@@ -1,0 +1,21 @@
+name: release
+on:
+  push:
+    tags: ['v*.*.*']
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet pack src --configuration Release --output out
+      - name: Publish to NuGet
+        run: dotnet nuget push out/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.nupkg
+          generate_release_notes: true
