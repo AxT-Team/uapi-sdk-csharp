@@ -33,11 +33,16 @@ public class UnsupportedFormatError: UapiError { public UnsupportedFormatError(s
 public class Client {
     private readonly HttpClient _http;
     public Client(string baseUrl, string? token = null) {
-        _http = new HttpClient { BaseAddress = new Uri(baseUrl) };
+        var normalized = baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
+        _http = new HttpClient { BaseAddress = new Uri(normalized) };
         if (!string.IsNullOrEmpty(token)) _http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
     }
     private async Task<object?> RequestAsync(string method, string path, Dictionary<string, object?>? query = null, object? body = null) {
-        var uri = path + (query is null ? "" : "?" + string.Join("&", query.Select(kv => $"{kv.Key}={kv.Value}")));
+        var relative = path.TrimStart('/');
+        var qs = query is null || query.Count == 0
+            ? ""
+            : "?" + string.Join("&", query.Select(kv => $"{Uri.EscapeDataString(kv.Key)}={Uri.EscapeDataString(kv.Value?.ToString() ?? "")}"));
+        var uri = relative + qs;
         var msg = new HttpRequestMessage(new HttpMethod(method), uri);
         if (body is not null) msg.Content = JsonContent.Create(body);
         var res = await _http.SendAsync(msg);
