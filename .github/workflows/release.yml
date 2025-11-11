@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - run: dotnet pack src --configuration Release --output out
+      - run: dotnet pack uapi-sdk-csharp.csproj --configuration Release --output out
       - name: Publish to NuGet
         run: dotnet nuget push out/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       - uses: softprops/action-gh-release@v2
