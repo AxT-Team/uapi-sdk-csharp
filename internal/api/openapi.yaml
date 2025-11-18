@@ -4810,6 +4810,96 @@ paths:
       - 语言检测
       - 内容分析
       - 文本工具
+  /translate/stream:
+    post:
+      description: |-
+        想让翻译结果像打字机一样逐字显示出来？这个流式翻译接口能实现这种效果。
+
+        ## 功能概述
+        不同于传统翻译API一次性返回完整结果，这个接口会实时地、一个字一个字地把翻译内容推给你（就像ChatGPT回复消息那样），非常适合用在聊天应用、直播字幕等需要即时反馈的场景。
+
+        ## 它能做什么
+        - **中英互译**：支持中文和英文之间的双向翻译
+        - **自动识别**：不确定源语言？设置为 `auto` 让我们自动检测
+        - **逐字返回**：翻译结果会像打字机一样逐字流式返回，用户体验更流畅
+        - **音频朗读**：部分翻译结果会附带音频链接，方便朗读
+
+        ## 支持的语言
+        目前专注于中英互译，支持以下选项：
+        - `中文`（简体/繁体）
+        - `英文`
+        - `auto`（自动检测）
+      operationId: post-translate-stream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_translate_stream_request"
+        description: 包含翻译参数的JSON对象
+        required: true
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                example: |
+                  event: start
+                  data: ok
+
+                  event: message
+                  data: {"content":"Hello"}
+
+                  event: audio
+                  data: {"speak_url":"https://fanyi.so.com/audio?from=zh&to=en&voice=2&cate=speakUrl&key=7eca689f0d3389d9dea66ae112e5cfd7&query=你好","tSpeak_url":"/audio?from=zh&to=en&voice=2&cate=tSpeakUrl&key=8b1a9953c4611296a827abf8c47804d7&query=Hello","美":"/audio?from=zh&to=en&voice=6&cate=us-speech&key=7eca689f0d3389d9dea66ae112e5cfd7&query=你好","英":"/audio?from=zh&to=en&voice=5&cate=uk-speech&key=7eca689f0d3389d9dea66ae112e5cfd7&query=你好"}
+
+                  event: end
+                  data: ok
+                type: string
+          description: SSE流式响应。Content-Type为text/event-stream
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post_translate_stream_400_response"
+          description: 请求参数错误
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post_translate_stream_500_response"
+          description: 翻译服务错误
+      summary: 流式翻译（中英互译）
+      tags:
+      - Translate
+      x-search-words:
+      - 流式翻译
+      - SSE翻译
+      - 实时翻译
+      - 中译英
+      - 英译中
+      - 打字机效果
+      - 流式响应
+      - Server-Sent Events
+      - stream translate
+      - 实时
+      - 逐字翻译
+      x-seo-optimized-text: 免费流式翻译API接口，支持中文和英文之间的实时流式翻译。采用Server-Sent Events（SSE）技术，提供打字机效果的翻译体验。适用于实时翻译应用、聊天翻译、直播字幕、即时通讯翻译等场景。
+      x-seo-keywords:
+      - 流式翻译API
+      - SSE翻译接口
+      - 实时翻译API
+      - 中英互译
+      - 打字机翻译
+      - Server-Sent Events
+      - 流式响应翻译
+      - 实时翻译服务
+      x-seo-title: 免费流式翻译API接口 - SSE实时中英互译服务
+      x-seo-usage-scenarios: 适用于实时聊天翻译、直播字幕翻译、即时通讯应用、AI对话翻译、语音识别翻译、在线教育、跨境沟通等场景
+      x-seo-related-apis:
+      - 多语言文本翻译
+      - AI智能翻译
+      - 文本处理
+      - 实时通信
   /ai/translate:
     post:
       description: |-
@@ -5003,6 +5093,7 @@ paths:
       - 文学翻译
       - 学术翻译
       - 快速翻译
+      - 快速翻译
   /ai/translate/languages:
     get:
       description: 获取AI智能翻译服务支持的完整语言列表、翻译风格选项、上下文场景选项以及性能指标信息。这个接口对于需要在前端动态展示翻译配置选项的应用非常有用，它会返回当前AI翻译服务所支持的所有语言代码、原生名称、翻译风格说明、上下文场景描述，以及服务的性能特征和限制信息。通过此接口，开发者可以构建用户友好的翻译界面，让用户选择合适的翻译参数。
@@ -5018,16 +5109,6 @@ paths:
       summary: 获取AI翻译支持的语言和配置
       tags:
       - Translate
-      x-search-words:
-      - 支持语言
-      - 翻译配置
-      - 语言列表
-      - 翻译风格
-      - 上下文选项
-      - supported languages
-      - translation config
-      - language list
-      - AI翻译配置
   /webparse/extractimages:
     get:
       description: |-
@@ -5943,6 +6024,19 @@ components:
           example: 5
           type: integer
       type: object
+    post_translate_stream_500_response:
+      example:
+        code: SERVICE_ERROR
+        error: Translation service unavailable
+      properties:
+        error:
+          description: 错误描述
+          example: Translation service unavailable
+          type: string
+        code:
+          example: SERVICE_ERROR
+          type: string
+      type: object
     get_misc_hotboard_200_response_list_inner:
       example:
         hot_value: "1234567"
@@ -6802,6 +6896,24 @@ components:
           type: integer
         text:
           example: aK3fP7bQ9zRjT1vN
+          type: string
+      type: object
+    post_translate_stream_400_response:
+      example:
+        code: MISSING_QUERY
+        error: Missing required parameter
+      properties:
+        error:
+          description: 错误描述
+          example: Missing required parameter
+          type: string
+        code:
+          description: 错误码
+          enum:
+          - INVALID_REQUEST
+          - MISSING_QUERY
+          - MISSING_TARGET_LANG
+          example: MISSING_QUERY
           type: string
       type: object
     get_social_qq_groupinfo_404_response:
@@ -8796,6 +8908,36 @@ components:
         update_time:
           example: 2023-10-27 12:00:00
           type: string
+      type: object
+    post_translate_stream_request:
+      properties:
+        query:
+          description: 待翻译的文本内容
+          example: "Hello, how are you?"
+          type: string
+        to_lang:
+          description: 目标语言，支持：中文、英文
+          enum:
+          - 中文
+          - 英文
+          example: 中文
+          type: string
+        from_lang:
+          default: auto
+          description: 源语言，支持：中文、英文、auto（自动检测）。默认为auto
+          enum:
+          - 中文
+          - 英文
+          - auto
+          example: 英文
+          type: string
+        tone:
+          description: 语气参数，可选
+          example: ""
+          type: string
+      required:
+      - query
+      - to_lang
       type: object
     get_misc_weather_200_response:
       example:

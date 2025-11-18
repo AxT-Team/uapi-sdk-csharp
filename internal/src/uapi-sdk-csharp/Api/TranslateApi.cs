@@ -82,6 +82,29 @@ namespace uapi-sdk-csharp.Api
         Task<IPostAiTranslateApiResponse?> PostAiTranslateOrDefaultAsync(string targetLang, PostAiTranslateRequest postAiTranslateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// 流式翻译（中英互译）
+        /// </summary>
+        /// <remarks>
+        /// 想让翻译结果像打字机一样逐字显示出来？这个流式翻译接口能实现这种效果。  ## 功能概述 不同于传统翻译API一次性返回完整结果，这个接口会实时地、一个字一个字地把翻译内容推给你（就像ChatGPT回复消息那样），非常适合用在聊天应用、直播字幕等需要即时反馈的场景。  ## 它能做什么 - **中英互译**：支持中文和英文之间的双向翻译 - **自动识别**：不确定源语言？设置为 &#x60;auto&#x60; 让我们自动检测 - **逐字返回**：翻译结果会像打字机一样逐字流式返回，用户体验更流畅 - **音频朗读**：部分翻译结果会附带音频链接，方便朗读  ## 支持的语言 目前专注于中英互译，支持以下选项： - &#x60;中文&#x60;（简体/繁体） - &#x60;英文&#x60; - &#x60;auto&#x60;（自动检测）
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTranslateStreamRequest">包含翻译参数的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTranslateStreamApiResponse"/>&gt;</returns>
+        Task<IPostTranslateStreamApiResponse> PostTranslateStreamAsync(PostTranslateStreamRequest postTranslateStreamRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 流式翻译（中英互译）
+        /// </summary>
+        /// <remarks>
+        /// 想让翻译结果像打字机一样逐字显示出来？这个流式翻译接口能实现这种效果。  ## 功能概述 不同于传统翻译API一次性返回完整结果，这个接口会实时地、一个字一个字地把翻译内容推给你（就像ChatGPT回复消息那样），非常适合用在聊天应用、直播字幕等需要即时反馈的场景。  ## 它能做什么 - **中英互译**：支持中文和英文之间的双向翻译 - **自动识别**：不确定源语言？设置为 &#x60;auto&#x60; 让我们自动检测 - **逐字返回**：翻译结果会像打字机一样逐字流式返回，用户体验更流畅 - **音频朗读**：部分翻译结果会附带音频链接，方便朗读  ## 支持的语言 目前专注于中英互译，支持以下选项： - &#x60;中文&#x60;（简体/繁体） - &#x60;英文&#x60; - &#x60;auto&#x60;（自动检测）
+        /// </remarks>
+        /// <param name="postTranslateStreamRequest">包含翻译参数的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTranslateStreamApiResponse"/>?&gt;</returns>
+        Task<IPostTranslateStreamApiResponse?> PostTranslateStreamOrDefaultAsync(PostTranslateStreamRequest postTranslateStreamRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// 多语言文本翻译
         /// </summary>
         /// <remarks>
@@ -147,6 +170,30 @@ namespace uapi-sdk-csharp.Api
         /// </summary>
         /// <returns></returns>
         bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IPostTranslateStreamApiResponse"/>
+    /// </summary>
+    public interface IPostTranslateStreamApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<string?>, IBadRequest<uapi-sdk-csharp.Model.PostTranslateStream400Response?>, IInternalServerError<uapi-sdk-csharp.Model.PostTranslateStream500Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
 
         /// <summary>
         /// Returns true if the response is 500 InternalServerError
@@ -222,6 +269,26 @@ namespace uapi-sdk-csharp.Api
         internal void ExecuteOnErrorPostAiTranslate(Exception exception)
         {
             OnErrorPostAiTranslate?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnPostTranslateStream;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorPostTranslateStream;
+
+        internal void ExecuteOnPostTranslateStream(TranslateApi.PostTranslateStreamApiResponse apiResponse)
+        {
+            OnPostTranslateStream?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorPostTranslateStream(Exception exception)
+        {
+            OnErrorPostTranslateStream?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -900,6 +967,337 @@ namespace uapi-sdk-csharp.Api
             /// <param name="result"></param>
             /// <returns></returns>
             public bool TryInternalServerError([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostAiTranslate500Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatPostTranslateStream(PostTranslateStreamRequest postTranslateStreamRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="postTranslateStreamRequest"></param>
+        /// <returns></returns>
+        private void ValidatePostTranslateStream(PostTranslateStreamRequest postTranslateStreamRequest)
+        {
+            if (postTranslateStreamRequest == null)
+                throw new ArgumentNullException(nameof(postTranslateStreamRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTranslateStreamRequest"></param>
+        private void AfterPostTranslateStreamDefaultImplementation(IPostTranslateStreamApiResponse apiResponseLocalVar, PostTranslateStreamRequest postTranslateStreamRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterPostTranslateStream(ref suppressDefaultLog, apiResponseLocalVar, postTranslateStreamRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTranslateStreamRequest"></param>
+        partial void AfterPostTranslateStream(ref bool suppressDefaultLog, IPostTranslateStreamApiResponse apiResponseLocalVar, PostTranslateStreamRequest postTranslateStreamRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTranslateStreamRequest"></param>
+        private void OnErrorPostTranslateStreamDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTranslateStreamRequest postTranslateStreamRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorPostTranslateStream(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, postTranslateStreamRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTranslateStreamRequest"></param>
+        partial void OnErrorPostTranslateStream(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTranslateStreamRequest postTranslateStreamRequest);
+
+        /// <summary>
+        /// 流式翻译（中英互译） 想让翻译结果像打字机一样逐字显示出来？这个流式翻译接口能实现这种效果。  ## 功能概述 不同于传统翻译API一次性返回完整结果，这个接口会实时地、一个字一个字地把翻译内容推给你（就像ChatGPT回复消息那样），非常适合用在聊天应用、直播字幕等需要即时反馈的场景。  ## 它能做什么 - **中英互译**：支持中文和英文之间的双向翻译 - **自动识别**：不确定源语言？设置为 &#x60;auto&#x60; 让我们自动检测 - **逐字返回**：翻译结果会像打字机一样逐字流式返回，用户体验更流畅 - **音频朗读**：部分翻译结果会附带音频链接，方便朗读  ## 支持的语言 目前专注于中英互译，支持以下选项： - &#x60;中文&#x60;（简体/繁体） - &#x60;英文&#x60; - &#x60;auto&#x60;（自动检测）
+        /// </summary>
+        /// <param name="postTranslateStreamRequest">包含翻译参数的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTranslateStreamApiResponse"/>&gt;</returns>
+        public async Task<IPostTranslateStreamApiResponse?> PostTranslateStreamOrDefaultAsync(PostTranslateStreamRequest postTranslateStreamRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await PostTranslateStreamAsync(postTranslateStreamRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 流式翻译（中英互译） 想让翻译结果像打字机一样逐字显示出来？这个流式翻译接口能实现这种效果。  ## 功能概述 不同于传统翻译API一次性返回完整结果，这个接口会实时地、一个字一个字地把翻译内容推给你（就像ChatGPT回复消息那样），非常适合用在聊天应用、直播字幕等需要即时反馈的场景。  ## 它能做什么 - **中英互译**：支持中文和英文之间的双向翻译 - **自动识别**：不确定源语言？设置为 &#x60;auto&#x60; 让我们自动检测 - **逐字返回**：翻译结果会像打字机一样逐字流式返回，用户体验更流畅 - **音频朗读**：部分翻译结果会附带音频链接，方便朗读  ## 支持的语言 目前专注于中英互译，支持以下选项： - &#x60;中文&#x60;（简体/繁体） - &#x60;英文&#x60; - &#x60;auto&#x60;（自动检测）
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTranslateStreamRequest">包含翻译参数的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTranslateStreamApiResponse"/>&gt;</returns>
+        public async Task<IPostTranslateStreamApiResponse> PostTranslateStreamAsync(PostTranslateStreamRequest postTranslateStreamRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidatePostTranslateStream(postTranslateStreamRequest);
+
+                FormatPostTranslateStream(postTranslateStreamRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/translate/stream"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/translate/stream");
+
+                    httpRequestMessageLocalVar.Content = (postTranslateStreamRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(postTranslateStreamRequest, _jsonSerializerOptions));
+
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "text/event-stream",
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<PostTranslateStreamApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PostTranslateStreamApiResponse>();
+                        PostTranslateStreamApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/translate/stream", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterPostTranslateStreamDefaultImplementation(apiResponseLocalVar, postTranslateStreamRequest);
+
+                        Events.ExecuteOnPostTranslateStream(apiResponseLocalVar);
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorPostTranslateStreamDefaultImplementation(e, "/translate/stream", uriBuilderLocalVar.Path, postTranslateStreamRequest);
+                Events.ExecuteOnErrorPostTranslateStream(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PostTranslateStreamApiResponse"/>
+        /// </summary>
+        public partial class PostTranslateStreamApiResponse : uapi-sdk-csharp.Client.ApiResponse, IPostTranslateStreamApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<PostTranslateStreamApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="PostTranslateStreamApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTranslateStreamApiResponse(ILogger<PostTranslateStreamApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PostTranslateStreamApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTranslateStreamApiResponse(ILogger<PostTranslateStreamApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public string? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<string>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out string? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTranslateStream400Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTranslateStream400Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTranslateStream400Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTranslateStream500Response? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTranslateStream500Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTranslateStream500Response? result)
             {
                 result = null;
 

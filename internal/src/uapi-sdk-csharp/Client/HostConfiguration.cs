@@ -295,6 +295,9 @@ namespace uapi-sdk-csharp.Client
             _jsonOptions.Converters.Add(new PostTextMd5Verify200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new PostTextMd5Verify400ResponseJsonConverter());
             _jsonOptions.Converters.Add(new PostTextMd5VerifyRequestJsonConverter());
+            _jsonOptions.Converters.Add(new PostTranslateStream400ResponseJsonConverter());
+            _jsonOptions.Converters.Add(new PostTranslateStream500ResponseJsonConverter());
+            _jsonOptions.Converters.Add(new PostTranslateStreamRequestJsonConverter());
             _jsonOptions.Converters.Add(new PostTranslateText200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new PostTranslateText400ResponseJsonConverter());
             _jsonOptions.Converters.Add(new PostTranslateText500ResponseJsonConverter());

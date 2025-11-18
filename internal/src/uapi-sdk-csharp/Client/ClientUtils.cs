@@ -115,6 +115,12 @@ namespace uapi-sdk-csharp.Client
                 return PostAiTranslateRequest.StyleEnumToJsonValue(postAiTranslateRequestStyleEnum);
             if (obj is PostAiTranslateRequest.ContextEnum postAiTranslateRequestContextEnum)
                 return PostAiTranslateRequest.ContextEnumToJsonValue(postAiTranslateRequestContextEnum);
+            if (obj is PostTranslateStream400Response.CodeEnum postTranslateStream400ResponseCodeEnum)
+                return PostTranslateStream400Response.CodeEnumToJsonValue(postTranslateStream400ResponseCodeEnum);
+            if (obj is PostTranslateStreamRequest.ToLangEnum postTranslateStreamRequestToLangEnum)
+                return PostTranslateStreamRequest.ToLangEnumToJsonValue(postTranslateStreamRequestToLangEnum);
+            if (obj is PostTranslateStreamRequest.FromLangEnum postTranslateStreamRequestFromLangEnum)
+                return PostTranslateStreamRequest.FromLangEnumToJsonValue(postTranslateStreamRequestFromLangEnum);
             if (obj is ICollection collection)
             {
                 List<string?> entries = new();

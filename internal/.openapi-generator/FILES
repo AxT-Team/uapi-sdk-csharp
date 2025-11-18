@@ -269,6 +269,9 @@ docs/models/PostTextMd5Request.md
 docs/models/PostTextMd5Verify200Response.md
 docs/models/PostTextMd5Verify400Response.md
 docs/models/PostTextMd5VerifyRequest.md
+docs/models/PostTranslateStream400Response.md
+docs/models/PostTranslateStream500Response.md
+docs/models/PostTranslateStreamRequest.md
 docs/models/PostTranslateText200Response.md
 docs/models/PostTranslateText400Response.md
 docs/models/PostTranslateText500Response.md
@@ -279,6 +282,9 @@ docs/models/SingleEndpoint.md
 docs/scripts/git_push.ps1
 docs/scripts/git_push.sh
 src/uapi-sdk-csharp.Test/Api/DependencyInjectionTests.cs
+src/uapi-sdk-csharp.Test/Model/PostTranslateStream400ResponseTests.cs
+src/uapi-sdk-csharp.Test/Model/PostTranslateStream500ResponseTests.cs
+src/uapi-sdk-csharp.Test/Model/PostTranslateStreamRequestTests.cs
 src/uapi-sdk-csharp.Test/README.md
 src/uapi-sdk-csharp.Test/uapi-sdk-csharp.Test.csproj
 src/uapi-sdk-csharp/Api/ClipzyApi.cs
@@ -570,6 +576,9 @@ src/uapi-sdk-csharp/Model/PostTextMd5Request.cs
 src/uapi-sdk-csharp/Model/PostTextMd5Verify200Response.cs
 src/uapi-sdk-csharp/Model/PostTextMd5Verify400Response.cs
 src/uapi-sdk-csharp/Model/PostTextMd5VerifyRequest.cs
+src/uapi-sdk-csharp/Model/PostTranslateStream400Response.cs
+src/uapi-sdk-csharp/Model/PostTranslateStream500Response.cs
+src/uapi-sdk-csharp/Model/PostTranslateStreamRequest.cs
 src/uapi-sdk-csharp/Model/PostTranslateText200Response.cs
 src/uapi-sdk-csharp/Model/PostTranslateText400Response.cs
 src/uapi-sdk-csharp/Model/PostTranslateText500Response.cs

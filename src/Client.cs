@@ -401,6 +401,10 @@ public class Client {
             var path = "/ai/translate";
             return _c.RequestAsync("POST", path, args);
         }
+        public Task<object?> postTranslateStreamAsync(Dictionary<string,object?>? args = null) {
+            var path = "/translate/stream";
+            return _c.RequestAsync("POST", path, args);
+        }
         public Task<object?> postTranslateTextAsync(Dictionary<string,object?>? args = null) {
             var path = "/translate/text";
             return _c.RequestAsync("POST", path, args);

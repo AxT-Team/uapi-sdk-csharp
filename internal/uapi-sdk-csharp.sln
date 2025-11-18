@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 12.0.0.0
 MinimumVisualStudioVersion = 10.0.0.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uapi-sdk-csharp", "src\uapi-sdk-csharp\uapi-sdk-csharp.csproj", "{C645B0F0-66DF-485C-9C07-51F2A2A1516B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uapi-sdk-csharp", "src\uapi-sdk-csharp\uapi-sdk-csharp.csproj", "{BFE6F072-76AC-4649-918A-7AD38654F8DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uapi-sdk-csharp.Test", "src\uapi-sdk-csharp.Test\uapi-sdk-csharp.Test.csproj", "{19F1DEBC-DE5E-4517-8062-F000CD499087}"
 EndProject
@@ -12,10 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C645B0F0-66DF-485C-9C07-51F2A2A1516B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C645B0F0-66DF-485C-9C07-51F2A2A1516B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C645B0F0-66DF-485C-9C07-51F2A2A1516B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C645B0F0-66DF-485C-9C07-51F2A2A1516B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE6F072-76AC-4649-918A-7AD38654F8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE6F072-76AC-4649-918A-7AD38654F8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE6F072-76AC-4649-918A-7AD38654F8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE6F072-76AC-4649-918A-7AD38654F8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU
