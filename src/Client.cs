@@ -85,16 +85,16 @@ public class Client {
     public class ClipzyZaiXianJianTieBanApi {
         private readonly Client _c; public ClipzyZaiXianJianTieBanApi(Client c) { _c = c; }
         public Task<object?> getClipzyGetAsync(Dictionary<string,object?>? args = null) {
-            var path = "/api/get";
+            var path = "/api/v1/api/get";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getClipzyRawAsync(Dictionary<string,object?>? args = null) {
-            var path = "/api/raw/{id}";
+            var path = "/api/v1/api/raw/{id}";
             if (args != null && args.ContainsKey("id") && args["id"] != null) path = path.Replace("{"+ "id" +"}", args["id"]!.ToString());
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postClipzyStoreAsync(Dictionary<string,object?>? args = null) {
-            var path = "/api/store";
+            var path = "/api/v1/api/store";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -102,11 +102,11 @@ public class Client {
     public class ConvertApi {
         private readonly Client _c; public ConvertApi(Client c) { _c = c; }
         public Task<object?> getConvertUnixtimeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/convert/unixtime";
+            var path = "/api/v1/convert/unixtime";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postConvertJsonAsync(Dictionary<string,object?>? args = null) {
-            var path = "/convert/json";
+            var path = "/api/v1/convert/json";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -114,7 +114,7 @@ public class Client {
     public class DailyApi {
         private readonly Client _c; public DailyApi(Client c) { _c = c; }
         public Task<object?> getDailyNewsImageAsync(Dictionary<string,object?>? args = null) {
-            var path = "/daily/news-image";
+            var path = "/api/v1/daily/news-image";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -122,23 +122,23 @@ public class Client {
     public class GameApi {
         private readonly Client _c; public GameApi(Client c) { _c = c; }
         public Task<object?> getGameEpicFreeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/game/epic-free";
+            var path = "/api/v1/game/epic-free";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getGameMinecraftHistoryidAsync(Dictionary<string,object?>? args = null) {
-            var path = "/game/minecraft/historyid";
+            var path = "/api/v1/game/minecraft/historyid";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getGameMinecraftServerstatusAsync(Dictionary<string,object?>? args = null) {
-            var path = "/game/minecraft/serverstatus";
+            var path = "/api/v1/game/minecraft/serverstatus";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getGameMinecraftUserinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/game/minecraft/userinfo";
+            var path = "/api/v1/game/minecraft/userinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getGameSteamSummaryAsync(Dictionary<string,object?>? args = null) {
-            var path = "/game/steam/summary";
+            var path = "/api/v1/game/steam/summary";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -146,43 +146,43 @@ public class Client {
     public class ImageApi {
         private readonly Client _c; public ImageApi(Client c) { _c = c; }
         public Task<object?> getAvatarGravatarAsync(Dictionary<string,object?>? args = null) {
-            var path = "/avatar/gravatar";
+            var path = "/api/v1/avatar/gravatar";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getImageBingDailyAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/bing-daily";
+            var path = "/api/v1/image/bing-daily";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getImageMotouAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/motou";
+            var path = "/api/v1/image/motou";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getImageQrcodeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/qrcode";
+            var path = "/api/v1/image/qrcode";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getImageTobase64Async(Dictionary<string,object?>? args = null) {
-            var path = "/image/tobase64";
+            var path = "/api/v1/image/tobase64";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postImageCompressAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/compress";
+            var path = "/api/v1/image/compress";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postImageFrombase64Async(Dictionary<string,object?>? args = null) {
-            var path = "/image/frombase64";
+            var path = "/api/v1/image/frombase64";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postImageMotouAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/motou";
+            var path = "/api/v1/image/motou";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postImageSpeechlessAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/speechless";
+            var path = "/api/v1/image/speechless";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postImageSvgAsync(Dictionary<string,object?>? args = null) {
-            var path = "/image/svg";
+            var path = "/api/v1/image/svg";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -190,47 +190,47 @@ public class Client {
     public class MiscApi {
         private readonly Client _c; public MiscApi(Client c) { _c = c; }
         public Task<object?> getHistoryProgrammerAsync(Dictionary<string,object?>? args = null) {
-            var path = "/history/programmer";
+            var path = "/api/v1/history/programmer";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getHistoryProgrammerTodayAsync(Dictionary<string,object?>? args = null) {
-            var path = "/history/programmer/today";
+            var path = "/api/v1/history/programmer/today";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscHotboardAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/hotboard";
+            var path = "/api/v1/misc/hotboard";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscPhoneinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/phoneinfo";
+            var path = "/api/v1/misc/phoneinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscRandomnumberAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/randomnumber";
+            var path = "/api/v1/misc/randomnumber";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscTimestampAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/timestamp";
+            var path = "/api/v1/misc/timestamp";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscTrackingCarriersAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/tracking/carriers";
+            var path = "/api/v1/misc/tracking/carriers";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscTrackingDetectAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/tracking/detect";
+            var path = "/api/v1/misc/tracking/detect";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscTrackingQueryAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/tracking/query";
+            var path = "/api/v1/misc/tracking/query";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscWeatherAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/weather";
+            var path = "/api/v1/misc/weather";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getMiscWorldtimeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/misc/worldtime";
+            var path = "/api/v1/misc/worldtime";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -238,43 +238,43 @@ public class Client {
     public class NetworkApi {
         private readonly Client _c; public NetworkApi(Client c) { _c = c; }
         public Task<object?> getNetworkDnsAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/dns";
+            var path = "/api/v1/network/dns";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkIcpAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/icp";
+            var path = "/api/v1/network/icp";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkIpinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/ipinfo";
+            var path = "/api/v1/network/ipinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkMyipAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/myip";
+            var path = "/api/v1/network/myip";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkPingAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/ping";
+            var path = "/api/v1/network/ping";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkPingmyipAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/pingmyip";
+            var path = "/api/v1/network/pingmyip";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkPortscanAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/portscan";
+            var path = "/api/v1/network/portscan";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkUrlstatusAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/urlstatus";
+            var path = "/api/v1/network/urlstatus";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkWhoisAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/whois";
+            var path = "/api/v1/network/whois";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getNetworkWxdomainAsync(Dictionary<string,object?>? args = null) {
-            var path = "/network/wxdomain";
+            var path = "/api/v1/network/wxdomain";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -282,7 +282,7 @@ public class Client {
     public class PoemApi {
         private readonly Client _c; public PoemApi(Client c) { _c = c; }
         public Task<object?> getSayingAsync(Dictionary<string,object?>? args = null) {
-            var path = "/saying";
+            var path = "/api/v1/saying";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -290,19 +290,19 @@ public class Client {
     public class RandomApi {
         private readonly Client _c; public RandomApi(Client c) { _c = c; }
         public Task<object?> getAnswerbookAskAsync(Dictionary<string,object?>? args = null) {
-            var path = "/answerbook/ask";
+            var path = "/api/v1/answerbook/ask";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getRandomImageAsync(Dictionary<string,object?>? args = null) {
-            var path = "/random/image";
+            var path = "/api/v1/random/image";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getRandomStringAsync(Dictionary<string,object?>? args = null) {
-            var path = "/random/string";
+            var path = "/api/v1/random/string";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postAnswerbookAskAsync(Dictionary<string,object?>? args = null) {
-            var path = "/answerbook/ask";
+            var path = "/api/v1/answerbook/ask";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -310,35 +310,35 @@ public class Client {
     public class SocialApi {
         private readonly Client _c; public SocialApi(Client c) { _c = c; }
         public Task<object?> getGithubRepoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/github/repo";
+            var path = "/api/v1/github/repo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialBilibiliArchivesAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/bilibili/archives";
+            var path = "/api/v1/social/bilibili/archives";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialBilibiliLiveroomAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/bilibili/liveroom";
+            var path = "/api/v1/social/bilibili/liveroom";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialBilibiliRepliesAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/bilibili/replies";
+            var path = "/api/v1/social/bilibili/replies";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialBilibiliUserinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/bilibili/userinfo";
+            var path = "/api/v1/social/bilibili/userinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialBilibiliVideoinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/bilibili/videoinfo";
+            var path = "/api/v1/social/bilibili/videoinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialQqGroupinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/qq/groupinfo";
+            var path = "/api/v1/social/qq/groupinfo";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getSocialQqUserinfoAsync(Dictionary<string,object?>? args = null) {
-            var path = "/social/qq/userinfo";
+            var path = "/api/v1/social/qq/userinfo";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -346,11 +346,11 @@ public class Client {
     public class StatusApi {
         private readonly Client _c; public StatusApi(Client c) { _c = c; }
         public Task<object?> getStatusRatelimitAsync(Dictionary<string,object?>? args = null) {
-            var path = "/status/ratelimit";
+            var path = "/api/v1/status/ratelimit";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getStatusUsageAsync(Dictionary<string,object?>? args = null) {
-            var path = "/status/usage";
+            var path = "/api/v1/status/usage";
             return _c.RequestAsync("GET", path, args);
         }
     }
@@ -358,35 +358,35 @@ public class Client {
     public class TextApi {
         private readonly Client _c; public TextApi(Client c) { _c = c; }
         public Task<object?> getTextMd5Async(Dictionary<string,object?>? args = null) {
-            var path = "/text/md5";
+            var path = "/api/v1/text/md5";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postTextAesDecryptAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/aes/decrypt";
+            var path = "/api/v1/text/aes/decrypt";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextAesEncryptAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/aes/encrypt";
+            var path = "/api/v1/text/aes/encrypt";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextAnalyzeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/analyze";
+            var path = "/api/v1/text/analyze";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextBase64DecodeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/base64/decode";
+            var path = "/api/v1/text/base64/decode";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextBase64EncodeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/base64/encode";
+            var path = "/api/v1/text/base64/encode";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextMd5Async(Dictionary<string,object?>? args = null) {
-            var path = "/text/md5";
+            var path = "/api/v1/text/md5";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTextMd5VerifyAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/md5/verify";
+            var path = "/api/v1/text/md5/verify";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -394,19 +394,19 @@ public class Client {
     public class TranslateApi {
         private readonly Client _c; public TranslateApi(Client c) { _c = c; }
         public Task<object?> getAiTranslateLanguagesAsync(Dictionary<string,object?>? args = null) {
-            var path = "/ai/translate/languages";
+            var path = "/api/v1/ai/translate/languages";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postAiTranslateAsync(Dictionary<string,object?>? args = null) {
-            var path = "/ai/translate";
+            var path = "/api/v1/ai/translate";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTranslateStreamAsync(Dictionary<string,object?>? args = null) {
-            var path = "/translate/stream";
+            var path = "/api/v1/translate/stream";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postTranslateTextAsync(Dictionary<string,object?>? args = null) {
-            var path = "/translate/text";
+            var path = "/api/v1/translate/text";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -414,20 +414,20 @@ public class Client {
     public class WebparseApi {
         private readonly Client _c; public WebparseApi(Client c) { _c = c; }
         public Task<object?> getWebTomarkdownAsyncStatusAsync(Dictionary<string,object?>? args = null) {
-            var path = "/web/tomarkdown/async/{task_id}";
+            var path = "/api/v1/web/tomarkdown/async/{task_id}";
             if (args != null && args.ContainsKey("task_id") && args["task_id"] != null) path = path.Replace("{"+ "task_id" +"}", args["task_id"]!.ToString());
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getWebparseExtractimagesAsync(Dictionary<string,object?>? args = null) {
-            var path = "/webparse/extractimages";
+            var path = "/api/v1/webparse/extractimages";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> getWebparseMetadataAsync(Dictionary<string,object?>? args = null) {
-            var path = "/webparse/metadata";
+            var path = "/api/v1/webparse/metadata";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postWebTomarkdownAsyncAsync(Dictionary<string,object?>? args = null) {
-            var path = "/web/tomarkdown/async";
+            var path = "/api/v1/web/tomarkdown/async";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -435,15 +435,15 @@ public class Client {
     public class MinGanCiShiBieApi {
         private readonly Client _c; public MinGanCiShiBieApi(Client c) { _c = c; }
         public Task<object?> getSensitiveWordAnalyzeQueryAsync(Dictionary<string,object?>? args = null) {
-            var path = "/sensitive-word/analyze-query";
+            var path = "/api/v1/sensitive-word/analyze-query";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postSensitiveWordAnalyzeAsync(Dictionary<string,object?>? args = null) {
-            var path = "/sensitive-word/analyze";
+            var path = "/api/v1/sensitive-word/analyze";
             return _c.RequestAsync("POST", path, args);
         }
         public Task<object?> postSensitiveWordQuickCheckAsync(Dictionary<string,object?>? args = null) {
-            var path = "/text/profanitycheck";
+            var path = "/api/v1/text/profanitycheck";
             return _c.RequestAsync("POST", path, args);
         }
     }
@@ -451,11 +451,11 @@ public class Client {
     public class ZhiNengSouSuoApi {
         private readonly Client _c; public ZhiNengSouSuoApi(Client c) { _c = c; }
         public Task<object?> getSearchEnginesAsync(Dictionary<string,object?>? args = null) {
-            var path = "/search/engines";
+            var path = "/api/v1/search/engines";
             return _c.RequestAsync("GET", path, args);
         }
         public Task<object?> postSearchAggregateAsync(Dictionary<string,object?>? args = null) {
-            var path = "/search/aggregate";
+            var path = "/api/v1/search/aggregate";
             return _c.RequestAsync("POST", path, args);
         }
     }
