@@ -1,6 +1,6 @@
 # uapi-sdk-csharp
 
-![Banner](https://raw.githubusercontent.com/AxT-Team/uapi-sdk-csharp/main/banner.png)
+![Banner](https://raw.githubusercontent.com/uapis/uapi-sdk-csharp/main/banner.png)
 
 [![.NET](https://img.shields.io/badge/.NET-7+-512BD4?style=flat-square&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![Docs](https://img.shields.io/badge/Docs-uapis.cn-2EAE5D?style=flat-square)](https://uapis.cn/)
