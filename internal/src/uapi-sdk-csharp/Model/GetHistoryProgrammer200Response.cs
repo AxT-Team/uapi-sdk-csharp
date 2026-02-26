@@ -33,14 +33,12 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetHistoryProgrammer200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="message">message</param>
         /// <param name="date">date</param>
         /// <param name="events">events</param>
         [JsonConstructor]
-        public GetHistoryProgrammer200Response(Option<int?> code = default, Option<string?> message = default, Option<string?> date = default, Option<List<GetHistoryProgrammer200ResponseEventsInner>?> events = default)
+        public GetHistoryProgrammer200Response(Option<string?> message = default, Option<string?> date = default, Option<List<GetHistoryProgrammer200ResponseEventsInner>?> events = default)
         {
-            CodeOption = code;
             MessageOption = message;
             DateOption = date;
             EventsOption = events;
@@ -48,20 +46,6 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Message
@@ -112,7 +96,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetHistoryProgrammer200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  Events: ").Append(Events).Append("\n");
@@ -153,7 +136,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> message = default;
             Option<string?> date = default;
             Option<List<GetHistoryProgrammer200ResponseEventsInner>?> events = default;
@@ -173,9 +155,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "message":
                             message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -191,9 +170,6 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetHistoryProgrammer200Response.");
-
             if (message.IsSet && message.Value == null)
                 throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetHistoryProgrammer200Response.");
 
@@ -203,7 +179,7 @@ namespace uapi-sdk-csharp.Model
             if (events.IsSet && events.Value == null)
                 throw new ArgumentNullException(nameof(events), "Property is not nullable for class GetHistoryProgrammer200Response.");
 
-            return new GetHistoryProgrammer200Response(code, message, date, events);
+            return new GetHistoryProgrammer200Response(message, date, events);
         }
 
         /// <summary>
@@ -238,9 +214,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getHistoryProgrammer200Response.EventsOption.IsSet && getHistoryProgrammer200Response.Events == null)
                 throw new ArgumentNullException(nameof(getHistoryProgrammer200Response.Events), "Property is required for class GetHistoryProgrammer200Response.");
-
-            if (getHistoryProgrammer200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getHistoryProgrammer200Response.CodeOption.Value!.Value);
 
             if (getHistoryProgrammer200Response.MessageOption.IsSet)
                 writer.WriteString("message", getHistoryProgrammer200Response.Message);

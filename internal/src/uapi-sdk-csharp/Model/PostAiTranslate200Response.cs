@@ -33,7 +33,6 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostAiTranslate200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="message">message</param>
         /// <param name="isBatch">标识是否为批量翻译请求。</param>
         /// <param name="data">data</param>
@@ -42,9 +41,8 @@ namespace uapi-sdk-csharp.Model
         /// <param name="performance">performance</param>
         /// <param name="qualityMetrics">qualityMetrics</param>
         [JsonConstructor]
-        public PostAiTranslate200Response(Option<int?> code = default, Option<string?> message = default, Option<bool?> isBatch = default, Option<PostAiTranslate200ResponseData?> data = default, Option<List<PostAiTranslate200ResponseBatchDataInner>?> batchData = default, Option<PostAiTranslate200ResponseBatchSummary?> batchSummary = default, Option<PostAiTranslate200ResponsePerformance?> performance = default, Option<PostAiTranslate200ResponseQualityMetrics?> qualityMetrics = default)
+        public PostAiTranslate200Response(Option<string?> message = default, Option<bool?> isBatch = default, Option<PostAiTranslate200ResponseData?> data = default, Option<List<PostAiTranslate200ResponseBatchDataInner>?> batchData = default, Option<PostAiTranslate200ResponseBatchSummary?> batchSummary = default, Option<PostAiTranslate200ResponsePerformance?> performance = default, Option<PostAiTranslate200ResponseQualityMetrics?> qualityMetrics = default)
         {
-            CodeOption = code;
             MessageOption = message;
             IsBatchOption = isBatch;
             DataOption = data;
@@ -56,20 +54,6 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Message
@@ -174,7 +158,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAiTranslate200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  IsBatch: ").Append(IsBatch).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
@@ -219,7 +202,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> message = default;
             Option<bool?> isBatch = default;
             Option<PostAiTranslate200ResponseData?> data = default;
@@ -243,9 +225,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "message":
                             message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -273,9 +252,6 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class PostAiTranslate200Response.");
-
             if (message.IsSet && message.Value == null)
                 throw new ArgumentNullException(nameof(message), "Property is not nullable for class PostAiTranslate200Response.");
 
@@ -297,7 +273,7 @@ namespace uapi-sdk-csharp.Model
             if (qualityMetrics.IsSet && qualityMetrics.Value == null)
                 throw new ArgumentNullException(nameof(qualityMetrics), "Property is not nullable for class PostAiTranslate200Response.");
 
-            return new PostAiTranslate200Response(code, message, isBatch, data, batchData, batchSummary, performance, qualityMetrics);
+            return new PostAiTranslate200Response(message, isBatch, data, batchData, batchSummary, performance, qualityMetrics);
         }
 
         /// <summary>
@@ -341,9 +317,6 @@ namespace uapi-sdk-csharp.Model
 
             if (postAiTranslate200Response.QualityMetricsOption.IsSet && postAiTranslate200Response.QualityMetrics == null)
                 throw new ArgumentNullException(nameof(postAiTranslate200Response.QualityMetrics), "Property is required for class PostAiTranslate200Response.");
-
-            if (postAiTranslate200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", postAiTranslate200Response.CodeOption.Value!.Value);
 
             if (postAiTranslate200Response.MessageOption.IsSet)
                 writer.WriteString("message", postAiTranslate200Response.Message);

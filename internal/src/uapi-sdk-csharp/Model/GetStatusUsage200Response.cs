@@ -33,40 +33,40 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetStatusUsage200Response" /> class.
         /// </summary>
-        /// <param name="endpointsAggregate"></param>
-        /// <param name="singleEndpoint"></param>
-        public GetStatusUsage200Response(Option<EndpointsAggregate?> endpointsAggregate, Option<SingleEndpoint?> singleEndpoint)
+        /// <param name="getStatusUsage200ResponseAnyOf"></param>
+        /// <param name="getStatusUsage200ResponseAnyOf1"></param>
+        public GetStatusUsage200Response(Option<GetStatusUsage200ResponseAnyOf?> getStatusUsage200ResponseAnyOf, Option<GetStatusUsage200ResponseAnyOf1?> getStatusUsage200ResponseAnyOf1)
         {
-            EndpointsAggregateOption = endpointsAggregate;
-            SingleEndpointOption = singleEndpoint;
+            GetStatusUsage200ResponseAnyOfOption = getStatusUsage200ResponseAnyOf;
+            GetStatusUsage200ResponseAnyOf1Option = getStatusUsage200ResponseAnyOf1;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of EndpointsAggregate
+        /// Used to track the state of GetStatusUsage200ResponseAnyOf
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<EndpointsAggregate?> EndpointsAggregateOption { get; private set; }
+        public Option<GetStatusUsage200ResponseAnyOf?> GetStatusUsage200ResponseAnyOfOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets EndpointsAggregate
+        /// Gets or Sets GetStatusUsage200ResponseAnyOf
         /// </summary>
-        public EndpointsAggregate? EndpointsAggregate { get { return this.EndpointsAggregateOption; } set { this.EndpointsAggregateOption = new(value); } }
+        public GetStatusUsage200ResponseAnyOf? GetStatusUsage200ResponseAnyOf { get { return this.GetStatusUsage200ResponseAnyOfOption; } set { this.GetStatusUsage200ResponseAnyOfOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of SingleEndpoint
+        /// Used to track the state of GetStatusUsage200ResponseAnyOf1
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<SingleEndpoint?> SingleEndpointOption { get; private set; }
+        public Option<GetStatusUsage200ResponseAnyOf1?> GetStatusUsage200ResponseAnyOf1Option { get; private set; }
 
         /// <summary>
-        /// Gets or Sets SingleEndpoint
+        /// Gets or Sets GetStatusUsage200ResponseAnyOf1
         /// </summary>
-        public SingleEndpoint? SingleEndpoint { get { return this.SingleEndpointOption; } set { this.SingleEndpointOption = new(value); } }
+        public GetStatusUsage200ResponseAnyOf1? GetStatusUsage200ResponseAnyOf1 { get { return this.GetStatusUsage200ResponseAnyOf1Option; } set { this.GetStatusUsage200ResponseAnyOf1Option = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -113,8 +113,8 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            EndpointsAggregate? endpointsAggregate = default;
-            SingleEndpoint? singleEndpoint = default;
+            GetStatusUsage200ResponseAnyOf? getStatusUsage200ResponseAnyOf = default;
+            GetStatusUsage200ResponseAnyOf1? getStatusUsage200ResponseAnyOf1 = default;
 
             Utf8JsonReader utf8JsonReaderAnyOf = utf8JsonReader;
             while (utf8JsonReaderAnyOf.Read())
@@ -127,11 +127,11 @@ namespace uapi-sdk-csharp.Model
 
                 if (utf8JsonReaderAnyOf.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderAnyOf.CurrentDepth - 1)
                 {
-                    Utf8JsonReader utf8JsonReaderEndpointsAggregate = utf8JsonReader;
-                    ClientUtils.TryDeserialize<EndpointsAggregate?>(ref utf8JsonReaderEndpointsAggregate, jsonSerializerOptions, out endpointsAggregate);
+                    Utf8JsonReader utf8JsonReaderGetStatusUsage200ResponseAnyOf = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetStatusUsage200ResponseAnyOf?>(ref utf8JsonReaderGetStatusUsage200ResponseAnyOf, jsonSerializerOptions, out getStatusUsage200ResponseAnyOf);
 
-                    Utf8JsonReader utf8JsonReaderSingleEndpoint = utf8JsonReader;
-                    ClientUtils.TryDeserialize<SingleEndpoint?>(ref utf8JsonReaderSingleEndpoint, jsonSerializerOptions, out singleEndpoint);
+                    Utf8JsonReader utf8JsonReaderGetStatusUsage200ResponseAnyOf1 = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetStatusUsage200ResponseAnyOf1?>(ref utf8JsonReaderGetStatusUsage200ResponseAnyOf1, jsonSerializerOptions, out getStatusUsage200ResponseAnyOf1);
                 }
             }
 
@@ -156,14 +156,14 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            Option<EndpointsAggregate?> endpointsAggregateParsedValue = endpointsAggregate == null
+            Option<GetStatusUsage200ResponseAnyOf?> getStatusUsage200ResponseAnyOfParsedValue = getStatusUsage200ResponseAnyOf == null
                 ? default
-                : new Option<EndpointsAggregate?>(endpointsAggregate);
-            Option<SingleEndpoint?> singleEndpointParsedValue = singleEndpoint == null
+                : new Option<GetStatusUsage200ResponseAnyOf?>(getStatusUsage200ResponseAnyOf);
+            Option<GetStatusUsage200ResponseAnyOf1?> getStatusUsage200ResponseAnyOf1ParsedValue = getStatusUsage200ResponseAnyOf1 == null
                 ? default
-                : new Option<SingleEndpoint?>(singleEndpoint);
+                : new Option<GetStatusUsage200ResponseAnyOf1?>(getStatusUsage200ResponseAnyOf1);
 
-            return new GetStatusUsage200Response(endpointsAggregateParsedValue, singleEndpointParsedValue);
+            return new GetStatusUsage200Response(getStatusUsage200ResponseAnyOfParsedValue, getStatusUsage200ResponseAnyOf1ParsedValue);
         }
 
         /// <summary>
@@ -177,16 +177,16 @@ namespace uapi-sdk-csharp.Model
         {
             writer.WriteStartObject();
 
-            if (getStatusUsage200Response.EndpointsAggregateOption.IsSet && getStatusUsage200Response.EndpointsAggregateOption.Value != null)
+            if (getStatusUsage200Response.GetStatusUsage200ResponseAnyOfOption.IsSet && getStatusUsage200Response.GetStatusUsage200ResponseAnyOfOption.Value != null)
             {
-                EndpointsAggregateJsonConverter endpointsAggregateJsonConverter = (EndpointsAggregateJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(getStatusUsage200Response.EndpointsAggregateOption.Value.GetType()));
-                endpointsAggregateJsonConverter.WriteProperties(writer, getStatusUsage200Response.EndpointsAggregateOption.Value, jsonSerializerOptions);
+                GetStatusUsage200ResponseAnyOfJsonConverter getStatusUsage200ResponseAnyOfJsonConverter = (GetStatusUsage200ResponseAnyOfJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(getStatusUsage200Response.GetStatusUsage200ResponseAnyOfOption.Value.GetType()));
+                getStatusUsage200ResponseAnyOfJsonConverter.WriteProperties(writer, getStatusUsage200Response.GetStatusUsage200ResponseAnyOfOption.Value, jsonSerializerOptions);
             }
 
-            if (getStatusUsage200Response.SingleEndpointOption.IsSet && getStatusUsage200Response.SingleEndpointOption.Value != null)
+            if (getStatusUsage200Response.GetStatusUsage200ResponseAnyOf1Option.IsSet && getStatusUsage200Response.GetStatusUsage200ResponseAnyOf1Option.Value != null)
             {
-                SingleEndpointJsonConverter singleEndpointJsonConverter = (SingleEndpointJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(getStatusUsage200Response.SingleEndpointOption.Value.GetType()));
-                singleEndpointJsonConverter.WriteProperties(writer, getStatusUsage200Response.SingleEndpointOption.Value, jsonSerializerOptions);
+                GetStatusUsage200ResponseAnyOf1JsonConverter getStatusUsage200ResponseAnyOf1JsonConverter = (GetStatusUsage200ResponseAnyOf1JsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(getStatusUsage200Response.GetStatusUsage200ResponseAnyOf1Option.Value.GetType()));
+                getStatusUsage200ResponseAnyOf1JsonConverter.WriteProperties(writer, getStatusUsage200Response.GetStatusUsage200ResponseAnyOf1Option.Value, jsonSerializerOptions);
             }
 
             WriteProperties(writer, getStatusUsage200Response, jsonSerializerOptions);

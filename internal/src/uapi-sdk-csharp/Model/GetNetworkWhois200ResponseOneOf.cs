@@ -33,31 +33,15 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNetworkWhois200ResponseOneOf" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="whois">**WHOIS原始文本**  返回未经处理的原始WHOIS查询结果文本。</param>
         [JsonConstructor]
-        public GetNetworkWhois200ResponseOneOf(Option<int?> code = default, Option<string?> whois = default)
+        public GetNetworkWhois200ResponseOneOf(Option<string?> whois = default)
         {
-            CodeOption = code;
             WhoisOption = whois;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Whois
@@ -85,7 +69,6 @@ Registrar WHOIS Server: whois.markmonitor.com
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkWhois200ResponseOneOf {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Whois: ").Append(Whois).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -124,7 +107,6 @@ Registrar WHOIS Server: whois.markmonitor.com
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> whois = default;
 
             while (utf8JsonReader.Read())
@@ -142,9 +124,6 @@ Registrar WHOIS Server: whois.markmonitor.com
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "whois":
                             whois = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -154,13 +133,10 @@ Registrar WHOIS Server: whois.markmonitor.com
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetNetworkWhois200ResponseOneOf.");
-
             if (whois.IsSet && whois.Value == null)
                 throw new ArgumentNullException(nameof(whois), "Property is not nullable for class GetNetworkWhois200ResponseOneOf.");
 
-            return new GetNetworkWhois200ResponseOneOf(code, whois);
+            return new GetNetworkWhois200ResponseOneOf(whois);
         }
 
         /// <summary>
@@ -189,9 +165,6 @@ Registrar WHOIS Server: whois.markmonitor.com
         {
             if (getNetworkWhois200ResponseOneOf.WhoisOption.IsSet && getNetworkWhois200ResponseOneOf.Whois == null)
                 throw new ArgumentNullException(nameof(getNetworkWhois200ResponseOneOf.Whois), "Property is required for class GetNetworkWhois200ResponseOneOf.");
-
-            if (getNetworkWhois200ResponseOneOf.CodeOption.IsSet)
-                writer.WriteNumber("code", getNetworkWhois200ResponseOneOf.CodeOption.Value!.Value);
 
             if (getNetworkWhois200ResponseOneOf.WhoisOption.IsSet)
                 writer.WriteString("whois", getNetworkWhois200ResponseOneOf.Whois);

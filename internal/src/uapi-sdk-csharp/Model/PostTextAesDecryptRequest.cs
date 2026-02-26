@@ -35,7 +35,7 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         /// <param name="key">密钥，长度必须为16、24或32字节，对应AES-128/192/256。</param>
         /// <param name="text">Base64编码的密文。</param>
-        /// <param name="nonce">16�ֽڵ�IV/Nonce����Ϊ16���ַ�</param>
+        /// <param name="nonce">16字节的IV/Nonce，必须为16个字符</param>
         [JsonConstructor]
         public PostTextAesDecryptRequest(string key, string text, string nonce)
         {
@@ -64,9 +64,9 @@ namespace uapi-sdk-csharp.Model
         public string Text { get; set; }
 
         /// <summary>
-        /// 16�ֽڵ�IV/Nonce����Ϊ16���ַ�
+        /// 16字节的IV/Nonce，必须为16个字符
         /// </summary>
-        /// <value>16�ֽڵ�IV/Nonce����Ϊ16���ַ�</value>
+        /// <value>16字节的IV/Nonce，必须为16个字符</value>
         /* <example>1234567890abcdef</example> */
         [JsonPropertyName("nonce")]
         public string Nonce { get; set; }

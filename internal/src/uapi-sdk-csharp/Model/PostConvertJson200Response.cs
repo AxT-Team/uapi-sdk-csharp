@@ -33,32 +33,15 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostConvertJson200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表操作成功。</param>
         /// <param name="content">格式化后的JSON字符串，带有标准缩进和换行。</param>
         [JsonConstructor]
-        public PostConvertJson200Response(Option<int?> code = default, Option<string?> content = default)
+        public PostConvertJson200Response(Option<string?> content = default)
         {
-            CodeOption = code;
             ContentOption = content;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表操作成功。
-        /// </summary>
-        /// <value>状态码，200代表操作成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Content
@@ -97,7 +80,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostConvertJson200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Content: ").Append(Content).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -136,7 +118,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> content = default;
 
             while (utf8JsonReader.Read())
@@ -154,9 +135,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "content":
                             content = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -166,13 +144,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class PostConvertJson200Response.");
-
             if (content.IsSet && content.Value == null)
                 throw new ArgumentNullException(nameof(content), "Property is not nullable for class PostConvertJson200Response.");
 
-            return new PostConvertJson200Response(code, content);
+            return new PostConvertJson200Response(content);
         }
 
         /// <summary>
@@ -201,9 +176,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (postConvertJson200Response.ContentOption.IsSet && postConvertJson200Response.Content == null)
                 throw new ArgumentNullException(nameof(postConvertJson200Response.Content), "Property is required for class PostConvertJson200Response.");
-
-            if (postConvertJson200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", postConvertJson200Response.CodeOption.Value!.Value);
 
             if (postConvertJson200Response.ContentOption.IsSet)
                 writer.WriteString("content", postConvertJson200Response.Content);

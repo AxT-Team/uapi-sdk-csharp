@@ -34,17 +34,15 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetNetworkPing200Response" /> class.
         /// </summary>
         /// <param name="avg">平均延迟(ms)</param>
-        /// <param name="code">code</param>
         /// <param name="host">host</param>
         /// <param name="ip">ip</param>
         /// <param name="location">location</param>
         /// <param name="max">最大延迟(ms)</param>
         /// <param name="min">最小延迟(ms)</param>
         [JsonConstructor]
-        public GetNetworkPing200Response(Option<decimal?> avg = default, Option<int?> code = default, Option<string?> host = default, Option<string?> ip = default, Option<string?> location = default, Option<decimal?> max = default, Option<decimal?> min = default)
+        public GetNetworkPing200Response(Option<decimal?> avg = default, Option<string?> host = default, Option<string?> ip = default, Option<string?> location = default, Option<decimal?> max = default, Option<decimal?> min = default)
         {
             AvgOption = avg;
-            CodeOption = code;
             HostOption = host;
             IpOption = ip;
             LocationOption = location;
@@ -69,20 +67,6 @@ namespace uapi-sdk-csharp.Model
         /* <example>1.25</example> */
         [JsonPropertyName("avg")]
         public decimal? Avg { get { return this.AvgOption; } set { this.AvgOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Host
@@ -165,7 +149,6 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkPing200Response {\n");
             sb.Append("  Avg: ").Append(Avg).Append("\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Host: ").Append(Host).Append("\n");
             sb.Append("  Ip: ").Append(Ip).Append("\n");
             sb.Append("  Location: ").Append(Location).Append("\n");
@@ -209,7 +192,6 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<decimal?> avg = default;
-            Option<int?> code = default;
             Option<string?> host = default;
             Option<string?> ip = default;
             Option<string?> location = default;
@@ -233,9 +215,6 @@ namespace uapi-sdk-csharp.Model
                     {
                         case "avg":
                             avg = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
-                            break;
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         case "host":
                             host = new Option<string?>(utf8JsonReader.GetString()!);
@@ -261,9 +240,6 @@ namespace uapi-sdk-csharp.Model
             if (avg.IsSet && avg.Value == null)
                 throw new ArgumentNullException(nameof(avg), "Property is not nullable for class GetNetworkPing200Response.");
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetNetworkPing200Response.");
-
             if (host.IsSet && host.Value == null)
                 throw new ArgumentNullException(nameof(host), "Property is not nullable for class GetNetworkPing200Response.");
 
@@ -279,7 +255,7 @@ namespace uapi-sdk-csharp.Model
             if (min.IsSet && min.Value == null)
                 throw new ArgumentNullException(nameof(min), "Property is not nullable for class GetNetworkPing200Response.");
 
-            return new GetNetworkPing200Response(avg, code, host, ip, location, max, min);
+            return new GetNetworkPing200Response(avg, host, ip, location, max, min);
         }
 
         /// <summary>
@@ -317,9 +293,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getNetworkPing200Response.AvgOption.IsSet)
                 writer.WriteNumber("avg", getNetworkPing200Response.AvgOption.Value!.Value);
-
-            if (getNetworkPing200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getNetworkPing200Response.CodeOption.Value!.Value);
 
             if (getNetworkPing200Response.HostOption.IsSet)
                 writer.WriteString("host", getNetworkPing200Response.Host);

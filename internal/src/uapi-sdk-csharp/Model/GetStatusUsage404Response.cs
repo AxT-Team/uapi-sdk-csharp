@@ -34,13 +34,11 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetStatusUsage404Response" /> class.
         /// </summary>
         /// <param name="code">code</param>
-        /// <param name="details">details</param>
         /// <param name="message">message</param>
         [JsonConstructor]
-        public GetStatusUsage404Response(Option<string?> code = default, Option<Object?> details = default, Option<string?> message = default)
+        public GetStatusUsage404Response(Option<string?> code = default, Option<string?> message = default)
         {
             CodeOption = code;
-            DetailsOption = details;
             MessageOption = message;
             OnCreated();
         }
@@ -62,19 +60,6 @@ namespace uapi-sdk-csharp.Model
         public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Details
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<Object?> DetailsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Details
-        /// </summary>
-        [JsonPropertyName("details")]
-        public Object? Details { get { return this.DetailsOption; } set { this.DetailsOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of Message
         /// </summary>
         [JsonIgnore]
@@ -84,7 +69,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /* <example>No usage statistics found for the specified path.</example> */
+        /* <example>未找到指定的端点统计数据</example> */
         [JsonPropertyName("message")]
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 
@@ -97,7 +82,6 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetStatusUsage404Response {\n");
             sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Details: ").Append(Details).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -137,7 +121,6 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> code = default;
-            Option<Object?> details = default;
             Option<string?> message = default;
 
             while (utf8JsonReader.Read())
@@ -158,9 +141,6 @@ namespace uapi-sdk-csharp.Model
                         case "code":
                             code = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "details":
-                            details = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
                         case "message":
                             message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -173,13 +153,10 @@ namespace uapi-sdk-csharp.Model
             if (code.IsSet && code.Value == null)
                 throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetStatusUsage404Response.");
 
-            if (details.IsSet && details.Value == null)
-                throw new ArgumentNullException(nameof(details), "Property is not nullable for class GetStatusUsage404Response.");
-
             if (message.IsSet && message.Value == null)
                 throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetStatusUsage404Response.");
 
-            return new GetStatusUsage404Response(code, details, message);
+            return new GetStatusUsage404Response(code, message);
         }
 
         /// <summary>
@@ -209,20 +186,12 @@ namespace uapi-sdk-csharp.Model
             if (getStatusUsage404Response.CodeOption.IsSet && getStatusUsage404Response.Code == null)
                 throw new ArgumentNullException(nameof(getStatusUsage404Response.Code), "Property is required for class GetStatusUsage404Response.");
 
-            if (getStatusUsage404Response.DetailsOption.IsSet && getStatusUsage404Response.Details == null)
-                throw new ArgumentNullException(nameof(getStatusUsage404Response.Details), "Property is required for class GetStatusUsage404Response.");
-
             if (getStatusUsage404Response.MessageOption.IsSet && getStatusUsage404Response.Message == null)
                 throw new ArgumentNullException(nameof(getStatusUsage404Response.Message), "Property is required for class GetStatusUsage404Response.");
 
             if (getStatusUsage404Response.CodeOption.IsSet)
                 writer.WriteString("code", getStatusUsage404Response.Code);
 
-            if (getStatusUsage404Response.DetailsOption.IsSet)
-            {
-                writer.WritePropertyName("details");
-                JsonSerializer.Serialize(writer, getStatusUsage404Response.Details, jsonSerializerOptions);
-            }
             if (getStatusUsage404Response.MessageOption.IsSet)
                 writer.WriteString("message", getStatusUsage404Response.Message);
         }

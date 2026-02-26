@@ -33,62 +33,34 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNetworkUrlstatus200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="status">HTTP响应状态码</param>
-        /// <param name="url">url</param>
-        [JsonConstructor]
-        public GetNetworkUrlstatus200Response(Option<int?> code = default, Option<int?> status = default, Option<string?> url = default)
+        /// <param name="getNetworkUrlstatus200ResponseOneOf"></param>
+        public GetNetworkUrlstatus200Response(GetNetworkUrlstatus200ResponseOneOf getNetworkUrlstatus200ResponseOneOf)
         {
-            CodeOption = code;
-            StatusOption = status;
-            UrlOption = url;
+            GetNetworkUrlstatus200ResponseOneOf = getNetworkUrlstatus200ResponseOneOf;
+            OnCreated();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetNetworkUrlstatus200Response" /> class.
+        /// </summary>
+        /// <param name="getNetworkUrlstatus200ResponseOneOf1"></param>
+        public GetNetworkUrlstatus200Response(GetNetworkUrlstatus200ResponseOneOf1 getNetworkUrlstatus200ResponseOneOf1)
+        {
+            GetNetworkUrlstatus200ResponseOneOf1 = getNetworkUrlstatus200ResponseOneOf1;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Gets or Sets GetNetworkUrlstatus200ResponseOneOf
         /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
+        public GetNetworkUrlstatus200ResponseOneOf? GetNetworkUrlstatus200ResponseOneOf { get; set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// Gets or Sets GetNetworkUrlstatus200ResponseOneOf1
         /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Status
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> StatusOption { get; private set; }
-
-        /// <summary>
-        /// HTTP响应状态码
-        /// </summary>
-        /// <value>HTTP响应状态码</value>
-        /* <example>200</example> */
-        [JsonPropertyName("status")]
-        public int? Status { get { return this.StatusOption; } set { this.StatusOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Url
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> UrlOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Url
-        /// </summary>
-        /* <example>https://www.google.com</example> */
-        [JsonPropertyName("url")]
-        public string? Url { get { return this.UrlOption; } set { this.UrlOption = new(value); } }
+        public GetNetworkUrlstatus200ResponseOneOf1? GetNetworkUrlstatus200ResponseOneOf1 { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -98,9 +70,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkUrlstatus200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -138,9 +107,27 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
-            Option<int?> status = default;
-            Option<string?> url = default;
+            GetNetworkUrlstatus200ResponseOneOf? getNetworkUrlstatus200ResponseOneOf = default;
+            GetNetworkUrlstatus200ResponseOneOf1? getNetworkUrlstatus200ResponseOneOf1 = default;
+
+            Utf8JsonReader utf8JsonReaderOneOf = utf8JsonReader;
+            while (utf8JsonReaderOneOf.Read())
+            {
+                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                    break;
+
+                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                    break;
+
+                if (utf8JsonReaderOneOf.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderOneOf.CurrentDepth - 1)
+                {
+                    Utf8JsonReader utf8JsonReaderGetNetworkUrlstatus200ResponseOneOf = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetNetworkUrlstatus200ResponseOneOf?>(ref utf8JsonReaderGetNetworkUrlstatus200ResponseOneOf, jsonSerializerOptions, out getNetworkUrlstatus200ResponseOneOf);
+
+                    Utf8JsonReader utf8JsonReaderGetNetworkUrlstatus200ResponseOneOf1 = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetNetworkUrlstatus200ResponseOneOf1?>(ref utf8JsonReaderGetNetworkUrlstatus200ResponseOneOf1, jsonSerializerOptions, out getNetworkUrlstatus200ResponseOneOf1);
+                }
+            }
 
             while (utf8JsonReader.Read())
             {
@@ -157,31 +144,19 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
-                        case "status":
-                            status = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
-                        case "url":
-                            url = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
                         default:
                             break;
                     }
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetNetworkUrlstatus200Response.");
+            if (getNetworkUrlstatus200ResponseOneOf != null)
+                return new GetNetworkUrlstatus200Response(getNetworkUrlstatus200ResponseOneOf);
 
-            if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class GetNetworkUrlstatus200Response.");
+            if (getNetworkUrlstatus200ResponseOneOf1 != null)
+                return new GetNetworkUrlstatus200Response(getNetworkUrlstatus200ResponseOneOf1);
 
-            if (url.IsSet && url.Value == null)
-                throw new ArgumentNullException(nameof(url), "Property is not nullable for class GetNetworkUrlstatus200Response.");
-
-            return new GetNetworkUrlstatus200Response(code, status, url);
+            throw new JsonException();
         }
 
         /// <summary>
@@ -208,17 +183,7 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetNetworkUrlstatus200Response getNetworkUrlstatus200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getNetworkUrlstatus200Response.UrlOption.IsSet && getNetworkUrlstatus200Response.Url == null)
-                throw new ArgumentNullException(nameof(getNetworkUrlstatus200Response.Url), "Property is required for class GetNetworkUrlstatus200Response.");
 
-            if (getNetworkUrlstatus200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getNetworkUrlstatus200Response.CodeOption.Value!.Value);
-
-            if (getNetworkUrlstatus200Response.StatusOption.IsSet)
-                writer.WriteNumber("status", getNetworkUrlstatus200Response.StatusOption.Value!.Value);
-
-            if (getNetworkUrlstatus200Response.UrlOption.IsSet)
-                writer.WriteString("url", getNetworkUrlstatus200Response.Url);
         }
     }
 }

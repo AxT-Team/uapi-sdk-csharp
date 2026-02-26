@@ -40,8 +40,19 @@ namespace uapi-sdk-csharp.Model
         /// <param name="tag">群标签</param>
         /// <param name="joinUrl">加群链接（QR码URL）</param>
         /// <param name="lastUpdated">最后更新时间（ISO 8601格式）</param>
+        /// <param name="memberCount">当前成员数</param>
+        /// <param name="maxMemberCount">最大成员数</param>
+        /// <param name="activeMemberNum">活跃成员数（可选，部分群有此数据）</param>
+        /// <param name="ownerUin">群主QQ号（可选）</param>
+        /// <param name="ownerUid">群主UID（可选）</param>
+        /// <param name="createTime">建群时间戳（Unix时间戳，可选）</param>
+        /// <param name="createTimeStr">建群时间格式化字符串（可选）</param>
+        /// <param name="groupGrade">群等级（可选）</param>
+        /// <param name="groupMemo">群公告/简介（可选）</param>
+        /// <param name="certType">认证类型（0&#x3D;未认证，可选）</param>
+        /// <param name="certText">认证说明文本（可选）</param>
         [JsonConstructor]
-        public GetSocialQqGroupinfo200Response(Option<string?> groupId = default, Option<string?> groupName = default, Option<string?> avatarUrl = default, Option<string?> description = default, Option<string?> tag = default, Option<string?> joinUrl = default, Option<string?> lastUpdated = default)
+        public GetSocialQqGroupinfo200Response(Option<string?> groupId = default, Option<string?> groupName = default, Option<string?> avatarUrl = default, Option<string?> description = default, Option<string?> tag = default, Option<string?> joinUrl = default, Option<string?> lastUpdated = default, Option<int?> memberCount = default, Option<int?> maxMemberCount = default, Option<int?> activeMemberNum = default, Option<string?> ownerUin = default, Option<string?> ownerUid = default, Option<int?> createTime = default, Option<string?> createTimeStr = default, Option<int?> groupGrade = default, Option<string?> groupMemo = default, Option<int?> certType = default, Option<string?> certText = default)
         {
             GroupIdOption = groupId;
             GroupNameOption = groupName;
@@ -50,6 +61,17 @@ namespace uapi-sdk-csharp.Model
             TagOption = tag;
             JoinUrlOption = joinUrl;
             LastUpdatedOption = lastUpdated;
+            MemberCountOption = memberCount;
+            MaxMemberCountOption = maxMemberCount;
+            ActiveMemberNumOption = activeMemberNum;
+            OwnerUinOption = ownerUin;
+            OwnerUidOption = ownerUid;
+            CreateTimeOption = createTime;
+            CreateTimeStrOption = createTimeStr;
+            GroupGradeOption = groupGrade;
+            GroupMemoOption = groupMemo;
+            CertTypeOption = certType;
+            CertTextOption = certText;
             OnCreated();
         }
 
@@ -161,6 +183,171 @@ namespace uapi-sdk-csharp.Model
         public string? LastUpdated { get { return this.LastUpdatedOption; } set { this.LastUpdatedOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of MemberCount
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> MemberCountOption { get; private set; }
+
+        /// <summary>
+        /// 当前成员数
+        /// </summary>
+        /// <value>当前成员数</value>
+        /* <example>498</example> */
+        [JsonPropertyName("member_count")]
+        public int? MemberCount { get { return this.MemberCountOption; } set { this.MemberCountOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of MaxMemberCount
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> MaxMemberCountOption { get; private set; }
+
+        /// <summary>
+        /// 最大成员数
+        /// </summary>
+        /// <value>最大成员数</value>
+        /* <example>500</example> */
+        [JsonPropertyName("max_member_count")]
+        public int? MaxMemberCount { get { return this.MaxMemberCountOption; } set { this.MaxMemberCountOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of ActiveMemberNum
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> ActiveMemberNumOption { get; private set; }
+
+        /// <summary>
+        /// 活跃成员数（可选，部分群有此数据）
+        /// </summary>
+        /// <value>活跃成员数（可选，部分群有此数据）</value>
+        /* <example>856</example> */
+        [JsonPropertyName("active_member_num")]
+        public int? ActiveMemberNum { get { return this.ActiveMemberNumOption; } set { this.ActiveMemberNumOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of OwnerUin
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> OwnerUinOption { get; private set; }
+
+        /// <summary>
+        /// 群主QQ号（可选）
+        /// </summary>
+        /// <value>群主QQ号（可选）</value>
+        /* <example>1164779091</example> */
+        [JsonPropertyName("owner_uin")]
+        public string? OwnerUin { get { return this.OwnerUinOption; } set { this.OwnerUinOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of OwnerUid
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> OwnerUidOption { get; private set; }
+
+        /// <summary>
+        /// 群主UID（可选）
+        /// </summary>
+        /// <value>群主UID（可选）</value>
+        /* <example>u_IuagWQ41A6XZhfJv4UpYqA</example> */
+        [JsonPropertyName("owner_uid")]
+        public string? OwnerUid { get { return this.OwnerUidOption; } set { this.OwnerUidOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CreateTime
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> CreateTimeOption { get; private set; }
+
+        /// <summary>
+        /// 建群时间戳（Unix时间戳，可选）
+        /// </summary>
+        /// <value>建群时间戳（Unix时间戳，可选）</value>
+        /* <example>1652321207</example> */
+        [JsonPropertyName("create_time")]
+        public int? CreateTime { get { return this.CreateTimeOption; } set { this.CreateTimeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CreateTimeStr
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CreateTimeStrOption { get; private set; }
+
+        /// <summary>
+        /// 建群时间格式化字符串（可选）
+        /// </summary>
+        /// <value>建群时间格式化字符串（可选）</value>
+        /* <example>2022-05-12 10:06:47</example> */
+        [JsonPropertyName("create_time_str")]
+        public string? CreateTimeStr { get { return this.CreateTimeStrOption; } set { this.CreateTimeStrOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of GroupGrade
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> GroupGradeOption { get; private set; }
+
+        /// <summary>
+        /// 群等级（可选）
+        /// </summary>
+        /// <value>群等级（可选）</value>
+        /* <example>3</example> */
+        [JsonPropertyName("group_grade")]
+        public int? GroupGrade { get { return this.GroupGradeOption; } set { this.GroupGradeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of GroupMemo
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> GroupMemoOption { get; private set; }
+
+        /// <summary>
+        /// 群公告/简介（可选）
+        /// </summary>
+        /// <value>群公告/简介（可选）</value>
+        /* <example>欢迎加入本群</example> */
+        [JsonPropertyName("group_memo")]
+        public string? GroupMemo { get { return this.GroupMemoOption; } set { this.GroupMemoOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CertType
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> CertTypeOption { get; private set; }
+
+        /// <summary>
+        /// 认证类型（0&#x3D;未认证，可选）
+        /// </summary>
+        /// <value>认证类型（0&#x3D;未认证，可选）</value>
+        /* <example>0</example> */
+        [JsonPropertyName("cert_type")]
+        public int? CertType { get { return this.CertTypeOption; } set { this.CertTypeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CertText
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CertTextOption { get; private set; }
+
+        /// <summary>
+        /// 认证说明文本（可选）
+        /// </summary>
+        /// <value>认证说明文本（可选）</value>
+        /* <example>官方认证群</example> */
+        [JsonPropertyName("cert_text")]
+        public string? CertText { get { return this.CertTextOption; } set { this.CertTextOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -175,6 +362,17 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  JoinUrl: ").Append(JoinUrl).Append("\n");
             sb.Append("  LastUpdated: ").Append(LastUpdated).Append("\n");
+            sb.Append("  MemberCount: ").Append(MemberCount).Append("\n");
+            sb.Append("  MaxMemberCount: ").Append(MaxMemberCount).Append("\n");
+            sb.Append("  ActiveMemberNum: ").Append(ActiveMemberNum).Append("\n");
+            sb.Append("  OwnerUin: ").Append(OwnerUin).Append("\n");
+            sb.Append("  OwnerUid: ").Append(OwnerUid).Append("\n");
+            sb.Append("  CreateTime: ").Append(CreateTime).Append("\n");
+            sb.Append("  CreateTimeStr: ").Append(CreateTimeStr).Append("\n");
+            sb.Append("  GroupGrade: ").Append(GroupGrade).Append("\n");
+            sb.Append("  GroupMemo: ").Append(GroupMemo).Append("\n");
+            sb.Append("  CertType: ").Append(CertType).Append("\n");
+            sb.Append("  CertText: ").Append(CertText).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -219,6 +417,17 @@ namespace uapi-sdk-csharp.Model
             Option<string?> tag = default;
             Option<string?> joinUrl = default;
             Option<string?> lastUpdated = default;
+            Option<int?> memberCount = default;
+            Option<int?> maxMemberCount = default;
+            Option<int?> activeMemberNum = default;
+            Option<string?> ownerUin = default;
+            Option<string?> ownerUid = default;
+            Option<int?> createTime = default;
+            Option<string?> createTimeStr = default;
+            Option<int?> groupGrade = default;
+            Option<string?> groupMemo = default;
+            Option<int?> certType = default;
+            Option<string?> certText = default;
 
             while (utf8JsonReader.Read())
             {
@@ -256,6 +465,39 @@ namespace uapi-sdk-csharp.Model
                         case "last_updated":
                             lastUpdated = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "member_count":
+                            memberCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "max_member_count":
+                            maxMemberCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "active_member_num":
+                            activeMemberNum = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "owner_uin":
+                            ownerUin = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "owner_uid":
+                            ownerUid = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "create_time":
+                            createTime = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "create_time_str":
+                            createTimeStr = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "group_grade":
+                            groupGrade = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "group_memo":
+                            groupMemo = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "cert_type":
+                            certType = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "cert_text":
+                            certText = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         default:
                             break;
                     }
@@ -283,7 +525,40 @@ namespace uapi-sdk-csharp.Model
             if (lastUpdated.IsSet && lastUpdated.Value == null)
                 throw new ArgumentNullException(nameof(lastUpdated), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
 
-            return new GetSocialQqGroupinfo200Response(groupId, groupName, avatarUrl, description, tag, joinUrl, lastUpdated);
+            if (memberCount.IsSet && memberCount.Value == null)
+                throw new ArgumentNullException(nameof(memberCount), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (maxMemberCount.IsSet && maxMemberCount.Value == null)
+                throw new ArgumentNullException(nameof(maxMemberCount), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (activeMemberNum.IsSet && activeMemberNum.Value == null)
+                throw new ArgumentNullException(nameof(activeMemberNum), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (ownerUin.IsSet && ownerUin.Value == null)
+                throw new ArgumentNullException(nameof(ownerUin), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (ownerUid.IsSet && ownerUid.Value == null)
+                throw new ArgumentNullException(nameof(ownerUid), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (createTime.IsSet && createTime.Value == null)
+                throw new ArgumentNullException(nameof(createTime), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (createTimeStr.IsSet && createTimeStr.Value == null)
+                throw new ArgumentNullException(nameof(createTimeStr), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (groupGrade.IsSet && groupGrade.Value == null)
+                throw new ArgumentNullException(nameof(groupGrade), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (groupMemo.IsSet && groupMemo.Value == null)
+                throw new ArgumentNullException(nameof(groupMemo), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (certType.IsSet && certType.Value == null)
+                throw new ArgumentNullException(nameof(certType), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            if (certText.IsSet && certText.Value == null)
+                throw new ArgumentNullException(nameof(certText), "Property is not nullable for class GetSocialQqGroupinfo200Response.");
+
+            return new GetSocialQqGroupinfo200Response(groupId, groupName, avatarUrl, description, tag, joinUrl, lastUpdated, memberCount, maxMemberCount, activeMemberNum, ownerUin, ownerUid, createTime, createTimeStr, groupGrade, groupMemo, certType, certText);
         }
 
         /// <summary>
@@ -331,6 +606,21 @@ namespace uapi-sdk-csharp.Model
             if (getSocialQqGroupinfo200Response.LastUpdatedOption.IsSet && getSocialQqGroupinfo200Response.LastUpdated == null)
                 throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.LastUpdated), "Property is required for class GetSocialQqGroupinfo200Response.");
 
+            if (getSocialQqGroupinfo200Response.OwnerUinOption.IsSet && getSocialQqGroupinfo200Response.OwnerUin == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.OwnerUin), "Property is required for class GetSocialQqGroupinfo200Response.");
+
+            if (getSocialQqGroupinfo200Response.OwnerUidOption.IsSet && getSocialQqGroupinfo200Response.OwnerUid == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.OwnerUid), "Property is required for class GetSocialQqGroupinfo200Response.");
+
+            if (getSocialQqGroupinfo200Response.CreateTimeStrOption.IsSet && getSocialQqGroupinfo200Response.CreateTimeStr == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.CreateTimeStr), "Property is required for class GetSocialQqGroupinfo200Response.");
+
+            if (getSocialQqGroupinfo200Response.GroupMemoOption.IsSet && getSocialQqGroupinfo200Response.GroupMemo == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.GroupMemo), "Property is required for class GetSocialQqGroupinfo200Response.");
+
+            if (getSocialQqGroupinfo200Response.CertTextOption.IsSet && getSocialQqGroupinfo200Response.CertText == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo200Response.CertText), "Property is required for class GetSocialQqGroupinfo200Response.");
+
             if (getSocialQqGroupinfo200Response.GroupIdOption.IsSet)
                 writer.WriteString("group_id", getSocialQqGroupinfo200Response.GroupId);
 
@@ -351,6 +641,39 @@ namespace uapi-sdk-csharp.Model
 
             if (getSocialQqGroupinfo200Response.LastUpdatedOption.IsSet)
                 writer.WriteString("last_updated", getSocialQqGroupinfo200Response.LastUpdated);
+
+            if (getSocialQqGroupinfo200Response.MemberCountOption.IsSet)
+                writer.WriteNumber("member_count", getSocialQqGroupinfo200Response.MemberCountOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.MaxMemberCountOption.IsSet)
+                writer.WriteNumber("max_member_count", getSocialQqGroupinfo200Response.MaxMemberCountOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.ActiveMemberNumOption.IsSet)
+                writer.WriteNumber("active_member_num", getSocialQqGroupinfo200Response.ActiveMemberNumOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.OwnerUinOption.IsSet)
+                writer.WriteString("owner_uin", getSocialQqGroupinfo200Response.OwnerUin);
+
+            if (getSocialQqGroupinfo200Response.OwnerUidOption.IsSet)
+                writer.WriteString("owner_uid", getSocialQqGroupinfo200Response.OwnerUid);
+
+            if (getSocialQqGroupinfo200Response.CreateTimeOption.IsSet)
+                writer.WriteNumber("create_time", getSocialQqGroupinfo200Response.CreateTimeOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.CreateTimeStrOption.IsSet)
+                writer.WriteString("create_time_str", getSocialQqGroupinfo200Response.CreateTimeStr);
+
+            if (getSocialQqGroupinfo200Response.GroupGradeOption.IsSet)
+                writer.WriteNumber("group_grade", getSocialQqGroupinfo200Response.GroupGradeOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.GroupMemoOption.IsSet)
+                writer.WriteString("group_memo", getSocialQqGroupinfo200Response.GroupMemo);
+
+            if (getSocialQqGroupinfo200Response.CertTypeOption.IsSet)
+                writer.WriteNumber("cert_type", getSocialQqGroupinfo200Response.CertTypeOption.Value!.Value);
+
+            if (getSocialQqGroupinfo200Response.CertTextOption.IsSet)
+                writer.WriteString("cert_text", getSocialQqGroupinfo200Response.CertText);
         }
     }
 }

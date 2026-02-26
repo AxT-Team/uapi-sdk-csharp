@@ -33,34 +33,17 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostImageFrombase64200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="imageUrl">图片保存后在服务器上的绝对访问URL。</param>
         /// <param name="msg">操作结果描述。</param>
         [JsonConstructor]
-        public PostImageFrombase64200Response(Option<int?> code = default, Option<string?> imageUrl = default, Option<string?> msg = default)
+        public PostImageFrombase64200Response(Option<string?> imageUrl = default, Option<string?> msg = default)
         {
-            CodeOption = code;
             ImageUrlOption = imageUrl;
             MsgOption = msg;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of ImageUrl
@@ -100,7 +83,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostImageFrombase64200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  ImageUrl: ").Append(ImageUrl).Append("\n");
             sb.Append("  Msg: ").Append(Msg).Append("\n");
             sb.Append("}\n");
@@ -140,7 +122,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> imageUrl = default;
             Option<string?> msg = default;
 
@@ -159,9 +140,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "image_url":
                             imageUrl = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -174,16 +152,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class PostImageFrombase64200Response.");
-
             if (imageUrl.IsSet && imageUrl.Value == null)
                 throw new ArgumentNullException(nameof(imageUrl), "Property is not nullable for class PostImageFrombase64200Response.");
 
             if (msg.IsSet && msg.Value == null)
                 throw new ArgumentNullException(nameof(msg), "Property is not nullable for class PostImageFrombase64200Response.");
 
-            return new PostImageFrombase64200Response(code, imageUrl, msg);
+            return new PostImageFrombase64200Response(imageUrl, msg);
         }
 
         /// <summary>
@@ -215,9 +190,6 @@ namespace uapi-sdk-csharp.Model
 
             if (postImageFrombase64200Response.MsgOption.IsSet && postImageFrombase64200Response.Msg == null)
                 throw new ArgumentNullException(nameof(postImageFrombase64200Response.Msg), "Property is required for class PostImageFrombase64200Response.");
-
-            if (postImageFrombase64200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", postImageFrombase64200Response.CodeOption.Value!.Value);
 
             if (postImageFrombase64200Response.ImageUrlOption.IsSet)
                 writer.WriteString("image_url", postImageFrombase64200Response.ImageUrl);

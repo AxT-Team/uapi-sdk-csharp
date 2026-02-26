@@ -37,19 +37,213 @@ namespace uapi-sdk-csharp.Model
         /// <param name="site">限制搜索特定网站，不需要 &#x60;site:&#x60; 前缀</param>
         /// <param name="filetype">限制文件类型，不需要 &#x60;filetype:&#x60; 前缀。支持 pdf、doc、docx、ppt、pptx、xls、xlsx、txt 等</param>
         /// <param name="fetchFull">是否获取页面完整正文（会影响响应时间） (default to false)</param>
-        /// <param name="timeoutMs">请求超时时间（毫秒），范围 1000-30000 (default to 3000)</param>
+        /// <param name="timeoutMs">请求超时时间（毫秒），范围 1000-30000 (default to 8000)</param>
+        /// <param name="sort">排序方式 (default to SortEnum.Relevance)</param>
+        /// <param name="timeRange">时间范围过滤</param>
         [JsonConstructor]
-        public PostSearchAggregateRequest(string query, Option<string?> site = default, Option<string?> filetype = default, Option<bool?> fetchFull = default, Option<int?> timeoutMs = default)
+        public PostSearchAggregateRequest(string query, Option<string?> site = default, Option<string?> filetype = default, Option<bool?> fetchFull = default, Option<int?> timeoutMs = default, Option<SortEnum?> sort = default, Option<TimeRangeEnum?> timeRange = default)
         {
             Query = query;
             SiteOption = site;
             FiletypeOption = filetype;
             FetchFullOption = fetchFull;
             TimeoutMsOption = timeoutMs;
+            SortOption = sort;
+            TimeRangeOption = timeRange;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// 排序方式
+        /// </summary>
+        /// <value>排序方式</value>
+        public enum SortEnum
+        {
+            /// <summary>
+            /// Enum Relevance for value: relevance
+            /// </summary>
+            Relevance = 1,
+
+            /// <summary>
+            /// Enum Date for value: date
+            /// </summary>
+            Date = 2
+        }
+
+        /// <summary>
+        /// Returns a <see cref="SortEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static SortEnum SortEnumFromString(string value)
+        {
+            if (value.Equals("relevance"))
+                return SortEnum.Relevance;
+
+            if (value.Equals("date"))
+                return SortEnum.Date;
+
+            throw new NotImplementedException($"Could not convert value to type SortEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="SortEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static SortEnum? SortEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("relevance"))
+                return SortEnum.Relevance;
+
+            if (value.Equals("date"))
+                return SortEnum.Date;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="SortEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string SortEnumToJsonValue(SortEnum? value)
+        {
+            if (value == SortEnum.Relevance)
+                return "relevance";
+
+            if (value == SortEnum.Date)
+                return "date";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of Sort
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<SortEnum?> SortOption { get; private set; }
+
+        /// <summary>
+        /// 排序方式
+        /// </summary>
+        /// <value>排序方式</value>
+        [JsonPropertyName("sort")]
+        public SortEnum? Sort { get { return this.SortOption; } set { this.SortOption = new(value); } }
+
+        /// <summary>
+        /// 时间范围过滤
+        /// </summary>
+        /// <value>时间范围过滤</value>
+        public enum TimeRangeEnum
+        {
+            /// <summary>
+            /// Enum Day for value: day
+            /// </summary>
+            Day = 1,
+
+            /// <summary>
+            /// Enum Week for value: week
+            /// </summary>
+            Week = 2,
+
+            /// <summary>
+            /// Enum Month for value: month
+            /// </summary>
+            Month = 3,
+
+            /// <summary>
+            /// Enum Year for value: year
+            /// </summary>
+            Year = 4
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeRangeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static TimeRangeEnum TimeRangeEnumFromString(string value)
+        {
+            if (value.Equals("day"))
+                return TimeRangeEnum.Day;
+
+            if (value.Equals("week"))
+                return TimeRangeEnum.Week;
+
+            if (value.Equals("month"))
+                return TimeRangeEnum.Month;
+
+            if (value.Equals("year"))
+                return TimeRangeEnum.Year;
+
+            throw new NotImplementedException($"Could not convert value to type TimeRangeEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeRangeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static TimeRangeEnum? TimeRangeEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("day"))
+                return TimeRangeEnum.Day;
+
+            if (value.Equals("week"))
+                return TimeRangeEnum.Week;
+
+            if (value.Equals("month"))
+                return TimeRangeEnum.Month;
+
+            if (value.Equals("year"))
+                return TimeRangeEnum.Year;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="TimeRangeEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string TimeRangeEnumToJsonValue(TimeRangeEnum? value)
+        {
+            if (value == TimeRangeEnum.Day)
+                return "day";
+
+            if (value == TimeRangeEnum.Week)
+                return "week";
+
+            if (value == TimeRangeEnum.Month)
+                return "month";
+
+            if (value == TimeRangeEnum.Year)
+                return "year";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of TimeRange
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<TimeRangeEnum?> TimeRangeOption { get; private set; }
+
+        /// <summary>
+        /// 时间范围过滤
+        /// </summary>
+        /// <value>时间范围过滤</value>
+        [JsonPropertyName("time_range")]
+        public TimeRangeEnum? TimeRange { get { return this.TimeRangeOption; } set { this.TimeRangeOption = new(value); } }
 
         /// <summary>
         /// 搜索查询关键词，支持中英文
@@ -128,6 +322,8 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Filetype: ").Append(Filetype).Append("\n");
             sb.Append("  FetchFull: ").Append(FetchFull).Append("\n");
             sb.Append("  TimeoutMs: ").Append(TimeoutMs).Append("\n");
+            sb.Append("  Sort: ").Append(Sort).Append("\n");
+            sb.Append("  TimeRange: ").Append(TimeRange).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -170,6 +366,8 @@ namespace uapi-sdk-csharp.Model
             Option<string?> filetype = default;
             Option<bool?> fetchFull = default;
             Option<int?> timeoutMs = default;
+            Option<PostSearchAggregateRequest.SortEnum?> sort = default;
+            Option<PostSearchAggregateRequest.TimeRangeEnum?> timeRange = default;
 
             while (utf8JsonReader.Read())
             {
@@ -201,6 +399,16 @@ namespace uapi-sdk-csharp.Model
                         case "timeout_ms":
                             timeoutMs = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
+                        case "sort":
+                            string? sortRawValue = utf8JsonReader.GetString();
+                            if (sortRawValue != null)
+                                sort = new Option<PostSearchAggregateRequest.SortEnum?>(PostSearchAggregateRequest.SortEnumFromStringOrDefault(sortRawValue));
+                            break;
+                        case "time_range":
+                            string? timeRangeRawValue = utf8JsonReader.GetString();
+                            if (timeRangeRawValue != null)
+                                timeRange = new Option<PostSearchAggregateRequest.TimeRangeEnum?>(PostSearchAggregateRequest.TimeRangeEnumFromStringOrDefault(timeRangeRawValue));
+                            break;
                         default:
                             break;
                     }
@@ -225,7 +433,13 @@ namespace uapi-sdk-csharp.Model
             if (timeoutMs.IsSet && timeoutMs.Value == null)
                 throw new ArgumentNullException(nameof(timeoutMs), "Property is not nullable for class PostSearchAggregateRequest.");
 
-            return new PostSearchAggregateRequest(query.Value!, site, filetype, fetchFull, timeoutMs);
+            if (sort.IsSet && sort.Value == null)
+                throw new ArgumentNullException(nameof(sort), "Property is not nullable for class PostSearchAggregateRequest.");
+
+            if (timeRange.IsSet && timeRange.Value == null)
+                throw new ArgumentNullException(nameof(timeRange), "Property is not nullable for class PostSearchAggregateRequest.");
+
+            return new PostSearchAggregateRequest(query.Value!, site, filetype, fetchFull, timeoutMs, sort, timeRange);
         }
 
         /// <summary>
@@ -274,6 +488,11 @@ namespace uapi-sdk-csharp.Model
 
             if (postSearchAggregateRequest.TimeoutMsOption.IsSet)
                 writer.WriteNumber("timeout_ms", postSearchAggregateRequest.TimeoutMsOption.Value!.Value);
+
+            var sortRawValue = PostSearchAggregateRequest.SortEnumToJsonValue(postSearchAggregateRequest.SortOption.Value!.Value);
+            writer.WriteString("sort", sortRawValue);
+            var timeRangeRawValue = PostSearchAggregateRequest.TimeRangeEnumToJsonValue(postSearchAggregateRequest.TimeRangeOption.Value!.Value);
+            writer.WriteString("time_range", timeRangeRawValue);
         }
     }
 }

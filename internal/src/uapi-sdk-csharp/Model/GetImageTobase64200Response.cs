@@ -34,13 +34,11 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetImageTobase64200Response" /> class.
         /// </summary>
         /// <param name="base64">转换后的完整Base64 Data URI，可以直接在CSS或HTML中使用。</param>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="msg">操作结果描述。</param>
         [JsonConstructor]
-        public GetImageTobase64200Response(Option<string?> base64 = default, Option<int?> code = default, Option<string?> msg = default)
+        public GetImageTobase64200Response(Option<string?> base64 = default, Option<string?> msg = default)
         {
             Base64Option = base64;
-            CodeOption = code;
             MsgOption = msg;
             OnCreated();
         }
@@ -61,21 +59,6 @@ namespace uapi-sdk-csharp.Model
         /* <example>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII&#x3D;</example> */
         [JsonPropertyName("base64")]
         public string? Base64 { get { return this.Base64Option; } set { this.Base64Option = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Msg
@@ -101,7 +84,6 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetImageTobase64200Response {\n");
             sb.Append("  Base64: ").Append(Base64).Append("\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Msg: ").Append(Msg).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -141,7 +123,6 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> base64 = default;
-            Option<int?> code = default;
             Option<string?> msg = default;
 
             while (utf8JsonReader.Read())
@@ -162,9 +143,6 @@ namespace uapi-sdk-csharp.Model
                         case "base64":
                             base64 = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "msg":
                             msg = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -177,13 +155,10 @@ namespace uapi-sdk-csharp.Model
             if (base64.IsSet && base64.Value == null)
                 throw new ArgumentNullException(nameof(base64), "Property is not nullable for class GetImageTobase64200Response.");
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetImageTobase64200Response.");
-
             if (msg.IsSet && msg.Value == null)
                 throw new ArgumentNullException(nameof(msg), "Property is not nullable for class GetImageTobase64200Response.");
 
-            return new GetImageTobase64200Response(base64, code, msg);
+            return new GetImageTobase64200Response(base64, msg);
         }
 
         /// <summary>
@@ -218,9 +193,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getImageTobase64200Response.Base64Option.IsSet)
                 writer.WriteString("base64", getImageTobase64200Response.Base64);
-
-            if (getImageTobase64200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getImageTobase64200Response.CodeOption.Value!.Value);
 
             if (getImageTobase64200Response.MsgOption.IsSet)
                 writer.WriteString("msg", getImageTobase64200Response.Msg);

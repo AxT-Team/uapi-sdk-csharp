@@ -33,31 +33,15 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNetworkWhois200ResponseOneOf1" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="whois">### 结构化WHOIS信息  返回经过解析的JSON对象，包含以下主要部分：  - **域名信息**: 包含域名ID、注册状态、DNS服务器等 - **注册商信息**: 注册服务商的详细信息 - **注册人信息**: 域名所有者的相关信息（可能因隐私保护而部分隐藏） - **重要日期**: 包括注册日期、更新日期和到期日期</param>
         [JsonConstructor]
-        public GetNetworkWhois200ResponseOneOf1(Option<int?> code = default, Option<Object?> whois = default)
+        public GetNetworkWhois200ResponseOneOf1(Option<Object?> whois = default)
         {
-            CodeOption = code;
             WhoisOption = whois;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Whois
@@ -82,7 +66,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkWhois200ResponseOneOf1 {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Whois: ").Append(Whois).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -121,7 +104,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<Object?> whois = default;
 
             while (utf8JsonReader.Read())
@@ -139,9 +121,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "whois":
                             whois = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
@@ -151,13 +130,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetNetworkWhois200ResponseOneOf1.");
-
             if (whois.IsSet && whois.Value == null)
                 throw new ArgumentNullException(nameof(whois), "Property is not nullable for class GetNetworkWhois200ResponseOneOf1.");
 
-            return new GetNetworkWhois200ResponseOneOf1(code, whois);
+            return new GetNetworkWhois200ResponseOneOf1(whois);
         }
 
         /// <summary>
@@ -186,9 +162,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (getNetworkWhois200ResponseOneOf1.WhoisOption.IsSet && getNetworkWhois200ResponseOneOf1.Whois == null)
                 throw new ArgumentNullException(nameof(getNetworkWhois200ResponseOneOf1.Whois), "Property is required for class GetNetworkWhois200ResponseOneOf1.");
-
-            if (getNetworkWhois200ResponseOneOf1.CodeOption.IsSet)
-                writer.WriteNumber("code", getNetworkWhois200ResponseOneOf1.CodeOption.Value!.Value);
 
             if (getNetworkWhois200ResponseOneOf1.WhoisOption.IsSet)
             {

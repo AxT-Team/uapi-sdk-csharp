@@ -84,7 +84,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /* <example>Failed to fetch data from Mojang API.</example> */
+        /* <example>Service temporarily unavailable.</example> */
         [JsonPropertyName("message")]
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 

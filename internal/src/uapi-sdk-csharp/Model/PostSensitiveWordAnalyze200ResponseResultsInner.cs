@@ -34,24 +34,220 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="PostSensitiveWordAnalyze200ResponseResultsInner" /> class.
         /// </summary>
         /// <param name="k">k</param>
-        /// <param name="r">r</param>
-        /// <param name="s">s</param>
-        /// <param name="v">v</param>
-        /// <param name="t">t</param>
-        /// <param name="d">d</param>
+        /// <param name="label">label</param>
+        /// <param name="category">category</param>
+        /// <param name="confidence">confidence</param>
         [JsonConstructor]
-        public PostSensitiveWordAnalyze200ResponseResultsInner(Option<string?> k = default, Option<string?> r = default, Option<List<decimal>?> s = default, Option<List<string>?> v = default, Option<List<string>?> t = default, Option<string?> d = default)
+        public PostSensitiveWordAnalyze200ResponseResultsInner(Option<string?> k = default, Option<LabelEnum?> label = default, Option<CategoryEnum?> category = default, Option<decimal?> confidence = default)
         {
             KOption = k;
-            ROption = r;
-            SOption = s;
-            VOption = v;
-            TOption = t;
-            DOption = d;
+            LabelOption = label;
+            CategoryOption = category;
+            ConfidenceOption = confidence;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// Defines Label
+        /// </summary>
+        public enum LabelEnum
+        {
+            /// <summary>
+            /// Enum Sensitive for value: sensitive
+            /// </summary>
+            Sensitive = 1,
+
+            /// <summary>
+            /// Enum Normal for value: normal
+            /// </summary>
+            Normal = 2
+        }
+
+        /// <summary>
+        /// Returns a <see cref="LabelEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static LabelEnum LabelEnumFromString(string value)
+        {
+            if (value.Equals("sensitive"))
+                return LabelEnum.Sensitive;
+
+            if (value.Equals("normal"))
+                return LabelEnum.Normal;
+
+            throw new NotImplementedException($"Could not convert value to type LabelEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="LabelEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static LabelEnum? LabelEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("sensitive"))
+                return LabelEnum.Sensitive;
+
+            if (value.Equals("normal"))
+                return LabelEnum.Normal;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="LabelEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string LabelEnumToJsonValue(LabelEnum? value)
+        {
+            if (value == LabelEnum.Sensitive)
+                return "sensitive";
+
+            if (value == LabelEnum.Normal)
+                return "normal";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of Label
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<LabelEnum?> LabelOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Label
+        /// </summary>
+        [JsonPropertyName("label")]
+        public LabelEnum? Label { get { return this.LabelOption; } set { this.LabelOption = new(value); } }
+
+        /// <summary>
+        /// Defines Category
+        /// </summary>
+        public enum CategoryEnum
+        {
+            /// <summary>
+            /// Enum Safe for value: safe
+            /// </summary>
+            Safe = 1,
+
+            /// <summary>
+            /// Enum Threat for value: threat
+            /// </summary>
+            Threat = 2,
+
+            /// <summary>
+            /// Enum Porn for value: porn
+            /// </summary>
+            Porn = 3,
+
+            /// <summary>
+            /// Enum Fraud for value: fraud
+            /// </summary>
+            Fraud = 4,
+
+            /// <summary>
+            /// Enum Insult for value: insult
+            /// </summary>
+            Insult = 5
+        }
+
+        /// <summary>
+        /// Returns a <see cref="CategoryEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static CategoryEnum CategoryEnumFromString(string value)
+        {
+            if (value.Equals("safe"))
+                return CategoryEnum.Safe;
+
+            if (value.Equals("threat"))
+                return CategoryEnum.Threat;
+
+            if (value.Equals("porn"))
+                return CategoryEnum.Porn;
+
+            if (value.Equals("fraud"))
+                return CategoryEnum.Fraud;
+
+            if (value.Equals("insult"))
+                return CategoryEnum.Insult;
+
+            throw new NotImplementedException($"Could not convert value to type CategoryEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="CategoryEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static CategoryEnum? CategoryEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("safe"))
+                return CategoryEnum.Safe;
+
+            if (value.Equals("threat"))
+                return CategoryEnum.Threat;
+
+            if (value.Equals("porn"))
+                return CategoryEnum.Porn;
+
+            if (value.Equals("fraud"))
+                return CategoryEnum.Fraud;
+
+            if (value.Equals("insult"))
+                return CategoryEnum.Insult;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="CategoryEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string CategoryEnumToJsonValue(CategoryEnum? value)
+        {
+            if (value == CategoryEnum.Safe)
+                return "safe";
+
+            if (value == CategoryEnum.Threat)
+                return "threat";
+
+            if (value == CategoryEnum.Porn)
+                return "porn";
+
+            if (value == CategoryEnum.Fraud)
+                return "fraud";
+
+            if (value == CategoryEnum.Insult)
+                return "insult";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of Category
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<CategoryEnum?> CategoryOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Category
+        /// </summary>
+        [JsonPropertyName("category")]
+        public CategoryEnum? Category { get { return this.CategoryOption; } set { this.CategoryOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of K
@@ -67,69 +263,17 @@ namespace uapi-sdk-csharp.Model
         public string? K { get { return this.KOption; } set { this.KOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of R
+        /// Used to track the state of Confidence
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> ROption { get; private set; }
+        public Option<decimal?> ConfidenceOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets R
+        /// Gets or Sets Confidence
         /// </summary>
-        [JsonPropertyName("r")]
-        public string? R { get { return this.ROption; } set { this.ROption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of S
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<decimal>?> SOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets S
-        /// </summary>
-        [JsonPropertyName("s")]
-        public List<decimal>? S { get { return this.SOption; } set { this.SOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of V
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> VOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets V
-        /// </summary>
-        [JsonPropertyName("v")]
-        public List<string>? V { get { return this.VOption; } set { this.VOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of T
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> TOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets T
-        /// </summary>
-        [JsonPropertyName("t")]
-        public List<string>? T { get { return this.TOption; } set { this.TOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of D
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> DOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets D
-        /// </summary>
-        [JsonPropertyName("d")]
-        public string? D { get { return this.DOption; } set { this.DOption = new(value); } }
+        [JsonPropertyName("confidence")]
+        public decimal? Confidence { get { return this.ConfidenceOption; } set { this.ConfidenceOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -140,11 +284,9 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostSensitiveWordAnalyze200ResponseResultsInner {\n");
             sb.Append("  K: ").Append(K).Append("\n");
-            sb.Append("  R: ").Append(R).Append("\n");
-            sb.Append("  S: ").Append(S).Append("\n");
-            sb.Append("  V: ").Append(V).Append("\n");
-            sb.Append("  T: ").Append(T).Append("\n");
-            sb.Append("  D: ").Append(D).Append("\n");
+            sb.Append("  Label: ").Append(Label).Append("\n");
+            sb.Append("  Category: ").Append(Category).Append("\n");
+            sb.Append("  Confidence: ").Append(Confidence).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -156,6 +298,18 @@ namespace uapi-sdk-csharp.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Confidence (decimal) maximum
+            if (this.ConfidenceOption.IsSet && this.ConfidenceOption.Value > (decimal)1)
+            {
+                yield return new ValidationResult("Invalid value for Confidence, must be a value less than or equal to 1.", new [] { "Confidence" });
+            }
+
+            // Confidence (decimal) minimum
+            if (this.ConfidenceOption.IsSet && this.ConfidenceOption.Value < (decimal)0)
+            {
+                yield return new ValidationResult("Invalid value for Confidence, must be a value greater than or equal to 0.", new [] { "Confidence" });
+            }
+
             yield break;
         }
     }
@@ -183,11 +337,9 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> k = default;
-            Option<string?> r = default;
-            Option<List<decimal>?> s = default;
-            Option<List<string>?> v = default;
-            Option<List<string>?> t = default;
-            Option<string?> d = default;
+            Option<PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnum?> label = default;
+            Option<PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnum?> category = default;
+            Option<decimal?> confidence = default;
 
             while (utf8JsonReader.Read())
             {
@@ -207,20 +359,18 @@ namespace uapi-sdk-csharp.Model
                         case "k":
                             k = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "r":
-                            r = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "label":
+                            string? labelRawValue = utf8JsonReader.GetString();
+                            if (labelRawValue != null)
+                                label = new Option<PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnum?>(PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnumFromStringOrDefault(labelRawValue));
                             break;
-                        case "s":
-                            s = new Option<List<decimal>?>(JsonSerializer.Deserialize<List<decimal>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "category":
+                            string? categoryRawValue = utf8JsonReader.GetString();
+                            if (categoryRawValue != null)
+                                category = new Option<PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnum?>(PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnumFromStringOrDefault(categoryRawValue));
                             break;
-                        case "v":
-                            v = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "t":
-                            t = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "d":
-                            d = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "confidence":
+                            confidence = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
                         default:
                             break;
@@ -231,22 +381,16 @@ namespace uapi-sdk-csharp.Model
             if (k.IsSet && k.Value == null)
                 throw new ArgumentNullException(nameof(k), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
 
-            if (r.IsSet && r.Value == null)
-                throw new ArgumentNullException(nameof(r), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
+            if (label.IsSet && label.Value == null)
+                throw new ArgumentNullException(nameof(label), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
 
-            if (s.IsSet && s.Value == null)
-                throw new ArgumentNullException(nameof(s), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
+            if (category.IsSet && category.Value == null)
+                throw new ArgumentNullException(nameof(category), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
 
-            if (v.IsSet && v.Value == null)
-                throw new ArgumentNullException(nameof(v), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
+            if (confidence.IsSet && confidence.Value == null)
+                throw new ArgumentNullException(nameof(confidence), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
 
-            if (t.IsSet && t.Value == null)
-                throw new ArgumentNullException(nameof(t), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            if (d.IsSet && d.Value == null)
-                throw new ArgumentNullException(nameof(d), "Property is not nullable for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            return new PostSensitiveWordAnalyze200ResponseResultsInner(k, r, s, v, t, d);
+            return new PostSensitiveWordAnalyze200ResponseResultsInner(k, label, category, confidence);
         }
 
         /// <summary>
@@ -276,44 +420,15 @@ namespace uapi-sdk-csharp.Model
             if (postSensitiveWordAnalyze200ResponseResultsInner.KOption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.K == null)
                 throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.K), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
 
-            if (postSensitiveWordAnalyze200ResponseResultsInner.ROption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.R == null)
-                throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.R), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            if (postSensitiveWordAnalyze200ResponseResultsInner.SOption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.S == null)
-                throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.S), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            if (postSensitiveWordAnalyze200ResponseResultsInner.VOption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.V == null)
-                throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.V), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            if (postSensitiveWordAnalyze200ResponseResultsInner.TOption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.T == null)
-                throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.T), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
-            if (postSensitiveWordAnalyze200ResponseResultsInner.DOption.IsSet && postSensitiveWordAnalyze200ResponseResultsInner.D == null)
-                throw new ArgumentNullException(nameof(postSensitiveWordAnalyze200ResponseResultsInner.D), "Property is required for class PostSensitiveWordAnalyze200ResponseResultsInner.");
-
             if (postSensitiveWordAnalyze200ResponseResultsInner.KOption.IsSet)
                 writer.WriteString("k", postSensitiveWordAnalyze200ResponseResultsInner.K);
 
-            if (postSensitiveWordAnalyze200ResponseResultsInner.ROption.IsSet)
-                writer.WriteString("r", postSensitiveWordAnalyze200ResponseResultsInner.R);
-
-            if (postSensitiveWordAnalyze200ResponseResultsInner.SOption.IsSet)
-            {
-                writer.WritePropertyName("s");
-                JsonSerializer.Serialize(writer, postSensitiveWordAnalyze200ResponseResultsInner.S, jsonSerializerOptions);
-            }
-            if (postSensitiveWordAnalyze200ResponseResultsInner.VOption.IsSet)
-            {
-                writer.WritePropertyName("v");
-                JsonSerializer.Serialize(writer, postSensitiveWordAnalyze200ResponseResultsInner.V, jsonSerializerOptions);
-            }
-            if (postSensitiveWordAnalyze200ResponseResultsInner.TOption.IsSet)
-            {
-                writer.WritePropertyName("t");
-                JsonSerializer.Serialize(writer, postSensitiveWordAnalyze200ResponseResultsInner.T, jsonSerializerOptions);
-            }
-            if (postSensitiveWordAnalyze200ResponseResultsInner.DOption.IsSet)
-                writer.WriteString("d", postSensitiveWordAnalyze200ResponseResultsInner.D);
+            var labelRawValue = PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnumToJsonValue(postSensitiveWordAnalyze200ResponseResultsInner.LabelOption.Value!.Value);
+            writer.WriteString("label", labelRawValue);
+            var categoryRawValue = PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnumToJsonValue(postSensitiveWordAnalyze200ResponseResultsInner.CategoryOption.Value!.Value);
+            writer.WriteString("category", categoryRawValue);
+            if (postSensitiveWordAnalyze200ResponseResultsInner.ConfidenceOption.IsSet)
+                writer.WriteNumber("confidence", postSensitiveWordAnalyze200ResponseResultsInner.ConfidenceOption.Value!.Value);
         }
     }
 }

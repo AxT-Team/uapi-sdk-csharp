@@ -36,7 +36,7 @@ namespace uapi-sdk-csharp.Model
         /// <param name="query">实际执行的搜索查询</param>
         /// <param name="totalResults">搜索结果总数</param>
         /// <param name="results">搜索结果列表</param>
-        /// <param name="sources">各搜索引擎的结果数量统计</param>
+        /// <param name="sources">各搜索源的结果统计</param>
         /// <param name="processTimeMs">处理耗时（毫秒）</param>
         /// <param name="cached">结果是否来自缓存</param>
         [JsonConstructor]
@@ -104,9 +104,9 @@ namespace uapi-sdk-csharp.Model
         public Option<List<PostSearchAggregate200ResponseSourcesInner>?> SourcesOption { get; private set; }
 
         /// <summary>
-        /// 各搜索引擎的结果数量统计
+        /// 各搜索源的结果统计
         /// </summary>
-        /// <value>各搜索引擎的结果数量统计</value>
+        /// <value>各搜索源的结果统计</value>
         [JsonPropertyName("sources")]
         public List<PostSearchAggregate200ResponseSourcesInner>? Sources { get { return this.SourcesOption; } set { this.SourcesOption = new(value); } }
 

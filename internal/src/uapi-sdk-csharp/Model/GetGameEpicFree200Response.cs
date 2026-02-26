@@ -33,32 +33,15 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGameEpicFree200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="data">免费游戏列表数组。</param>
         [JsonConstructor]
-        public GetGameEpicFree200Response(Option<int?> code = default, Option<List<GetGameEpicFree200ResponseDataInner>?> data = default)
+        public GetGameEpicFree200Response(Option<List<GetGameEpicFree200ResponseDataInner>?> data = default)
         {
-            CodeOption = code;
             DataOption = data;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Data
@@ -82,7 +65,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetGameEpicFree200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -121,7 +103,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<List<GetGameEpicFree200ResponseDataInner>?> data = default;
 
             while (utf8JsonReader.Read())
@@ -139,9 +120,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "data":
                             data = new Option<List<GetGameEpicFree200ResponseDataInner>?>(JsonSerializer.Deserialize<List<GetGameEpicFree200ResponseDataInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
@@ -151,13 +129,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetGameEpicFree200Response.");
-
             if (data.IsSet && data.Value == null)
                 throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetGameEpicFree200Response.");
 
-            return new GetGameEpicFree200Response(code, data);
+            return new GetGameEpicFree200Response(data);
         }
 
         /// <summary>
@@ -186,9 +161,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (getGameEpicFree200Response.DataOption.IsSet && getGameEpicFree200Response.Data == null)
                 throw new ArgumentNullException(nameof(getGameEpicFree200Response.Data), "Property is required for class GetGameEpicFree200Response.");
-
-            if (getGameEpicFree200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getGameEpicFree200Response.CodeOption.Value!.Value);
 
             if (getGameEpicFree200Response.DataOption.IsSet)
             {

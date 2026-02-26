@@ -33,14 +33,12 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGameMinecraftUserinfo200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="skinUrl">玩家当前使用的皮肤图片URL。</param>
         /// <param name="username">玩家当前的准确用户名（注意大小写可能与输入不同）。</param>
         /// <param name="uuid">玩家的32位无破折号UUID。</param>
         [JsonConstructor]
-        public GetGameMinecraftUserinfo200Response(Option<int?> code = default, Option<string?> skinUrl = default, Option<string?> username = default, Option<string?> uuid = default)
+        public GetGameMinecraftUserinfo200Response(Option<string?> skinUrl = default, Option<string?> username = default, Option<string?> uuid = default)
         {
-            CodeOption = code;
             SkinUrlOption = skinUrl;
             UsernameOption = username;
             UuidOption = uuid;
@@ -48,21 +46,6 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of SkinUrl
@@ -117,7 +100,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetGameMinecraftUserinfo200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  SkinUrl: ").Append(SkinUrl).Append("\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Uuid: ").Append(Uuid).Append("\n");
@@ -158,7 +140,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> skinUrl = default;
             Option<string?> username = default;
             Option<string?> uuid = default;
@@ -178,9 +159,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "skin_url":
                             skinUrl = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -196,9 +174,6 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetGameMinecraftUserinfo200Response.");
-
             if (skinUrl.IsSet && skinUrl.Value == null)
                 throw new ArgumentNullException(nameof(skinUrl), "Property is not nullable for class GetGameMinecraftUserinfo200Response.");
 
@@ -208,7 +183,7 @@ namespace uapi-sdk-csharp.Model
             if (uuid.IsSet && uuid.Value == null)
                 throw new ArgumentNullException(nameof(uuid), "Property is not nullable for class GetGameMinecraftUserinfo200Response.");
 
-            return new GetGameMinecraftUserinfo200Response(code, skinUrl, username, uuid);
+            return new GetGameMinecraftUserinfo200Response(skinUrl, username, uuid);
         }
 
         /// <summary>
@@ -243,9 +218,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getGameMinecraftUserinfo200Response.UuidOption.IsSet && getGameMinecraftUserinfo200Response.Uuid == null)
                 throw new ArgumentNullException(nameof(getGameMinecraftUserinfo200Response.Uuid), "Property is required for class GetGameMinecraftUserinfo200Response.");
-
-            if (getGameMinecraftUserinfo200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getGameMinecraftUserinfo200Response.CodeOption.Value!.Value);
 
             if (getGameMinecraftUserinfo200Response.SkinUrlOption.IsSet)
                 writer.WriteString("skin_url", getGameMinecraftUserinfo200Response.SkinUrl);

@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **int** |  | [optional] 
 **Message** | **string** |  | [optional] 
 **IsBatch** | **bool** | 标识是否为批量翻译请求。 | [optional] 
 **Data** | [**PostAiTranslate200ResponseData**](PostAiTranslate200ResponseData.md) |  | [optional] 

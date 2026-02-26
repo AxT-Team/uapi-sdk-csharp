@@ -36,7 +36,6 @@ namespace uapi-sdk-csharp.Model
         /// <param name="avatar">32x32 像素的小尺寸头像URL。</param>
         /// <param name="avatarfull">184x184 像素的大尺寸头像URL。</param>
         /// <param name="avatarmedium">64x64 像素的中等尺寸头像URL。</param>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="communityvisibilitystate">社区资料的可见性状态: 1&#x3D;私密, 3&#x3D;公开。</param>
         /// <param name="loccountrycode">用户个人资料中设置的国家代码 (ISO 3166-1)，前提是用户已设置并公开。</param>
         /// <param name="personaname">玩家的当前昵称。</param>
@@ -49,12 +48,11 @@ namespace uapi-sdk-csharp.Model
         /// <param name="timecreated">账户创建时的Unix时间戳（秒）。</param>
         /// <param name="timecreatedStr">我们为你格式化好的账户创建时间，更直观。</param>
         [JsonConstructor]
-        public GetGameSteamSummary200Response(Option<string?> avatar = default, Option<string?> avatarfull = default, Option<string?> avatarmedium = default, Option<int?> code = default, Option<int?> communityvisibilitystate = default, Option<string?> loccountrycode = default, Option<string?> personaname = default, Option<int?> personastate = default, Option<string?> primaryclanid = default, Option<int?> profilestate = default, Option<string?> profileurl = default, Option<string?> realname = default, Option<string?> steamid = default, Option<int?> timecreated = default, Option<string?> timecreatedStr = default)
+        public GetGameSteamSummary200Response(Option<string?> avatar = default, Option<string?> avatarfull = default, Option<string?> avatarmedium = default, Option<int?> communityvisibilitystate = default, Option<string?> loccountrycode = default, Option<string?> personaname = default, Option<int?> personastate = default, Option<string?> primaryclanid = default, Option<int?> profilestate = default, Option<string?> profileurl = default, Option<string?> realname = default, Option<string?> steamid = default, Option<int?> timecreated = default, Option<string?> timecreatedStr = default)
         {
             AvatarOption = avatar;
             AvatarfullOption = avatarfull;
             AvatarmediumOption = avatarmedium;
-            CodeOption = code;
             CommunityvisibilitystateOption = communityvisibilitystate;
             LoccountrycodeOption = loccountrycode;
             PersonanameOption = personaname;
@@ -115,21 +113,6 @@ namespace uapi-sdk-csharp.Model
         /* <example>https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg</example> */
         [JsonPropertyName("avatarmedium")]
         public string? Avatarmedium { get { return this.AvatarmediumOption; } set { this.AvatarmediumOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Communityvisibilitystate
@@ -307,7 +290,6 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Avatar: ").Append(Avatar).Append("\n");
             sb.Append("  Avatarfull: ").Append(Avatarfull).Append("\n");
             sb.Append("  Avatarmedium: ").Append(Avatarmedium).Append("\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Communityvisibilitystate: ").Append(Communityvisibilitystate).Append("\n");
             sb.Append("  Loccountrycode: ").Append(Loccountrycode).Append("\n");
             sb.Append("  Personaname: ").Append(Personaname).Append("\n");
@@ -359,7 +341,6 @@ namespace uapi-sdk-csharp.Model
             Option<string?> avatar = default;
             Option<string?> avatarfull = default;
             Option<string?> avatarmedium = default;
-            Option<int?> code = default;
             Option<int?> communityvisibilitystate = default;
             Option<string?> loccountrycode = default;
             Option<string?> personaname = default;
@@ -395,9 +376,6 @@ namespace uapi-sdk-csharp.Model
                             break;
                         case "avatarmedium":
                             avatarmedium = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         case "communityvisibilitystate":
                             communityvisibilitystate = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
@@ -447,9 +425,6 @@ namespace uapi-sdk-csharp.Model
             if (avatarmedium.IsSet && avatarmedium.Value == null)
                 throw new ArgumentNullException(nameof(avatarmedium), "Property is not nullable for class GetGameSteamSummary200Response.");
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetGameSteamSummary200Response.");
-
             if (communityvisibilitystate.IsSet && communityvisibilitystate.Value == null)
                 throw new ArgumentNullException(nameof(communityvisibilitystate), "Property is not nullable for class GetGameSteamSummary200Response.");
 
@@ -483,7 +458,7 @@ namespace uapi-sdk-csharp.Model
             if (timecreatedStr.IsSet && timecreatedStr.Value == null)
                 throw new ArgumentNullException(nameof(timecreatedStr), "Property is not nullable for class GetGameSteamSummary200Response.");
 
-            return new GetGameSteamSummary200Response(avatar, avatarfull, avatarmedium, code, communityvisibilitystate, loccountrycode, personaname, personastate, primaryclanid, profilestate, profileurl, realname, steamid, timecreated, timecreatedStr);
+            return new GetGameSteamSummary200Response(avatar, avatarfull, avatarmedium, communityvisibilitystate, loccountrycode, personaname, personastate, primaryclanid, profilestate, profileurl, realname, steamid, timecreated, timecreatedStr);
         }
 
         /// <summary>
@@ -548,9 +523,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getGameSteamSummary200Response.AvatarmediumOption.IsSet)
                 writer.WriteString("avatarmedium", getGameSteamSummary200Response.Avatarmedium);
-
-            if (getGameSteamSummary200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getGameSteamSummary200Response.CodeOption.Value!.Value);
 
             if (getGameSteamSummary200Response.CommunityvisibilitystateOption.IsSet)
                 writer.WriteNumber("communityvisibilitystate", getGameSteamSummary200Response.CommunityvisibilitystateOption.Value!.Value);

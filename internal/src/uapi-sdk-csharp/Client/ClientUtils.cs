@@ -111,10 +111,34 @@ namespace uapi-sdk-csharp.Client
                 return boolean
                     ? "true"
                     : "false";
+            if (obj is GetMiscHolidayCalendar200ResponseDataHolidaysInner.TypeEnum getMiscHolidayCalendar200ResponseDataHolidaysInnerTypeEnum)
+                return GetMiscHolidayCalendar200ResponseDataHolidaysInner.TypeEnumToJsonValue(getMiscHolidayCalendar200ResponseDataHolidaysInnerTypeEnum);
             if (obj is PostAiTranslateRequest.StyleEnum postAiTranslateRequestStyleEnum)
                 return PostAiTranslateRequest.StyleEnumToJsonValue(postAiTranslateRequestStyleEnum);
             if (obj is PostAiTranslateRequest.ContextEnum postAiTranslateRequestContextEnum)
                 return PostAiTranslateRequest.ContextEnumToJsonValue(postAiTranslateRequestContextEnum);
+            if (obj is PostSearchAggregateRequest.SortEnum postSearchAggregateRequestSortEnum)
+                return PostSearchAggregateRequest.SortEnumToJsonValue(postSearchAggregateRequestSortEnum);
+            if (obj is PostSearchAggregateRequest.TimeRangeEnum postSearchAggregateRequestTimeRangeEnum)
+                return PostSearchAggregateRequest.TimeRangeEnumToJsonValue(postSearchAggregateRequestTimeRangeEnum);
+            if (obj is PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnum postSensitiveWordAnalyze200ResponseResultsInnerLabelEnum)
+                return PostSensitiveWordAnalyze200ResponseResultsInner.LabelEnumToJsonValue(postSensitiveWordAnalyze200ResponseResultsInnerLabelEnum);
+            if (obj is PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnum postSensitiveWordAnalyze200ResponseResultsInnerCategoryEnum)
+                return PostSensitiveWordAnalyze200ResponseResultsInner.CategoryEnumToJsonValue(postSensitiveWordAnalyze200ResponseResultsInnerCategoryEnum);
+            if (obj is PostTextAesDecryptAdvancedRequest.ModeEnum postTextAesDecryptAdvancedRequestModeEnum)
+                return PostTextAesDecryptAdvancedRequest.ModeEnumToJsonValue(postTextAesDecryptAdvancedRequestModeEnum);
+            if (obj is PostTextAesDecryptAdvancedRequest.PaddingEnum postTextAesDecryptAdvancedRequestPaddingEnum)
+                return PostTextAesDecryptAdvancedRequest.PaddingEnumToJsonValue(postTextAesDecryptAdvancedRequestPaddingEnum);
+            if (obj is PostTextAesEncryptAdvancedRequest.ModeEnum postTextAesEncryptAdvancedRequestModeEnum)
+                return PostTextAesEncryptAdvancedRequest.ModeEnumToJsonValue(postTextAesEncryptAdvancedRequestModeEnum);
+            if (obj is PostTextAesEncryptAdvancedRequest.PaddingEnum postTextAesEncryptAdvancedRequestPaddingEnum)
+                return PostTextAesEncryptAdvancedRequest.PaddingEnumToJsonValue(postTextAesEncryptAdvancedRequestPaddingEnum);
+            if (obj is PostTextAesEncryptAdvancedRequest.OutputFormatEnum postTextAesEncryptAdvancedRequestOutputFormatEnum)
+                return PostTextAesEncryptAdvancedRequest.OutputFormatEnumToJsonValue(postTextAesEncryptAdvancedRequestOutputFormatEnum);
+            if (obj is PostTextConvertRequest.FromEnum postTextConvertRequestFromEnum)
+                return PostTextConvertRequest.FromEnumToJsonValue(postTextConvertRequestFromEnum);
+            if (obj is PostTextConvertRequest.ToEnum postTextConvertRequestToEnum)
+                return PostTextConvertRequest.ToEnumToJsonValue(postTextConvertRequestToEnum);
             if (obj is PostTranslateStream400Response.CodeEnum postTranslateStream400ResponseCodeEnum)
                 return PostTranslateStream400Response.CodeEnumToJsonValue(postTranslateStream400ResponseCodeEnum);
             if (obj is PostTranslateStreamRequest.ToLangEnum postTranslateStreamRequestToLangEnum)

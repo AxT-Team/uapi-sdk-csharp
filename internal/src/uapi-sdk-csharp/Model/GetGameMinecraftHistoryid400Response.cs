@@ -84,7 +84,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /* <example>Missing or invalid &#39;uuid&#39; parameter.</example> */
+        /* <example>uuid or name query parameter is required</example> */
         [JsonPropertyName("message")]
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 

@@ -84,7 +84,7 @@ namespace uapi-sdk-csharp.Model
         /// 支持的所有参数说明列表
         /// </summary>
         /// <value>支持的所有参数说明列表</value>
-        /* <example>[&quot;query (必需) - 搜索查询&quot;,&quot;limit (可选) - 返回条数，默认10，最大100&quot;,&quot;page (可选) - 页码，默认1&quot;,&quot;site (可选) - 站内搜索，例如：github.com&quot;,&quot;filetype (可选) - 文件类型，例如：pdf&quot;,&quot;fetch_full (可选) - 是否获取完整正文&quot;,&quot;timeout_ms (可选) - 超时时间（毫秒），默认3000&quot;]</example> */
+        /* <example>[&quot;query (必需) - 搜索查询&quot;,&quot;limit (可选) - 返回条数，默认10，最大100&quot;,&quot;page (可选) - 页码，默认1&quot;,&quot;site (可选) - 站内搜索，例如：github.com&quot;,&quot;filetype (可选) - 文件类型，例如：pdf&quot;,&quot;fetch_full (可选) - 是否获取完整正文&quot;,&quot;timeout_ms (可选) - 超时时间（毫秒），默认3000&quot;,&quot;sort (可选) - 排序方式：relevance(相关性) 或 date(时间)&quot;,&quot;time_range (可选) - 时间范围：day/week/month/year&quot;]</example> */
         [JsonPropertyName("supported_parameters")]
         public List<string>? SupportedParameters { get { return this.SupportedParametersOption; } set { this.SupportedParametersOption = new(value); } }
 

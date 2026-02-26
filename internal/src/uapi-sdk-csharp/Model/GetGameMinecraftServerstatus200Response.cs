@@ -33,7 +33,6 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGameMinecraftServerstatus200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表成功。</param>
         /// <param name="faviconUrl">服务器图标的 Base64 Data URI。你可以直接在 &#x60;&lt;img&gt;&#x60; 标签的 &#x60;src&#x60; 属性中使用它。</param>
         /// <param name="ip">服务器解析后的IP地址。</param>
         /// <param name="maxPlayers">服务器配置的最大玩家容量。</param>
@@ -44,9 +43,8 @@ namespace uapi-sdk-csharp.Model
         /// <param name="port">服务器使用的端口。</param>
         /// <param name="varVersion">服务器报告的版本信息。</param>
         [JsonConstructor]
-        public GetGameMinecraftServerstatus200Response(Option<int?> code = default, Option<string?> faviconUrl = default, Option<string?> ip = default, Option<int?> maxPlayers = default, Option<string?> motdClean = default, Option<string?> motdHtml = default, Option<bool?> online = default, Option<int?> players = default, Option<int?> port = default, Option<string?> varVersion = default)
+        public GetGameMinecraftServerstatus200Response(Option<string?> faviconUrl = default, Option<string?> ip = default, Option<int?> maxPlayers = default, Option<string?> motdClean = default, Option<string?> motdHtml = default, Option<bool?> online = default, Option<int?> players = default, Option<int?> port = default, Option<string?> varVersion = default)
         {
-            CodeOption = code;
             FaviconUrlOption = faviconUrl;
             IpOption = ip;
             MaxPlayersOption = maxPlayers;
@@ -60,21 +58,6 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表成功。
-        /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of FaviconUrl
@@ -220,7 +203,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetGameMinecraftServerstatus200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  FaviconUrl: ").Append(FaviconUrl).Append("\n");
             sb.Append("  Ip: ").Append(Ip).Append("\n");
             sb.Append("  MaxPlayers: ").Append(MaxPlayers).Append("\n");
@@ -267,7 +249,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> faviconUrl = default;
             Option<string?> ip = default;
             Option<int?> maxPlayers = default;
@@ -293,9 +274,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "favicon_url":
                             faviconUrl = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -329,9 +307,6 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetGameMinecraftServerstatus200Response.");
-
             if (faviconUrl.IsSet && faviconUrl.Value == null)
                 throw new ArgumentNullException(nameof(faviconUrl), "Property is not nullable for class GetGameMinecraftServerstatus200Response.");
 
@@ -359,7 +334,7 @@ namespace uapi-sdk-csharp.Model
             if (varVersion.IsSet && varVersion.Value == null)
                 throw new ArgumentNullException(nameof(varVersion), "Property is not nullable for class GetGameMinecraftServerstatus200Response.");
 
-            return new GetGameMinecraftServerstatus200Response(code, faviconUrl, ip, maxPlayers, motdClean, motdHtml, online, players, port, varVersion);
+            return new GetGameMinecraftServerstatus200Response(faviconUrl, ip, maxPlayers, motdClean, motdHtml, online, players, port, varVersion);
         }
 
         /// <summary>
@@ -400,9 +375,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getGameMinecraftServerstatus200Response.VarVersionOption.IsSet && getGameMinecraftServerstatus200Response.VarVersion == null)
                 throw new ArgumentNullException(nameof(getGameMinecraftServerstatus200Response.VarVersion), "Property is required for class GetGameMinecraftServerstatus200Response.");
-
-            if (getGameMinecraftServerstatus200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getGameMinecraftServerstatus200Response.CodeOption.Value!.Value);
 
             if (getGameMinecraftServerstatus200Response.FaviconUrlOption.IsSet)
                 writer.WriteString("favicon_url", getGameMinecraftServerstatus200Response.FaviconUrl);

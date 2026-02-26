@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **int** |  | [optional] 
 **Message** | **string** |  | [optional] 
 **Date** | **string** |  | [optional] 
 **Events** | [**List&lt;GetHistoryProgrammerToday200ResponseEventsInner&gt;**](GetHistoryProgrammerToday200ResponseEventsInner.md) |  | [optional] 

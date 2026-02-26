@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **int** |  | [optional] 
 **Question** | **string** |  | [optional] 
 **Answer** | **string** |  | [optional] 
 

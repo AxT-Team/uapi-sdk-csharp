@@ -288,6 +288,26 @@ namespace uapi-sdk-csharp.Client
     /// An interface for responses of type 
     /// </summary>
     /// <typeparam name="TType"></typeparam>
+    public interface IServiceUnavailable<TType> : IApiResponse
+    {
+        /// <summary>
+        /// Deserializes the response if the response is ServiceUnavailable
+        /// </summary>
+        /// <returns></returns>
+        TType ServiceUnavailable();
+
+        /// <summary>
+        /// Returns true if the response is ServiceUnavailable and the deserialized response is not null
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        bool TryServiceUnavailable([NotNullWhen(true)]out TType? result);
+    }
+
+    /// <summary>
+    /// An interface for responses of type 
+    /// </summary>
+    /// <typeparam name="TType"></typeparam>
     public interface IContentTooLarge<TType> : IApiResponse
     {
         /// <summary>
@@ -342,26 +362,6 @@ namespace uapi-sdk-csharp.Client
         /// <param name="result"></param>
         /// <returns></returns>
         bool TryInternalServerError([NotNullWhen(true)]out TType? result);
-    }
-
-    /// <summary>
-    /// An interface for responses of type 
-    /// </summary>
-    /// <typeparam name="TType"></typeparam>
-    public interface IGone<TType> : IApiResponse
-    {
-        /// <summary>
-        /// Deserializes the response if the response is Gone
-        /// </summary>
-        /// <returns></returns>
-        TType Gone();
-
-        /// <summary>
-        /// Returns true if the response is Gone and the deserialized response is not null
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        bool TryGone([NotNullWhen(true)]out TType? result);
     }
 
     /// <summary>

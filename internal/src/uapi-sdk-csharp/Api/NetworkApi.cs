@@ -84,10 +84,10 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkIcpApiResponse?> GetNetworkIcpOrDefaultAsync(string domain, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查询指定IP或域名的归属信息
+        /// 查询 IP
         /// </summary>
         /// <remarks>
-        /// 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会利用GeoIP数据库查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="ip">你需要查询的公网IP地址或域名（支持IPv4和IPv6）。</param>
@@ -97,10 +97,10 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkIpinfoApiResponse> GetNetworkIpinfoAsync(string ip, Option<string> source = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查询指定IP或域名的归属信息
+        /// 查询 IP
         /// </summary>
         /// <remarks>
-        /// 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会利用GeoIP数据库查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </remarks>
         /// <param name="ip">你需要查询的公网IP地址或域名（支持IPv4和IPv6）。</param>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
@@ -109,10 +109,10 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkIpinfoApiResponse?> GetNetworkIpinfoOrDefaultAsync(string ip, Option<string> source = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取你的公网IP及归属信息
+        /// 查询我的 IP
         /// </summary>
         /// <remarks>
-        /// 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
@@ -121,10 +121,10 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkMyipApiResponse> GetNetworkMyipAsync(Option<string> source = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取你的公网IP及归属信息
+        /// 查询我的 IP
         /// </summary>
         /// <remarks>
-        /// 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </remarks>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -132,7 +132,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkMyipApiResponse?> GetNetworkMyipOrDefaultAsync(Option<string> source = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 从服务器Ping指定主机
+        /// Ping 主机
         /// </summary>
         /// <remarks>
         /// 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
@@ -144,7 +144,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkPingApiResponse> GetNetworkPingAsync(string host, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 从服务器Ping指定主机
+        /// Ping 主机
         /// </summary>
         /// <remarks>
         /// 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
@@ -155,7 +155,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkPingApiResponse?> GetNetworkPingOrDefaultAsync(string host, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 从服务器Ping你的客户端IP
+        /// Ping 我的 IP
         /// </summary>
         /// <remarks>
         /// 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
@@ -166,7 +166,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkPingmyipApiResponse> GetNetworkPingmyipAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 从服务器Ping你的客户端IP
+        /// Ping 我的 IP
         /// </summary>
         /// <remarks>
         /// 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
@@ -176,7 +176,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkPingmyipApiResponse?> GetNetworkPingmyipOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 扫描远程主机的指定端口
+        /// 端口扫描
         /// </summary>
         /// <remarks>
         /// 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
@@ -190,7 +190,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetNetworkPortscanApiResponse> GetNetworkPortscanAsync(string host, int port, Option<string> protocol = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 扫描远程主机的指定端口
+        /// 端口扫描
         /// </summary>
         /// <remarks>
         /// 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
@@ -206,7 +206,7 @@ namespace uapi-sdk-csharp.Api
         /// 检查URL的可访问性状态
         /// </summary>
         /// <remarks>
-        /// 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。  &gt; [!TIP] &gt; **性能优化**：为了提高效率并减少对目标服务器的负载，我们实际发送的是 &#x60;HEAD&#x60; 请求，而不是 &#x60;GET&#x60; 请求。&#x60;HEAD&#x60; 请求只会获取响应头，而不会下载整个页面内容，因此速度更快。
+        /// 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="url">你需要检查其可访问性状态的完整URL。</param>
@@ -218,7 +218,7 @@ namespace uapi-sdk-csharp.Api
         /// 检查URL的可访问性状态
         /// </summary>
         /// <remarks>
-        /// 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。  &gt; [!TIP] &gt; **性能优化**：为了提高效率并减少对目标服务器的负载，我们实际发送的是 &#x60;HEAD&#x60; 请求，而不是 &#x60;GET&#x60; 请求。&#x60;HEAD&#x60; 请求只会获取响应头，而不会下载整个页面内容，因此速度更快。
+        /// 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。
         /// </remarks>
         /// <param name="url">你需要检查其可访问性状态的完整URL。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -355,7 +355,7 @@ namespace uapi-sdk-csharp.Api
     /// <summary>
     /// The <see cref="IGetNetworkMyipApiResponse"/>
     /// </summary>
-    public interface IGetNetworkMyipApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.GetNetworkIpinfo200Response?>, IBadRequest<uapi-sdk-csharp.Model.GetNetworkMyip400Response?>, IInternalServerError<uapi-sdk-csharp.Model.GetNetworkMyip500Response?>
+    public interface IGetNetworkMyipApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.GetNetworkMyip200Response?>, IBadRequest<uapi-sdk-csharp.Model.GetNetworkMyip400Response?>, IInternalServerError<uapi-sdk-csharp.Model.GetNetworkMyip500Response?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1493,7 +1493,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkIpinfo(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string ip, Option<string> source);
 
         /// <summary>
-        /// 查询指定IP或域名的归属信息 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会利用GeoIP数据库查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 查询 IP 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </summary>
         /// <param name="ip">你需要查询的公网IP地址或域名（支持IPv4和IPv6）。</param>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
@@ -1512,7 +1512,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 查询指定IP或域名的归属信息 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会利用GeoIP数据库查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 查询 IP 想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="ip">你需要查询的公网IP地址或域名（支持IPv4和IPv6）。</param>
@@ -1859,7 +1859,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkMyip(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> source);
 
         /// <summary>
-        /// 获取你的公网IP及归属信息 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 查询我的 IP 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </summary>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1877,7 +1877,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 获取你的公网IP及归属信息 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以选择使用默认的GeoIP数据库，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+        /// 查询我的 IP 想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 &#x60;source&#x3D;commercial&#x60; 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 &#x60;/network/ipinfo&#x60; 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 &#x60;source&#x3D;commercial&#x60; 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="source">查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 (optional)</param>
@@ -2008,11 +2008,11 @@ namespace uapi-sdk-csharp.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public uapi-sdk-csharp.Model.GetNetworkIpinfo200Response? Ok()
+            public uapi-sdk-csharp.Model.GetNetworkMyip200Response? Ok()
             {
                 // This logic may be modified with the AsModel.mustache template
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.GetNetworkIpinfo200Response>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.GetNetworkMyip200Response>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
@@ -2021,7 +2021,7 @@ namespace uapi-sdk-csharp.Api
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.GetNetworkIpinfo200Response? result)
+            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.GetNetworkMyip200Response? result)
             {
                 result = null;
 
@@ -2183,7 +2183,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkPing(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string host);
 
         /// <summary>
-        /// 从服务器Ping指定主机 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
+        /// Ping 主机 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
         /// </summary>
         /// <param name="host">你需要 Ping 的目标主机，可以是域名或IP地址。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2201,7 +2201,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 从服务器Ping指定主机 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
+        /// Ping 主机 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="host">你需要 Ping 的目标主机，可以是域名或IP地址。</param>
@@ -2489,7 +2489,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkPingmyip(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar);
 
         /// <summary>
-        /// 从服务器Ping你的客户端IP 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
+        /// Ping 我的 IP 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetNetworkPingmyipApiResponse"/>&gt;</returns>
@@ -2506,7 +2506,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 从服务器Ping你的客户端IP 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
+        /// Ping 我的 IP 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 &#x60;/network/myip&#x60; 和 &#x60;/network/ping&#x60; 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2812,7 +2812,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkPortscan(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string host, int port, Option<string> protocol);
 
         /// <summary>
-        /// 扫描远程主机的指定端口 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
+        /// 端口扫描 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
         /// </summary>
         /// <param name="host">需要扫描的目标主机，可以是域名或IP地址。</param>
         /// <param name="port">需要扫描的端口号，范围是 1 到 65535。</param>
@@ -2832,7 +2832,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 扫描远程主机的指定端口 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
+        /// 端口扫描 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="host">需要扫描的目标主机，可以是域名或IP地址。</param>
@@ -3143,7 +3143,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetNetworkUrlstatus(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string url);
 
         /// <summary>
-        /// 检查URL的可访问性状态 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。  &gt; [!TIP] &gt; **性能优化**：为了提高效率并减少对目标服务器的负载，我们实际发送的是 &#x60;HEAD&#x60; 请求，而不是 &#x60;GET&#x60; 请求。&#x60;HEAD&#x60; 请求只会获取响应头，而不会下载整个页面内容，因此速度更快。
+        /// 检查URL的可访问性状态 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。
         /// </summary>
         /// <param name="url">你需要检查其可访问性状态的完整URL。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -3161,7 +3161,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 检查URL的可访问性状态 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。  &gt; [!TIP] &gt; **性能优化**：为了提高效率并减少对目标服务器的负载，我们实际发送的是 &#x60;HEAD&#x60; 请求，而不是 &#x60;GET&#x60; 请求。&#x60;HEAD&#x60; 请求只会获取响应头，而不会下载整个页面内容，因此速度更快。
+        /// 检查URL的可访问性状态 你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="url">你需要检查其可访问性状态的完整URL。</param>

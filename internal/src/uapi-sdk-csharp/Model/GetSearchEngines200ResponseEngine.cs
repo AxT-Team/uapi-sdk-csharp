@@ -139,7 +139,7 @@ namespace uapi-sdk-csharp.Model
         /// 支持的特性列表
         /// </summary>
         /// <value>支持的特性列表</value>
-        /* <example>[&quot;实时网页搜索&quot;,&quot;AI智能摘要&quot;,&quot;自有机器学习回归排序&quot;,&quot;站内搜索 (site:)&quot;,&quot;文件类型过滤 (filetype:)&quot;,&quot;分页浏览&quot;]</example> */
+        /* <example>[&quot;实时网页搜索&quot;,&quot;AI智能摘要&quot;,&quot;自有机器学习回归排序&quot;,&quot;时间排序 (sort: date)&quot;,&quot;时间范围过滤 (time_range)&quot;,&quot;站内搜索 (site:)&quot;,&quot;文件类型过滤 (filetype:)&quot;,&quot;分页浏览&quot;]</example> */
         [JsonPropertyName("features")]
         public List<string>? Features { get { return this.FeaturesOption; } set { this.FeaturesOption = new(value); } }
 

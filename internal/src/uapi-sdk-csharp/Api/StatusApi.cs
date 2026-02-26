@@ -36,7 +36,7 @@ namespace uapi-sdk-csharp.Api
         StatusApiEvents Events { get; }
 
         /// <summary>
-        /// 获取API限流器实时状态
+        /// 限流状态
         /// </summary>
         /// <remarks>
         /// 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
@@ -48,7 +48,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetStatusRatelimitApiResponse> GetStatusRatelimitAsync(string authorization, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取API限流器实时状态
+        /// 限流状态
         /// </summary>
         /// <remarks>
         /// 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
@@ -103,7 +103,7 @@ namespace uapi-sdk-csharp.Api
     /// <summary>
     /// The <see cref="IGetStatusUsageApiResponse"/>
     /// </summary>
-    public interface IGetStatusUsageApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.GetStatusUsage200Response?>, IUnauthorized<uapi-sdk-csharp.Model.GetStatusRatelimit401Response?>, INotFound<uapi-sdk-csharp.Model.GetStatusUsage404Response?>, IInternalServerError<uapi-sdk-csharp.Model.GetStatusUsage500Response?>
+    public interface IGetStatusUsageApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.GetStatusUsage200Response?>, INotFound<uapi-sdk-csharp.Model.GetStatusUsage404Response?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -112,22 +112,10 @@ namespace uapi-sdk-csharp.Api
         bool IsOk { get; }
 
         /// <summary>
-        /// Returns true if the response is 401 Unauthorized
-        /// </summary>
-        /// <returns></returns>
-        bool IsUnauthorized { get; }
-
-        /// <summary>
         /// Returns true if the response is 404 NotFound
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
-
-        /// <summary>
-        /// Returns true if the response is 500 InternalServerError
-        /// </summary>
-        /// <returns></returns>
-        bool IsInternalServerError { get; }
     }
 
     /// <summary>
@@ -276,7 +264,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetStatusRatelimit(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string authorization);
 
         /// <summary>
-        /// 获取API限流器实时状态 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
+        /// 限流状态 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
         /// </summary>
         /// <param name="authorization">Bearer类型的API密钥认证头。例如：&#x60;Bearer sk-xxx&#x60;</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -294,7 +282,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 获取API限流器实时状态 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
+        /// 限流状态 想了解我们API的当前负载情况吗？这个接口为你提供了服务的“心电图”。  ## 功能概述 此接口返回我们后端自适应限流器的实时状态。你可以看到当前并发请求数、并发上限、系统负载、请求接受/拒绝数等核心指标。这对于监控API健康状况和性能表现至关重要。  &gt; [!IMPORTANT] &gt; 此接口为管理接口，需要提供有效的管理员级别API密钥才能访问。  ### 认证方式 请在请求头中添加 &#x60;Authorization: Bearer &lt;你的API密钥&gt;&#x60;。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="authorization">Bearer类型的API密钥认证头。例如：&#x60;Bearer sk-xxx&#x60;</param>
@@ -735,44 +723,6 @@ namespace uapi-sdk-csharp.Api
             }
 
             /// <summary>
-            /// Returns true if the response is 401 Unauthorized
-            /// </summary>
-            /// <returns></returns>
-            public bool IsUnauthorized => 401 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 401 Unauthorized
-            /// </summary>
-            /// <returns></returns>
-            public uapi-sdk-csharp.Model.GetStatusRatelimit401Response? Unauthorized()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsUnauthorized
-                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.GetStatusRatelimit401Response>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryUnauthorized([NotNullWhen(true)]out uapi-sdk-csharp.Model.GetStatusRatelimit401Response? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Unauthorized();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
             /// Returns true if the response is 404 NotFound
             /// </summary>
             /// <returns></returns>
@@ -805,44 +755,6 @@ namespace uapi-sdk-csharp.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public bool IsInternalServerError => 500 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 500 InternalServerError
-            /// </summary>
-            /// <returns></returns>
-            public uapi-sdk-csharp.Model.GetStatusUsage500Response? InternalServerError()
-            {
-                // This logic may be modified with the AsModel.mustache template
-                return IsInternalServerError
-                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.GetStatusUsage500Response>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryInternalServerError([NotNullWhen(true)]out uapi-sdk-csharp.Model.GetStatusUsage500Response? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = InternalServerError();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
                 }
 
                 return result != null;

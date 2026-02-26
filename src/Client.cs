@@ -213,6 +213,9 @@ public class Client {
             if (args != null && args.ContainsKey("text")) query["text"] = args["text"];
             if (args != null && args.ContainsKey("size")) query["size"] = args["size"];
             if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
+            if (args != null && args.ContainsKey("transparent")) query["transparent"] = args["transparent"];
+            if (args != null && args.ContainsKey("fgcolor")) query["fgcolor"] = args["fgcolor"];
+            if (args != null && args.ContainsKey("bgcolor")) query["bgcolor"] = args["bgcolor"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> getImageTobase64Async(Dictionary<string,object?>? args = null) {
@@ -245,6 +248,14 @@ public class Client {
             if (args != null && args.ContainsKey("bg_color")) body["bg_color"] = args["bg_color"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
             if (args != null && args.ContainsKey("image_url")) body["image_url"] = args["image_url"];
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
+        }
+        public Task<object?> postImageNsfwAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/image/nsfw";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> postImageSpeechlessAsync(Dictionary<string,object?>? args = null) {
@@ -284,11 +295,51 @@ public class Client {
             var body = new Dictionary<string, object?>();
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
+        public Task<object?> getMiscDistrictAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/district";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            if (args != null && args.ContainsKey("keywords")) query["keywords"] = args["keywords"];
+            if (args != null && args.ContainsKey("adcode")) query["adcode"] = args["adcode"];
+            if (args != null && args.ContainsKey("lat")) query["lat"] = args["lat"];
+            if (args != null && args.ContainsKey("lng")) query["lng"] = args["lng"];
+            if (args != null && args.ContainsKey("level")) query["level"] = args["level"];
+            if (args != null && args.ContainsKey("country")) query["country"] = args["country"];
+            if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
+        }
+        public Task<object?> getMiscHolidayCalendarAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/holiday-calendar";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("month")) query["month"] = args["month"];
+            if (args != null && args.ContainsKey("year")) query["year"] = args["year"];
+            if (args != null && args.ContainsKey("timezone")) query["timezone"] = args["timezone"];
+            if (args != null && args.ContainsKey("holiday_type")) query["holiday_type"] = args["holiday_type"];
+            if (args != null && args.ContainsKey("include_nearby")) query["include_nearby"] = args["include_nearby"];
+            if (args != null && args.ContainsKey("nearby_limit")) query["nearby_limit"] = args["nearby_limit"];
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
+        }
         public Task<object?> getMiscHotboardAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/hotboard";
             var query = new Dictionary<string, object?>();
             var body = new Dictionary<string, object?>();
             if (args != null && args.ContainsKey("type")) query["type"] = args["type"];
+            if (args != null && args.ContainsKey("time")) query["time"] = args["time"];
+            if (args != null && args.ContainsKey("keyword")) query["keyword"] = args["keyword"];
+            if (args != null && args.ContainsKey("time_start")) query["time_start"] = args["time_start"];
+            if (args != null && args.ContainsKey("time_end")) query["time_end"] = args["time_end"];
+            if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
+            if (args != null && args.ContainsKey("sources")) query["sources"] = args["sources"];
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
+        }
+        public Task<object?> getMiscLunartimeAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/lunartime";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            if (args != null && args.ContainsKey("ts")) query["ts"] = args["ts"];
+            if (args != null && args.ContainsKey("timezone")) query["timezone"] = args["timezone"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> getMiscPhoneinfoAsync(Dictionary<string,object?>? args = null) {
@@ -336,6 +387,7 @@ public class Client {
             var body = new Dictionary<string, object?>();
             if (args != null && args.ContainsKey("tracking_number")) query["tracking_number"] = args["tracking_number"];
             if (args != null && args.ContainsKey("carrier_code")) query["carrier_code"] = args["carrier_code"];
+            if (args != null && args.ContainsKey("phone")) query["phone"] = args["phone"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> getMiscWeatherAsync(Dictionary<string,object?>? args = null) {
@@ -345,8 +397,11 @@ public class Client {
             if (args != null && args.ContainsKey("city")) query["city"] = args["city"];
             if (args != null && args.ContainsKey("adcode")) query["adcode"] = args["adcode"];
             if (args != null && args.ContainsKey("extended")) query["extended"] = args["extended"];
-            if (args != null && args.ContainsKey("indices")) query["indices"] = args["indices"];
             if (args != null && args.ContainsKey("forecast")) query["forecast"] = args["forecast"];
+            if (args != null && args.ContainsKey("hourly")) query["hourly"] = args["hourly"];
+            if (args != null && args.ContainsKey("minutely")) query["minutely"] = args["minutely"];
+            if (args != null && args.ContainsKey("indices")) query["indices"] = args["indices"];
+            if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> getMiscWorldtimeAsync(Dictionary<string,object?>? args = null) {

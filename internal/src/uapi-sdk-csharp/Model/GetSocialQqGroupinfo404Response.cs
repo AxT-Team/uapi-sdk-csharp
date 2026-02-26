@@ -33,60 +33,29 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSocialQqGroupinfo404Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="details">details</param>
-        /// <param name="message">message</param>
+        /// <param name="error">error</param>
         [JsonConstructor]
-        public GetSocialQqGroupinfo404Response(Option<string?> code = default, Option<Object?> details = default, Option<string?> message = default)
+        public GetSocialQqGroupinfo404Response(Option<string?> error = default)
         {
-            CodeOption = code;
-            DetailsOption = details;
-            MessageOption = message;
+            ErrorOption = error;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of Error
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> CodeOption { get; private set; }
+        public Option<string?> ErrorOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// Gets or Sets Error
         /// </summary>
-        /* <example>NOT_FOUND</example> */
-        [JsonPropertyName("code")]
-        public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Details
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<Object?> DetailsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Details
-        /// </summary>
-        [JsonPropertyName("details")]
-        public Object? Details { get { return this.DetailsOption; } set { this.DetailsOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Message
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> MessageOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Message
-        /// </summary>
-        /* <example>QQ group not found or inaccessible.</example> */
-        [JsonPropertyName("message")]
-        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
+        /* <example>QQ群不存在或无法访问</example> */
+        [JsonPropertyName("error")]
+        public string? Error { get { return this.ErrorOption; } set { this.ErrorOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -96,9 +65,7 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetSocialQqGroupinfo404Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Details: ").Append(Details).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("  Error: ").Append(Error).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,9 +103,7 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string?> code = default;
-            Option<Object?> details = default;
-            Option<string?> message = default;
+            Option<string?> error = default;
 
             while (utf8JsonReader.Read())
             {
@@ -155,14 +120,8 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "details":
-                            details = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "message":
-                            message = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "error":
+                            error = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         default:
                             break;
@@ -170,16 +129,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetSocialQqGroupinfo404Response.");
+            if (error.IsSet && error.Value == null)
+                throw new ArgumentNullException(nameof(error), "Property is not nullable for class GetSocialQqGroupinfo404Response.");
 
-            if (details.IsSet && details.Value == null)
-                throw new ArgumentNullException(nameof(details), "Property is not nullable for class GetSocialQqGroupinfo404Response.");
-
-            if (message.IsSet && message.Value == null)
-                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetSocialQqGroupinfo404Response.");
-
-            return new GetSocialQqGroupinfo404Response(code, details, message);
+            return new GetSocialQqGroupinfo404Response(error);
         }
 
         /// <summary>
@@ -206,25 +159,11 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetSocialQqGroupinfo404Response getSocialQqGroupinfo404Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getSocialQqGroupinfo404Response.CodeOption.IsSet && getSocialQqGroupinfo404Response.Code == null)
-                throw new ArgumentNullException(nameof(getSocialQqGroupinfo404Response.Code), "Property is required for class GetSocialQqGroupinfo404Response.");
+            if (getSocialQqGroupinfo404Response.ErrorOption.IsSet && getSocialQqGroupinfo404Response.Error == null)
+                throw new ArgumentNullException(nameof(getSocialQqGroupinfo404Response.Error), "Property is required for class GetSocialQqGroupinfo404Response.");
 
-            if (getSocialQqGroupinfo404Response.DetailsOption.IsSet && getSocialQqGroupinfo404Response.Details == null)
-                throw new ArgumentNullException(nameof(getSocialQqGroupinfo404Response.Details), "Property is required for class GetSocialQqGroupinfo404Response.");
-
-            if (getSocialQqGroupinfo404Response.MessageOption.IsSet && getSocialQqGroupinfo404Response.Message == null)
-                throw new ArgumentNullException(nameof(getSocialQqGroupinfo404Response.Message), "Property is required for class GetSocialQqGroupinfo404Response.");
-
-            if (getSocialQqGroupinfo404Response.CodeOption.IsSet)
-                writer.WriteString("code", getSocialQqGroupinfo404Response.Code);
-
-            if (getSocialQqGroupinfo404Response.DetailsOption.IsSet)
-            {
-                writer.WritePropertyName("details");
-                JsonSerializer.Serialize(writer, getSocialQqGroupinfo404Response.Details, jsonSerializerOptions);
-            }
-            if (getSocialQqGroupinfo404Response.MessageOption.IsSet)
-                writer.WriteString("message", getSocialQqGroupinfo404Response.Message);
+            if (getSocialQqGroupinfo404Response.ErrorOption.IsSet)
+                writer.WriteString("error", getSocialQqGroupinfo404Response.Error);
         }
     }
 }

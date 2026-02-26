@@ -36,7 +36,7 @@ namespace uapi-sdk-csharp.Api
         TextApiEvents Events { get; }
 
         /// <summary>
-        /// 计算文本的MD5哈希值(GET)
+        /// MD5 哈希
         /// </summary>
         /// <remarks>
         /// 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
@@ -48,7 +48,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetTextMd5ApiResponse> GetTextMd5Async(string text, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 计算文本的MD5哈希值(GET)
+        /// MD5 哈希
         /// </summary>
         /// <remarks>
         /// 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
@@ -59,7 +59,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetTextMd5ApiResponse?> GetTextMd5OrDefaultAsync(string text, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 使用AES算法解密文本
+        /// AES 解密
         /// </summary>
         /// <remarks>
         /// 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
@@ -71,7 +71,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAesDecryptApiResponse> PostTextAesDecryptAsync(PostTextAesDecryptRequest postTextAesDecryptRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 使用AES算法解密文本
+        /// AES 解密
         /// </summary>
         /// <remarks>
         /// 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
@@ -82,7 +82,30 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAesDecryptApiResponse?> PostTextAesDecryptOrDefaultAsync(PostTextAesDecryptRequest postTextAesDecryptRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 使用AES算法加密文本
+        /// AES高级解密
+        /// </summary>
+        /// <remarks>
+        /// 需要解密通过高级加密接口加密的数据？这个接口提供与加密接口完全配对的解密功能，支持相同的6种加密模式和3种填充方式。  &gt; [!IMPORTANT] &gt; **解密参数必须与加密时一致** &gt; 解密时，必须提供与加密时相同的密钥、模式和填充方式。对于非GCM模式，还需要提供加密时返回的IV。  ## 功能概述 这是一个功能完整的AES解密接口，能够解密通过高级加密接口加密的所有密文。支持所有6种加密模式和3种填充方式，与加密接口完全配对。  ### 解密流程 1. 获取加密时返回的密文和配置参数 2. 使用相同的密钥、模式、填充方式和IV（如需要） 3. 调用本接口进行解密 4. 获取原始明文  ### 支持的解密模式 - **GCM模式**（推荐）：自动验证数据完整性，如果密文被篡改会解密失败 - **CBC模式**：经典块解密模式，需要提供加密时的IV - **CTR/OFB/CFB模式**：流密码解密，需要提供加密时的IV - **ECB模式**：不需要IV，但安全性较低  ### 填充方式处理 - **PKCS7填充**：解密后自动移除填充 - **Zero填充**：解密后自动移除0x00填充 - **None填充**：无填充处理  ## 参数说明 - **&#x60;text&#x60;**: 待解密的密文（Base64编码，来自加密接口返回的ciphertext字段） - **&#x60;key&#x60;**: 解密密钥（必须与加密时相同） - **&#x60;mode&#x60;**: 加密模式（必须与加密时相同） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7，必须与加密时相同） - **&#x60;iv&#x60;**: 初始化向量（非GCM模式必须提供，Base64编码）  ## 常见错误处理 如果解密失败，请检查以下几点： - 密钥是否与加密时完全相同 - 模式和填充方式是否匹配 - 非GCM模式下是否提供了正确的IV - 密文是否完整且未被修改 - GCM模式下密文是否被篡改
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextAesDecryptAdvancedRequest">包含解密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesDecryptAdvancedApiResponse"/>&gt;</returns>
+        Task<IPostTextAesDecryptAdvancedApiResponse> PostTextAesDecryptAdvancedAsync(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// AES高级解密
+        /// </summary>
+        /// <remarks>
+        /// 需要解密通过高级加密接口加密的数据？这个接口提供与加密接口完全配对的解密功能，支持相同的6种加密模式和3种填充方式。  &gt; [!IMPORTANT] &gt; **解密参数必须与加密时一致** &gt; 解密时，必须提供与加密时相同的密钥、模式和填充方式。对于非GCM模式，还需要提供加密时返回的IV。  ## 功能概述 这是一个功能完整的AES解密接口，能够解密通过高级加密接口加密的所有密文。支持所有6种加密模式和3种填充方式，与加密接口完全配对。  ### 解密流程 1. 获取加密时返回的密文和配置参数 2. 使用相同的密钥、模式、填充方式和IV（如需要） 3. 调用本接口进行解密 4. 获取原始明文  ### 支持的解密模式 - **GCM模式**（推荐）：自动验证数据完整性，如果密文被篡改会解密失败 - **CBC模式**：经典块解密模式，需要提供加密时的IV - **CTR/OFB/CFB模式**：流密码解密，需要提供加密时的IV - **ECB模式**：不需要IV，但安全性较低  ### 填充方式处理 - **PKCS7填充**：解密后自动移除填充 - **Zero填充**：解密后自动移除0x00填充 - **None填充**：无填充处理  ## 参数说明 - **&#x60;text&#x60;**: 待解密的密文（Base64编码，来自加密接口返回的ciphertext字段） - **&#x60;key&#x60;**: 解密密钥（必须与加密时相同） - **&#x60;mode&#x60;**: 加密模式（必须与加密时相同） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7，必须与加密时相同） - **&#x60;iv&#x60;**: 初始化向量（非GCM模式必须提供，Base64编码）  ## 常见错误处理 如果解密失败，请检查以下几点： - 密钥是否与加密时完全相同 - 模式和填充方式是否匹配 - 非GCM模式下是否提供了正确的IV - 密文是否完整且未被修改 - GCM模式下密文是否被篡改
+        /// </remarks>
+        /// <param name="postTextAesDecryptAdvancedRequest">包含解密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesDecryptAdvancedApiResponse"/>?&gt;</returns>
+        Task<IPostTextAesDecryptAdvancedApiResponse?> PostTextAesDecryptAdvancedOrDefaultAsync(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// AES 加密
         /// </summary>
         /// <remarks>
         /// 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
@@ -94,7 +117,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAesEncryptApiResponse> PostTextAesEncryptAsync(PostTextAesEncryptRequest postTextAesEncryptRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 使用AES算法加密文本
+        /// AES 加密
         /// </summary>
         /// <remarks>
         /// 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
@@ -105,7 +128,30 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAesEncryptApiResponse?> PostTextAesEncryptOrDefaultAsync(PostTextAesEncryptRequest postTextAesEncryptRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 多维度分析文本内容
+        /// AES高级加密
+        /// </summary>
+        /// <remarks>
+        /// 需要更灵活的AES加密方案？这个高级接口支持6种加密模式和3种填充方式，让你根据具体场景选择最合适的加密配置。  &gt; [!IMPORTANT] &gt; **推荐使用GCM模式** &gt; GCM模式提供认证加密(AEAD)，不仅能加密数据，还能验证数据完整性，防止密文被篡改。这是目前最推荐的加密模式。  ## 功能概述 这是一个功能全面的AES加密接口，支持多种加密模式和填充方式。你可以根据不同的安全需求和性能要求，灵活选择合适的加密配置。  ### 支持的加密模式 - **GCM模式**（推荐）：认证加密模式，提供完整性保护 - **CBC模式**：经典块加密模式，需要IV和填充，适用于文件加密 - **CTR模式**：流密码模式，无需填充，适用于实时数据加密 - **OFB/CFB模式**：流密码模式，无需填充，适用于流数据加密 - **ECB模式**（不推荐）：仅用于兼容性需求  ### 支持的填充方式 - **PKCS7填充**（推荐）：标准填充方式 - **Zero填充**：使用0x00字节填充 - **None填充**：无填充，用于流密码模式  ### 输出格式支持 - **base64**（默认）：标准Base64编码输出，适合传输和存储 - **hex**：十六进制编码输出，方便与在线加密工具对比验证  通过 &#x60;output_format&#x60; 参数可以直接获取HEX格式的密文，无需额外调用转换接口。  ## 参数说明 - **&#x60;text&#x60;**: 待加密的明文文本 - **&#x60;key&#x60;**: 加密密钥（支持任意长度） - **&#x60;mode&#x60;**: 加密模式（可选，默认GCM） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7） - **&#x60;iv&#x60;**: 自定义IV（可选，Base64编码，16字节） - **&#x60;output_format&#x60;**: 输出格式（可选，默认base64）  ## 使用示例  **示例1：HEX格式输出** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot;,   \&quot;output_format\&quot;: \&quot;hex\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;aaaca6027da10918bb5d23d81939552c\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  **示例2：Base64格式输出（默认）** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;qqymAn2hCRi7XSPYGTlVLA&#x3D;&#x3D;\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  ## 技术规格 - **加密算法**: AES-256 - **编码格式**: Base64/HEX（输入/输出） - **IV长度**: 16字节（128位） - **版本标注**: v3.4.8+  &gt; [!NOTE] &gt; **关于IV（初始化向量）** &gt; - GCM模式无需提供IV &gt; - CBC/CTR/OFB/CFB模式可选提供IV &gt; - ECB模式不使用IV &gt; - 建议每次加密使用不同的IV以确保安全性  &gt; [!TIP] &gt; **关于输出格式** &gt; - 如需与在线加密工具（如 toolhelper.cn）对比结果，建议使用 &#x60;output_format: \&quot;hex\&quot;&#x60;  &gt; - Base64格式更适合网络传输和API调用 &gt; - 两种格式可以相互转换，数据完全一致
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextAesEncryptAdvancedRequest">包含加密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesEncryptAdvancedApiResponse"/>&gt;</returns>
+        Task<IPostTextAesEncryptAdvancedApiResponse> PostTextAesEncryptAdvancedAsync(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// AES高级加密
+        /// </summary>
+        /// <remarks>
+        /// 需要更灵活的AES加密方案？这个高级接口支持6种加密模式和3种填充方式，让你根据具体场景选择最合适的加密配置。  &gt; [!IMPORTANT] &gt; **推荐使用GCM模式** &gt; GCM模式提供认证加密(AEAD)，不仅能加密数据，还能验证数据完整性，防止密文被篡改。这是目前最推荐的加密模式。  ## 功能概述 这是一个功能全面的AES加密接口，支持多种加密模式和填充方式。你可以根据不同的安全需求和性能要求，灵活选择合适的加密配置。  ### 支持的加密模式 - **GCM模式**（推荐）：认证加密模式，提供完整性保护 - **CBC模式**：经典块加密模式，需要IV和填充，适用于文件加密 - **CTR模式**：流密码模式，无需填充，适用于实时数据加密 - **OFB/CFB模式**：流密码模式，无需填充，适用于流数据加密 - **ECB模式**（不推荐）：仅用于兼容性需求  ### 支持的填充方式 - **PKCS7填充**（推荐）：标准填充方式 - **Zero填充**：使用0x00字节填充 - **None填充**：无填充，用于流密码模式  ### 输出格式支持 - **base64**（默认）：标准Base64编码输出，适合传输和存储 - **hex**：十六进制编码输出，方便与在线加密工具对比验证  通过 &#x60;output_format&#x60; 参数可以直接获取HEX格式的密文，无需额外调用转换接口。  ## 参数说明 - **&#x60;text&#x60;**: 待加密的明文文本 - **&#x60;key&#x60;**: 加密密钥（支持任意长度） - **&#x60;mode&#x60;**: 加密模式（可选，默认GCM） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7） - **&#x60;iv&#x60;**: 自定义IV（可选，Base64编码，16字节） - **&#x60;output_format&#x60;**: 输出格式（可选，默认base64）  ## 使用示例  **示例1：HEX格式输出** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot;,   \&quot;output_format\&quot;: \&quot;hex\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;aaaca6027da10918bb5d23d81939552c\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  **示例2：Base64格式输出（默认）** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;qqymAn2hCRi7XSPYGTlVLA&#x3D;&#x3D;\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  ## 技术规格 - **加密算法**: AES-256 - **编码格式**: Base64/HEX（输入/输出） - **IV长度**: 16字节（128位） - **版本标注**: v3.4.8+  &gt; [!NOTE] &gt; **关于IV（初始化向量）** &gt; - GCM模式无需提供IV &gt; - CBC/CTR/OFB/CFB模式可选提供IV &gt; - ECB模式不使用IV &gt; - 建议每次加密使用不同的IV以确保安全性  &gt; [!TIP] &gt; **关于输出格式** &gt; - 如需与在线加密工具（如 toolhelper.cn）对比结果，建议使用 &#x60;output_format: \&quot;hex\&quot;&#x60;  &gt; - Base64格式更适合网络传输和API调用 &gt; - 两种格式可以相互转换，数据完全一致
+        /// </remarks>
+        /// <param name="postTextAesEncryptAdvancedRequest">包含加密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesEncryptAdvancedApiResponse"/>?&gt;</returns>
+        Task<IPostTextAesEncryptAdvancedApiResponse?> PostTextAesEncryptAdvancedOrDefaultAsync(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 文本分析
         /// </summary>
         /// <remarks>
         /// 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
@@ -117,7 +163,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAnalyzeApiResponse> PostTextAnalyzeAsync(PostTextAnalyzeRequest postTextAnalyzeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 多维度分析文本内容
+        /// 文本分析
         /// </summary>
         /// <remarks>
         /// 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
@@ -128,7 +174,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextAnalyzeApiResponse?> PostTextAnalyzeOrDefaultAsync(PostTextAnalyzeRequest postTextAnalyzeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 解码Base64编码的文本
+        /// Base64 解码
         /// </summary>
         /// <remarks>
         /// 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
@@ -140,7 +186,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextBase64DecodeApiResponse> PostTextBase64DecodeAsync(PostTextBase64DecodeRequest postTextBase64DecodeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 解码Base64编码的文本
+        /// Base64 解码
         /// </summary>
         /// <remarks>
         /// 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
@@ -151,7 +197,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextBase64DecodeApiResponse?> PostTextBase64DecodeOrDefaultAsync(PostTextBase64DecodeRequest postTextBase64DecodeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 将文本进行Base64编码
+        /// Base64 编码
         /// </summary>
         /// <remarks>
         /// 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
@@ -163,7 +209,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextBase64EncodeApiResponse> PostTextBase64EncodeAsync(PostTextBase64EncodeRequest postTextBase64EncodeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 将文本进行Base64编码
+        /// Base64 编码
         /// </summary>
         /// <remarks>
         /// 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
@@ -174,7 +220,30 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextBase64EncodeApiResponse?> PostTextBase64EncodeOrDefaultAsync(PostTextBase64EncodeRequest postTextBase64EncodeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 计算文本的MD5哈希值 (POST)
+        /// 格式转换
+        /// </summary>
+        /// <remarks>
+        /// 需要在不同文本格式之间转换？这个接口支持Base64、Hex、URL、HTML、Unicode等多种格式互转，还能生成MD5、SHA256等哈希值。  ## 功能概述 你提供待转换的文本、源格式和目标格式，接口会自动完成转换。支持7种双向格式（plain、base64、hex、url、html、unicode、binary）和4种单向哈希（md5、sha1、sha256、sha512）。  ## 格式说明 **双向转换格式**：plain（纯文本）、base64、hex（十六进制）、url、html（HTML实体）、unicode（\\uXXXX转义）、binary（二进制字符串）  **单向哈希格式**：md5、sha1、sha256、sha512（仅可作为目标格式，不可逆）  ## 链式转换 支持多次调用实现复杂转换，如先将文本转为base64，再将base64转为hex。
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextConvertRequest">包含转换配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextConvertApiResponse"/>&gt;</returns>
+        Task<IPostTextConvertApiResponse> PostTextConvertAsync(PostTextConvertRequest postTextConvertRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 格式转换
+        /// </summary>
+        /// <remarks>
+        /// 需要在不同文本格式之间转换？这个接口支持Base64、Hex、URL、HTML、Unicode等多种格式互转，还能生成MD5、SHA256等哈希值。  ## 功能概述 你提供待转换的文本、源格式和目标格式，接口会自动完成转换。支持7种双向格式（plain、base64、hex、url、html、unicode、binary）和4种单向哈希（md5、sha1、sha256、sha512）。  ## 格式说明 **双向转换格式**：plain（纯文本）、base64、hex（十六进制）、url、html（HTML实体）、unicode（\\uXXXX转义）、binary（二进制字符串）  **单向哈希格式**：md5、sha1、sha256、sha512（仅可作为目标格式，不可逆）  ## 链式转换 支持多次调用实现复杂转换，如先将文本转为base64，再将base64转为hex。
+        /// </remarks>
+        /// <param name="postTextConvertRequest">包含转换配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextConvertApiResponse"/>?&gt;</returns>
+        Task<IPostTextConvertApiResponse?> PostTextConvertOrDefaultAsync(PostTextConvertRequest postTextConvertRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// MD5 哈希 (POST)
         /// </summary>
         /// <remarks>
         /// 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
@@ -186,7 +255,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextMd5ApiResponse> PostTextMd5Async(PostTextMd5Request postTextMd5Request, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 计算文本的MD5哈希值 (POST)
+        /// MD5 哈希 (POST)
         /// </summary>
         /// <remarks>
         /// 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
@@ -197,7 +266,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextMd5ApiResponse?> PostTextMd5OrDefaultAsync(PostTextMd5Request postTextMd5Request, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 校验MD5哈希值
+        /// MD5 校验
         /// </summary>
         /// <remarks>
         /// 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
@@ -209,7 +278,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostTextMd5VerifyApiResponse> PostTextMd5VerifyAsync(PostTextMd5VerifyRequest postTextMd5VerifyRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 校验MD5哈希值
+        /// MD5 校验
         /// </summary>
         /// <remarks>
         /// 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
@@ -263,6 +332,24 @@ namespace uapi-sdk-csharp.Api
     }
 
     /// <summary>
+    /// The <see cref="IPostTextAesDecryptAdvancedApiResponse"/>
+    /// </summary>
+    public interface IPostTextAesDecryptAdvancedApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced400Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IPostTextAesEncryptApiResponse"/>
     /// </summary>
     public interface IPostTextAesEncryptApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostTextAesEncrypt200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostTextAesEncrypt400Response?>, IInternalServerError<uapi-sdk-csharp.Model.PostTextAesEncrypt500Response?>
@@ -284,6 +371,24 @@ namespace uapi-sdk-csharp.Api
         /// </summary>
         /// <returns></returns>
         bool IsInternalServerError { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IPostTextAesEncryptAdvancedApiResponse"/>
+    /// </summary>
+    public interface IPostTextAesEncryptAdvancedApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced400Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
     }
 
     /// <summary>
@@ -326,6 +431,24 @@ namespace uapi-sdk-csharp.Api
     /// The <see cref="IPostTextBase64EncodeApiResponse"/>
     /// </summary>
     public interface IPostTextBase64EncodeApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostTextBase64Encode200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostTextBase64Encode400Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IPostTextConvertApiResponse"/>
+    /// </summary>
+    public interface IPostTextConvertApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostTextConvert200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostTextConvert400Response?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -424,6 +547,26 @@ namespace uapi-sdk-csharp.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnPostTextAesDecryptAdvanced;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorPostTextAesDecryptAdvanced;
+
+        internal void ExecuteOnPostTextAesDecryptAdvanced(TextApi.PostTextAesDecryptAdvancedApiResponse apiResponse)
+        {
+            OnPostTextAesDecryptAdvanced?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorPostTextAesDecryptAdvanced(Exception exception)
+        {
+            OnErrorPostTextAesDecryptAdvanced?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs>? OnPostTextAesEncrypt;
 
         /// <summary>
@@ -439,6 +582,26 @@ namespace uapi-sdk-csharp.Api
         internal void ExecuteOnErrorPostTextAesEncrypt(Exception exception)
         {
             OnErrorPostTextAesEncrypt?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnPostTextAesEncryptAdvanced;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorPostTextAesEncryptAdvanced;
+
+        internal void ExecuteOnPostTextAesEncryptAdvanced(TextApi.PostTextAesEncryptAdvancedApiResponse apiResponse)
+        {
+            OnPostTextAesEncryptAdvanced?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorPostTextAesEncryptAdvanced(Exception exception)
+        {
+            OnErrorPostTextAesEncryptAdvanced?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -499,6 +662,26 @@ namespace uapi-sdk-csharp.Api
         internal void ExecuteOnErrorPostTextBase64Encode(Exception exception)
         {
             OnErrorPostTextBase64Encode?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnPostTextConvert;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorPostTextConvert;
+
+        internal void ExecuteOnPostTextConvert(TextApi.PostTextConvertApiResponse apiResponse)
+        {
+            OnPostTextConvert?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorPostTextConvert(Exception exception)
+        {
+            OnErrorPostTextConvert?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -642,7 +825,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetTextMd5(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string text);
 
         /// <summary>
-        /// 计算文本的MD5哈希值(GET) 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
+        /// MD5 哈希 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
         /// </summary>
         /// <param name="text">需要计算哈希值的文本</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -660,7 +843,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 计算文本的MD5哈希值(GET) 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
+        /// MD5 哈希 一个快速计算文本 MD5 哈希值的工具，适用于短文本且不关心参数暴露的场景。  ## 功能概述 通过GET请求的查询参数传入文本，返回其32位小写的MD5哈希值。  &gt; [!NOTE] &gt; 对于较长或敏感的文本，我们推荐使用本接口的 POST 版本，以避免URL长度限制和参数暴露问题。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="text">需要计算哈希值的文本</param>
@@ -927,7 +1110,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextAesDecrypt(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesDecryptRequest postTextAesDecryptRequest);
 
         /// <summary>
-        /// 使用AES算法解密文本 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
+        /// AES 解密 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
         /// </summary>
         /// <param name="postTextAesDecryptRequest">包含待解密文本 &#39;text&#39;、密钥 &#39;key&#39; 和随机数 &#39;nonce&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -945,7 +1128,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 使用AES算法解密文本 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
+        /// AES 解密 收到了用AES加密的密文？把它、密钥和随机数（nonce）交给我们，就能还原出原始内容。  ## 功能概述 这是一个标准的AES解密接口。你需要提供经过Base64编码的密文、加密时使用的密钥和nonce（随机数，通常为16字节字符串）。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。 &gt;  &gt; **关于随机数 &#x60;nonce&#x60;** &gt; 通常为16字节字符串，需与加密时一致。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextAesDecryptRequest">包含待解密文本 &#39;text&#39;、密钥 &#39;key&#39; 和随机数 &#39;nonce&#39; 的JSON对象</param>
@@ -1197,6 +1380,298 @@ namespace uapi-sdk-csharp.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatPostTextAesDecryptAdvanced(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="postTextAesDecryptAdvancedRequest"></param>
+        /// <returns></returns>
+        private void ValidatePostTextAesDecryptAdvanced(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest)
+        {
+            if (postTextAesDecryptAdvancedRequest == null)
+                throw new ArgumentNullException(nameof(postTextAesDecryptAdvancedRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextAesDecryptAdvancedRequest"></param>
+        private void AfterPostTextAesDecryptAdvancedDefaultImplementation(IPostTextAesDecryptAdvancedApiResponse apiResponseLocalVar, PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterPostTextAesDecryptAdvanced(ref suppressDefaultLog, apiResponseLocalVar, postTextAesDecryptAdvancedRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextAesDecryptAdvancedRequest"></param>
+        partial void AfterPostTextAesDecryptAdvanced(ref bool suppressDefaultLog, IPostTextAesDecryptAdvancedApiResponse apiResponseLocalVar, PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextAesDecryptAdvancedRequest"></param>
+        private void OnErrorPostTextAesDecryptAdvancedDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorPostTextAesDecryptAdvanced(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, postTextAesDecryptAdvancedRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextAesDecryptAdvancedRequest"></param>
+        partial void OnErrorPostTextAesDecryptAdvanced(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest);
+
+        /// <summary>
+        /// AES高级解密 需要解密通过高级加密接口加密的数据？这个接口提供与加密接口完全配对的解密功能，支持相同的6种加密模式和3种填充方式。  &gt; [!IMPORTANT] &gt; **解密参数必须与加密时一致** &gt; 解密时，必须提供与加密时相同的密钥、模式和填充方式。对于非GCM模式，还需要提供加密时返回的IV。  ## 功能概述 这是一个功能完整的AES解密接口，能够解密通过高级加密接口加密的所有密文。支持所有6种加密模式和3种填充方式，与加密接口完全配对。  ### 解密流程 1. 获取加密时返回的密文和配置参数 2. 使用相同的密钥、模式、填充方式和IV（如需要） 3. 调用本接口进行解密 4. 获取原始明文  ### 支持的解密模式 - **GCM模式**（推荐）：自动验证数据完整性，如果密文被篡改会解密失败 - **CBC模式**：经典块解密模式，需要提供加密时的IV - **CTR/OFB/CFB模式**：流密码解密，需要提供加密时的IV - **ECB模式**：不需要IV，但安全性较低  ### 填充方式处理 - **PKCS7填充**：解密后自动移除填充 - **Zero填充**：解密后自动移除0x00填充 - **None填充**：无填充处理  ## 参数说明 - **&#x60;text&#x60;**: 待解密的密文（Base64编码，来自加密接口返回的ciphertext字段） - **&#x60;key&#x60;**: 解密密钥（必须与加密时相同） - **&#x60;mode&#x60;**: 加密模式（必须与加密时相同） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7，必须与加密时相同） - **&#x60;iv&#x60;**: 初始化向量（非GCM模式必须提供，Base64编码）  ## 常见错误处理 如果解密失败，请检查以下几点： - 密钥是否与加密时完全相同 - 模式和填充方式是否匹配 - 非GCM模式下是否提供了正确的IV - 密文是否完整且未被修改 - GCM模式下密文是否被篡改
+        /// </summary>
+        /// <param name="postTextAesDecryptAdvancedRequest">包含解密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesDecryptAdvancedApiResponse"/>&gt;</returns>
+        public async Task<IPostTextAesDecryptAdvancedApiResponse?> PostTextAesDecryptAdvancedOrDefaultAsync(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await PostTextAesDecryptAdvancedAsync(postTextAesDecryptAdvancedRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// AES高级解密 需要解密通过高级加密接口加密的数据？这个接口提供与加密接口完全配对的解密功能，支持相同的6种加密模式和3种填充方式。  &gt; [!IMPORTANT] &gt; **解密参数必须与加密时一致** &gt; 解密时，必须提供与加密时相同的密钥、模式和填充方式。对于非GCM模式，还需要提供加密时返回的IV。  ## 功能概述 这是一个功能完整的AES解密接口，能够解密通过高级加密接口加密的所有密文。支持所有6种加密模式和3种填充方式，与加密接口完全配对。  ### 解密流程 1. 获取加密时返回的密文和配置参数 2. 使用相同的密钥、模式、填充方式和IV（如需要） 3. 调用本接口进行解密 4. 获取原始明文  ### 支持的解密模式 - **GCM模式**（推荐）：自动验证数据完整性，如果密文被篡改会解密失败 - **CBC模式**：经典块解密模式，需要提供加密时的IV - **CTR/OFB/CFB模式**：流密码解密，需要提供加密时的IV - **ECB模式**：不需要IV，但安全性较低  ### 填充方式处理 - **PKCS7填充**：解密后自动移除填充 - **Zero填充**：解密后自动移除0x00填充 - **None填充**：无填充处理  ## 参数说明 - **&#x60;text&#x60;**: 待解密的密文（Base64编码，来自加密接口返回的ciphertext字段） - **&#x60;key&#x60;**: 解密密钥（必须与加密时相同） - **&#x60;mode&#x60;**: 加密模式（必须与加密时相同） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7，必须与加密时相同） - **&#x60;iv&#x60;**: 初始化向量（非GCM模式必须提供，Base64编码）  ## 常见错误处理 如果解密失败，请检查以下几点： - 密钥是否与加密时完全相同 - 模式和填充方式是否匹配 - 非GCM模式下是否提供了正确的IV - 密文是否完整且未被修改 - GCM模式下密文是否被篡改
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextAesDecryptAdvancedRequest">包含解密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesDecryptAdvancedApiResponse"/>&gt;</returns>
+        public async Task<IPostTextAesDecryptAdvancedApiResponse> PostTextAesDecryptAdvancedAsync(PostTextAesDecryptAdvancedRequest postTextAesDecryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidatePostTextAesDecryptAdvanced(postTextAesDecryptAdvancedRequest);
+
+                FormatPostTextAesDecryptAdvanced(postTextAesDecryptAdvancedRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/text/aes/decrypt-advanced"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/text/aes/decrypt-advanced");
+
+                    httpRequestMessageLocalVar.Content = (postTextAesDecryptAdvancedRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(postTextAesDecryptAdvancedRequest, _jsonSerializerOptions));
+
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<PostTextAesDecryptAdvancedApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PostTextAesDecryptAdvancedApiResponse>();
+                        PostTextAesDecryptAdvancedApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/text/aes/decrypt-advanced", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterPostTextAesDecryptAdvancedDefaultImplementation(apiResponseLocalVar, postTextAesDecryptAdvancedRequest);
+
+                        Events.ExecuteOnPostTextAesDecryptAdvanced(apiResponseLocalVar);
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorPostTextAesDecryptAdvancedDefaultImplementation(e, "/text/aes/decrypt-advanced", uriBuilderLocalVar.Path, postTextAesDecryptAdvancedRequest);
+                Events.ExecuteOnErrorPostTextAesDecryptAdvanced(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PostTextAesDecryptAdvancedApiResponse"/>
+        /// </summary>
+        public partial class PostTextAesDecryptAdvancedApiResponse : uapi-sdk-csharp.Client.ApiResponse, IPostTextAesDecryptAdvancedApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<PostTextAesDecryptAdvancedApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="PostTextAesDecryptAdvancedApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextAesDecryptAdvancedApiResponse(ILogger<PostTextAesDecryptAdvancedApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PostTextAesDecryptAdvancedApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextAesDecryptAdvancedApiResponse(ILogger<PostTextAesDecryptAdvancedApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced200Response? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced200Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced200Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced400Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced400Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextAesDecryptAdvanced400Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatPostTextAesEncrypt(PostTextAesEncryptRequest postTextAesEncryptRequest);
 
         /// <summary>
@@ -1257,7 +1732,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextAesEncrypt(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesEncryptRequest postTextAesEncryptRequest);
 
         /// <summary>
-        /// 使用AES算法加密文本 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
+        /// AES 加密 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
         /// </summary>
         /// <param name="postTextAesEncryptRequest">包含待加密文本 &#39;text&#39; 和密钥 &#39;key&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1275,7 +1750,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 使用AES算法加密文本 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
+        /// AES 加密 需要安全地传输或存储一些文本信息？AES加密是一个可靠的选择。  ## 功能概述 这是一个标准的AES加密接口。你提供需要加密的明文和密钥，我们返回经过Base64编码的密文。  &gt; [!IMPORTANT] &gt; **关于密钥 &#x60;key&#x60;** &gt; 我们支持 AES-128, AES-192, 和 AES-256。请确保你提供的密钥 &#x60;key&#x60; 的长度（字节数）正好是 **16**、**24** 或 **32**，以分别对应这三种加密强度。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextAesEncryptRequest">包含待加密文本 &#39;text&#39; 和密钥 &#39;key&#39; 的JSON对象</param>
@@ -1527,6 +2002,298 @@ namespace uapi-sdk-csharp.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatPostTextAesEncryptAdvanced(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="postTextAesEncryptAdvancedRequest"></param>
+        /// <returns></returns>
+        private void ValidatePostTextAesEncryptAdvanced(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest)
+        {
+            if (postTextAesEncryptAdvancedRequest == null)
+                throw new ArgumentNullException(nameof(postTextAesEncryptAdvancedRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextAesEncryptAdvancedRequest"></param>
+        private void AfterPostTextAesEncryptAdvancedDefaultImplementation(IPostTextAesEncryptAdvancedApiResponse apiResponseLocalVar, PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterPostTextAesEncryptAdvanced(ref suppressDefaultLog, apiResponseLocalVar, postTextAesEncryptAdvancedRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextAesEncryptAdvancedRequest"></param>
+        partial void AfterPostTextAesEncryptAdvanced(ref bool suppressDefaultLog, IPostTextAesEncryptAdvancedApiResponse apiResponseLocalVar, PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextAesEncryptAdvancedRequest"></param>
+        private void OnErrorPostTextAesEncryptAdvancedDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorPostTextAesEncryptAdvanced(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, postTextAesEncryptAdvancedRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextAesEncryptAdvancedRequest"></param>
+        partial void OnErrorPostTextAesEncryptAdvanced(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest);
+
+        /// <summary>
+        /// AES高级加密 需要更灵活的AES加密方案？这个高级接口支持6种加密模式和3种填充方式，让你根据具体场景选择最合适的加密配置。  &gt; [!IMPORTANT] &gt; **推荐使用GCM模式** &gt; GCM模式提供认证加密(AEAD)，不仅能加密数据，还能验证数据完整性，防止密文被篡改。这是目前最推荐的加密模式。  ## 功能概述 这是一个功能全面的AES加密接口，支持多种加密模式和填充方式。你可以根据不同的安全需求和性能要求，灵活选择合适的加密配置。  ### 支持的加密模式 - **GCM模式**（推荐）：认证加密模式，提供完整性保护 - **CBC模式**：经典块加密模式，需要IV和填充，适用于文件加密 - **CTR模式**：流密码模式，无需填充，适用于实时数据加密 - **OFB/CFB模式**：流密码模式，无需填充，适用于流数据加密 - **ECB模式**（不推荐）：仅用于兼容性需求  ### 支持的填充方式 - **PKCS7填充**（推荐）：标准填充方式 - **Zero填充**：使用0x00字节填充 - **None填充**：无填充，用于流密码模式  ### 输出格式支持 - **base64**（默认）：标准Base64编码输出，适合传输和存储 - **hex**：十六进制编码输出，方便与在线加密工具对比验证  通过 &#x60;output_format&#x60; 参数可以直接获取HEX格式的密文，无需额外调用转换接口。  ## 参数说明 - **&#x60;text&#x60;**: 待加密的明文文本 - **&#x60;key&#x60;**: 加密密钥（支持任意长度） - **&#x60;mode&#x60;**: 加密模式（可选，默认GCM） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7） - **&#x60;iv&#x60;**: 自定义IV（可选，Base64编码，16字节） - **&#x60;output_format&#x60;**: 输出格式（可选，默认base64）  ## 使用示例  **示例1：HEX格式输出** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot;,   \&quot;output_format\&quot;: \&quot;hex\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;aaaca6027da10918bb5d23d81939552c\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  **示例2：Base64格式输出（默认）** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;qqymAn2hCRi7XSPYGTlVLA&#x3D;&#x3D;\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  ## 技术规格 - **加密算法**: AES-256 - **编码格式**: Base64/HEX（输入/输出） - **IV长度**: 16字节（128位） - **版本标注**: v3.4.8+  &gt; [!NOTE] &gt; **关于IV（初始化向量）** &gt; - GCM模式无需提供IV &gt; - CBC/CTR/OFB/CFB模式可选提供IV &gt; - ECB模式不使用IV &gt; - 建议每次加密使用不同的IV以确保安全性  &gt; [!TIP] &gt; **关于输出格式** &gt; - 如需与在线加密工具（如 toolhelper.cn）对比结果，建议使用 &#x60;output_format: \&quot;hex\&quot;&#x60;  &gt; - Base64格式更适合网络传输和API调用 &gt; - 两种格式可以相互转换，数据完全一致
+        /// </summary>
+        /// <param name="postTextAesEncryptAdvancedRequest">包含加密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesEncryptAdvancedApiResponse"/>&gt;</returns>
+        public async Task<IPostTextAesEncryptAdvancedApiResponse?> PostTextAesEncryptAdvancedOrDefaultAsync(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await PostTextAesEncryptAdvancedAsync(postTextAesEncryptAdvancedRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// AES高级加密 需要更灵活的AES加密方案？这个高级接口支持6种加密模式和3种填充方式，让你根据具体场景选择最合适的加密配置。  &gt; [!IMPORTANT] &gt; **推荐使用GCM模式** &gt; GCM模式提供认证加密(AEAD)，不仅能加密数据，还能验证数据完整性，防止密文被篡改。这是目前最推荐的加密模式。  ## 功能概述 这是一个功能全面的AES加密接口，支持多种加密模式和填充方式。你可以根据不同的安全需求和性能要求，灵活选择合适的加密配置。  ### 支持的加密模式 - **GCM模式**（推荐）：认证加密模式，提供完整性保护 - **CBC模式**：经典块加密模式，需要IV和填充，适用于文件加密 - **CTR模式**：流密码模式，无需填充，适用于实时数据加密 - **OFB/CFB模式**：流密码模式，无需填充，适用于流数据加密 - **ECB模式**（不推荐）：仅用于兼容性需求  ### 支持的填充方式 - **PKCS7填充**（推荐）：标准填充方式 - **Zero填充**：使用0x00字节填充 - **None填充**：无填充，用于流密码模式  ### 输出格式支持 - **base64**（默认）：标准Base64编码输出，适合传输和存储 - **hex**：十六进制编码输出，方便与在线加密工具对比验证  通过 &#x60;output_format&#x60; 参数可以直接获取HEX格式的密文，无需额外调用转换接口。  ## 参数说明 - **&#x60;text&#x60;**: 待加密的明文文本 - **&#x60;key&#x60;**: 加密密钥（支持任意长度） - **&#x60;mode&#x60;**: 加密模式（可选，默认GCM） - **&#x60;padding&#x60;**: 填充方式（可选，默认PKCS7） - **&#x60;iv&#x60;**: 自定义IV（可选，Base64编码，16字节） - **&#x60;output_format&#x60;**: 输出格式（可选，默认base64）  ## 使用示例  **示例1：HEX格式输出** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot;,   \&quot;output_format\&quot;: \&quot;hex\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;aaaca6027da10918bb5d23d81939552c\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  **示例2：Base64格式输出（默认）** &#x60;&#x60;&#x60;json {   \&quot;text\&quot;: \&quot;测试文本123\&quot;,   \&quot;key\&quot;: \&quot;1234567890123456\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60; 返回示例： &#x60;&#x60;&#x60;json {   \&quot;ciphertext\&quot;: \&quot;qqymAn2hCRi7XSPYGTlVLA&#x3D;&#x3D;\&quot;,   \&quot;mode\&quot;: \&quot;ECB\&quot;,   \&quot;padding\&quot;: \&quot;PKCS7\&quot; } &#x60;&#x60;&#x60;  ## 技术规格 - **加密算法**: AES-256 - **编码格式**: Base64/HEX（输入/输出） - **IV长度**: 16字节（128位） - **版本标注**: v3.4.8+  &gt; [!NOTE] &gt; **关于IV（初始化向量）** &gt; - GCM模式无需提供IV &gt; - CBC/CTR/OFB/CFB模式可选提供IV &gt; - ECB模式不使用IV &gt; - 建议每次加密使用不同的IV以确保安全性  &gt; [!TIP] &gt; **关于输出格式** &gt; - 如需与在线加密工具（如 toolhelper.cn）对比结果，建议使用 &#x60;output_format: \&quot;hex\&quot;&#x60;  &gt; - Base64格式更适合网络传输和API调用 &gt; - 两种格式可以相互转换，数据完全一致
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextAesEncryptAdvancedRequest">包含加密配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextAesEncryptAdvancedApiResponse"/>&gt;</returns>
+        public async Task<IPostTextAesEncryptAdvancedApiResponse> PostTextAesEncryptAdvancedAsync(PostTextAesEncryptAdvancedRequest postTextAesEncryptAdvancedRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidatePostTextAesEncryptAdvanced(postTextAesEncryptAdvancedRequest);
+
+                FormatPostTextAesEncryptAdvanced(postTextAesEncryptAdvancedRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/text/aes/encrypt-advanced"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/text/aes/encrypt-advanced");
+
+                    httpRequestMessageLocalVar.Content = (postTextAesEncryptAdvancedRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(postTextAesEncryptAdvancedRequest, _jsonSerializerOptions));
+
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<PostTextAesEncryptAdvancedApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PostTextAesEncryptAdvancedApiResponse>();
+                        PostTextAesEncryptAdvancedApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/text/aes/encrypt-advanced", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterPostTextAesEncryptAdvancedDefaultImplementation(apiResponseLocalVar, postTextAesEncryptAdvancedRequest);
+
+                        Events.ExecuteOnPostTextAesEncryptAdvanced(apiResponseLocalVar);
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorPostTextAesEncryptAdvancedDefaultImplementation(e, "/text/aes/encrypt-advanced", uriBuilderLocalVar.Path, postTextAesEncryptAdvancedRequest);
+                Events.ExecuteOnErrorPostTextAesEncryptAdvanced(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PostTextAesEncryptAdvancedApiResponse"/>
+        /// </summary>
+        public partial class PostTextAesEncryptAdvancedApiResponse : uapi-sdk-csharp.Client.ApiResponse, IPostTextAesEncryptAdvancedApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<PostTextAesEncryptAdvancedApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="PostTextAesEncryptAdvancedApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextAesEncryptAdvancedApiResponse(ILogger<PostTextAesEncryptAdvancedApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PostTextAesEncryptAdvancedApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextAesEncryptAdvancedApiResponse(ILogger<PostTextAesEncryptAdvancedApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced200Response? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced200Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced200Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced400Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced400Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextAesEncryptAdvanced400Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatPostTextAnalyze(PostTextAnalyzeRequest postTextAnalyzeRequest);
 
         /// <summary>
@@ -1587,7 +2354,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextAnalyze(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextAnalyzeRequest postTextAnalyzeRequest);
 
         /// <summary>
-        /// 多维度分析文本内容 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
+        /// 文本分析 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
         /// </summary>
         /// <param name="postTextAnalyzeRequest">包含待分析文本 &#39;text&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1605,7 +2372,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 多维度分析文本内容 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
+        /// 文本分析 想知道一篇文章有多少字、多少个词、或者多少行？这个接口可以帮你快速统计。  ## 功能概述 你提供一段文本，我们会从多个维度进行分析，并返回其字符数、词数、句子数、段落数和行数。这对于文本编辑、内容管理等场景非常有用。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextAnalyzeRequest">包含待分析文本 &#39;text&#39; 的JSON对象</param>
@@ -1879,7 +2646,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextBase64Decode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextBase64DecodeRequest postTextBase64DecodeRequest);
 
         /// <summary>
-        /// 解码Base64编码的文本 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
+        /// Base64 解码 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
         /// </summary>
         /// <param name="postTextBase64DecodeRequest">包含待解码文本 &#39;text&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1897,7 +2664,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 解码Base64编码的文本 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
+        /// Base64 解码 这是一个简单实用的 Base64 解码工具。  ## 功能概述 你提供一个 Base64 编码的字符串，我们帮你解码成原始的 UTF-8 文本。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextBase64DecodeRequest">包含待解码文本 &#39;text&#39; 的JSON对象</param>
@@ -2171,7 +2938,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextBase64Encode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextBase64EncodeRequest postTextBase64EncodeRequest);
 
         /// <summary>
-        /// 将文本进行Base64编码 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
+        /// Base64 编码 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
         /// </summary>
         /// <param name="postTextBase64EncodeRequest">包含待编码文本 &#39;text&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2189,7 +2956,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 将文本进行Base64编码 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
+        /// Base64 编码 这是一个简单实用的 Base64 编码工具。  ## 功能概述 你提供一段原始文本，我们帮你转换成 Base64 编码的字符串。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextBase64EncodeRequest">包含待编码文本 &#39;text&#39; 的JSON对象</param>
@@ -2403,6 +3170,298 @@ namespace uapi-sdk-csharp.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatPostTextConvert(PostTextConvertRequest postTextConvertRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="postTextConvertRequest"></param>
+        /// <returns></returns>
+        private void ValidatePostTextConvert(PostTextConvertRequest postTextConvertRequest)
+        {
+            if (postTextConvertRequest == null)
+                throw new ArgumentNullException(nameof(postTextConvertRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextConvertRequest"></param>
+        private void AfterPostTextConvertDefaultImplementation(IPostTextConvertApiResponse apiResponseLocalVar, PostTextConvertRequest postTextConvertRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterPostTextConvert(ref suppressDefaultLog, apiResponseLocalVar, postTextConvertRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="postTextConvertRequest"></param>
+        partial void AfterPostTextConvert(ref bool suppressDefaultLog, IPostTextConvertApiResponse apiResponseLocalVar, PostTextConvertRequest postTextConvertRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextConvertRequest"></param>
+        private void OnErrorPostTextConvertDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextConvertRequest postTextConvertRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorPostTextConvert(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, postTextConvertRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="postTextConvertRequest"></param>
+        partial void OnErrorPostTextConvert(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextConvertRequest postTextConvertRequest);
+
+        /// <summary>
+        /// 格式转换 需要在不同文本格式之间转换？这个接口支持Base64、Hex、URL、HTML、Unicode等多种格式互转，还能生成MD5、SHA256等哈希值。  ## 功能概述 你提供待转换的文本、源格式和目标格式，接口会自动完成转换。支持7种双向格式（plain、base64、hex、url、html、unicode、binary）和4种单向哈希（md5、sha1、sha256、sha512）。  ## 格式说明 **双向转换格式**：plain（纯文本）、base64、hex（十六进制）、url、html（HTML实体）、unicode（\\uXXXX转义）、binary（二进制字符串）  **单向哈希格式**：md5、sha1、sha256、sha512（仅可作为目标格式，不可逆）  ## 链式转换 支持多次调用实现复杂转换，如先将文本转为base64，再将base64转为hex。
+        /// </summary>
+        /// <param name="postTextConvertRequest">包含转换配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextConvertApiResponse"/>&gt;</returns>
+        public async Task<IPostTextConvertApiResponse?> PostTextConvertOrDefaultAsync(PostTextConvertRequest postTextConvertRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await PostTextConvertAsync(postTextConvertRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 格式转换 需要在不同文本格式之间转换？这个接口支持Base64、Hex、URL、HTML、Unicode等多种格式互转，还能生成MD5、SHA256等哈希值。  ## 功能概述 你提供待转换的文本、源格式和目标格式，接口会自动完成转换。支持7种双向格式（plain、base64、hex、url、html、unicode、binary）和4种单向哈希（md5、sha1、sha256、sha512）。  ## 格式说明 **双向转换格式**：plain（纯文本）、base64、hex（十六进制）、url、html（HTML实体）、unicode（\\uXXXX转义）、binary（二进制字符串）  **单向哈希格式**：md5、sha1、sha256、sha512（仅可作为目标格式，不可逆）  ## 链式转换 支持多次调用实现复杂转换，如先将文本转为base64，再将base64转为hex。
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="postTextConvertRequest">包含转换配置的JSON对象</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostTextConvertApiResponse"/>&gt;</returns>
+        public async Task<IPostTextConvertApiResponse> PostTextConvertAsync(PostTextConvertRequest postTextConvertRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidatePostTextConvert(postTextConvertRequest);
+
+                FormatPostTextConvert(postTextConvertRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/text/convert"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/text/convert");
+
+                    httpRequestMessageLocalVar.Content = (postTextConvertRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(postTextConvertRequest, _jsonSerializerOptions));
+
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<PostTextConvertApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PostTextConvertApiResponse>();
+                        PostTextConvertApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/text/convert", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterPostTextConvertDefaultImplementation(apiResponseLocalVar, postTextConvertRequest);
+
+                        Events.ExecuteOnPostTextConvert(apiResponseLocalVar);
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorPostTextConvertDefaultImplementation(e, "/text/convert", uriBuilderLocalVar.Path, postTextConvertRequest);
+                Events.ExecuteOnErrorPostTextConvert(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PostTextConvertApiResponse"/>
+        /// </summary>
+        public partial class PostTextConvertApiResponse : uapi-sdk-csharp.Client.ApiResponse, IPostTextConvertApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<PostTextConvertApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="PostTextConvertApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextConvertApiResponse(ILogger<PostTextConvertApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PostTextConvertApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostTextConvertApiResponse(ILogger<PostTextConvertApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextConvert200Response? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextConvert200Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextConvert200Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostTextConvert400Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostTextConvert400Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostTextConvert400Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatPostTextMd5(PostTextMd5Request postTextMd5Request);
 
         /// <summary>
@@ -2463,7 +3522,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextMd5(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextMd5Request postTextMd5Request);
 
         /// <summary>
-        /// 计算文本的MD5哈希值 (POST) 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
+        /// MD5 哈希 (POST) 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
         /// </summary>
         /// <param name="postTextMd5Request"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2481,7 +3540,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 计算文本的MD5哈希值 (POST) 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
+        /// MD5 哈希 (POST) 一个用于计算文本 MD5 哈希值的标准工具，推荐使用此版本。  ## 功能概述 通过POST请求的表单体传入文本，返回其32位小写的MD5哈希值。相比GET版本，此方法更适合处理较长或包含敏感信息的文本。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextMd5Request"></param>
@@ -2755,7 +3814,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostTextMd5Verify(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostTextMd5VerifyRequest postTextMd5VerifyRequest);
 
         /// <summary>
-        /// 校验MD5哈希值 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
+        /// MD5 校验 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
         /// </summary>
         /// <param name="postTextMd5VerifyRequest">包含待校验文本 &#39;text&#39; 和哈希值 &#39;hash&#39; 的JSON对象</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2773,7 +3832,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 校验MD5哈希值 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
+        /// MD5 校验 下载了一个文件，想确认它在传输过程中有没有损坏？校验MD5值是最常用的方法。  ## 功能概述 你提供原始文本和一个MD5哈希值，我们帮你计算文本的哈希，并与你提供的哈希进行比对，告诉你它们是否匹配。这在文件完整性校验等场景下非常有用。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postTextMd5VerifyRequest">包含待校验文本 &#39;text&#39; 和哈希值 &#39;hash&#39; 的JSON对象</param>

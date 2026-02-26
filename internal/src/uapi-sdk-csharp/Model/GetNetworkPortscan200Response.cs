@@ -33,15 +33,13 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNetworkPortscan200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="ip">ip</param>
         /// <param name="port">port</param>
         /// <param name="portStatus">\&quot;open\&quot;, \&quot;closed\&quot;, 或 \&quot;timeout\&quot;</param>
         /// <param name="protocol">protocol</param>
         [JsonConstructor]
-        public GetNetworkPortscan200Response(Option<int?> code = default, Option<string?> ip = default, Option<int?> port = default, Option<string?> portStatus = default, Option<string?> protocol = default)
+        public GetNetworkPortscan200Response(Option<string?> ip = default, Option<int?> port = default, Option<string?> portStatus = default, Option<string?> protocol = default)
         {
-            CodeOption = code;
             IpOption = ip;
             PortOption = port;
             PortStatusOption = portStatus;
@@ -50,20 +48,6 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Ip
@@ -130,7 +114,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkPortscan200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Ip: ").Append(Ip).Append("\n");
             sb.Append("  Port: ").Append(Port).Append("\n");
             sb.Append("  PortStatus: ").Append(PortStatus).Append("\n");
@@ -172,7 +155,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> ip = default;
             Option<int?> port = default;
             Option<string?> portStatus = default;
@@ -193,9 +175,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "ip":
                             ip = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -214,9 +193,6 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetNetworkPortscan200Response.");
-
             if (ip.IsSet && ip.Value == null)
                 throw new ArgumentNullException(nameof(ip), "Property is not nullable for class GetNetworkPortscan200Response.");
 
@@ -229,7 +205,7 @@ namespace uapi-sdk-csharp.Model
             if (protocol.IsSet && protocol.Value == null)
                 throw new ArgumentNullException(nameof(protocol), "Property is not nullable for class GetNetworkPortscan200Response.");
 
-            return new GetNetworkPortscan200Response(code, ip, port, portStatus, protocol);
+            return new GetNetworkPortscan200Response(ip, port, portStatus, protocol);
         }
 
         /// <summary>
@@ -264,9 +240,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getNetworkPortscan200Response.ProtocolOption.IsSet && getNetworkPortscan200Response.Protocol == null)
                 throw new ArgumentNullException(nameof(getNetworkPortscan200Response.Protocol), "Property is required for class GetNetworkPortscan200Response.");
-
-            if (getNetworkPortscan200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getNetworkPortscan200Response.CodeOption.Value!.Value);
 
             if (getNetworkPortscan200Response.IpOption.IsSet)
                 writer.WriteString("ip", getNetworkPortscan200Response.Ip);

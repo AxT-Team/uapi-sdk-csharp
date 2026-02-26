@@ -33,33 +33,17 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostAnswerbookAsk200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="question">question</param>
         /// <param name="answer">answer</param>
         [JsonConstructor]
-        public PostAnswerbookAsk200Response(Option<int?> code = default, Option<string?> question = default, Option<string?> answer = default)
+        public PostAnswerbookAsk200Response(Option<string?> question = default, Option<string?> answer = default)
         {
-            CodeOption = code;
             QuestionOption = question;
             AnswerOption = answer;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Question
@@ -97,7 +81,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAnswerbookAsk200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Question: ").Append(Question).Append("\n");
             sb.Append("  Answer: ").Append(Answer).Append("\n");
             sb.Append("}\n");
@@ -137,7 +120,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> question = default;
             Option<string?> answer = default;
 
@@ -156,9 +138,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "question":
                             question = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -171,16 +150,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class PostAnswerbookAsk200Response.");
-
             if (question.IsSet && question.Value == null)
                 throw new ArgumentNullException(nameof(question), "Property is not nullable for class PostAnswerbookAsk200Response.");
 
             if (answer.IsSet && answer.Value == null)
                 throw new ArgumentNullException(nameof(answer), "Property is not nullable for class PostAnswerbookAsk200Response.");
 
-            return new PostAnswerbookAsk200Response(code, question, answer);
+            return new PostAnswerbookAsk200Response(question, answer);
         }
 
         /// <summary>
@@ -212,9 +188,6 @@ namespace uapi-sdk-csharp.Model
 
             if (postAnswerbookAsk200Response.AnswerOption.IsSet && postAnswerbookAsk200Response.Answer == null)
                 throw new ArgumentNullException(nameof(postAnswerbookAsk200Response.Answer), "Property is required for class PostAnswerbookAsk200Response.");
-
-            if (postAnswerbookAsk200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", postAnswerbookAsk200Response.CodeOption.Value!.Value);
 
             if (postAnswerbookAsk200Response.QuestionOption.IsSet)
                 writer.WriteString("question", postAnswerbookAsk200Response.Question);

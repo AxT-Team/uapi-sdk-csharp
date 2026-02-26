@@ -38,14 +38,16 @@ namespace uapi-sdk-csharp.Model
         /// <param name="index">index</param>
         /// <param name="title">title</param>
         /// <param name="url">url</param>
+        /// <param name="cover">封面图 URL，音乐类热榜返回专辑封面，其他平台无此字段。</param>
         [JsonConstructor]
-        public GetMiscHotboard200ResponseListInner(Option<Dictionary<string, Object>?> extra = default, Option<string?> hotValue = default, Option<int?> index = default, Option<string?> title = default, Option<string?> url = default)
+        public GetMiscHotboard200ResponseListInner(Option<Dictionary<string, Object>?> extra = default, Option<string?> hotValue = default, Option<int?> index = default, Option<string?> title = default, Option<string?> url = default, Option<string?> cover = default)
         {
             ExtraOption = extra;
             HotValueOption = hotValue;
             IndexOption = index;
             TitleOption = title;
             UrlOption = url;
+            CoverOption = cover;
             OnCreated();
         }
 
@@ -122,6 +124,21 @@ namespace uapi-sdk-csharp.Model
         public string? Url { get { return this.UrlOption; } set { this.UrlOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Cover
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CoverOption { get; private set; }
+
+        /// <summary>
+        /// 封面图 URL，音乐类热榜返回专辑封面，其他平台无此字段。
+        /// </summary>
+        /// <value>封面图 URL，音乐类热榜返回专辑封面，其他平台无此字段。</value>
+        /* <example>https://p1.music.126.net/xxx/109951170483249998.jpg</example> */
+        [JsonPropertyName("cover")]
+        public string? Cover { get { return this.CoverOption; } set { this.CoverOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -134,6 +151,7 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Index: ").Append(Index).Append("\n");
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("  Cover: ").Append(Cover).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -176,6 +194,7 @@ namespace uapi-sdk-csharp.Model
             Option<int?> index = default;
             Option<string?> title = default;
             Option<string?> url = default;
+            Option<string?> cover = default;
 
             while (utf8JsonReader.Read())
             {
@@ -207,6 +226,9 @@ namespace uapi-sdk-csharp.Model
                         case "url":
                             url = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "cover":
+                            cover = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         default:
                             break;
                     }
@@ -228,7 +250,10 @@ namespace uapi-sdk-csharp.Model
             if (url.IsSet && url.Value == null)
                 throw new ArgumentNullException(nameof(url), "Property is not nullable for class GetMiscHotboard200ResponseListInner.");
 
-            return new GetMiscHotboard200ResponseListInner(extra, hotValue, index, title, url);
+            if (cover.IsSet && cover.Value == null)
+                throw new ArgumentNullException(nameof(cover), "Property is not nullable for class GetMiscHotboard200ResponseListInner.");
+
+            return new GetMiscHotboard200ResponseListInner(extra, hotValue, index, title, url, cover);
         }
 
         /// <summary>
@@ -267,6 +292,9 @@ namespace uapi-sdk-csharp.Model
             if (getMiscHotboard200ResponseListInner.UrlOption.IsSet && getMiscHotboard200ResponseListInner.Url == null)
                 throw new ArgumentNullException(nameof(getMiscHotboard200ResponseListInner.Url), "Property is required for class GetMiscHotboard200ResponseListInner.");
 
+            if (getMiscHotboard200ResponseListInner.CoverOption.IsSet && getMiscHotboard200ResponseListInner.Cover == null)
+                throw new ArgumentNullException(nameof(getMiscHotboard200ResponseListInner.Cover), "Property is required for class GetMiscHotboard200ResponseListInner.");
+
             if (getMiscHotboard200ResponseListInner.ExtraOption.IsSet)
             {
                 writer.WritePropertyName("extra");
@@ -283,6 +311,9 @@ namespace uapi-sdk-csharp.Model
 
             if (getMiscHotboard200ResponseListInner.UrlOption.IsSet)
                 writer.WriteString("url", getMiscHotboard200ResponseListInner.Url);
+
+            if (getMiscHotboard200ResponseListInner.CoverOption.IsSet)
+                writer.WriteString("cover", getMiscHotboard200ResponseListInner.Cover);
         }
     }
 }

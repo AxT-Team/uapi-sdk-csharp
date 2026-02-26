@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **Languages** | **Dictionary&lt;string, int&gt;** |  | [optional] 
 **Collaborators** | [**List&lt;GetGithubRepo200ResponseCollaboratorsInner&gt;**](GetGithubRepo200ResponseCollaboratorsInner.md) |  | [optional] 
 **Maintainers** | [**List&lt;GetGithubRepo200ResponseCollaboratorsInner&gt;**](GetGithubRepo200ResponseCollaboratorsInner.md) |  | [optional] 
+**LatestRelease** | [**GetGithubRepo200ResponseLatestRelease**](GetGithubRepo200ResponseLatestRelease.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

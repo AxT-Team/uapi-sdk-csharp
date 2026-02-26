@@ -56,8 +56,9 @@ namespace uapi-sdk-csharp.Model
         /// <param name="languages">languages</param>
         /// <param name="collaborators">collaborators</param>
         /// <param name="maintainers">maintainers</param>
+        /// <param name="latestRelease">latestRelease</param>
         [JsonConstructor]
-        public GetGithubRepo200Response(Option<string?> fullName = default, Option<string?> description = default, Option<string?> homepage = default, Option<string?> defaultBranch = default, Option<string?> primaryBranch = default, Option<string?> defaultBranchSha = default, Option<string?> visibility = default, Option<bool?> archived = default, Option<bool?> disabled = default, Option<bool?> fork = default, Option<string?> language = default, Option<List<string>?> topics = default, Option<string?> license = default, Option<int?> stargazers = default, Option<int?> forks = default, Option<int?> openIssues = default, Option<int?> watchers = default, Option<DateTime?> pushedAt = default, Option<DateTime?> createdAt = default, Option<DateTime?> updatedAt = default, Option<Dictionary<string, int>?> languages = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> collaborators = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> maintainers = default)
+        public GetGithubRepo200Response(Option<string?> fullName = default, Option<string?> description = default, Option<string?> homepage = default, Option<string?> defaultBranch = default, Option<string?> primaryBranch = default, Option<string?> defaultBranchSha = default, Option<string?> visibility = default, Option<bool?> archived = default, Option<bool?> disabled = default, Option<bool?> fork = default, Option<string?> language = default, Option<List<string>?> topics = default, Option<string?> license = default, Option<int?> stargazers = default, Option<int?> forks = default, Option<int?> openIssues = default, Option<int?> watchers = default, Option<DateTime?> pushedAt = default, Option<DateTime?> createdAt = default, Option<DateTime?> updatedAt = default, Option<Dictionary<string, int>?> languages = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> collaborators = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> maintainers = default, Option<GetGithubRepo200ResponseLatestRelease?> latestRelease = default)
         {
             FullNameOption = fullName;
             DescriptionOption = description;
@@ -82,6 +83,7 @@ namespace uapi-sdk-csharp.Model
             LanguagesOption = languages;
             CollaboratorsOption = collaborators;
             MaintainersOption = maintainers;
+            LatestReleaseOption = latestRelease;
             OnCreated();
         }
 
@@ -410,6 +412,19 @@ namespace uapi-sdk-csharp.Model
         public List<GetGithubRepo200ResponseCollaboratorsInner>? Maintainers { get { return this.MaintainersOption; } set { this.MaintainersOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of LatestRelease
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetGithubRepo200ResponseLatestRelease?> LatestReleaseOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets LatestRelease
+        /// </summary>
+        [JsonPropertyName("latest_release")]
+        public GetGithubRepo200ResponseLatestRelease? LatestRelease { get { return this.LatestReleaseOption; } set { this.LatestReleaseOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -440,6 +455,7 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Languages: ").Append(Languages).Append("\n");
             sb.Append("  Collaborators: ").Append(Collaborators).Append("\n");
             sb.Append("  Maintainers: ").Append(Maintainers).Append("\n");
+            sb.Append("  LatestRelease: ").Append(LatestRelease).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -515,6 +531,7 @@ namespace uapi-sdk-csharp.Model
             Option<Dictionary<string, int>?> languages = default;
             Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> collaborators = default;
             Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> maintainers = default;
+            Option<GetGithubRepo200ResponseLatestRelease?> latestRelease = default;
 
             while (utf8JsonReader.Read())
             {
@@ -600,6 +617,9 @@ namespace uapi-sdk-csharp.Model
                         case "maintainers":
                             maintainers = new Option<List<GetGithubRepo200ResponseCollaboratorsInner>?>(JsonSerializer.Deserialize<List<GetGithubRepo200ResponseCollaboratorsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
+                        case "latest_release":
+                            latestRelease = new Option<GetGithubRepo200ResponseLatestRelease?>(JsonSerializer.Deserialize<GetGithubRepo200ResponseLatestRelease>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         default:
                             break;
                     }
@@ -672,7 +692,7 @@ namespace uapi-sdk-csharp.Model
             if (maintainers.IsSet && maintainers.Value == null)
                 throw new ArgumentNullException(nameof(maintainers), "Property is not nullable for class GetGithubRepo200Response.");
 
-            return new GetGithubRepo200Response(fullName, description, homepage, defaultBranch, primaryBranch, defaultBranchSha, visibility, archived, disabled, fork, language, topics, license, stargazers, forks, openIssues, watchers, pushedAt, createdAt, updatedAt, languages, collaborators, maintainers);
+            return new GetGithubRepo200Response(fullName, description, homepage, defaultBranch, primaryBranch, defaultBranchSha, visibility, archived, disabled, fork, language, topics, license, stargazers, forks, openIssues, watchers, pushedAt, createdAt, updatedAt, languages, collaborators, maintainers, latestRelease);
         }
 
         /// <summary>
@@ -815,6 +835,14 @@ namespace uapi-sdk-csharp.Model
                 writer.WritePropertyName("maintainers");
                 JsonSerializer.Serialize(writer, getGithubRepo200Response.Maintainers, jsonSerializerOptions);
             }
+            if (getGithubRepo200Response.LatestReleaseOption.IsSet)
+                if (getGithubRepo200Response.LatestReleaseOption.Value != null)
+                {
+                    writer.WritePropertyName("latest_release");
+                    JsonSerializer.Serialize(writer, getGithubRepo200Response.LatestRelease, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("latest_release");
         }
     }
 }

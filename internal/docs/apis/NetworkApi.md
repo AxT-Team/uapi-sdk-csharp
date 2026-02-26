@@ -6,11 +6,11 @@ All URIs are relative to *https://uapis.cn/api/v1*
 |--------|--------------|-------------|
 | [**GetNetworkDns**](NetworkApi.md#getnetworkdns) | **GET** /network/dns | 执行DNS解析查询 |
 | [**GetNetworkIcp**](NetworkApi.md#getnetworkicp) | **GET** /network/icp | 查询域名ICP备案信息 |
-| [**GetNetworkIpinfo**](NetworkApi.md#getnetworkipinfo) | **GET** /network/ipinfo | 查询指定IP或域名的归属信息 |
-| [**GetNetworkMyip**](NetworkApi.md#getnetworkmyip) | **GET** /network/myip | 获取你的公网IP及归属信息 |
-| [**GetNetworkPing**](NetworkApi.md#getnetworkping) | **GET** /network/ping | 从服务器Ping指定主机 |
-| [**GetNetworkPingmyip**](NetworkApi.md#getnetworkpingmyip) | **GET** /network/pingmyip | 从服务器Ping你的客户端IP |
-| [**GetNetworkPortscan**](NetworkApi.md#getnetworkportscan) | **GET** /network/portscan | 扫描远程主机的指定端口 |
+| [**GetNetworkIpinfo**](NetworkApi.md#getnetworkipinfo) | **GET** /network/ipinfo | 查询 IP |
+| [**GetNetworkMyip**](NetworkApi.md#getnetworkmyip) | **GET** /network/myip | 查询我的 IP |
+| [**GetNetworkPing**](NetworkApi.md#getnetworkping) | **GET** /network/ping | Ping 主机 |
+| [**GetNetworkPingmyip**](NetworkApi.md#getnetworkpingmyip) | **GET** /network/pingmyip | Ping 我的 IP |
+| [**GetNetworkPortscan**](NetworkApi.md#getnetworkportscan) | **GET** /network/portscan | 端口扫描 |
 | [**GetNetworkUrlstatus**](NetworkApi.md#getnetworkurlstatus) | **GET** /network/urlstatus | 检查URL的可访问性状态 |
 | [**GetNetworkWhois**](NetworkApi.md#getnetworkwhois) | **GET** /network/whois | 查询域名的WHOIS注册信息 |
 | [**GetNetworkWxdomain**](NetworkApi.md#getnetworkwxdomain) | **GET** /network/wxdomain | 检查域名在微信中的访问状态 |
@@ -96,9 +96,9 @@ No authorization required
 # **GetNetworkIpinfo**
 > GetNetworkIpinfo200Response GetNetworkIpinfo (string ip, string source = null)
 
-查询指定IP或域名的归属信息
+查询 IP
 
-想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以选择使用默认的GeoIP数据库，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会利用GeoIP数据库查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
 
 
 ### Parameters
@@ -125,20 +125,20 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 查询成功！返回该IP地址的详细地理和网络信息。  **示例 1：标准查询 (不带 &#x60;source&#x60; 参数)**  请求: &#x60;/api/v1/network/ipinfo?ip&#x3D;120.24.0.0&#x60;  响应: &#x60;&#x60;&#x60;json {   \&quot;code\&quot;: 200,   \&quot;ip\&quot;: \&quot;120.24.0.0\&quot;,   \&quot;beginip\&quot;: \&quot;120.24.0.0\&quot;,   \&quot;endip\&quot;: \&quot;120.24.255.255\&quot;,   \&quot;region\&quot;: \&quot;中国 广东\&quot;,   \&quot;isp\&quot;: \&quot;China Telecom\&quot;,   \&quot;asn\&quot;: \&quot;AS4134\&quot;,   \&quot;llc\&quot;: \&quot;电信\&quot;,   \&quot;latitude\&quot;: 23.1291,   \&quot;longitude\&quot;: 113.2644 } &#x60;&#x60;&#x60;  **示例 2：商业数据源查询 (&#x60;source&#x3D;commercial&#x60;)**  请求: &#x60;/api/v1/network/ipinfo?ip&#x3D;120.24.0.0&amp;source&#x3D;commercial&#x60;  响应: &#x60;&#x60;&#x60;json {   \&quot;code\&quot;: 200,   \&quot;ip\&quot;: \&quot;120.24.0.0\&quot;,   \&quot;region\&quot;: \&quot;中国 广东 广州\&quot;,   \&quot;isp\&quot;: \&quot;电信\&quot;,   \&quot;llc\&quot;: \&quot;电信\&quot;,   \&quot;latitude\&quot;: 23.1291,   \&quot;longitude\&quot;: 113.2644,   \&quot;district\&quot;: \&quot;天河\&quot;,   \&quot;area_code\&quot;: \&quot;440106\&quot;,   \&quot;city_code\&quot;: \&quot;020\&quot;,   \&quot;zip_code\&quot;: \&quot;510000\&quot;,   \&quot;time_zone\&quot;: \&quot;Asia/Shanghai\&quot;,   \&quot;elevation\&quot;: \&quot;50\&quot;,   \&quot;weather_station\&quot;: \&quot;CHXX0049\&quot; } &#x60;&#x60;&#x60; |  -  |
+| **200** | 查询成功！返回该IP地址的详细地理和网络信息。 |  -  |
 | **400** | IP地址参数无效。请检查 &#x60;ip&#x60; 参数是否提供，以及它是否是一个合法的公网IP地址。 |  -  |
 | **404** | 信息未找到。这通常意味着你查询的是一个内网IP地址（如 192.168.x.x）或一个未分配的公网IP地址，我们的数据库中没有它的信息。 |  -  |
-| **500** | 服务器内部错误。我们的GeoIP数据库查询服务可能遇到了问题。 |  -  |
+| **500** | 服务器内部错误。IP查询服务可能遇到了问题。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="getnetworkmyip"></a>
 # **GetNetworkMyip**
-> GetNetworkIpinfo200Response GetNetworkMyip (string source = null)
+> GetNetworkMyip200Response GetNetworkMyip (string source = null)
 
-获取你的公网IP及归属信息
+查询我的 IP
 
-想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以选择使用默认的GeoIP数据库，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 `/network/ipinfo` 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 `/network/ipinfo` 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
 
 
 ### Parameters
@@ -149,7 +149,7 @@ No authorization required
 
 ### Return type
 
-[**GetNetworkIpinfo200Response**](GetNetworkIpinfo200Response.md)
+[**GetNetworkMyip200Response**](GetNetworkMyip200Response.md)
 
 ### Authorization
 
@@ -164,7 +164,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 查询成功！返回你的客户端IP的详细信息。  **示例 1：标准查询 (不带 &#x60;source&#x60; 参数)**  请求: &#x60;/api/v1/network/myip&#x60;  响应: &#x60;&#x60;&#x60;json {   \&quot;code\&quot;: 200,   \&quot;ip\&quot;: \&quot;1.2.3.4\&quot;,   \&quot;beginip\&quot;: \&quot;1.2.3.0\&quot;,   \&quot;endip\&quot;: \&quot;1.2.3.255\&quot;,   \&quot;region\&quot;: \&quot;中国 湖南 长沙\&quot;,   \&quot;isp\&quot;: \&quot;China Unicom\&quot;,   \&quot;asn\&quot;: \&quot;AS4837\&quot;,   \&quot;llc\&quot;: \&quot;联通\&quot;,   \&quot;latitude\&quot;: 28.1941,   \&quot;longitude\&quot;: 112.9823 } &#x60;&#x60;&#x60;  **示例 2：商业数据源查询 (&#x60;source&#x3D;commercial&#x60;)**  请求: &#x60;/api/v1/network/myip?source&#x3D;commercial&#x60;  响应: &#x60;&#x60;&#x60;json {   \&quot;code\&quot;: 200,   \&quot;ip\&quot;: \&quot;1.2.3.4\&quot;,   \&quot;region\&quot;: \&quot;中国 湖南 长沙\&quot;,   \&quot;isp\&quot;: \&quot;联通\&quot;,   \&quot;llc\&quot;: \&quot;联通\&quot;,   \&quot;latitude\&quot;: 28.1941,   \&quot;longitude\&quot;: 112.9823,   \&quot;district\&quot;: \&quot;岳麓\&quot;,   \&quot;area_code\&quot;: \&quot;430104\&quot;,   \&quot;city_code\&quot;: \&quot;0731\&quot;,   \&quot;zip_code\&quot;: \&quot;410000\&quot;,   \&quot;time_zone\&quot;: \&quot;Asia/Shanghai\&quot;,   \&quot;elevation\&quot;: \&quot;60\&quot;,   \&quot;weather_station\&quot;: \&quot;CHXX0062\&quot; } &#x60;&#x60;&#x60; |  -  |
+| **200** | 查询成功！返回你的客户端IP的详细信息。 |  -  |
 | **400** | 无法获取有效的客户端IP。这在一些特殊的网络环境下可能发生，例如通过了复杂的代理。 |  -  |
 | **500** | 服务器内部错误。在查询IP归属地信息时发生错误。 |  -  |
 
@@ -174,7 +174,7 @@ No authorization required
 # **GetNetworkPing**
 > GetNetworkPing200Response GetNetworkPing (string host)
 
-从服务器Ping指定主机
+Ping 主机
 
 想知道从我们的服务器到你的服务器网络延迟高不高？这个工具可以帮你测试网络连通性。  ## 功能概述 这个接口会从我们的服务器节点对你指定的主机（域名或IP地址）执行 ICMP Ping 操作。它会返回最小、最大、平均延迟以及丢包率等关键指标，是诊断网络问题的得力助手。
 
@@ -212,7 +212,7 @@ No authorization required
 # **GetNetworkPingmyip**
 > GetNetworkPingmyip200Response GetNetworkPingmyip ()
 
-从服务器Ping你的客户端IP
+Ping 我的 IP
 
 这是一个非常方便的快捷接口，想知道你的网络到我们服务器的回程延迟吗？点一下就行！  ## 功能概述 这个接口是 `/network/myip` 和 `/network/ping` 的结合体。它会自动获取你客户端的公网IP，然后从我们的服务器Ping这个IP，并返回延迟数据。这对于快速判断你本地网络到服务器的连接质量非常有用。
 
@@ -246,7 +246,7 @@ No authorization required
 # **GetNetworkPortscan**
 > GetNetworkPortscan200Response GetNetworkPortscan (string host, int port, string protocol = null)
 
-扫描远程主机的指定端口
+端口扫描
 
 想检查一下你的服务器上某个端口（比如SSH的22端口或者Web的80端口）是否对外开放？这个工具可以帮你快速确认。  ## 功能概述 你可以指定一个主机和端口号，我们的服务器会尝试连接该端口，并告诉你它是开放的（open）、关闭的（closed）还是超时了（timeout）。这对于网络服务配置检查和基本的安全扫描很有用。
 
@@ -288,7 +288,7 @@ No authorization required
 
 检查URL的可访问性状态
 
-你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。  > [!TIP] > **性能优化**：为了提高效率并减少对目标服务器的负载，我们实际发送的是 `HEAD` 请求，而不是 `GET` 请求。`HEAD` 请求只会获取响应头，而不会下载整个页面内容，因此速度更快。
+你的网站或API还好吗？用这个接口给它做个快速“体检”吧。  ## 功能概述 提供一个URL，我们会向它发起一个请求，并返回其HTTP响应状态码。这是一种简单而有效的服务可用性监控方法。
 
 
 ### Parameters
@@ -314,7 +314,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 检查成功！返回目标的HTTP状态码。 |  -  |
+| **200** | 检查完成！根据目标URL的可达性返回不同结果。 |  -  |
 | **400** | 请求参数无效。请检查 &#x60;url&#x60; 参数是否提供且格式正确。 |  -  |
 | **502** | 请求URL失败（例如，DNS解析失败、连接超时） |  -  |
 

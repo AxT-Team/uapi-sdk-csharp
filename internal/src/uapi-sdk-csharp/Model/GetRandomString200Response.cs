@@ -33,31 +33,15 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetRandomString200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
         /// <param name="text">text</param>
         [JsonConstructor]
-        public GetRandomString200Response(Option<int?> code = default, Option<string?> text = default)
+        public GetRandomString200Response(Option<string?> text = default)
         {
-            CodeOption = code;
             TextOption = text;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Text
@@ -81,7 +65,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetRandomString200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Text: ").Append(Text).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -120,7 +103,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> text = default;
 
             while (utf8JsonReader.Read())
@@ -138,9 +120,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "text":
                             text = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -150,13 +129,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetRandomString200Response.");
-
             if (text.IsSet && text.Value == null)
                 throw new ArgumentNullException(nameof(text), "Property is not nullable for class GetRandomString200Response.");
 
-            return new GetRandomString200Response(code, text);
+            return new GetRandomString200Response(text);
         }
 
         /// <summary>
@@ -185,9 +161,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (getRandomString200Response.TextOption.IsSet && getRandomString200Response.Text == null)
                 throw new ArgumentNullException(nameof(getRandomString200Response.Text), "Property is required for class GetRandomString200Response.");
-
-            if (getRandomString200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getRandomString200Response.CodeOption.Value!.Value);
 
             if (getRandomString200Response.TextOption.IsSet)
                 writer.WriteString("text", getRandomString200Response.Text);

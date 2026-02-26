@@ -34,13 +34,11 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetMiscWeather500Response" /> class.
         /// </summary>
         /// <param name="code">code</param>
-        /// <param name="details">details</param>
         /// <param name="message">message</param>
         [JsonConstructor]
-        public GetMiscWeather500Response(Option<string?> code = default, Option<Object?> details = default, Option<string?> message = default)
+        public GetMiscWeather500Response(Option<string?> code = default, Option<string?> message = default)
         {
             CodeOption = code;
-            DetailsOption = details;
             MessageOption = message;
             OnCreated();
         }
@@ -62,19 +60,6 @@ namespace uapi-sdk-csharp.Model
         public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Details
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<Object?> DetailsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Details
-        /// </summary>
-        [JsonPropertyName("details")]
-        public Object? Details { get { return this.DetailsOption; } set { this.DetailsOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of Message
         /// </summary>
         [JsonIgnore]
@@ -84,7 +69,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /* <example>An internal error occurred while fetching weather data.</example> */
+        /* <example>服务器内部错误</example> */
         [JsonPropertyName("message")]
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 
@@ -97,7 +82,6 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetMiscWeather500Response {\n");
             sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Details: ").Append(Details).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -137,7 +121,6 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> code = default;
-            Option<Object?> details = default;
             Option<string?> message = default;
 
             while (utf8JsonReader.Read())
@@ -158,9 +141,6 @@ namespace uapi-sdk-csharp.Model
                         case "code":
                             code = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "details":
-                            details = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
                         case "message":
                             message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -173,13 +153,10 @@ namespace uapi-sdk-csharp.Model
             if (code.IsSet && code.Value == null)
                 throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetMiscWeather500Response.");
 
-            if (details.IsSet && details.Value == null)
-                throw new ArgumentNullException(nameof(details), "Property is not nullable for class GetMiscWeather500Response.");
-
             if (message.IsSet && message.Value == null)
                 throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetMiscWeather500Response.");
 
-            return new GetMiscWeather500Response(code, details, message);
+            return new GetMiscWeather500Response(code, message);
         }
 
         /// <summary>
@@ -209,20 +186,12 @@ namespace uapi-sdk-csharp.Model
             if (getMiscWeather500Response.CodeOption.IsSet && getMiscWeather500Response.Code == null)
                 throw new ArgumentNullException(nameof(getMiscWeather500Response.Code), "Property is required for class GetMiscWeather500Response.");
 
-            if (getMiscWeather500Response.DetailsOption.IsSet && getMiscWeather500Response.Details == null)
-                throw new ArgumentNullException(nameof(getMiscWeather500Response.Details), "Property is required for class GetMiscWeather500Response.");
-
             if (getMiscWeather500Response.MessageOption.IsSet && getMiscWeather500Response.Message == null)
                 throw new ArgumentNullException(nameof(getMiscWeather500Response.Message), "Property is required for class GetMiscWeather500Response.");
 
             if (getMiscWeather500Response.CodeOption.IsSet)
                 writer.WriteString("code", getMiscWeather500Response.Code);
 
-            if (getMiscWeather500Response.DetailsOption.IsSet)
-            {
-                writer.WritePropertyName("details");
-                JsonSerializer.Serialize(writer, getMiscWeather500Response.Details, jsonSerializerOptions);
-            }
             if (getMiscWeather500Response.MessageOption.IsSet)
                 writer.WriteString("message", getMiscWeather500Response.Message);
         }

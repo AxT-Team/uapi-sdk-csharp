@@ -26,59 +26,78 @@ using uapi-sdk-csharp.Client;
 namespace uapi-sdk-csharp.Model
 {
     /// <summary>
-    /// GetGameMinecraftHistoryid200Response
+    /// 响应结构根据查询参数不同而变化
     /// </summary>
     public partial class GetGameMinecraftHistoryid200Response : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGameMinecraftHistoryid200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表成功。</param>
-        /// <param name="history">一个包含所有历史用户名的数组，按时间倒序排列。</param>
-        /// <param name="id">玩家当前的用户名。</param>
-        /// <param name="nameNum">历史名称的总数（包含当前名称）。</param>
-        /// <param name="uuid">被查询玩家的32位无破折号UUID。</param>
+        /// <param name="query">【name 查询时返回】查询的用户名。</param>
+        /// <param name="count">【name 查询时返回】匹配到的用户数量，为 0 时表示未找到。</param>
+        /// <param name="results">【name 查询时返回】匹配用户列表，包含当前用户名或曾用名匹配的所有玩家。</param>
+        /// <param name="id">【uuid 查询时返回】玩家当前的用户名。</param>
+        /// <param name="uuid">【uuid 查询时返回】被查询玩家的UUID（带连字符格式）。</param>
+        /// <param name="nameNum">【uuid 查询时返回】历史名称的总数（包含当前名称）。</param>
+        /// <param name="history">【uuid 查询时返回】包含所有历史用户名的数组，按时间倒序排列。</param>
         [JsonConstructor]
-        public GetGameMinecraftHistoryid200Response(Option<int?> code = default, Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> history = default, Option<string?> id = default, Option<int?> nameNum = default, Option<string?> uuid = default)
+        public GetGameMinecraftHistoryid200Response(Option<string?> query = default, Option<int?> count = default, Option<List<GetGameMinecraftHistoryid200ResponseResultsInner>?> results = default, Option<string?> id = default, Option<string?> uuid = default, Option<int?> nameNum = default, Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> history = default)
         {
-            CodeOption = code;
-            HistoryOption = history;
+            QueryOption = query;
+            CountOption = count;
+            ResultsOption = results;
             IdOption = id;
-            NameNumOption = nameNum;
             UuidOption = uuid;
+            NameNumOption = nameNum;
+            HistoryOption = history;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of Query
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
+        public Option<string?> QueryOption { get; private set; }
 
         /// <summary>
-        /// 状态码，200代表成功。
+        /// 【name 查询时返回】查询的用户名。
         /// </summary>
-        /// <value>状态码，200代表成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
+        /// <value>【name 查询时返回】查询的用户名。</value>
+        /* <example>ExamplePlayer</example> */
+        [JsonPropertyName("query")]
+        public string? Query { get { return this.QueryOption; } set { this.QueryOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of History
+        /// Used to track the state of Count
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> HistoryOption { get; private set; }
+        public Option<int?> CountOption { get; private set; }
 
         /// <summary>
-        /// 一个包含所有历史用户名的数组，按时间倒序排列。
+        /// 【name 查询时返回】匹配到的用户数量，为 0 时表示未找到。
         /// </summary>
-        /// <value>一个包含所有历史用户名的数组，按时间倒序排列。</value>
-        [JsonPropertyName("history")]
-        public List<GetGameMinecraftHistoryid200ResponseHistoryInner>? History { get { return this.HistoryOption; } set { this.HistoryOption = new(value); } }
+        /// <value>【name 查询时返回】匹配到的用户数量，为 0 时表示未找到。</value>
+        /* <example>2</example> */
+        [JsonPropertyName("count")]
+        public int? Count { get { return this.CountOption; } set { this.CountOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Results
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetGameMinecraftHistoryid200ResponseResultsInner>?> ResultsOption { get; private set; }
+
+        /// <summary>
+        /// 【name 查询时返回】匹配用户列表，包含当前用户名或曾用名匹配的所有玩家。
+        /// </summary>
+        /// <value>【name 查询时返回】匹配用户列表，包含当前用户名或曾用名匹配的所有玩家。</value>
+        [JsonPropertyName("results")]
+        public List<GetGameMinecraftHistoryid200ResponseResultsInner>? Results { get { return this.ResultsOption; } set { this.ResultsOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Id
@@ -88,27 +107,12 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> IdOption { get; private set; }
 
         /// <summary>
-        /// 玩家当前的用户名。
+        /// 【uuid 查询时返回】玩家当前的用户名。
         /// </summary>
-        /// <value>玩家当前的用户名。</value>
-        /* <example>Notch</example> */
+        /// <value>【uuid 查询时返回】玩家当前的用户名。</value>
+        /* <example>T8K_</example> */
         [JsonPropertyName("id")]
         public string? Id { get { return this.IdOption; } set { this.IdOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of NameNum
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> NameNumOption { get; private set; }
-
-        /// <summary>
-        /// 历史名称的总数（包含当前名称）。
-        /// </summary>
-        /// <value>历史名称的总数（包含当前名称）。</value>
-        /* <example>2</example> */
-        [JsonPropertyName("name_num")]
-        public int? NameNum { get { return this.NameNumOption; } set { this.NameNumOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Uuid
@@ -118,12 +122,41 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> UuidOption { get; private set; }
 
         /// <summary>
-        /// 被查询玩家的32位无破折号UUID。
+        /// 【uuid 查询时返回】被查询玩家的UUID（带连字符格式）。
         /// </summary>
-        /// <value>被查询玩家的32位无破折号UUID。</value>
-        /* <example>ee9b4ed1aac1491eb7611471be374b80</example> */
+        /// <value>【uuid 查询时返回】被查询玩家的UUID（带连字符格式）。</value>
+        /* <example>ee9b4ed1-aac1-491e-b761-1471be374b80</example> */
         [JsonPropertyName("uuid")]
         public string? Uuid { get { return this.UuidOption; } set { this.UuidOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of NameNum
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> NameNumOption { get; private set; }
+
+        /// <summary>
+        /// 【uuid 查询时返回】历史名称的总数（包含当前名称）。
+        /// </summary>
+        /// <value>【uuid 查询时返回】历史名称的总数（包含当前名称）。</value>
+        /* <example>4</example> */
+        [JsonPropertyName("name_num")]
+        public int? NameNum { get { return this.NameNumOption; } set { this.NameNumOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of History
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> HistoryOption { get; private set; }
+
+        /// <summary>
+        /// 【uuid 查询时返回】包含所有历史用户名的数组，按时间倒序排列。
+        /// </summary>
+        /// <value>【uuid 查询时返回】包含所有历史用户名的数组，按时间倒序排列。</value>
+        [JsonPropertyName("history")]
+        public List<GetGameMinecraftHistoryid200ResponseHistoryInner>? History { get { return this.HistoryOption; } set { this.HistoryOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -133,11 +166,13 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetGameMinecraftHistoryid200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  History: ").Append(History).Append("\n");
+            sb.Append("  Query: ").Append(Query).Append("\n");
+            sb.Append("  Count: ").Append(Count).Append("\n");
+            sb.Append("  Results: ").Append(Results).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  NameNum: ").Append(NameNum).Append("\n");
             sb.Append("  Uuid: ").Append(Uuid).Append("\n");
+            sb.Append("  NameNum: ").Append(NameNum).Append("\n");
+            sb.Append("  History: ").Append(History).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -175,11 +210,13 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
-            Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> history = default;
+            Option<string?> query = default;
+            Option<int?> count = default;
+            Option<List<GetGameMinecraftHistoryid200ResponseResultsInner>?> results = default;
             Option<string?> id = default;
-            Option<int?> nameNum = default;
             Option<string?> uuid = default;
+            Option<int?> nameNum = default;
+            Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?> history = default;
 
             while (utf8JsonReader.Read())
             {
@@ -196,20 +233,26 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                        case "query":
+                            query = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "history":
-                            history = new Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?>(JsonSerializer.Deserialize<List<GetGameMinecraftHistoryid200ResponseHistoryInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "count":
+                            count = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "results":
+                            results = new Option<List<GetGameMinecraftHistoryid200ResponseResultsInner>?>(JsonSerializer.Deserialize<List<GetGameMinecraftHistoryid200ResponseResultsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "id":
                             id = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "uuid":
+                            uuid = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "name_num":
                             nameNum = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
-                        case "uuid":
-                            uuid = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "history":
+                            history = new Option<List<GetGameMinecraftHistoryid200ResponseHistoryInner>?>(JsonSerializer.Deserialize<List<GetGameMinecraftHistoryid200ResponseHistoryInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -217,22 +260,28 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
+            if (query.IsSet && query.Value == null)
+                throw new ArgumentNullException(nameof(query), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
 
-            if (history.IsSet && history.Value == null)
-                throw new ArgumentNullException(nameof(history), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
+            if (count.IsSet && count.Value == null)
+                throw new ArgumentNullException(nameof(count), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
+
+            if (results.IsSet && results.Value == null)
+                throw new ArgumentNullException(nameof(results), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
 
             if (id.IsSet && id.Value == null)
                 throw new ArgumentNullException(nameof(id), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
 
-            if (nameNum.IsSet && nameNum.Value == null)
-                throw new ArgumentNullException(nameof(nameNum), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
-
             if (uuid.IsSet && uuid.Value == null)
                 throw new ArgumentNullException(nameof(uuid), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
 
-            return new GetGameMinecraftHistoryid200Response(code, history, id, nameNum, uuid);
+            if (nameNum.IsSet && nameNum.Value == null)
+                throw new ArgumentNullException(nameof(nameNum), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
+
+            if (history.IsSet && history.Value == null)
+                throw new ArgumentNullException(nameof(history), "Property is not nullable for class GetGameMinecraftHistoryid200Response.");
+
+            return new GetGameMinecraftHistoryid200Response(query, count, results, id, uuid, nameNum, history);
         }
 
         /// <summary>
@@ -259,8 +308,11 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetGameMinecraftHistoryid200Response getGameMinecraftHistoryid200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getGameMinecraftHistoryid200Response.HistoryOption.IsSet && getGameMinecraftHistoryid200Response.History == null)
-                throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.History), "Property is required for class GetGameMinecraftHistoryid200Response.");
+            if (getGameMinecraftHistoryid200Response.QueryOption.IsSet && getGameMinecraftHistoryid200Response.Query == null)
+                throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.Query), "Property is required for class GetGameMinecraftHistoryid200Response.");
+
+            if (getGameMinecraftHistoryid200Response.ResultsOption.IsSet && getGameMinecraftHistoryid200Response.Results == null)
+                throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.Results), "Property is required for class GetGameMinecraftHistoryid200Response.");
 
             if (getGameMinecraftHistoryid200Response.IdOption.IsSet && getGameMinecraftHistoryid200Response.Id == null)
                 throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.Id), "Property is required for class GetGameMinecraftHistoryid200Response.");
@@ -268,22 +320,34 @@ namespace uapi-sdk-csharp.Model
             if (getGameMinecraftHistoryid200Response.UuidOption.IsSet && getGameMinecraftHistoryid200Response.Uuid == null)
                 throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.Uuid), "Property is required for class GetGameMinecraftHistoryid200Response.");
 
-            if (getGameMinecraftHistoryid200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getGameMinecraftHistoryid200Response.CodeOption.Value!.Value);
+            if (getGameMinecraftHistoryid200Response.HistoryOption.IsSet && getGameMinecraftHistoryid200Response.History == null)
+                throw new ArgumentNullException(nameof(getGameMinecraftHistoryid200Response.History), "Property is required for class GetGameMinecraftHistoryid200Response.");
+
+            if (getGameMinecraftHistoryid200Response.QueryOption.IsSet)
+                writer.WriteString("query", getGameMinecraftHistoryid200Response.Query);
+
+            if (getGameMinecraftHistoryid200Response.CountOption.IsSet)
+                writer.WriteNumber("count", getGameMinecraftHistoryid200Response.CountOption.Value!.Value);
+
+            if (getGameMinecraftHistoryid200Response.ResultsOption.IsSet)
+            {
+                writer.WritePropertyName("results");
+                JsonSerializer.Serialize(writer, getGameMinecraftHistoryid200Response.Results, jsonSerializerOptions);
+            }
+            if (getGameMinecraftHistoryid200Response.IdOption.IsSet)
+                writer.WriteString("id", getGameMinecraftHistoryid200Response.Id);
+
+            if (getGameMinecraftHistoryid200Response.UuidOption.IsSet)
+                writer.WriteString("uuid", getGameMinecraftHistoryid200Response.Uuid);
+
+            if (getGameMinecraftHistoryid200Response.NameNumOption.IsSet)
+                writer.WriteNumber("name_num", getGameMinecraftHistoryid200Response.NameNumOption.Value!.Value);
 
             if (getGameMinecraftHistoryid200Response.HistoryOption.IsSet)
             {
                 writer.WritePropertyName("history");
                 JsonSerializer.Serialize(writer, getGameMinecraftHistoryid200Response.History, jsonSerializerOptions);
             }
-            if (getGameMinecraftHistoryid200Response.IdOption.IsSet)
-                writer.WriteString("id", getGameMinecraftHistoryid200Response.Id);
-
-            if (getGameMinecraftHistoryid200Response.NameNumOption.IsSet)
-                writer.WriteNumber("name_num", getGameMinecraftHistoryid200Response.NameNumOption.Value!.Value);
-
-            if (getGameMinecraftHistoryid200Response.UuidOption.IsSet)
-                writer.WriteString("uuid", getGameMinecraftHistoryid200Response.Uuid);
         }
     }
 }

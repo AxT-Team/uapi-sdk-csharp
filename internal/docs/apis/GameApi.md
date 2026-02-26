@@ -4,17 +4,17 @@ All URIs are relative to *https://uapis.cn/api/v1*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**GetGameEpicFree**](GameApi.md#getgameepicfree) | **GET** /game/epic-free | 获取Epic Games免费游戏 |
-| [**GetGameMinecraftHistoryid**](GameApi.md#getgameminecrafthistoryid) | **GET** /game/minecraft/historyid | 查询Minecraft玩家历史用户名 |
-| [**GetGameMinecraftServerstatus**](GameApi.md#getgameminecraftserverstatus) | **GET** /game/minecraft/serverstatus | 查询Minecraft服务器状态 |
-| [**GetGameMinecraftUserinfo**](GameApi.md#getgameminecraftuserinfo) | **GET** /game/minecraft/userinfo | 查询Minecraft玩家信息 |
-| [**GetGameSteamSummary**](GameApi.md#getgamesteamsummary) | **GET** /game/steam/summary | 获取Steam用户公开摘要 |
+| [**GetGameEpicFree**](GameApi.md#getgameepicfree) | **GET** /game/epic-free | Epic 免费游戏 |
+| [**GetGameMinecraftHistoryid**](GameApi.md#getgameminecrafthistoryid) | **GET** /game/minecraft/historyid | 查询 MC 曾用名 |
+| [**GetGameMinecraftServerstatus**](GameApi.md#getgameminecraftserverstatus) | **GET** /game/minecraft/serverstatus | 查询 MC 服务器 |
+| [**GetGameMinecraftUserinfo**](GameApi.md#getgameminecraftuserinfo) | **GET** /game/minecraft/userinfo | 查询 MC 玩家 |
+| [**GetGameSteamSummary**](GameApi.md#getgamesteamsummary) | **GET** /game/steam/summary | 查询 Steam 用户 |
 
 <a id="getgameepicfree"></a>
 # **GetGameEpicFree**
 > GetGameEpicFree200Response GetGameEpicFree ()
 
-获取Epic Games免费游戏
+Epic 免费游戏
 
 白嫖党的福音来了！想第一时间知道Epic商店本周送了哪些游戏大作吗？  ## 功能概述 这个接口帮你实时追踪Epic Games商店的每周免费游戏活动。无需任何参数，调用后即可获得当前所有免费游戏的完整信息，包括游戏封面、原价、剩余时间等，再也不用担心错过心仪的免费游戏了！  ## 使用场景 - 开发游戏资讯应用或网站 - 制作Epic免费游戏推送机器人 - 为用户提供游戏收藏建议 - 构建个人游戏库管理工具  > [!TIP] > **关于时间格式** > 为了方便不同场景的使用，我们同时提供了可读的时间字符串（如 `2025/01/10 00:00:00`）和13位毫秒时间戳。前端显示用字符串，程序逻辑用时间戳
 
@@ -45,18 +45,19 @@ No authorization required
 
 <a id="getgameminecrafthistoryid"></a>
 # **GetGameMinecraftHistoryid**
-> GetGameMinecraftHistoryid200Response GetGameMinecraftHistoryid (string uuid)
+> GetGameMinecraftHistoryid200Response GetGameMinecraftHistoryid (string name = null, string uuid = null)
 
-查询Minecraft玩家历史用户名
+查询 MC 曾用名
 
-想知道某个大佬以前叫什么名字吗？这个接口可以帮你追溯一个 Minecraft 玩家的“黑历史”！  ## 功能概述 通过提供一个玩家的 UUID，你可以获取到该玩家所有曾用名及其变更时间的列表。这对于识别回归的老玩家或者社区管理非常有用。  ## 使用须知 > [!NOTE] > **UUID 格式** > 查询时，请务必提供玩家的 **32位无破折号** Minecraft UUID，例如 `ee9b4ed1aac1491eb7611471be374b80`。
+想知道某个大佬以前叫什么名字吗？这个接口可以帮你追溯一个 Minecraft 玩家的“黑历史”！  ## 功能概述 通过提供玩家的用户名或 UUID，你可以获取到该玩家所有曾用名及其变更时间的列表。这对于识别回归的老玩家或者社区管理非常有用。  ## 使用须知 > [!NOTE] > **参数说明** > - `name` 和 `uuid` 二选一 > - UUID 支持带连字符（如 `ee9b4ed1-aac1-491e-b761-1471be374b80`）或不带连字符格式  > [!IMPORTANT] > **响应结构差异** > - 使用 `uuid` 查询：返回单个用户的历史记录 > - 使用 `name` 查询：返回所有匹配用户的列表（包括当前用户名或曾用名匹配的玩家），需判断响应中是否有 `results` 字段来区分两种模式
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **uuid** | **string** | 玩家的 Minecraft UUID，请务必使用32位无破折号的格式。 |  |
+| **name** | **string** | 玩家的 Minecraft 用户名。使用此参数查询时，会返回所有匹配用户的列表（包括当前用户名或曾用名匹配的玩家）。 | [optional]  |
+| **uuid** | **string** | 玩家的 Minecraft UUID，支持带连字符或不带连字符格式。 | [optional]  |
 
 ### Return type
 
@@ -75,10 +76,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 查询成功！返回该玩家的完整用户名历史记录。 |  -  |
-| **400** | 请求失败。请检查你是否提供了 &#x60;uuid&#x60; 参数，以及它的格式是否为32位无破折号字符串。 |  -  |
+| **200** | 查询成功！根据查询方式返回不同结构： - **uuid 查询**：返回单个用户的历史记录 - **name 查询**：返回匹配用户列表（判断响应中是否有 &#x60;results&#x60; 字段来区分） |  -  |
+| **400** | 请求失败。请检查你是否提供了 &#x60;name&#x60; 或 &#x60;uuid&#x60; 参数中的至少一个。 |  -  |
 | **404** | 用户未找到。我们根据你提供的 UUID 未能找到对应的 Minecraft 玩家。请确认 UUID 是否正确。 |  -  |
-| **502** | 上游服务错误。在向 Mojang 的官方 API 请求数据时遇到了问题。这可能是他们的服务暂时中断，请稍后重试。 |  -  |
+| **502** | 服务暂时不可用，请稍后重试。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -86,7 +87,7 @@ No authorization required
 # **GetGameMinecraftServerstatus**
 > GetGameMinecraftServerstatus200Response GetGameMinecraftServerstatus (string server)
 
-查询Minecraft服务器状态
+查询 MC 服务器
 
 想在加入服务器前看看有多少人在线？或者检查一下服务器开没开？用这个接口就对了！  ## 功能概述 你可以通过提供服务器地址（域名或IP），来获取一个 Minecraft Java 版服务器的实时状态。返回信息非常丰富，包括服务器是否在线、当前玩家数、最大玩家数、服务器版本、MOTD（每日消息）以及服务器图标等。
 
@@ -125,7 +126,7 @@ No authorization required
 # **GetGameMinecraftUserinfo**
 > GetGameMinecraftUserinfo200Response GetGameMinecraftUserinfo (string username)
 
-查询Minecraft玩家信息
+查询 MC 玩家
 
 只需要一个玩家的用户名，就能快速获取到他的正版皮肤和独一无二的UUID！  ## 功能概述 这是一个基础但非常实用的接口。通过玩家当前的游戏内名称（Username），你可以查询到他对应的UUID（唯一标识符）和当前皮肤的URL地址。这是构建许多其他玩家相关服务的第一步。
 
@@ -164,7 +165,7 @@ No authorization required
 # **GetGameSteamSummary**
 > GetGameSteamSummary200Response GetGameSteamSummary (string steamid = null, string id = null, string id3 = null, string key = null)
 
-获取Steam用户公开摘要
+查询 Steam 用户
 
 想在你的网站或应用中展示用户的 Steam 个人资料？这个接口就是为你准备的。  ## 功能概述 通过一个用户的 Steam 标识（支持多种格式），你可以获取到他公开的个人资料摘要，包括昵称、头像、在线状态、真实姓名（如果公开）和个人资料主页URL等信息。  ## 支持的参数格式 接口现在支持以下几种标识符格式： - **`steamid`**: 64位SteamID（如 `76561197960287930`） - **`id`**: 自定义URL名称（如 `gabelogannewell`） - **`id3`**: Steam ID3格式（如 `STEAM_0:0:22202`） - 完整的个人资料链接 - 好友代码  ## 使用须知  > [!IMPORTANT] > **API Key 安全** > 此接口需要一个 Steam Web API Key。我们强烈建议由后端统一配置和调用，以避免在客户端泄露。当然，你也可以通过 `key` 查询参数临时提供一个Key来覆盖后端配置。  在处理响应时，请注意以下数字代码的含义： - **`personastate` (用户状态)**: 0-离线, 1-在线, 2-忙碌, 3-离开, 4-打盹, 5-想交易, 6-想玩。 - **`communityvisibilitystate` (社区可见性)**: 1-私密, 3-公开 (API通常只能查到这两种状态)。
 

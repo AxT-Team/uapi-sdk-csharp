@@ -33,34 +33,17 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetConvertUnixtime200Response" /> class.
         /// </summary>
-        /// <param name="code">状态码，200代表操作成功。</param>
         /// <param name="datetime">标准格式（YYYY-MM-DD HH:mm:ss）的日期时间字符串。</param>
         /// <param name="timestamp">转换后的10位秒级Unix时间戳。</param>
         [JsonConstructor]
-        public GetConvertUnixtime200Response(Option<int?> code = default, Option<string?> datetime = default, Option<int?> timestamp = default)
+        public GetConvertUnixtime200Response(Option<string?> datetime = default, Option<int?> timestamp = default)
         {
-            CodeOption = code;
             DatetimeOption = datetime;
             TimestampOption = timestamp;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of Code
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
-
-        /// <summary>
-        /// 状态码，200代表操作成功。
-        /// </summary>
-        /// <value>状态码，200代表操作成功。</value>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Datetime
@@ -100,7 +83,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetConvertUnixtime200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Datetime: ").Append(Datetime).Append("\n");
             sb.Append("  Timestamp: ").Append(Timestamp).Append("\n");
             sb.Append("}\n");
@@ -140,7 +122,6 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
             Option<string?> datetime = default;
             Option<int?> timestamp = default;
 
@@ -159,9 +140,6 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         case "datetime":
                             datetime = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -174,16 +152,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetConvertUnixtime200Response.");
-
             if (datetime.IsSet && datetime.Value == null)
                 throw new ArgumentNullException(nameof(datetime), "Property is not nullable for class GetConvertUnixtime200Response.");
 
             if (timestamp.IsSet && timestamp.Value == null)
                 throw new ArgumentNullException(nameof(timestamp), "Property is not nullable for class GetConvertUnixtime200Response.");
 
-            return new GetConvertUnixtime200Response(code, datetime, timestamp);
+            return new GetConvertUnixtime200Response(datetime, timestamp);
         }
 
         /// <summary>
@@ -212,9 +187,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (getConvertUnixtime200Response.DatetimeOption.IsSet && getConvertUnixtime200Response.Datetime == null)
                 throw new ArgumentNullException(nameof(getConvertUnixtime200Response.Datetime), "Property is required for class GetConvertUnixtime200Response.");
-
-            if (getConvertUnixtime200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getConvertUnixtime200Response.CodeOption.Value!.Value);
 
             if (getConvertUnixtime200Response.DatetimeOption.IsSet)
                 writer.WriteString("datetime", getConvertUnixtime200Response.Datetime);

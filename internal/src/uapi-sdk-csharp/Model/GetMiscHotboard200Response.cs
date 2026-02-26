@@ -36,12 +36,22 @@ namespace uapi-sdk-csharp.Model
         /// <param name="list">热榜条目列表。</param>
         /// <param name="type">type</param>
         /// <param name="updateTime">updateTime</param>
+        /// <param name="snapshotTime">时光机模式返回的快照实际时间戳（毫秒）。</param>
+        /// <param name="keyword">搜索模式返回的搜索关键词。</param>
+        /// <param name="count">搜索模式返回的结果数量。</param>
+        /// <param name="results">搜索模式返回的结果数组。</param>
+        /// <param name="sources">数据源列表模式返回的可用历史数据源数组。</param>
         [JsonConstructor]
-        public GetMiscHotboard200Response(Option<List<GetMiscHotboard200ResponseListInner>?> list = default, Option<string?> type = default, Option<string?> updateTime = default)
+        public GetMiscHotboard200Response(Option<List<GetMiscHotboard200ResponseListInner>?> list = default, Option<string?> type = default, Option<string?> updateTime = default, Option<int?> snapshotTime = default, Option<string?> keyword = default, Option<int?> count = default, Option<List<GetMiscHotboard200ResponseResultsInner>?> results = default, Option<List<string>?> sources = default)
         {
             ListOption = list;
             TypeOption = type;
             UpdateTimeOption = updateTime;
+            SnapshotTimeOption = snapshotTime;
+            KeywordOption = keyword;
+            CountOption = count;
+            ResultsOption = results;
+            SourcesOption = sources;
             OnCreated();
         }
 
@@ -90,6 +100,79 @@ namespace uapi-sdk-csharp.Model
         public string? UpdateTime { get { return this.UpdateTimeOption; } set { this.UpdateTimeOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of SnapshotTime
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> SnapshotTimeOption { get; private set; }
+
+        /// <summary>
+        /// 时光机模式返回的快照实际时间戳（毫秒）。
+        /// </summary>
+        /// <value>时光机模式返回的快照实际时间戳（毫秒）。</value>
+        /* <example>1700000000000</example> */
+        [JsonPropertyName("snapshot_time")]
+        public int? SnapshotTime { get { return this.SnapshotTimeOption; } set { this.SnapshotTimeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Keyword
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> KeywordOption { get; private set; }
+
+        /// <summary>
+        /// 搜索模式返回的搜索关键词。
+        /// </summary>
+        /// <value>搜索模式返回的搜索关键词。</value>
+        /* <example>AI</example> */
+        [JsonPropertyName("keyword")]
+        public string? Keyword { get { return this.KeywordOption; } set { this.KeywordOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Count
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> CountOption { get; private set; }
+
+        /// <summary>
+        /// 搜索模式返回的结果数量。
+        /// </summary>
+        /// <value>搜索模式返回的结果数量。</value>
+        /* <example>25</example> */
+        [JsonPropertyName("count")]
+        public int? Count { get { return this.CountOption; } set { this.CountOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Results
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetMiscHotboard200ResponseResultsInner>?> ResultsOption { get; private set; }
+
+        /// <summary>
+        /// 搜索模式返回的结果数组。
+        /// </summary>
+        /// <value>搜索模式返回的结果数组。</value>
+        [JsonPropertyName("results")]
+        public List<GetMiscHotboard200ResponseResultsInner>? Results { get { return this.ResultsOption; } set { this.ResultsOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Sources
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<string>?> SourcesOption { get; private set; }
+
+        /// <summary>
+        /// 数据源列表模式返回的可用历史数据源数组。
+        /// </summary>
+        /// <value>数据源列表模式返回的可用历史数据源数组。</value>
+        [JsonPropertyName("sources")]
+        public List<string>? Sources { get { return this.SourcesOption; } set { this.SourcesOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -100,6 +183,11 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  List: ").Append(List).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
+            sb.Append("  SnapshotTime: ").Append(SnapshotTime).Append("\n");
+            sb.Append("  Keyword: ").Append(Keyword).Append("\n");
+            sb.Append("  Count: ").Append(Count).Append("\n");
+            sb.Append("  Results: ").Append(Results).Append("\n");
+            sb.Append("  Sources: ").Append(Sources).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -140,6 +228,11 @@ namespace uapi-sdk-csharp.Model
             Option<List<GetMiscHotboard200ResponseListInner>?> list = default;
             Option<string?> type = default;
             Option<string?> updateTime = default;
+            Option<int?> snapshotTime = default;
+            Option<string?> keyword = default;
+            Option<int?> count = default;
+            Option<List<GetMiscHotboard200ResponseResultsInner>?> results = default;
+            Option<List<string>?> sources = default;
 
             while (utf8JsonReader.Read())
             {
@@ -165,6 +258,21 @@ namespace uapi-sdk-csharp.Model
                         case "update_time":
                             updateTime = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "snapshot_time":
+                            snapshotTime = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "keyword":
+                            keyword = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "count":
+                            count = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "results":
+                            results = new Option<List<GetMiscHotboard200ResponseResultsInner>?>(JsonSerializer.Deserialize<List<GetMiscHotboard200ResponseResultsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "sources":
+                            sources = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
                         default:
                             break;
                     }
@@ -180,7 +288,22 @@ namespace uapi-sdk-csharp.Model
             if (updateTime.IsSet && updateTime.Value == null)
                 throw new ArgumentNullException(nameof(updateTime), "Property is not nullable for class GetMiscHotboard200Response.");
 
-            return new GetMiscHotboard200Response(list, type, updateTime);
+            if (snapshotTime.IsSet && snapshotTime.Value == null)
+                throw new ArgumentNullException(nameof(snapshotTime), "Property is not nullable for class GetMiscHotboard200Response.");
+
+            if (keyword.IsSet && keyword.Value == null)
+                throw new ArgumentNullException(nameof(keyword), "Property is not nullable for class GetMiscHotboard200Response.");
+
+            if (count.IsSet && count.Value == null)
+                throw new ArgumentNullException(nameof(count), "Property is not nullable for class GetMiscHotboard200Response.");
+
+            if (results.IsSet && results.Value == null)
+                throw new ArgumentNullException(nameof(results), "Property is not nullable for class GetMiscHotboard200Response.");
+
+            if (sources.IsSet && sources.Value == null)
+                throw new ArgumentNullException(nameof(sources), "Property is not nullable for class GetMiscHotboard200Response.");
+
+            return new GetMiscHotboard200Response(list, type, updateTime, snapshotTime, keyword, count, results, sources);
         }
 
         /// <summary>
@@ -216,6 +339,15 @@ namespace uapi-sdk-csharp.Model
             if (getMiscHotboard200Response.UpdateTimeOption.IsSet && getMiscHotboard200Response.UpdateTime == null)
                 throw new ArgumentNullException(nameof(getMiscHotboard200Response.UpdateTime), "Property is required for class GetMiscHotboard200Response.");
 
+            if (getMiscHotboard200Response.KeywordOption.IsSet && getMiscHotboard200Response.Keyword == null)
+                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Keyword), "Property is required for class GetMiscHotboard200Response.");
+
+            if (getMiscHotboard200Response.ResultsOption.IsSet && getMiscHotboard200Response.Results == null)
+                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Results), "Property is required for class GetMiscHotboard200Response.");
+
+            if (getMiscHotboard200Response.SourcesOption.IsSet && getMiscHotboard200Response.Sources == null)
+                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Sources), "Property is required for class GetMiscHotboard200Response.");
+
             if (getMiscHotboard200Response.ListOption.IsSet)
             {
                 writer.WritePropertyName("list");
@@ -226,6 +358,26 @@ namespace uapi-sdk-csharp.Model
 
             if (getMiscHotboard200Response.UpdateTimeOption.IsSet)
                 writer.WriteString("update_time", getMiscHotboard200Response.UpdateTime);
+
+            if (getMiscHotboard200Response.SnapshotTimeOption.IsSet)
+                writer.WriteNumber("snapshot_time", getMiscHotboard200Response.SnapshotTimeOption.Value!.Value);
+
+            if (getMiscHotboard200Response.KeywordOption.IsSet)
+                writer.WriteString("keyword", getMiscHotboard200Response.Keyword);
+
+            if (getMiscHotboard200Response.CountOption.IsSet)
+                writer.WriteNumber("count", getMiscHotboard200Response.CountOption.Value!.Value);
+
+            if (getMiscHotboard200Response.ResultsOption.IsSet)
+            {
+                writer.WritePropertyName("results");
+                JsonSerializer.Serialize(writer, getMiscHotboard200Response.Results, jsonSerializerOptions);
+            }
+            if (getMiscHotboard200Response.SourcesOption.IsSet)
+            {
+                writer.WritePropertyName("sources");
+                JsonSerializer.Serialize(writer, getMiscHotboard200Response.Sources, jsonSerializerOptions);
+            }
         }
     }
 }

@@ -4,10 +4,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <Version>0.1.5</Version>
+    <Version>0.1.10</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/**/*.cs" />
   </ItemGroup>
 </Project>
-

@@ -84,7 +84,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /* <example>An internal error occurred while querying the GeoIP database.</example> */
+        /* <example>An internal error occurred while querying IP information.</example> */
         [JsonPropertyName("message")]
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 

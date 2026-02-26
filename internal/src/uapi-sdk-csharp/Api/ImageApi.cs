@@ -67,7 +67,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetAvatarGravatarApiResponse?> GetAvatarGravatarOrDefaultAsync(Option<string> email = default, Option<string> hash = default, Option<int> s = default, Option<string> d = default, Option<string> r = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取必应每日壁纸
+        /// 必应壁纸
         /// </summary>
         /// <remarks>
         /// 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
@@ -78,7 +78,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetImageBingDailyApiResponse> GetImageBingDailyAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取必应每日壁纸
+        /// 必应壁纸
         /// </summary>
         /// <remarks>
         /// 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
@@ -88,7 +88,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetImageBingDailyApiResponse?> GetImageBingDailyOrDefaultAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 生成摸摸头GIF (QQ号方式)
+        /// 生成摸摸头GIF (QQ号)
         /// </summary>
         /// <remarks>
         /// 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
@@ -101,7 +101,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetImageMotouApiResponse> GetImageMotouAsync(string qq, Option<string> bgColor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 生成摸摸头GIF (QQ号方式)
+        /// 生成摸摸头GIF (QQ号)
         /// </summary>
         /// <remarks>
         /// 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
@@ -113,34 +113,40 @@ namespace uapi-sdk-csharp.Api
         Task<IGetImageMotouApiResponse?> GetImageMotouOrDefaultAsync(string qq, Option<string> bgColor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 动态生成二维码
+        /// 生成二维码
         /// </summary>
         /// <remarks>
-        /// 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。
+        /// 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸、前景色、背景色，还支持透明背景，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。  &gt; [!TIP] &gt; **颜色参数说明** &gt; - 颜色参数使用十六进制格式（如 &#x60;#FF0000&#x60;） &gt; - URL 中需要对 &#x60;#&#x60; 进行编码，即 &#x60;%23&#x60;（例如：&#x60;fgcolor&#x3D;%23FF0000&#x60;） &gt; - 当 &#x60;transparent&#x3D;true&#x60; 时，&#x60;bgcolor&#x60; 参数会被忽略
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="text">你希望编码到二维码中的任何文本内容，比如一个URL、一段话或者一个JSON字符串。</param>
-        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 1024 之间。 (optional, default to 256)</param>
+        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 2048 之间。 (optional, default to 256)</param>
         /// <param name="format">指定响应内容的格式。可选值为 &#x60;image&#x60;, &#x60;json&#x60;, &#x60;json_url&#x60;。 (optional, default to image)</param>
+        /// <param name="transparent">是否使用透明背景。启用后生成的 PNG 图片将具有 alpha 通道，背景透明。 (optional, default to false)</param>
+        /// <param name="fgcolor">二维码前景色（即二维码本身的颜色），使用十六进制格式。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#000000&quot;)</param>
+        /// <param name="bgcolor">二维码背景色，使用十六进制格式。当 &#x60;transparent&#x3D;true&#x60; 时此参数会被忽略。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#FFFFFF&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetImageQrcodeApiResponse"/>&gt;</returns>
-        Task<IGetImageQrcodeApiResponse> GetImageQrcodeAsync(string text, Option<int> size = default, Option<string> format = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetImageQrcodeApiResponse> GetImageQrcodeAsync(string text, Option<int> size = default, Option<string> format = default, Option<bool> transparent = default, Option<string> fgcolor = default, Option<string> bgcolor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 动态生成二维码
+        /// 生成二维码
         /// </summary>
         /// <remarks>
-        /// 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。
+        /// 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸、前景色、背景色，还支持透明背景，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。  &gt; [!TIP] &gt; **颜色参数说明** &gt; - 颜色参数使用十六进制格式（如 &#x60;#FF0000&#x60;） &gt; - URL 中需要对 &#x60;#&#x60; 进行编码，即 &#x60;%23&#x60;（例如：&#x60;fgcolor&#x3D;%23FF0000&#x60;） &gt; - 当 &#x60;transparent&#x3D;true&#x60; 时，&#x60;bgcolor&#x60; 参数会被忽略
         /// </remarks>
         /// <param name="text">你希望编码到二维码中的任何文本内容，比如一个URL、一段话或者一个JSON字符串。</param>
-        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 1024 之间。 (optional, default to 256)</param>
+        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 2048 之间。 (optional, default to 256)</param>
         /// <param name="format">指定响应内容的格式。可选值为 &#x60;image&#x60;, &#x60;json&#x60;, &#x60;json_url&#x60;。 (optional, default to image)</param>
+        /// <param name="transparent">是否使用透明背景。启用后生成的 PNG 图片将具有 alpha 通道，背景透明。 (optional, default to false)</param>
+        /// <param name="fgcolor">二维码前景色（即二维码本身的颜色），使用十六进制格式。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#000000&quot;)</param>
+        /// <param name="bgcolor">二维码背景色，使用十六进制格式。当 &#x60;transparent&#x3D;true&#x60; 时此参数会被忽略。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#FFFFFF&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetImageQrcodeApiResponse"/>?&gt;</returns>
-        Task<IGetImageQrcodeApiResponse?> GetImageQrcodeOrDefaultAsync(string text, Option<int> size = default, Option<string> format = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetImageQrcodeApiResponse?> GetImageQrcodeOrDefaultAsync(string text, Option<int> size = default, Option<string> format = default, Option<bool> transparent = default, Option<string> fgcolor = default, Option<string> bgcolor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 将在线图片转换为Base64
+        /// 图片转 Base64
         /// </summary>
         /// <remarks>
         /// 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
@@ -152,7 +158,7 @@ namespace uapi-sdk-csharp.Api
         Task<IGetImageTobase64ApiResponse> GetImageTobase64Async(string url, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 将在线图片转换为Base64
+        /// 图片转 Base64
         /// </summary>
         /// <remarks>
         /// 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
@@ -166,7 +172,7 @@ namespace uapi-sdk-csharp.Api
         /// 无损压缩图片
         /// </summary>
         /// <remarks>
-        /// 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;application/octet-stream&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
+        /// 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;image/_*&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="file">支持PNG, JPG, JPEG等常见图片格式。文件大小不超过15MB。</param>
@@ -180,7 +186,7 @@ namespace uapi-sdk-csharp.Api
         /// 无损压缩图片
         /// </summary>
         /// <remarks>
-        /// 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;application/octet-stream&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
+        /// 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;image/_*&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
         /// </remarks>
         /// <param name="file">支持PNG, JPG, JPEG等常见图片格式。文件大小不超过15MB。</param>
         /// <param name="level">压缩强度 (1-5)，默认为 3。数字越小，压缩率越高。 (optional, default to 3)</param>
@@ -213,7 +219,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostImageFrombase64ApiResponse?> PostImageFrombase64OrDefaultAsync(PostImageFrombase64Request postImageFrombase64Request, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 生成摸摸头GIF (图片上传或URL方式)
+        /// 生成摸摸头GIF
         /// </summary>
         /// <remarks>
         /// 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
@@ -227,7 +233,7 @@ namespace uapi-sdk-csharp.Api
         Task<IPostImageMotouApiResponse> PostImageMotouAsync(Option<string> imageUrl = default, Option<System.IO.Stream> file = default, Option<string> bgColor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 生成摸摸头GIF (图片上传或URL方式)
+        /// 生成摸摸头GIF
         /// </summary>
         /// <remarks>
         /// 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
@@ -240,10 +246,35 @@ namespace uapi-sdk-csharp.Api
         Task<IPostImageMotouApiResponse?> PostImageMotouOrDefaultAsync(Option<string> imageUrl = default, Option<System.IO.Stream> file = default, Option<string> bgColor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// 图片敏感检测
+        /// </summary>
+        /// <remarks>
+        /// 这是一个图片内容审核接口，自动识别图片中的违规内容并返回处理建议。  &gt; [!VIP] &gt; 此接口限时免费开放，无需企业认证即可使用。  ## 功能概述 上传图片文件或提供图片URL，接口会自动分析图片内容，返回是否违规、风险等级和处理建议。适合对接到用户上传流程中，实现自动化内容审核。  ## 返回字段说明 - **is_nsfw**: 是否判定为违规内容，&#x60;true&#x60; 表示违规，&#x60;false&#x60; 表示正常 - **nsfw_score**: 违规内容置信度，0-1 之间，越高表示越可能违规 - **normal_score**: 正常内容置信度，0-1 之间，与 nsfw_score 互补 - **suggestion**: 处理建议   - &#x60;pass&#x60;: 内容正常，可以直接放行   - &#x60;review&#x60;: 存在风险，建议转人工复核   - &#x60;block&#x60;: 高风险内容，建议直接拦截 - **risk_level**: 风险等级   - &#x60;low&#x60;: 低风险   - &#x60;medium&#x60;: 中风险   - &#x60;high&#x60;: 高风险 - **label**: 内容标签，&#x60;nsfw&#x60; 或 &#x60;normal&#x60; - **confidence**: 模型对当前判断的整体置信度 - **inference_time_ms**: 模型推理耗时，单位毫秒
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="file">要检测的图片文件。支持 JPG、JPEG、PNG、GIF、WebP 格式，最大 20MB。 (optional)</param>
+        /// <param name="url">图片的 URL 地址。如果同时提供 file 和 url，将优先使用 file。 (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostImageNsfwApiResponse"/>&gt;</returns>
+        Task<IPostImageNsfwApiResponse> PostImageNsfwAsync(Option<System.IO.Stream> file = default, Option<string> url = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 图片敏感检测
+        /// </summary>
+        /// <remarks>
+        /// 这是一个图片内容审核接口，自动识别图片中的违规内容并返回处理建议。  &gt; [!VIP] &gt; 此接口限时免费开放，无需企业认证即可使用。  ## 功能概述 上传图片文件或提供图片URL，接口会自动分析图片内容，返回是否违规、风险等级和处理建议。适合对接到用户上传流程中，实现自动化内容审核。  ## 返回字段说明 - **is_nsfw**: 是否判定为违规内容，&#x60;true&#x60; 表示违规，&#x60;false&#x60; 表示正常 - **nsfw_score**: 违规内容置信度，0-1 之间，越高表示越可能违规 - **normal_score**: 正常内容置信度，0-1 之间，与 nsfw_score 互补 - **suggestion**: 处理建议   - &#x60;pass&#x60;: 内容正常，可以直接放行   - &#x60;review&#x60;: 存在风险，建议转人工复核   - &#x60;block&#x60;: 高风险内容，建议直接拦截 - **risk_level**: 风险等级   - &#x60;low&#x60;: 低风险   - &#x60;medium&#x60;: 中风险   - &#x60;high&#x60;: 高风险 - **label**: 内容标签，&#x60;nsfw&#x60; 或 &#x60;normal&#x60; - **confidence**: 模型对当前判断的整体置信度 - **inference_time_ms**: 模型推理耗时，单位毫秒
+        /// </remarks>
+        /// <param name="file">要检测的图片文件。支持 JPG、JPEG、PNG、GIF、WebP 格式，最大 20MB。 (optional)</param>
+        /// <param name="url">图片的 URL 地址。如果同时提供 file 和 url，将优先使用 file。 (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostImageNsfwApiResponse"/>?&gt;</returns>
+        Task<IPostImageNsfwApiResponse?> PostImageNsfwOrDefaultAsync(Option<System.IO.Stream> file = default, Option<string> url = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// 生成你们怎么不说话了表情包
         /// </summary>
         /// <remarks>
-        /// 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 效果展示 ![示例](https://uapis.cn/static/uploads/33580466897f1e5815296f235b582815.png)  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/jpeg&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
+        /// 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/png&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postImageSpeechlessRequest">包含表情包文字内容的JSON对象。至少需要提供上方或下方文字之一。</param>
@@ -255,7 +286,7 @@ namespace uapi-sdk-csharp.Api
         /// 生成你们怎么不说话了表情包
         /// </summary>
         /// <remarks>
-        /// 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 效果展示 ![示例](https://uapis.cn/static/uploads/33580466897f1e5815296f235b582815.png)  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/jpeg&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
+        /// 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/png&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
         /// </remarks>
         /// <param name="postImageSpeechlessRequest">包含表情包文字内容的JSON对象。至少需要提供上方或下方文字之一。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -481,6 +512,36 @@ namespace uapi-sdk-csharp.Api
     }
 
     /// <summary>
+    /// The <see cref="IPostImageNsfwApiResponse"/>
+    /// </summary>
+    public interface IPostImageNsfwApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<uapi-sdk-csharp.Model.PostImageNsfw200Response?>, IBadRequest<uapi-sdk-csharp.Model.PostImageNsfw400Response?>, IContentTooLarge<uapi-sdk-csharp.Model.PostImageNsfw413Response?>, IInternalServerError<uapi-sdk-csharp.Model.PostImageNsfw500Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 413 ContentTooLarge
+        /// </summary>
+        /// <returns></returns>
+        bool IsContentTooLarge { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IPostImageSpeechlessApiResponse"/>
     /// </summary>
     public interface IPostImageSpeechlessApiResponse : uapi-sdk-csharp.Client.IApiResponse, IOk<System.IO.Stream?>, IBadRequest<uapi-sdk-csharp.Model.PostImageSpeechless400Response?>, IInternalServerError<uapi-sdk-csharp.Model.PostImageSpeechless500Response?>
@@ -691,6 +752,26 @@ namespace uapi-sdk-csharp.Api
         internal void ExecuteOnErrorPostImageMotou(Exception exception)
         {
             OnErrorPostImageMotou?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnPostImageNsfw;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorPostImageNsfw;
+
+        internal void ExecuteOnPostImageNsfw(ImageApi.PostImageNsfwApiResponse apiResponse)
+        {
+            OnPostImageNsfw?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorPostImageNsfw(Exception exception)
+        {
+            OnErrorPostImageNsfw?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -1198,7 +1279,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetImageBingDaily(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar);
 
         /// <summary>
-        /// 获取必应每日壁纸 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
+        /// 必应壁纸 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetImageBingDailyApiResponse"/>&gt;</returns>
@@ -1215,7 +1296,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 获取必应每日壁纸 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
+        /// 必应壁纸 每天都想换张新壁纸？让必应的美图点亮你的一天吧！  ## 功能概述 这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。  ## 使用须知  &gt; [!NOTE] &gt; **响应格式是图片** &gt; 请注意，此接口成功时直接返回图片二进制数据（通常为 &#x60;image/jpeg&#x60;），而非 JSON 格式。请确保客户端能够正确处理。  我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1488,7 +1569,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetImageMotou(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string qq, Option<string> bgColor);
 
         /// <summary>
-        /// 生成摸摸头GIF (QQ号方式) 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
+        /// 生成摸摸头GIF (QQ号) 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
         /// </summary>
         /// <param name="qq">你想要摸头的对象的QQ号码。</param>
         /// <param name="bgColor">GIF的背景颜色。留空则由后端服务决定默认值。 (optional)</param>
@@ -1507,7 +1588,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 生成摸摸头GIF (QQ号方式) 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
+        /// 生成摸摸头GIF (QQ号) 想在线rua一下好友的头像吗？这个趣味接口可以满足你。  ## 功能概述 此接口通过GET方法，专门用于通过QQ号生成摸摸头GIF。你只需要提供一个QQ号码，我们就会自动获取其公开头像，并制作成一个可爱的动图。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **背景颜色**：你可以通过 &#x60;bg_color&#x60; 参数来控制GIF的背景。使用 &#x60;transparent&#x60; 选项可以让它更好地融入各种聊天背景中。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="qq">你想要摸头的对象的QQ号码。</param>
@@ -1765,21 +1846,29 @@ namespace uapi-sdk-csharp.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetImageQrcode(ref string text, ref Option<int> size, ref Option<string> format);
+        partial void FormatGetImageQrcode(ref string text, ref Option<int> size, ref Option<string> format, ref Option<bool> transparent, ref Option<string> fgcolor, ref Option<string> bgcolor);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="text"></param>
         /// <param name="format"></param>
+        /// <param name="fgcolor"></param>
+        /// <param name="bgcolor"></param>
         /// <returns></returns>
-        private void ValidateGetImageQrcode(string text, Option<string> format)
+        private void ValidateGetImageQrcode(string text, Option<string> format, Option<string> fgcolor, Option<string> bgcolor)
         {
             if (text == null)
                 throw new ArgumentNullException(nameof(text));
 
             if (format.IsSet && format.Value == null)
                 throw new ArgumentNullException(nameof(format));
+
+            if (fgcolor.IsSet && fgcolor.Value == null)
+                throw new ArgumentNullException(nameof(fgcolor));
+
+            if (bgcolor.IsSet && bgcolor.Value == null)
+                throw new ArgumentNullException(nameof(bgcolor));
         }
 
         /// <summary>
@@ -1789,10 +1878,13 @@ namespace uapi-sdk-csharp.Api
         /// <param name="text"></param>
         /// <param name="size"></param>
         /// <param name="format"></param>
-        private void AfterGetImageQrcodeDefaultImplementation(IGetImageQrcodeApiResponse apiResponseLocalVar, string text, Option<int> size, Option<string> format)
+        /// <param name="transparent"></param>
+        /// <param name="fgcolor"></param>
+        /// <param name="bgcolor"></param>
+        private void AfterGetImageQrcodeDefaultImplementation(IGetImageQrcodeApiResponse apiResponseLocalVar, string text, Option<int> size, Option<string> format, Option<bool> transparent, Option<string> fgcolor, Option<string> bgcolor)
         {
             bool suppressDefaultLog = false;
-            AfterGetImageQrcode(ref suppressDefaultLog, apiResponseLocalVar, text, size, format);
+            AfterGetImageQrcode(ref suppressDefaultLog, apiResponseLocalVar, text, size, format, transparent, fgcolor, bgcolor);
             if (!suppressDefaultLog)
                 Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1805,7 +1897,10 @@ namespace uapi-sdk-csharp.Api
         /// <param name="text"></param>
         /// <param name="size"></param>
         /// <param name="format"></param>
-        partial void AfterGetImageQrcode(ref bool suppressDefaultLog, IGetImageQrcodeApiResponse apiResponseLocalVar, string text, Option<int> size, Option<string> format);
+        /// <param name="transparent"></param>
+        /// <param name="fgcolor"></param>
+        /// <param name="bgcolor"></param>
+        partial void AfterGetImageQrcode(ref bool suppressDefaultLog, IGetImageQrcodeApiResponse apiResponseLocalVar, string text, Option<int> size, Option<string> format, Option<bool> transparent, Option<string> fgcolor, Option<string> bgcolor);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1816,10 +1911,13 @@ namespace uapi-sdk-csharp.Api
         /// <param name="text"></param>
         /// <param name="size"></param>
         /// <param name="format"></param>
-        private void OnErrorGetImageQrcodeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string text, Option<int> size, Option<string> format)
+        /// <param name="transparent"></param>
+        /// <param name="fgcolor"></param>
+        /// <param name="bgcolor"></param>
+        private void OnErrorGetImageQrcodeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string text, Option<int> size, Option<string> format, Option<bool> transparent, Option<string> fgcolor, Option<string> bgcolor)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetImageQrcode(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, text, size, format);
+            OnErrorGetImageQrcode(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, text, size, format, transparent, fgcolor, bgcolor);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1834,21 +1932,27 @@ namespace uapi-sdk-csharp.Api
         /// <param name="text"></param>
         /// <param name="size"></param>
         /// <param name="format"></param>
-        partial void OnErrorGetImageQrcode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string text, Option<int> size, Option<string> format);
+        /// <param name="transparent"></param>
+        /// <param name="fgcolor"></param>
+        /// <param name="bgcolor"></param>
+        partial void OnErrorGetImageQrcode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string text, Option<int> size, Option<string> format, Option<bool> transparent, Option<string> fgcolor, Option<string> bgcolor);
 
         /// <summary>
-        /// 动态生成二维码 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。
+        /// 生成二维码 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸、前景色、背景色，还支持透明背景，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。  &gt; [!TIP] &gt; **颜色参数说明** &gt; - 颜色参数使用十六进制格式（如 &#x60;#FF0000&#x60;） &gt; - URL 中需要对 &#x60;#&#x60; 进行编码，即 &#x60;%23&#x60;（例如：&#x60;fgcolor&#x3D;%23FF0000&#x60;） &gt; - 当 &#x60;transparent&#x3D;true&#x60; 时，&#x60;bgcolor&#x60; 参数会被忽略
         /// </summary>
         /// <param name="text">你希望编码到二维码中的任何文本内容，比如一个URL、一段话或者一个JSON字符串。</param>
-        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 1024 之间。 (optional, default to 256)</param>
+        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 2048 之间。 (optional, default to 256)</param>
         /// <param name="format">指定响应内容的格式。可选值为 &#x60;image&#x60;, &#x60;json&#x60;, &#x60;json_url&#x60;。 (optional, default to image)</param>
+        /// <param name="transparent">是否使用透明背景。启用后生成的 PNG 图片将具有 alpha 通道，背景透明。 (optional, default to false)</param>
+        /// <param name="fgcolor">二维码前景色（即二维码本身的颜色），使用十六进制格式。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#000000&quot;)</param>
+        /// <param name="bgcolor">二维码背景色，使用十六进制格式。当 &#x60;transparent&#x3D;true&#x60; 时此参数会被忽略。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#FFFFFF&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetImageQrcodeApiResponse"/>&gt;</returns>
-        public async Task<IGetImageQrcodeApiResponse?> GetImageQrcodeOrDefaultAsync(string text, Option<int> size = default, Option<string> format = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetImageQrcodeApiResponse?> GetImageQrcodeOrDefaultAsync(string text, Option<int> size = default, Option<string> format = default, Option<bool> transparent = default, Option<string> fgcolor = default, Option<string> bgcolor = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetImageQrcodeAsync(text, size, format, cancellationToken).ConfigureAwait(false);
+                return await GetImageQrcodeAsync(text, size, format, transparent, fgcolor, bgcolor, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1857,23 +1961,26 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 动态生成二维码 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。
+        /// 生成二维码 无论是网址、文本还是联系方式，通通可以变成一个二维码！这是一个非常灵活的二维码生成工具。  ## 功能概述 你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸、前景色、背景色，还支持透明背景，并选择不同的返回格式以适应不同场景。  ## 使用须知  &gt; [!IMPORTANT] &gt; **关键参数 &#x60;format&#x60;** &gt; 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应： &gt; - **&#x60;image&#x60;** (默认): 直接返回 &#x60;image/png&#x60; 格式的图片二进制数据，适合在 &#x60;&lt;img&gt;&#x60; 标签中直接使用。 &gt; - **&#x60;json&#x60;**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。 &gt; - **&#x60;json_url&#x60;**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。  &gt; [!TIP] &gt; **颜色参数说明** &gt; - 颜色参数使用十六进制格式（如 &#x60;#FF0000&#x60;） &gt; - URL 中需要对 &#x60;#&#x60; 进行编码，即 &#x60;%23&#x60;（例如：&#x60;fgcolor&#x3D;%23FF0000&#x60;） &gt; - 当 &#x60;transparent&#x3D;true&#x60; 时，&#x60;bgcolor&#x60; 参数会被忽略
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="text">你希望编码到二维码中的任何文本内容，比如一个URL、一段话或者一个JSON字符串。</param>
-        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 1024 之间。 (optional, default to 256)</param>
+        /// <param name="size">二维码图片的边长（正方形），单位是像素。有效范围是 256 到 2048 之间。 (optional, default to 256)</param>
         /// <param name="format">指定响应内容的格式。可选值为 &#x60;image&#x60;, &#x60;json&#x60;, &#x60;json_url&#x60;。 (optional, default to image)</param>
+        /// <param name="transparent">是否使用透明背景。启用后生成的 PNG 图片将具有 alpha 通道，背景透明。 (optional, default to false)</param>
+        /// <param name="fgcolor">二维码前景色（即二维码本身的颜色），使用十六进制格式。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#000000&quot;)</param>
+        /// <param name="bgcolor">二维码背景色，使用十六进制格式。当 &#x60;transparent&#x3D;true&#x60; 时此参数会被忽略。URL 中需要将 &#x60;#&#x60; 编码为 &#x60;%23&#x60;。 (optional, default to &quot;#FFFFFF&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetImageQrcodeApiResponse"/>&gt;</returns>
-        public async Task<IGetImageQrcodeApiResponse> GetImageQrcodeAsync(string text, Option<int> size = default, Option<string> format = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetImageQrcodeApiResponse> GetImageQrcodeAsync(string text, Option<int> size = default, Option<string> format = default, Option<bool> transparent = default, Option<string> fgcolor = default, Option<string> bgcolor = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetImageQrcode(text, format);
+                ValidateGetImageQrcode(text, format, fgcolor, bgcolor);
 
-                FormatGetImageQrcode(ref text, ref size, ref format);
+                FormatGetImageQrcode(ref text, ref size, ref format, ref transparent, ref fgcolor, ref bgcolor);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1893,6 +2000,15 @@ namespace uapi-sdk-csharp.Api
 
                     if (format.IsSet)
                         parseQueryStringLocalVar["format"] = ClientUtils.ParameterToString(format.Value);
+
+                    if (transparent.IsSet)
+                        parseQueryStringLocalVar["transparent"] = ClientUtils.ParameterToString(transparent.Value);
+
+                    if (fgcolor.IsSet)
+                        parseQueryStringLocalVar["fgcolor"] = ClientUtils.ParameterToString(fgcolor.Value);
+
+                    if (bgcolor.IsSet)
+                        parseQueryStringLocalVar["bgcolor"] = ClientUtils.ParameterToString(bgcolor.Value);
 
                     uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
@@ -1934,7 +2050,7 @@ namespace uapi-sdk-csharp.Api
                             }
                         }
 
-                        AfterGetImageQrcodeDefaultImplementation(apiResponseLocalVar, text, size, format);
+                        AfterGetImageQrcodeDefaultImplementation(apiResponseLocalVar, text, size, format, transparent, fgcolor, bgcolor);
 
                         Events.ExecuteOnGetImageQrcode(apiResponseLocalVar);
 
@@ -1944,7 +2060,7 @@ namespace uapi-sdk-csharp.Api
             }
             catch(Exception e)
             {
-                OnErrorGetImageQrcodeDefaultImplementation(e, "/image/qrcode", uriBuilderLocalVar.Path, text, size, format);
+                OnErrorGetImageQrcodeDefaultImplementation(e, "/image/qrcode", uriBuilderLocalVar.Path, text, size, format, transparent, fgcolor, bgcolor);
                 Events.ExecuteOnErrorGetImageQrcode(e);
                 throw;
             }
@@ -2179,7 +2295,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorGetImageTobase64(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string url);
 
         /// <summary>
-        /// 将在线图片转换为Base64 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
+        /// 图片转 Base64 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
         /// </summary>
         /// <param name="url">需要转换为Base64的、可公开访问的图片URL地址。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -2197,7 +2313,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 将在线图片转换为Base64 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
+        /// 图片转 Base64 看到一张网上的图片，想把它转换成 Base64 编码以便嵌入到你的 HTML 或 CSS 中？用这个接口就对了。  ## 功能概述 你提供一个公开可访问的图片 URL，我们帮你把它下载下来，并转换成包含 MIME 类型的 Base64 Data URI 字符串返回给你。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="url">需要转换为Base64的、可公开访问的图片URL地址。</param>
@@ -2514,7 +2630,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostImageCompress(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, System.IO.Stream file, Option<int> level, Option<string> format);
 
         /// <summary>
-        /// 无损压缩图片 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;application/octet-stream&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
+        /// 无损压缩图片 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;image/_*&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
         /// </summary>
         /// <param name="file">支持PNG, JPG, JPEG等常见图片格式。文件大小不超过15MB。</param>
         /// <param name="level">压缩强度 (1-5)，默认为 3。数字越小，压缩率越高。 (optional, default to 3)</param>
@@ -2534,7 +2650,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 无损压缩图片 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;application/octet-stream&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
+        /// 无损压缩图片 还在为图片体积和加载速度发愁吗？体验一下我们强大的**无损压缩服务**，它能在几乎不牺牲任何肉眼可感知的画质的前提下，将图片体积压缩到极致。  ## 功能概述 你只需要上传一张常见的图片（如 PNG, JPG），选择一个压缩等级，就能获得一个体积小到惊人的压缩文件。这对于需要大量展示高清图片的网站、App 或小程序来说，是优化用户体验、节省带宽和存储成本的利器。  ## 使用须知 &gt; [!TIP] &gt; 为了给您最好的压缩效果，我们的算法需要进行复杂计算，处理时间可能会稍长一些，请耐心等待。  &gt; [!WARNING] &gt; **服务排队提醒** &gt; 这是一个计算密集型服务。在高并发时，您的请求可能会被排队等待处理。如果您需要将其集成到对延迟敏感的生产服务中，请注意这一点。  ### 请求与响应格式 - 请求必须使用 &#x60;multipart/form-data&#x60; 格式上传文件。 - 成功响应将直接返回压缩后的文件二进制流 (&#x60;image/_*&#x60;)，并附带 &#x60;Content-Disposition&#x60; 头，建议客户端根据此头信息保存文件。  ## 参数详解 ### &#x60;level&#x60; (压缩等级) 这是一个从 &#x60;1&#x60; 到 &#x60;5&#x60; 的整数，它决定了压缩的强度和策略，数字越小，压缩率越高。所有等级都经过精心调校，以在最大化压缩率的同时保证出色的视觉质量。 - &#x60;1&#x60;: **极限压缩** (推荐，体积最小，画质优异) - &#x60;2&#x60;: **高效压缩** - &#x60;3&#x60;: **智能均衡** (默认选项) - &#x60;4&#x60;: **画质优先** - &#x60;5&#x60;: **专业保真** (压缩率稍低，保留最多图像信息)  ## 错误处理指南 - **400 Bad Request**: 通常因为没有上传文件，或者 &#x60;level&#x60; 参数不在 1-5 的范围内。 - **500 Internal Server Error**: 如果在压缩过程中服务器发生内部错误，会返回此状态码。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="file">支持PNG, JPG, JPEG等常见图片格式。文件大小不超过15MB。</param>
@@ -3217,7 +3333,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostImageMotou(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> imageUrl, Option<System.IO.Stream> file, Option<string> bgColor);
 
         /// <summary>
-        /// 生成摸摸头GIF (图片上传或URL方式) 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
+        /// 生成摸摸头GIF 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
         /// </summary>
         /// <param name="imageUrl">图片的URL地址。如果提供此项，将优先使用该URL的图片。 (optional)</param>
         /// <param name="file">上传的图片文件。支持JPG、PNG、GIF等常见格式。 (optional)</param>
@@ -3237,7 +3353,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 生成摸摸头GIF (图片上传或URL方式) 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
+        /// 生成摸摸头GIF 除了使用QQ头像，你还可以通过上传自己的图片或提供图片URL来制作独一无二的摸摸头GIF。  ## 功能概述 此接口通过POST方法，支持两种方式生成GIF： 1.  **图片URL**：在表单中提供 &#x60;image_url&#x60; 字段。 2.  **上传图片**：在表单中上传 &#x60;file&#x60; 文件。  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/gif&#x60; 格式的二进制数据。 - **参数优先级**：如果同时提供了 &#x60;image_url&#x60; 和上传的 &#x60;file&#x60; 文件，系统将 **优先使用 &#x60;image_url&#x60;**。 - **背景颜色**：同样支持 &#x60;bg_color&#x60; 表单字段来控制GIF背景。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="imageUrl">图片的URL地址。如果提供此项，将优先使用该URL的图片。 (optional)</param>
@@ -3511,6 +3627,392 @@ namespace uapi-sdk-csharp.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatPostImageNsfw(ref Option<System.IO.Stream> file, ref Option<string> url);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private void ValidatePostImageNsfw(Option<System.IO.Stream> file, Option<string> url)
+        {
+            if (file.IsSet && file.Value == null)
+                throw new ArgumentNullException(nameof(file));
+
+            if (url.IsSet && url.Value == null)
+                throw new ArgumentNullException(nameof(url));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="file"></param>
+        /// <param name="url"></param>
+        private void AfterPostImageNsfwDefaultImplementation(IPostImageNsfwApiResponse apiResponseLocalVar, Option<System.IO.Stream> file, Option<string> url)
+        {
+            bool suppressDefaultLog = false;
+            AfterPostImageNsfw(ref suppressDefaultLog, apiResponseLocalVar, file, url);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="file"></param>
+        /// <param name="url"></param>
+        partial void AfterPostImageNsfw(ref bool suppressDefaultLog, IPostImageNsfwApiResponse apiResponseLocalVar, Option<System.IO.Stream> file, Option<string> url);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="file"></param>
+        /// <param name="url"></param>
+        private void OnErrorPostImageNsfwDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<System.IO.Stream> file, Option<string> url)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorPostImageNsfw(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, file, url);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="file"></param>
+        /// <param name="url"></param>
+        partial void OnErrorPostImageNsfw(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<System.IO.Stream> file, Option<string> url);
+
+        /// <summary>
+        /// 图片敏感检测 这是一个图片内容审核接口，自动识别图片中的违规内容并返回处理建议。  &gt; [!VIP] &gt; 此接口限时免费开放，无需企业认证即可使用。  ## 功能概述 上传图片文件或提供图片URL，接口会自动分析图片内容，返回是否违规、风险等级和处理建议。适合对接到用户上传流程中，实现自动化内容审核。  ## 返回字段说明 - **is_nsfw**: 是否判定为违规内容，&#x60;true&#x60; 表示违规，&#x60;false&#x60; 表示正常 - **nsfw_score**: 违规内容置信度，0-1 之间，越高表示越可能违规 - **normal_score**: 正常内容置信度，0-1 之间，与 nsfw_score 互补 - **suggestion**: 处理建议   - &#x60;pass&#x60;: 内容正常，可以直接放行   - &#x60;review&#x60;: 存在风险，建议转人工复核   - &#x60;block&#x60;: 高风险内容，建议直接拦截 - **risk_level**: 风险等级   - &#x60;low&#x60;: 低风险   - &#x60;medium&#x60;: 中风险   - &#x60;high&#x60;: 高风险 - **label**: 内容标签，&#x60;nsfw&#x60; 或 &#x60;normal&#x60; - **confidence**: 模型对当前判断的整体置信度 - **inference_time_ms**: 模型推理耗时，单位毫秒
+        /// </summary>
+        /// <param name="file">要检测的图片文件。支持 JPG、JPEG、PNG、GIF、WebP 格式，最大 20MB。 (optional)</param>
+        /// <param name="url">图片的 URL 地址。如果同时提供 file 和 url，将优先使用 file。 (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostImageNsfwApiResponse"/>&gt;</returns>
+        public async Task<IPostImageNsfwApiResponse?> PostImageNsfwOrDefaultAsync(Option<System.IO.Stream> file = default, Option<string> url = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await PostImageNsfwAsync(file, url, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 图片敏感检测 这是一个图片内容审核接口，自动识别图片中的违规内容并返回处理建议。  &gt; [!VIP] &gt; 此接口限时免费开放，无需企业认证即可使用。  ## 功能概述 上传图片文件或提供图片URL，接口会自动分析图片内容，返回是否违规、风险等级和处理建议。适合对接到用户上传流程中，实现自动化内容审核。  ## 返回字段说明 - **is_nsfw**: 是否判定为违规内容，&#x60;true&#x60; 表示违规，&#x60;false&#x60; 表示正常 - **nsfw_score**: 违规内容置信度，0-1 之间，越高表示越可能违规 - **normal_score**: 正常内容置信度，0-1 之间，与 nsfw_score 互补 - **suggestion**: 处理建议   - &#x60;pass&#x60;: 内容正常，可以直接放行   - &#x60;review&#x60;: 存在风险，建议转人工复核   - &#x60;block&#x60;: 高风险内容，建议直接拦截 - **risk_level**: 风险等级   - &#x60;low&#x60;: 低风险   - &#x60;medium&#x60;: 中风险   - &#x60;high&#x60;: 高风险 - **label**: 内容标签，&#x60;nsfw&#x60; 或 &#x60;normal&#x60; - **confidence**: 模型对当前判断的整体置信度 - **inference_time_ms**: 模型推理耗时，单位毫秒
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="file">要检测的图片文件。支持 JPG、JPEG、PNG、GIF、WebP 格式，最大 20MB。 (optional)</param>
+        /// <param name="url">图片的 URL 地址。如果同时提供 file 和 url，将优先使用 file。 (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IPostImageNsfwApiResponse"/>&gt;</returns>
+        public async Task<IPostImageNsfwApiResponse> PostImageNsfwAsync(Option<System.IO.Stream> file = default, Option<string> url = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidatePostImageNsfw(file, url);
+
+                FormatPostImageNsfw(ref file, ref url);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/image/nsfw"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/image/nsfw");
+
+                    MultipartContent multipartContentLocalVar = new MultipartContent();
+
+                    httpRequestMessageLocalVar.Content = multipartContentLocalVar;
+
+                    List<KeyValuePair<string?, string?>> formParameterLocalVars = new List<KeyValuePair<string?, string?>>();
+
+                    multipartContentLocalVar.Add(new FormUrlEncodedContent(formParameterLocalVars));                    if (file.IsSet)
+                        multipartContentLocalVar.Add(new StreamContent(file.Value));
+
+                    if (url.IsSet)
+                        formParameterLocalVars.Add(new KeyValuePair<string?, string?>("url", ClientUtils.ParameterToString(url.Value)));
+
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    string[] contentTypes = new string[] {
+                        "multipart/form-data"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<PostImageNsfwApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PostImageNsfwApiResponse>();
+                        PostImageNsfwApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/image/nsfw", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterPostImageNsfwDefaultImplementation(apiResponseLocalVar, file, url);
+
+                        Events.ExecuteOnPostImageNsfw(apiResponseLocalVar);
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorPostImageNsfwDefaultImplementation(e, "/image/nsfw", uriBuilderLocalVar.Path, file, url);
+                Events.ExecuteOnErrorPostImageNsfw(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PostImageNsfwApiResponse"/>
+        /// </summary>
+        public partial class PostImageNsfwApiResponse : uapi-sdk-csharp.Client.ApiResponse, IPostImageNsfwApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<PostImageNsfwApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="PostImageNsfwApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostImageNsfwApiResponse(ILogger<PostImageNsfwApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PostImageNsfwApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PostImageNsfwApiResponse(ILogger<PostImageNsfwApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostImageNsfw200Response? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostImageNsfw200Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostImageNsfw200Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostImageNsfw400Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostImageNsfw400Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostImageNsfw400Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 413 ContentTooLarge
+            /// </summary>
+            /// <returns></returns>
+            public bool IsContentTooLarge => 413 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 413 ContentTooLarge
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostImageNsfw413Response? ContentTooLarge()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsContentTooLarge
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostImageNsfw413Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 413 ContentTooLarge and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryContentTooLarge([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostImageNsfw413Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = ContentTooLarge();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)413);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public uapi-sdk-csharp.Model.PostImageNsfw500Response? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<uapi-sdk-csharp.Model.PostImageNsfw500Response>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out uapi-sdk-csharp.Model.PostImageNsfw500Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatPostImageSpeechless(PostImageSpeechlessRequest postImageSpeechlessRequest);
 
         /// <summary>
@@ -3571,7 +4073,7 @@ namespace uapi-sdk-csharp.Api
         partial void OnErrorPostImageSpeechless(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, PostImageSpeechlessRequest postImageSpeechlessRequest);
 
         /// <summary>
-        /// 生成你们怎么不说话了表情包 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 效果展示 ![示例](https://uapis.cn/static/uploads/33580466897f1e5815296f235b582815.png)  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/jpeg&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
+        /// 生成你们怎么不说话了表情包 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/png&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
         /// </summary>
         /// <param name="postImageSpeechlessRequest">包含表情包文字内容的JSON对象。至少需要提供上方或下方文字之一。</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -3589,7 +4091,7 @@ namespace uapi-sdk-csharp.Api
         }
 
         /// <summary>
-        /// 生成你们怎么不说话了表情包 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 效果展示 ![示例](https://uapis.cn/static/uploads/33580466897f1e5815296f235b582815.png)  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/jpeg&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
+        /// 生成你们怎么不说话了表情包 你们怎么不说话了？是不是都在偷偷玩Uapi，求求你们不要玩Uapi了  ## 使用须知 - **响应格式**：接口成功时直接返回 &#x60;image/png&#x60; 格式的二进制数据。 - **文字内容**：至少需要提供 &#x60;top_text&#x60;（上方文字）或 &#x60;bottom_text&#x60;（下方文字）之一。 - **梗图逻辑**：上方描述某个行为，下方通常以「们」开头表示劝阻，形成戏谑的对比效果。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="postImageSpeechlessRequest">包含表情包文字内容的JSON对象。至少需要提供上方或下方文字之一。</param>
