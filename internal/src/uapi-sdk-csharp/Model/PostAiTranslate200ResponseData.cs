@@ -26,46 +26,22 @@ using uapi-sdk-csharp.Client;
 namespace uapi-sdk-csharp.Model
 {
     /// <summary>
-    /// 单个翻译的详细结果，仅在单个翻译时返回。
+    /// 翻译结果的详细信息。
     /// </summary>
     public partial class PostAiTranslate200ResponseData : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PostAiTranslate200ResponseData" /> class.
         /// </summary>
-        /// <param name="originalText">originalText</param>
         /// <param name="translatedText">translatedText</param>
-        /// <param name="detectedLang">detectedLang</param>
-        /// <param name="confidenceScore">confidenceScore</param>
-        /// <param name="alternatives">alternatives</param>
-        /// <param name="explanation">explanation</param>
         [JsonConstructor]
-        public PostAiTranslate200ResponseData(Option<string?> originalText = default, Option<string?> translatedText = default, Option<string?> detectedLang = default, Option<decimal?> confidenceScore = default, Option<List<string>?> alternatives = default, Option<PostAiTranslate200ResponseDataExplanation?> explanation = default)
+        public PostAiTranslate200ResponseData(Option<string?> translatedText = default)
         {
-            OriginalTextOption = originalText;
             TranslatedTextOption = translatedText;
-            DetectedLangOption = detectedLang;
-            ConfidenceScoreOption = confidenceScore;
-            AlternativesOption = alternatives;
-            ExplanationOption = explanation;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of OriginalText
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> OriginalTextOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets OriginalText
-        /// </summary>
-        /* <example>Hello, how are you today?</example> */
-        [JsonPropertyName("original_text")]
-        public string? OriginalText { get { return this.OriginalTextOption; } set { this.OriginalTextOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of TranslatedText
@@ -82,61 +58,6 @@ namespace uapi-sdk-csharp.Model
         public string? TranslatedText { get { return this.TranslatedTextOption; } set { this.TranslatedTextOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of DetectedLang
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> DetectedLangOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets DetectedLang
-        /// </summary>
-        /* <example>en</example> */
-        [JsonPropertyName("detected_lang")]
-        public string? DetectedLang { get { return this.DetectedLangOption; } set { this.DetectedLangOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of ConfidenceScore
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<decimal?> ConfidenceScoreOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets ConfidenceScore
-        /// </summary>
-        /* <example>0.98</example> */
-        [JsonPropertyName("confidence_score")]
-        public decimal? ConfidenceScore { get { return this.ConfidenceScoreOption; } set { this.ConfidenceScoreOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Alternatives
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> AlternativesOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Alternatives
-        /// </summary>
-        /* <example>[&quot;你好，今天过得如何？&quot;]</example> */
-        [JsonPropertyName("alternatives")]
-        public List<string>? Alternatives { get { return this.AlternativesOption; } set { this.AlternativesOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Explanation
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<PostAiTranslate200ResponseDataExplanation?> ExplanationOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Explanation
-        /// </summary>
-        [JsonPropertyName("explanation")]
-        public PostAiTranslate200ResponseDataExplanation? Explanation { get { return this.ExplanationOption; } set { this.ExplanationOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -144,12 +65,7 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAiTranslate200ResponseData {\n");
-            sb.Append("  OriginalText: ").Append(OriginalText).Append("\n");
             sb.Append("  TranslatedText: ").Append(TranslatedText).Append("\n");
-            sb.Append("  DetectedLang: ").Append(DetectedLang).Append("\n");
-            sb.Append("  ConfidenceScore: ").Append(ConfidenceScore).Append("\n");
-            sb.Append("  Alternatives: ").Append(Alternatives).Append("\n");
-            sb.Append("  Explanation: ").Append(Explanation).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -187,12 +103,7 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string?> originalText = default;
             Option<string?> translatedText = default;
-            Option<string?> detectedLang = default;
-            Option<decimal?> confidenceScore = default;
-            Option<List<string>?> alternatives = default;
-            Option<PostAiTranslate200ResponseDataExplanation?> explanation = default;
 
             while (utf8JsonReader.Read())
             {
@@ -209,23 +120,8 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "original_text":
-                            originalText = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
                         case "translated_text":
                             translatedText = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "detected_lang":
-                            detectedLang = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "confidence_score":
-                            confidenceScore = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
-                            break;
-                        case "alternatives":
-                            alternatives = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "explanation":
-                            explanation = new Option<PostAiTranslate200ResponseDataExplanation?>(JsonSerializer.Deserialize<PostAiTranslate200ResponseDataExplanation>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -233,25 +129,10 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (originalText.IsSet && originalText.Value == null)
-                throw new ArgumentNullException(nameof(originalText), "Property is not nullable for class PostAiTranslate200ResponseData.");
-
             if (translatedText.IsSet && translatedText.Value == null)
                 throw new ArgumentNullException(nameof(translatedText), "Property is not nullable for class PostAiTranslate200ResponseData.");
 
-            if (detectedLang.IsSet && detectedLang.Value == null)
-                throw new ArgumentNullException(nameof(detectedLang), "Property is not nullable for class PostAiTranslate200ResponseData.");
-
-            if (confidenceScore.IsSet && confidenceScore.Value == null)
-                throw new ArgumentNullException(nameof(confidenceScore), "Property is not nullable for class PostAiTranslate200ResponseData.");
-
-            if (alternatives.IsSet && alternatives.Value == null)
-                throw new ArgumentNullException(nameof(alternatives), "Property is not nullable for class PostAiTranslate200ResponseData.");
-
-            if (explanation.IsSet && explanation.Value == null)
-                throw new ArgumentNullException(nameof(explanation), "Property is not nullable for class PostAiTranslate200ResponseData.");
-
-            return new PostAiTranslate200ResponseData(originalText, translatedText, detectedLang, confidenceScore, alternatives, explanation);
+            return new PostAiTranslate200ResponseData(translatedText);
         }
 
         /// <summary>
@@ -278,43 +159,11 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PostAiTranslate200ResponseData postAiTranslate200ResponseData, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (postAiTranslate200ResponseData.OriginalTextOption.IsSet && postAiTranslate200ResponseData.OriginalText == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200ResponseData.OriginalText), "Property is required for class PostAiTranslate200ResponseData.");
-
             if (postAiTranslate200ResponseData.TranslatedTextOption.IsSet && postAiTranslate200ResponseData.TranslatedText == null)
                 throw new ArgumentNullException(nameof(postAiTranslate200ResponseData.TranslatedText), "Property is required for class PostAiTranslate200ResponseData.");
 
-            if (postAiTranslate200ResponseData.DetectedLangOption.IsSet && postAiTranslate200ResponseData.DetectedLang == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200ResponseData.DetectedLang), "Property is required for class PostAiTranslate200ResponseData.");
-
-            if (postAiTranslate200ResponseData.AlternativesOption.IsSet && postAiTranslate200ResponseData.Alternatives == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200ResponseData.Alternatives), "Property is required for class PostAiTranslate200ResponseData.");
-
-            if (postAiTranslate200ResponseData.ExplanationOption.IsSet && postAiTranslate200ResponseData.Explanation == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200ResponseData.Explanation), "Property is required for class PostAiTranslate200ResponseData.");
-
-            if (postAiTranslate200ResponseData.OriginalTextOption.IsSet)
-                writer.WriteString("original_text", postAiTranslate200ResponseData.OriginalText);
-
             if (postAiTranslate200ResponseData.TranslatedTextOption.IsSet)
                 writer.WriteString("translated_text", postAiTranslate200ResponseData.TranslatedText);
-
-            if (postAiTranslate200ResponseData.DetectedLangOption.IsSet)
-                writer.WriteString("detected_lang", postAiTranslate200ResponseData.DetectedLang);
-
-            if (postAiTranslate200ResponseData.ConfidenceScoreOption.IsSet)
-                writer.WriteNumber("confidence_score", postAiTranslate200ResponseData.ConfidenceScoreOption.Value!.Value);
-
-            if (postAiTranslate200ResponseData.AlternativesOption.IsSet)
-            {
-                writer.WritePropertyName("alternatives");
-                JsonSerializer.Serialize(writer, postAiTranslate200ResponseData.Alternatives, jsonSerializerOptions);
-            }
-            if (postAiTranslate200ResponseData.ExplanationOption.IsSet)
-            {
-                writer.WritePropertyName("explanation");
-                JsonSerializer.Serialize(writer, postAiTranslate200ResponseData.Explanation, jsonSerializerOptions);
-            }
         }
     }
 }

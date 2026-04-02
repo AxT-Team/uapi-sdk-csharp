@@ -33,112 +33,64 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNetworkPingmyip200Response" /> class.
         /// </summary>
-        /// <param name="avg">平均延迟(ms)</param>
-        /// <param name="host">host</param>
-        /// <param name="ip">ip</param>
-        /// <param name="location">location</param>
-        /// <param name="max">最大延迟(ms)</param>
-        /// <param name="min">最小延迟(ms)</param>
+        /// <param name="clientIp">当前客户端的公网 IP 地址。</param>
+        /// <param name="pingSuccessful">是否成功完成对当前客户端 IP 的 Ping。</param>
+        /// <param name="message">操作结果说明。成功时通常会附带平均延迟信息。</param>
         [JsonConstructor]
-        public GetNetworkPingmyip200Response(Option<decimal?> avg = default, Option<string?> host = default, Option<string?> ip = default, Option<string?> location = default, Option<decimal?> max = default, Option<decimal?> min = default)
+        public GetNetworkPingmyip200Response(Option<string?> clientIp = default, Option<bool?> pingSuccessful = default, Option<string?> message = default)
         {
-            AvgOption = avg;
-            HostOption = host;
-            IpOption = ip;
-            LocationOption = location;
-            MaxOption = max;
-            MinOption = min;
+            ClientIpOption = clientIp;
+            PingSuccessfulOption = pingSuccessful;
+            MessageOption = message;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Avg
+        /// Used to track the state of ClientIp
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<decimal?> AvgOption { get; private set; }
+        public Option<string?> ClientIpOption { get; private set; }
 
         /// <summary>
-        /// 平均延迟(ms)
+        /// 当前客户端的公网 IP 地址。
         /// </summary>
-        /// <value>平均延迟(ms)</value>
-        /* <example>35.4</example> */
-        [JsonPropertyName("avg")]
-        public decimal? Avg { get { return this.AvgOption; } set { this.AvgOption = new(value); } }
+        /// <value>当前客户端的公网 IP 地址。</value>
+        /* <example>117.140.191.159</example> */
+        [JsonPropertyName("client_ip")]
+        public string? ClientIp { get { return this.ClientIpOption; } set { this.ClientIpOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Host
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> HostOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Host
-        /// </summary>
-        /* <example>123.123.123.123</example> */
-        [JsonPropertyName("host")]
-        public string? Host { get { return this.HostOption; } set { this.HostOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Ip
+        /// Used to track the state of PingSuccessful
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> IpOption { get; private set; }
+        public Option<bool?> PingSuccessfulOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Ip
+        /// 是否成功完成对当前客户端 IP 的 Ping。
         /// </summary>
-        /* <example>123.123.123.123</example> */
-        [JsonPropertyName("ip")]
-        public string? Ip { get { return this.IpOption; } set { this.IpOption = new(value); } }
+        /// <value>是否成功完成对当前客户端 IP 的 Ping。</value>
+        /* <example>true</example> */
+        [JsonPropertyName("ping_successful")]
+        public bool? PingSuccessful { get { return this.PingSuccessfulOption; } set { this.PingSuccessfulOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Location
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> LocationOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Location
-        /// </summary>
-        /* <example>中国 北京</example> */
-        [JsonPropertyName("location")]
-        public string? Location { get { return this.LocationOption; } set { this.LocationOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Max
+        /// Used to track the state of Message
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<decimal?> MaxOption { get; private set; }
+        public Option<string?> MessageOption { get; private set; }
 
         /// <summary>
-        /// 最大延迟(ms)
+        /// 操作结果说明。成功时通常会附带平均延迟信息。
         /// </summary>
-        /// <value>最大延迟(ms)</value>
-        /* <example>40.1</example> */
-        [JsonPropertyName("max")]
-        public decimal? Max { get { return this.MaxOption; } set { this.MaxOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Min
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<decimal?> MinOption { get; private set; }
-
-        /// <summary>
-        /// 最小延迟(ms)
-        /// </summary>
-        /// <value>最小延迟(ms)</value>
-        /* <example>32.8</example> */
-        [JsonPropertyName("min")]
-        public decimal? Min { get { return this.MinOption; } set { this.MinOption = new(value); } }
+        /// <value>操作结果说明。成功时通常会附带平均延迟信息。</value>
+        /* <example>Ping successful, avg latency: 35.43 ms</example> */
+        [JsonPropertyName("message")]
+        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -148,12 +100,9 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetNetworkPingmyip200Response {\n");
-            sb.Append("  Avg: ").Append(Avg).Append("\n");
-            sb.Append("  Host: ").Append(Host).Append("\n");
-            sb.Append("  Ip: ").Append(Ip).Append("\n");
-            sb.Append("  Location: ").Append(Location).Append("\n");
-            sb.Append("  Max: ").Append(Max).Append("\n");
-            sb.Append("  Min: ").Append(Min).Append("\n");
+            sb.Append("  ClientIp: ").Append(ClientIp).Append("\n");
+            sb.Append("  PingSuccessful: ").Append(PingSuccessful).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -191,12 +140,9 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<decimal?> avg = default;
-            Option<string?> host = default;
-            Option<string?> ip = default;
-            Option<string?> location = default;
-            Option<decimal?> max = default;
-            Option<decimal?> min = default;
+            Option<string?> clientIp = default;
+            Option<bool?> pingSuccessful = default;
+            Option<string?> message = default;
 
             while (utf8JsonReader.Read())
             {
@@ -213,23 +159,14 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "avg":
-                            avg = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                        case "client_ip":
+                            clientIp = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "host":
-                            host = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "ping_successful":
+                            pingSuccessful = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
-                        case "ip":
-                            ip = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "location":
-                            location = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "max":
-                            max = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
-                            break;
-                        case "min":
-                            min = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                        case "message":
+                            message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         default:
                             break;
@@ -237,25 +174,16 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (avg.IsSet && avg.Value == null)
-                throw new ArgumentNullException(nameof(avg), "Property is not nullable for class GetNetworkPingmyip200Response.");
+            if (clientIp.IsSet && clientIp.Value == null)
+                throw new ArgumentNullException(nameof(clientIp), "Property is not nullable for class GetNetworkPingmyip200Response.");
 
-            if (host.IsSet && host.Value == null)
-                throw new ArgumentNullException(nameof(host), "Property is not nullable for class GetNetworkPingmyip200Response.");
+            if (pingSuccessful.IsSet && pingSuccessful.Value == null)
+                throw new ArgumentNullException(nameof(pingSuccessful), "Property is not nullable for class GetNetworkPingmyip200Response.");
 
-            if (ip.IsSet && ip.Value == null)
-                throw new ArgumentNullException(nameof(ip), "Property is not nullable for class GetNetworkPingmyip200Response.");
+            if (message.IsSet && message.Value == null)
+                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetNetworkPingmyip200Response.");
 
-            if (location.IsSet && location.Value == null)
-                throw new ArgumentNullException(nameof(location), "Property is not nullable for class GetNetworkPingmyip200Response.");
-
-            if (max.IsSet && max.Value == null)
-                throw new ArgumentNullException(nameof(max), "Property is not nullable for class GetNetworkPingmyip200Response.");
-
-            if (min.IsSet && min.Value == null)
-                throw new ArgumentNullException(nameof(min), "Property is not nullable for class GetNetworkPingmyip200Response.");
-
-            return new GetNetworkPingmyip200Response(avg, host, ip, location, max, min);
+            return new GetNetworkPingmyip200Response(clientIp, pingSuccessful, message);
         }
 
         /// <summary>
@@ -282,32 +210,20 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetNetworkPingmyip200Response getNetworkPingmyip200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getNetworkPingmyip200Response.HostOption.IsSet && getNetworkPingmyip200Response.Host == null)
-                throw new ArgumentNullException(nameof(getNetworkPingmyip200Response.Host), "Property is required for class GetNetworkPingmyip200Response.");
+            if (getNetworkPingmyip200Response.ClientIpOption.IsSet && getNetworkPingmyip200Response.ClientIp == null)
+                throw new ArgumentNullException(nameof(getNetworkPingmyip200Response.ClientIp), "Property is required for class GetNetworkPingmyip200Response.");
 
-            if (getNetworkPingmyip200Response.IpOption.IsSet && getNetworkPingmyip200Response.Ip == null)
-                throw new ArgumentNullException(nameof(getNetworkPingmyip200Response.Ip), "Property is required for class GetNetworkPingmyip200Response.");
+            if (getNetworkPingmyip200Response.MessageOption.IsSet && getNetworkPingmyip200Response.Message == null)
+                throw new ArgumentNullException(nameof(getNetworkPingmyip200Response.Message), "Property is required for class GetNetworkPingmyip200Response.");
 
-            if (getNetworkPingmyip200Response.LocationOption.IsSet && getNetworkPingmyip200Response.Location == null)
-                throw new ArgumentNullException(nameof(getNetworkPingmyip200Response.Location), "Property is required for class GetNetworkPingmyip200Response.");
+            if (getNetworkPingmyip200Response.ClientIpOption.IsSet)
+                writer.WriteString("client_ip", getNetworkPingmyip200Response.ClientIp);
 
-            if (getNetworkPingmyip200Response.AvgOption.IsSet)
-                writer.WriteNumber("avg", getNetworkPingmyip200Response.AvgOption.Value!.Value);
+            if (getNetworkPingmyip200Response.PingSuccessfulOption.IsSet)
+                writer.WriteBoolean("ping_successful", getNetworkPingmyip200Response.PingSuccessfulOption.Value!.Value);
 
-            if (getNetworkPingmyip200Response.HostOption.IsSet)
-                writer.WriteString("host", getNetworkPingmyip200Response.Host);
-
-            if (getNetworkPingmyip200Response.IpOption.IsSet)
-                writer.WriteString("ip", getNetworkPingmyip200Response.Ip);
-
-            if (getNetworkPingmyip200Response.LocationOption.IsSet)
-                writer.WriteString("location", getNetworkPingmyip200Response.Location);
-
-            if (getNetworkPingmyip200Response.MaxOption.IsSet)
-                writer.WriteNumber("max", getNetworkPingmyip200Response.MaxOption.Value!.Value);
-
-            if (getNetworkPingmyip200Response.MinOption.IsSet)
-                writer.WriteNumber("min", getNetworkPingmyip200Response.MinOption.Value!.Value);
+            if (getNetworkPingmyip200Response.MessageOption.IsSet)
+                writer.WriteString("message", getNetworkPingmyip200Response.Message);
         }
     }
 }

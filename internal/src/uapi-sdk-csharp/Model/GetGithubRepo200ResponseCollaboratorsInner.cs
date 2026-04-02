@@ -33,10 +33,10 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGithubRepo200ResponseCollaboratorsInner" /> class.
         /// </summary>
-        /// <param name="login">login</param>
-        /// <param name="name">name</param>
-        /// <param name="email">email</param>
-        /// <param name="url">url</param>
+        /// <param name="login">GitHub 登录名。</param>
+        /// <param name="name">显示名称。</param>
+        /// <param name="email">公开邮箱。</param>
+        /// <param name="url">GitHub 主页链接。</param>
         [JsonConstructor]
         public GetGithubRepo200ResponseCollaboratorsInner(Option<string?> login = default, Option<string?> name = default, Option<string?> email = default, Option<string?> url = default)
         {
@@ -57,8 +57,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> LoginOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Login
+        /// GitHub 登录名。
         /// </summary>
+        /// <value>GitHub 登录名。</value>
         [JsonPropertyName("login")]
         public string? Login { get { return this.LoginOption; } set { this.LoginOption = new(value); } }
 
@@ -70,8 +71,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> NameOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// 显示名称。
         /// </summary>
+        /// <value>显示名称。</value>
         [JsonPropertyName("name")]
         public string? Name { get { return this.NameOption; } set { this.NameOption = new(value); } }
 
@@ -83,8 +85,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> EmailOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Email
+        /// 公开邮箱。
         /// </summary>
+        /// <value>公开邮箱。</value>
         [JsonPropertyName("email")]
         public string? Email { get { return this.EmailOption; } set { this.EmailOption = new(value); } }
 
@@ -96,8 +99,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> UrlOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Url
+        /// GitHub 主页链接。
         /// </summary>
+        /// <value>GitHub 主页链接。</value>
         [JsonPropertyName("url")]
         public string? Url { get { return this.UrlOption; } set { this.UrlOption = new(value); } }
 

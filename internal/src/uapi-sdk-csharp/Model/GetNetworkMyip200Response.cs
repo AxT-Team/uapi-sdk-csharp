@@ -42,9 +42,10 @@ namespace uapi-sdk-csharp.Model
         /// <param name="longitude">经度</param>
         /// <param name="beginip">IP段起始地址（标准查询）</param>
         /// <param name="endip">IP段结束地址（标准查询）</param>
-        /// <param name="district">行政区（商业查询）</param>
+        /// <param name="district">行政区。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。</param>
+        /// <param name="varTimeZone">时区名称。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。</param>
         [JsonConstructor]
-        public GetNetworkMyip200Response(Option<string?> ip = default, Option<string?> region = default, Option<string?> isp = default, Option<string?> llc = default, Option<string?> asn = default, Option<decimal?> latitude = default, Option<decimal?> longitude = default, Option<string?> beginip = default, Option<string?> endip = default, Option<string?> district = default)
+        public GetNetworkMyip200Response(Option<string?> ip = default, Option<string?> region = default, Option<string?> isp = default, Option<string?> llc = default, Option<string?> asn = default, Option<decimal?> latitude = default, Option<decimal?> longitude = default, Option<string?> beginip = default, Option<string?> endip = default, Option<string?> district = default, Option<string?> varTimeZone = default)
         {
             IpOption = ip;
             RegionOption = region;
@@ -56,6 +57,7 @@ namespace uapi-sdk-csharp.Model
             BeginipOption = beginip;
             EndipOption = endip;
             DistrictOption = district;
+            VarTimeZoneOption = varTimeZone;
             OnCreated();
         }
 
@@ -204,12 +206,27 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> DistrictOption { get; private set; }
 
         /// <summary>
-        /// 行政区（商业查询）
+        /// 行政区。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。
         /// </summary>
-        /// <value>行政区（商业查询）</value>
-        /* <example>青秀区</example> */
+        /// <value>行政区。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。</value>
+        /* <example>临桂区</example> */
         [JsonPropertyName("district")]
         public string? District { get { return this.DistrictOption; } set { this.DistrictOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of VarTimeZone
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> VarTimeZoneOption { get; private set; }
+
+        /// <summary>
+        /// 时区名称。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。
+        /// </summary>
+        /// <value>时区名称。仅 &#x60;source&#x3D;commercial&#x60; 时可能返回。</value>
+        /* <example>Asia/Shanghai</example> */
+        [JsonPropertyName("time_zone")]
+        public string? VarTimeZone { get { return this.VarTimeZoneOption; } set { this.VarTimeZoneOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -229,6 +246,7 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Beginip: ").Append(Beginip).Append("\n");
             sb.Append("  Endip: ").Append(Endip).Append("\n");
             sb.Append("  District: ").Append(District).Append("\n");
+            sb.Append("  VarTimeZone: ").Append(VarTimeZone).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -276,6 +294,7 @@ namespace uapi-sdk-csharp.Model
             Option<string?> beginip = default;
             Option<string?> endip = default;
             Option<string?> district = default;
+            Option<string?> varTimeZone = default;
 
             while (utf8JsonReader.Read())
             {
@@ -322,6 +341,9 @@ namespace uapi-sdk-csharp.Model
                         case "district":
                             district = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "time_zone":
+                            varTimeZone = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         default:
                             break;
                     }
@@ -358,7 +380,10 @@ namespace uapi-sdk-csharp.Model
             if (district.IsSet && district.Value == null)
                 throw new ArgumentNullException(nameof(district), "Property is not nullable for class GetNetworkMyip200Response.");
 
-            return new GetNetworkMyip200Response(ip, region, isp, llc, asn, latitude, longitude, beginip, endip, district);
+            if (varTimeZone.IsSet && varTimeZone.Value == null)
+                throw new ArgumentNullException(nameof(varTimeZone), "Property is not nullable for class GetNetworkMyip200Response.");
+
+            return new GetNetworkMyip200Response(ip, region, isp, llc, asn, latitude, longitude, beginip, endip, district, varTimeZone);
         }
 
         /// <summary>
@@ -409,6 +434,9 @@ namespace uapi-sdk-csharp.Model
             if (getNetworkMyip200Response.DistrictOption.IsSet && getNetworkMyip200Response.District == null)
                 throw new ArgumentNullException(nameof(getNetworkMyip200Response.District), "Property is required for class GetNetworkMyip200Response.");
 
+            if (getNetworkMyip200Response.VarTimeZoneOption.IsSet && getNetworkMyip200Response.VarTimeZone == null)
+                throw new ArgumentNullException(nameof(getNetworkMyip200Response.VarTimeZone), "Property is required for class GetNetworkMyip200Response.");
+
             if (getNetworkMyip200Response.IpOption.IsSet)
                 writer.WriteString("ip", getNetworkMyip200Response.Ip);
 
@@ -438,6 +466,9 @@ namespace uapi-sdk-csharp.Model
 
             if (getNetworkMyip200Response.DistrictOption.IsSet)
                 writer.WriteString("district", getNetworkMyip200Response.District);
+
+            if (getNetworkMyip200Response.VarTimeZoneOption.IsSet)
+                writer.WriteString("time_zone", getNetworkMyip200Response.VarTimeZone);
         }
     }
 }

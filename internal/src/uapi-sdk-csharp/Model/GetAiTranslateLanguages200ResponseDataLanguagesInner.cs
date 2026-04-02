@@ -57,7 +57,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Code
         /// </summary>
-        /* <example>zh-CHS</example> */
+        /* <example>zh</example> */
         [JsonPropertyName("code")]
         public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
 

@@ -4,9 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **string** |  | [optional] 
-**Message** | **string** |  | [optional] 
-**Data** | [**GetMiscTrackingCarriers200ResponseData**](GetMiscTrackingCarriers200ResponseData.md) |  | [optional] 
+**Carriers** | [**List&lt;GetMiscTrackingCarriers200ResponseCarriersInner&gt;**](GetMiscTrackingCarriers200ResponseCarriersInner.md) | 快递公司列表 | [optional] 
+**Total** | **int** | 支持的快递公司总数 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

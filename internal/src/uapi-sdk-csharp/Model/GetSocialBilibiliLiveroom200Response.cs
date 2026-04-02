@@ -37,36 +37,42 @@ namespace uapi-sdk-csharp.Model
         /// <param name="roomId">直播间的真实房间号（长号）。</param>
         /// <param name="shortId">直播间的短号（靓号）。如果没有设置，则为0。</param>
         /// <param name="attention">主播的粉丝数（关注数量）。</param>
-        /// <param name="online">直播间当前的人气值。注意这不是真实在线人数。</param>
+        /// <param name="online">直播间当前的人气值（对应你文档里的 PopularValue，不代表真实在线人数）。</param>
+        /// <param name="isPortrait">是否为竖屏直播。</param>
         /// <param name="liveStatus">直播状态。0:未开播, 1:直播中, 2:轮播中。</param>
         /// <param name="areaId">分区ID。</param>
         /// <param name="parentAreaName">父分区名称。</param>
+        /// <param name="parentAreaId">父分区 ID。</param>
         /// <param name="areaName">子分区名称。</param>
         /// <param name="background">直播间背景图的URL。</param>
         /// <param name="title">当前直播间的标题。</param>
         /// <param name="userCover">用户设置的直播间封面URL。</param>
         /// <param name="description">直播间公告或描述，支持换行符。</param>
         /// <param name="liveTime">本次直播开始的时间，格式为 &#x60;YYYY-MM-DD HH:mm:ss&#x60;。如果未开播，则为空字符串。</param>
+        /// <param name="keyframe">关键帧封面图链接。</param>
         /// <param name="tags">直播间设置的标签，以逗号分隔。</param>
         /// <param name="hotWords">直播间热词列表，通常用于弹幕互动。</param>
-        /// <param name="newPendants">主播佩戴的头像框、大航海等级等信息，结构可能比较复杂。</param>
+        /// <param name="newPendants">newPendants</param>
         [JsonConstructor]
-        public GetSocialBilibiliLiveroom200Response(Option<decimal?> uid = default, Option<decimal?> roomId = default, Option<decimal?> shortId = default, Option<decimal?> attention = default, Option<decimal?> online = default, Option<decimal?> liveStatus = default, Option<decimal?> areaId = default, Option<string?> parentAreaName = default, Option<string?> areaName = default, Option<string?> background = default, Option<string?> title = default, Option<string?> userCover = default, Option<string?> description = default, Option<string?> liveTime = default, Option<string?> tags = default, Option<List<string>?> hotWords = default, Option<Object?> newPendants = default)
+        public GetSocialBilibiliLiveroom200Response(Option<decimal?> uid = default, Option<decimal?> roomId = default, Option<decimal?> shortId = default, Option<decimal?> attention = default, Option<decimal?> online = default, Option<bool?> isPortrait = default, Option<decimal?> liveStatus = default, Option<decimal?> areaId = default, Option<string?> parentAreaName = default, Option<decimal?> parentAreaId = default, Option<string?> areaName = default, Option<string?> background = default, Option<string?> title = default, Option<string?> userCover = default, Option<string?> description = default, Option<string?> liveTime = default, Option<string?> keyframe = default, Option<string?> tags = default, Option<List<string>?> hotWords = default, Option<GetSocialBilibiliLiveroom200ResponseNewPendants?> newPendants = default)
         {
             UidOption = uid;
             RoomIdOption = roomId;
             ShortIdOption = shortId;
             AttentionOption = attention;
             OnlineOption = online;
+            IsPortraitOption = isPortrait;
             LiveStatusOption = liveStatus;
             AreaIdOption = areaId;
             ParentAreaNameOption = parentAreaName;
+            ParentAreaIdOption = parentAreaId;
             AreaNameOption = areaName;
             BackgroundOption = background;
             TitleOption = title;
             UserCoverOption = userCover;
             DescriptionOption = description;
             LiveTimeOption = liveTime;
+            KeyframeOption = keyframe;
             TagsOption = tags;
             HotWordsOption = hotWords;
             NewPendantsOption = newPendants;
@@ -143,12 +149,27 @@ namespace uapi-sdk-csharp.Model
         public Option<decimal?> OnlineOption { get; private set; }
 
         /// <summary>
-        /// 直播间当前的人气值。注意这不是真实在线人数。
+        /// 直播间当前的人气值（对应你文档里的 PopularValue，不代表真实在线人数）。
         /// </summary>
-        /// <value>直播间当前的人气值。注意这不是真实在线人数。</value>
+        /// <value>直播间当前的人气值（对应你文档里的 PopularValue，不代表真实在线人数）。</value>
         /* <example>3662242</example> */
         [JsonPropertyName("online")]
         public decimal? Online { get { return this.OnlineOption; } set { this.OnlineOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of IsPortrait
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> IsPortraitOption { get; private set; }
+
+        /// <summary>
+        /// 是否为竖屏直播。
+        /// </summary>
+        /// <value>是否为竖屏直播。</value>
+        /* <example>false</example> */
+        [JsonPropertyName("is_portrait")]
+        public bool? IsPortrait { get { return this.IsPortraitOption; } set { this.IsPortraitOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of LiveStatus
@@ -194,6 +215,21 @@ namespace uapi-sdk-csharp.Model
         /* <example>虚拟主播</example> */
         [JsonPropertyName("parent_area_name")]
         public string? ParentAreaName { get { return this.ParentAreaNameOption; } set { this.ParentAreaNameOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of ParentAreaId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> ParentAreaIdOption { get; private set; }
+
+        /// <summary>
+        /// 父分区 ID。
+        /// </summary>
+        /// <value>父分区 ID。</value>
+        /* <example>9</example> */
+        [JsonPropertyName("parent_area_id")]
+        public decimal? ParentAreaId { get { return this.ParentAreaIdOption; } set { this.ParentAreaIdOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of AreaName
@@ -286,6 +322,21 @@ namespace uapi-sdk-csharp.Model
         public string? LiveTime { get { return this.LiveTimeOption; } set { this.LiveTimeOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Keyframe
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> KeyframeOption { get; private set; }
+
+        /// <summary>
+        /// 关键帧封面图链接。
+        /// </summary>
+        /// <value>关键帧封面图链接。</value>
+        /* <example>http://i0.hdslb.com/bfs/live-key-frame/keyframe.jpg</example> */
+        [JsonPropertyName("keyframe")]
+        public string? Keyframe { get { return this.KeyframeOption; } set { this.KeyframeOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of Tags
         /// </summary>
         [JsonIgnore]
@@ -319,14 +370,13 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<Object?> NewPendantsOption { get; private set; }
+        public Option<GetSocialBilibiliLiveroom200ResponseNewPendants?> NewPendantsOption { get; private set; }
 
         /// <summary>
-        /// 主播佩戴的头像框、大航海等级等信息，结构可能比较复杂。
+        /// Gets or Sets NewPendants
         /// </summary>
-        /// <value>主播佩戴的头像框、大航海等级等信息，结构可能比较复杂。</value>
         [JsonPropertyName("new_pendants")]
-        public Object? NewPendants { get { return this.NewPendantsOption; } set { this.NewPendantsOption = new(value); } }
+        public GetSocialBilibiliLiveroom200ResponseNewPendants? NewPendants { get { return this.NewPendantsOption; } set { this.NewPendantsOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -341,15 +391,18 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  ShortId: ").Append(ShortId).Append("\n");
             sb.Append("  Attention: ").Append(Attention).Append("\n");
             sb.Append("  Online: ").Append(Online).Append("\n");
+            sb.Append("  IsPortrait: ").Append(IsPortrait).Append("\n");
             sb.Append("  LiveStatus: ").Append(LiveStatus).Append("\n");
             sb.Append("  AreaId: ").Append(AreaId).Append("\n");
             sb.Append("  ParentAreaName: ").Append(ParentAreaName).Append("\n");
+            sb.Append("  ParentAreaId: ").Append(ParentAreaId).Append("\n");
             sb.Append("  AreaName: ").Append(AreaName).Append("\n");
             sb.Append("  Background: ").Append(Background).Append("\n");
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  UserCover: ").Append(UserCover).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  LiveTime: ").Append(LiveTime).Append("\n");
+            sb.Append("  Keyframe: ").Append(Keyframe).Append("\n");
             sb.Append("  Tags: ").Append(Tags).Append("\n");
             sb.Append("  HotWords: ").Append(HotWords).Append("\n");
             sb.Append("  NewPendants: ").Append(NewPendants).Append("\n");
@@ -395,18 +448,21 @@ namespace uapi-sdk-csharp.Model
             Option<decimal?> shortId = default;
             Option<decimal?> attention = default;
             Option<decimal?> online = default;
+            Option<bool?> isPortrait = default;
             Option<decimal?> liveStatus = default;
             Option<decimal?> areaId = default;
             Option<string?> parentAreaName = default;
+            Option<decimal?> parentAreaId = default;
             Option<string?> areaName = default;
             Option<string?> background = default;
             Option<string?> title = default;
             Option<string?> userCover = default;
             Option<string?> description = default;
             Option<string?> liveTime = default;
+            Option<string?> keyframe = default;
             Option<string?> tags = default;
             Option<List<string>?> hotWords = default;
-            Option<Object?> newPendants = default;
+            Option<GetSocialBilibiliLiveroom200ResponseNewPendants?> newPendants = default;
 
             while (utf8JsonReader.Read())
             {
@@ -438,6 +494,9 @@ namespace uapi-sdk-csharp.Model
                         case "online":
                             online = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
+                        case "is_portrait":
+                            isPortrait = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "live_status":
                             liveStatus = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
@@ -446,6 +505,9 @@ namespace uapi-sdk-csharp.Model
                             break;
                         case "parent_area_name":
                             parentAreaName = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "parent_area_id":
+                            parentAreaId = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
                         case "area_name":
                             areaName = new Option<string?>(utf8JsonReader.GetString()!);
@@ -465,6 +527,9 @@ namespace uapi-sdk-csharp.Model
                         case "live_time":
                             liveTime = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "keyframe":
+                            keyframe = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "tags":
                             tags = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -472,7 +537,7 @@ namespace uapi-sdk-csharp.Model
                             hotWords = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "new_pendants":
-                            newPendants = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            newPendants = new Option<GetSocialBilibiliLiveroom200ResponseNewPendants?>(JsonSerializer.Deserialize<GetSocialBilibiliLiveroom200ResponseNewPendants>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -495,6 +560,9 @@ namespace uapi-sdk-csharp.Model
             if (online.IsSet && online.Value == null)
                 throw new ArgumentNullException(nameof(online), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
+            if (isPortrait.IsSet && isPortrait.Value == null)
+                throw new ArgumentNullException(nameof(isPortrait), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
+
             if (liveStatus.IsSet && liveStatus.Value == null)
                 throw new ArgumentNullException(nameof(liveStatus), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
@@ -503,6 +571,9 @@ namespace uapi-sdk-csharp.Model
 
             if (parentAreaName.IsSet && parentAreaName.Value == null)
                 throw new ArgumentNullException(nameof(parentAreaName), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
+
+            if (parentAreaId.IsSet && parentAreaId.Value == null)
+                throw new ArgumentNullException(nameof(parentAreaId), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
             if (areaName.IsSet && areaName.Value == null)
                 throw new ArgumentNullException(nameof(areaName), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
@@ -522,16 +593,16 @@ namespace uapi-sdk-csharp.Model
             if (liveTime.IsSet && liveTime.Value == null)
                 throw new ArgumentNullException(nameof(liveTime), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
+            if (keyframe.IsSet && keyframe.Value == null)
+                throw new ArgumentNullException(nameof(keyframe), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
+
             if (tags.IsSet && tags.Value == null)
                 throw new ArgumentNullException(nameof(tags), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
             if (hotWords.IsSet && hotWords.Value == null)
                 throw new ArgumentNullException(nameof(hotWords), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
 
-            if (newPendants.IsSet && newPendants.Value == null)
-                throw new ArgumentNullException(nameof(newPendants), "Property is not nullable for class GetSocialBilibiliLiveroom200Response.");
-
-            return new GetSocialBilibiliLiveroom200Response(uid, roomId, shortId, attention, online, liveStatus, areaId, parentAreaName, areaName, background, title, userCover, description, liveTime, tags, hotWords, newPendants);
+            return new GetSocialBilibiliLiveroom200Response(uid, roomId, shortId, attention, online, isPortrait, liveStatus, areaId, parentAreaName, parentAreaId, areaName, background, title, userCover, description, liveTime, keyframe, tags, hotWords, newPendants);
         }
 
         /// <summary>
@@ -579,14 +650,14 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliLiveroom200Response.LiveTimeOption.IsSet && getSocialBilibiliLiveroom200Response.LiveTime == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliLiveroom200Response.LiveTime), "Property is required for class GetSocialBilibiliLiveroom200Response.");
 
+            if (getSocialBilibiliLiveroom200Response.KeyframeOption.IsSet && getSocialBilibiliLiveroom200Response.Keyframe == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliLiveroom200Response.Keyframe), "Property is required for class GetSocialBilibiliLiveroom200Response.");
+
             if (getSocialBilibiliLiveroom200Response.TagsOption.IsSet && getSocialBilibiliLiveroom200Response.Tags == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliLiveroom200Response.Tags), "Property is required for class GetSocialBilibiliLiveroom200Response.");
 
             if (getSocialBilibiliLiveroom200Response.HotWordsOption.IsSet && getSocialBilibiliLiveroom200Response.HotWords == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliLiveroom200Response.HotWords), "Property is required for class GetSocialBilibiliLiveroom200Response.");
-
-            if (getSocialBilibiliLiveroom200Response.NewPendantsOption.IsSet && getSocialBilibiliLiveroom200Response.NewPendants == null)
-                throw new ArgumentNullException(nameof(getSocialBilibiliLiveroom200Response.NewPendants), "Property is required for class GetSocialBilibiliLiveroom200Response.");
 
             if (getSocialBilibiliLiveroom200Response.UidOption.IsSet)
                 writer.WriteNumber("uid", getSocialBilibiliLiveroom200Response.UidOption.Value!.Value);
@@ -603,6 +674,9 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliLiveroom200Response.OnlineOption.IsSet)
                 writer.WriteNumber("online", getSocialBilibiliLiveroom200Response.OnlineOption.Value!.Value);
 
+            if (getSocialBilibiliLiveroom200Response.IsPortraitOption.IsSet)
+                writer.WriteBoolean("is_portrait", getSocialBilibiliLiveroom200Response.IsPortraitOption.Value!.Value);
+
             if (getSocialBilibiliLiveroom200Response.LiveStatusOption.IsSet)
                 writer.WriteNumber("live_status", getSocialBilibiliLiveroom200Response.LiveStatusOption.Value!.Value);
 
@@ -611,6 +685,9 @@ namespace uapi-sdk-csharp.Model
 
             if (getSocialBilibiliLiveroom200Response.ParentAreaNameOption.IsSet)
                 writer.WriteString("parent_area_name", getSocialBilibiliLiveroom200Response.ParentAreaName);
+
+            if (getSocialBilibiliLiveroom200Response.ParentAreaIdOption.IsSet)
+                writer.WriteNumber("parent_area_id", getSocialBilibiliLiveroom200Response.ParentAreaIdOption.Value!.Value);
 
             if (getSocialBilibiliLiveroom200Response.AreaNameOption.IsSet)
                 writer.WriteString("area_name", getSocialBilibiliLiveroom200Response.AreaName);
@@ -630,6 +707,9 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliLiveroom200Response.LiveTimeOption.IsSet)
                 writer.WriteString("live_time", getSocialBilibiliLiveroom200Response.LiveTime);
 
+            if (getSocialBilibiliLiveroom200Response.KeyframeOption.IsSet)
+                writer.WriteString("keyframe", getSocialBilibiliLiveroom200Response.Keyframe);
+
             if (getSocialBilibiliLiveroom200Response.TagsOption.IsSet)
                 writer.WriteString("tags", getSocialBilibiliLiveroom200Response.Tags);
 
@@ -639,10 +719,13 @@ namespace uapi-sdk-csharp.Model
                 JsonSerializer.Serialize(writer, getSocialBilibiliLiveroom200Response.HotWords, jsonSerializerOptions);
             }
             if (getSocialBilibiliLiveroom200Response.NewPendantsOption.IsSet)
-            {
-                writer.WritePropertyName("new_pendants");
-                JsonSerializer.Serialize(writer, getSocialBilibiliLiveroom200Response.NewPendants, jsonSerializerOptions);
-            }
+                if (getSocialBilibiliLiveroom200Response.NewPendantsOption.Value != null)
+                {
+                    writer.WritePropertyName("new_pendants");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliLiveroom200Response.NewPendants, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("new_pendants");
         }
     }
 }

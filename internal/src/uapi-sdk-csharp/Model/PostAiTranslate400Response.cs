@@ -85,7 +85,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Gets or Sets Error
         /// </summary>
-        /* <example>either &#39;text&#39; or &#39;texts&#39; must be provided</example> */
+        /* <example>&#39;text&#39; must be provided</example> */
         [JsonPropertyName("error")]
         public string? Error { get { return this.ErrorOption; } set { this.ErrorOption = new(value); } }
 

@@ -115,7 +115,7 @@ namespace uapi-sdk-csharp.Api
         /// 通过POST请求向答案之书提问并获得神秘答案。  ## 功能概述 与GET方式相同，但通过JSON请求体发送问题，适合在需要发送较长问题或希望避免URL编码问题的场景中使用。  ## 请求体格式 请求体必须是有效的JSON格式，包含question字段。
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="postAnswerbookAskRequest">包含问题的JSON对象</param>
+        /// <param name="postAnswerbookAskRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPostAnswerbookAskApiResponse"/>&gt;</returns>
         Task<IPostAnswerbookAskApiResponse> PostAnswerbookAskAsync(PostAnswerbookAskRequest postAnswerbookAskRequest, System.Threading.CancellationToken cancellationToken = default);
@@ -126,7 +126,7 @@ namespace uapi-sdk-csharp.Api
         /// <remarks>
         /// 通过POST请求向答案之书提问并获得神秘答案。  ## 功能概述 与GET方式相同，但通过JSON请求体发送问题，适合在需要发送较长问题或希望避免URL编码问题的场景中使用。  ## 请求体格式 请求体必须是有效的JSON格式，包含question字段。
         /// </remarks>
-        /// <param name="postAnswerbookAskRequest">包含问题的JSON对象</param>
+        /// <param name="postAnswerbookAskRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPostAnswerbookAskApiResponse"/>?&gt;</returns>
         Task<IPostAnswerbookAskApiResponse?> PostAnswerbookAskOrDefaultAsync(PostAnswerbookAskRequest postAnswerbookAskRequest, System.Threading.CancellationToken cancellationToken = default);
@@ -1418,7 +1418,7 @@ namespace uapi-sdk-csharp.Api
         /// <summary>
         /// 答案之书 (POST) 通过POST请求向答案之书提问并获得神秘答案。  ## 功能概述 与GET方式相同，但通过JSON请求体发送问题，适合在需要发送较长问题或希望避免URL编码问题的场景中使用。  ## 请求体格式 请求体必须是有效的JSON格式，包含question字段。
         /// </summary>
-        /// <param name="postAnswerbookAskRequest">包含问题的JSON对象</param>
+        /// <param name="postAnswerbookAskRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPostAnswerbookAskApiResponse"/>&gt;</returns>
         public async Task<IPostAnswerbookAskApiResponse?> PostAnswerbookAskOrDefaultAsync(PostAnswerbookAskRequest postAnswerbookAskRequest, System.Threading.CancellationToken cancellationToken = default)
@@ -1437,7 +1437,7 @@ namespace uapi-sdk-csharp.Api
         /// 答案之书 (POST) 通过POST请求向答案之书提问并获得神秘答案。  ## 功能概述 与GET方式相同，但通过JSON请求体发送问题，适合在需要发送较长问题或希望避免URL编码问题的场景中使用。  ## 请求体格式 请求体必须是有效的JSON格式，包含question字段。
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="postAnswerbookAskRequest">包含问题的JSON对象</param>
+        /// <param name="postAnswerbookAskRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPostAnswerbookAskApiResponse"/>&gt;</returns>
         public async Task<IPostAnswerbookAskApiResponse> PostAnswerbookAskAsync(PostAnswerbookAskRequest postAnswerbookAskRequest, System.Threading.CancellationToken cancellationToken = default)

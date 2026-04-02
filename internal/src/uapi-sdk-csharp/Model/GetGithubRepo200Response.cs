@@ -33,29 +33,29 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGithubRepo200Response" /> class.
         /// </summary>
-        /// <param name="fullName">fullName</param>
-        /// <param name="description">description</param>
-        /// <param name="homepage">homepage</param>
-        /// <param name="defaultBranch">defaultBranch</param>
-        /// <param name="primaryBranch">primaryBranch</param>
-        /// <param name="defaultBranchSha">defaultBranchSha</param>
-        /// <param name="visibility">visibility</param>
-        /// <param name="archived">archived</param>
-        /// <param name="disabled">disabled</param>
-        /// <param name="fork">fork</param>
-        /// <param name="language">language</param>
-        /// <param name="topics">topics</param>
-        /// <param name="license">license</param>
-        /// <param name="stargazers">stargazers</param>
-        /// <param name="forks">forks</param>
-        /// <param name="openIssues">openIssues</param>
-        /// <param name="watchers">watchers</param>
-        /// <param name="pushedAt">pushedAt</param>
-        /// <param name="createdAt">createdAt</param>
-        /// <param name="updatedAt">updatedAt</param>
-        /// <param name="languages">languages</param>
-        /// <param name="collaborators">collaborators</param>
-        /// <param name="maintainers">maintainers</param>
+        /// <param name="fullName">仓库完整名称。</param>
+        /// <param name="description">仓库简介。</param>
+        /// <param name="homepage">仓库主页链接。</param>
+        /// <param name="defaultBranch">默认分支名称。</param>
+        /// <param name="primaryBranch">主要分支名称（通常与默认分支一致）。</param>
+        /// <param name="defaultBranchSha">默认分支最新提交的 SHA 哈希。</param>
+        /// <param name="visibility">仓库可见性，常见值为 &#x60;public&#x60; 或 &#x60;private&#x60;。</param>
+        /// <param name="archived">仓库是否已归档。</param>
+        /// <param name="disabled">仓库是否被禁用。</param>
+        /// <param name="fork">是否为 Fork 仓库。</param>
+        /// <param name="language">主要语言。</param>
+        /// <param name="topics">话题标签列表。</param>
+        /// <param name="license">开源许可证名称。</param>
+        /// <param name="stargazers">Star 数。</param>
+        /// <param name="forks">Fork 数。</param>
+        /// <param name="openIssues">开放 Issue 数。</param>
+        /// <param name="watchers">关注者数量（watchers/subscribers）。</param>
+        /// <param name="pushedAt">最后推送时间（ISO 8601）。</param>
+        /// <param name="createdAt">创建时间（ISO 8601）。</param>
+        /// <param name="updatedAt">更新时间（ISO 8601）。</param>
+        /// <param name="languages">语言统计（键为语言名，值为代码字节数）。</param>
+        /// <param name="collaborators">协作者列表。受权限限制时可能为 null 或空数组。</param>
+        /// <param name="maintainers">维护者列表（根据默认分支近期提交推断）。</param>
         /// <param name="latestRelease">latestRelease</param>
         [JsonConstructor]
         public GetGithubRepo200Response(Option<string?> fullName = default, Option<string?> description = default, Option<string?> homepage = default, Option<string?> defaultBranch = default, Option<string?> primaryBranch = default, Option<string?> defaultBranchSha = default, Option<string?> visibility = default, Option<bool?> archived = default, Option<bool?> disabled = default, Option<bool?> fork = default, Option<string?> language = default, Option<List<string>?> topics = default, Option<string?> license = default, Option<int?> stargazers = default, Option<int?> forks = default, Option<int?> openIssues = default, Option<int?> watchers = default, Option<DateTime?> pushedAt = default, Option<DateTime?> createdAt = default, Option<DateTime?> updatedAt = default, Option<Dictionary<string, int>?> languages = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> collaborators = default, Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> maintainers = default, Option<GetGithubRepo200ResponseLatestRelease?> latestRelease = default)
@@ -97,8 +97,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> FullNameOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets FullName
+        /// 仓库完整名称。
         /// </summary>
+        /// <value>仓库完整名称。</value>
         /* <example>torvalds/linux</example> */
         [JsonPropertyName("full_name")]
         public string? FullName { get { return this.FullNameOption; } set { this.FullNameOption = new(value); } }
@@ -111,8 +112,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> DescriptionOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Description
+        /// 仓库简介。
         /// </summary>
+        /// <value>仓库简介。</value>
         /* <example>Linux kernel source tree</example> */
         [JsonPropertyName("description")]
         public string? Description { get { return this.DescriptionOption; } set { this.DescriptionOption = new(value); } }
@@ -125,8 +127,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> HomepageOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Homepage
+        /// 仓库主页链接。
         /// </summary>
+        /// <value>仓库主页链接。</value>
         /* <example>https://www.kernel.org</example> */
         [JsonPropertyName("homepage")]
         public string? Homepage { get { return this.HomepageOption; } set { this.HomepageOption = new(value); } }
@@ -139,8 +142,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> DefaultBranchOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets DefaultBranch
+        /// 默认分支名称。
         /// </summary>
+        /// <value>默认分支名称。</value>
         /* <example>master</example> */
         [JsonPropertyName("default_branch")]
         public string? DefaultBranch { get { return this.DefaultBranchOption; } set { this.DefaultBranchOption = new(value); } }
@@ -153,8 +157,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> PrimaryBranchOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets PrimaryBranch
+        /// 主要分支名称（通常与默认分支一致）。
         /// </summary>
+        /// <value>主要分支名称（通常与默认分支一致）。</value>
         /* <example>master</example> */
         [JsonPropertyName("primary_branch")]
         public string? PrimaryBranch { get { return this.PrimaryBranchOption; } set { this.PrimaryBranchOption = new(value); } }
@@ -167,8 +172,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> DefaultBranchShaOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets DefaultBranchSha
+        /// 默认分支最新提交的 SHA 哈希。
         /// </summary>
+        /// <value>默认分支最新提交的 SHA 哈希。</value>
         /* <example>abc123...</example> */
         [JsonPropertyName("default_branch_sha")]
         public string? DefaultBranchSha { get { return this.DefaultBranchShaOption; } set { this.DefaultBranchShaOption = new(value); } }
@@ -181,8 +187,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> VisibilityOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Visibility
+        /// 仓库可见性，常见值为 &#x60;public&#x60; 或 &#x60;private&#x60;。
         /// </summary>
+        /// <value>仓库可见性，常见值为 &#x60;public&#x60; 或 &#x60;private&#x60;。</value>
         /* <example>public</example> */
         [JsonPropertyName("visibility")]
         public string? Visibility { get { return this.VisibilityOption; } set { this.VisibilityOption = new(value); } }
@@ -195,8 +202,9 @@ namespace uapi-sdk-csharp.Model
         public Option<bool?> ArchivedOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Archived
+        /// 仓库是否已归档。
         /// </summary>
+        /// <value>仓库是否已归档。</value>
         /* <example>false</example> */
         [JsonPropertyName("archived")]
         public bool? Archived { get { return this.ArchivedOption; } set { this.ArchivedOption = new(value); } }
@@ -209,8 +217,9 @@ namespace uapi-sdk-csharp.Model
         public Option<bool?> DisabledOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Disabled
+        /// 仓库是否被禁用。
         /// </summary>
+        /// <value>仓库是否被禁用。</value>
         /* <example>false</example> */
         [JsonPropertyName("disabled")]
         public bool? Disabled { get { return this.DisabledOption; } set { this.DisabledOption = new(value); } }
@@ -223,8 +232,9 @@ namespace uapi-sdk-csharp.Model
         public Option<bool?> ForkOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Fork
+        /// 是否为 Fork 仓库。
         /// </summary>
+        /// <value>是否为 Fork 仓库。</value>
         /* <example>false</example> */
         [JsonPropertyName("fork")]
         public bool? Fork { get { return this.ForkOption; } set { this.ForkOption = new(value); } }
@@ -237,8 +247,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> LanguageOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Language
+        /// 主要语言。
         /// </summary>
+        /// <value>主要语言。</value>
         /* <example>C</example> */
         [JsonPropertyName("language")]
         public string? Language { get { return this.LanguageOption; } set { this.LanguageOption = new(value); } }
@@ -251,8 +262,9 @@ namespace uapi-sdk-csharp.Model
         public Option<List<string>?> TopicsOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Topics
+        /// 话题标签列表。
         /// </summary>
+        /// <value>话题标签列表。</value>
         /* <example>[&quot;kernel&quot;,&quot;linux&quot;]</example> */
         [JsonPropertyName("topics")]
         public List<string>? Topics { get { return this.TopicsOption; } set { this.TopicsOption = new(value); } }
@@ -265,8 +277,9 @@ namespace uapi-sdk-csharp.Model
         public Option<string?> LicenseOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets License
+        /// 开源许可证名称。
         /// </summary>
+        /// <value>开源许可证名称。</value>
         /* <example>GPL-2.0</example> */
         [JsonPropertyName("license")]
         public string? License { get { return this.LicenseOption; } set { this.LicenseOption = new(value); } }
@@ -279,8 +292,9 @@ namespace uapi-sdk-csharp.Model
         public Option<int?> StargazersOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Stargazers
+        /// Star 数。
         /// </summary>
+        /// <value>Star 数。</value>
         /* <example>170000</example> */
         [JsonPropertyName("stargazers")]
         public int? Stargazers { get { return this.StargazersOption; } set { this.StargazersOption = new(value); } }
@@ -293,8 +307,9 @@ namespace uapi-sdk-csharp.Model
         public Option<int?> ForksOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Forks
+        /// Fork 数。
         /// </summary>
+        /// <value>Fork 数。</value>
         /* <example>85000</example> */
         [JsonPropertyName("forks")]
         public int? Forks { get { return this.ForksOption; } set { this.ForksOption = new(value); } }
@@ -307,8 +322,9 @@ namespace uapi-sdk-csharp.Model
         public Option<int?> OpenIssuesOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets OpenIssues
+        /// 开放 Issue 数。
         /// </summary>
+        /// <value>开放 Issue 数。</value>
         /* <example>500</example> */
         [JsonPropertyName("open_issues")]
         public int? OpenIssues { get { return this.OpenIssuesOption; } set { this.OpenIssuesOption = new(value); } }
@@ -321,8 +337,9 @@ namespace uapi-sdk-csharp.Model
         public Option<int?> WatchersOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Watchers
+        /// 关注者数量（watchers/subscribers）。
         /// </summary>
+        /// <value>关注者数量（watchers/subscribers）。</value>
         /* <example>3000</example> */
         [JsonPropertyName("watchers")]
         public int? Watchers { get { return this.WatchersOption; } set { this.WatchersOption = new(value); } }
@@ -335,8 +352,9 @@ namespace uapi-sdk-csharp.Model
         public Option<DateTime?> PushedAtOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets PushedAt
+        /// 最后推送时间（ISO 8601）。
         /// </summary>
+        /// <value>最后推送时间（ISO 8601）。</value>
         /* <example>2025-09-24T12:34:56Z</example> */
         [JsonPropertyName("pushed_at")]
         public DateTime? PushedAt { get { return this.PushedAtOption; } set { this.PushedAtOption = new(value); } }
@@ -349,8 +367,9 @@ namespace uapi-sdk-csharp.Model
         public Option<DateTime?> CreatedAtOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets CreatedAt
+        /// 创建时间（ISO 8601）。
         /// </summary>
+        /// <value>创建时间（ISO 8601）。</value>
         /* <example>2011-07-04T22:42Z</example> */
         [JsonPropertyName("created_at")]
         public DateTime? CreatedAt { get { return this.CreatedAtOption; } set { this.CreatedAtOption = new(value); } }
@@ -363,8 +382,9 @@ namespace uapi-sdk-csharp.Model
         public Option<DateTime?> UpdatedAtOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets UpdatedAt
+        /// 更新时间（ISO 8601）。
         /// </summary>
+        /// <value>更新时间（ISO 8601）。</value>
         /* <example>2025-09-24T12:34:56Z</example> */
         [JsonPropertyName("updated_at")]
         public DateTime? UpdatedAt { get { return this.UpdatedAtOption; } set { this.UpdatedAtOption = new(value); } }
@@ -377,8 +397,9 @@ namespace uapi-sdk-csharp.Model
         public Option<Dictionary<string, int>?> LanguagesOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Languages
+        /// 语言统计（键为语言名，值为代码字节数）。
         /// </summary>
+        /// <value>语言统计（键为语言名，值为代码字节数）。</value>
         /* <example>{&quot;C&quot;:123456789,&quot;Assembly&quot;:2345678}</example> */
         [JsonPropertyName("languages")]
         public Dictionary<string, int>? Languages { get { return this.LanguagesOption; } set { this.LanguagesOption = new(value); } }
@@ -391,8 +412,9 @@ namespace uapi-sdk-csharp.Model
         public Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> CollaboratorsOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Collaborators
+        /// 协作者列表。受权限限制时可能为 null 或空数组。
         /// </summary>
+        /// <value>协作者列表。受权限限制时可能为 null 或空数组。</value>
         /* <example>[{&quot;login&quot;:&quot;octocat&quot;,&quot;name&quot;:&quot;The Octocat&quot;,&quot;email&quot;:&quot;public@example.com&quot;,&quot;url&quot;:&quot;https://github.com/octocat&quot;}]</example> */
         [JsonPropertyName("collaborators")]
         public List<GetGithubRepo200ResponseCollaboratorsInner>? Collaborators { get { return this.CollaboratorsOption; } set { this.CollaboratorsOption = new(value); } }
@@ -405,8 +427,9 @@ namespace uapi-sdk-csharp.Model
         public Option<List<GetGithubRepo200ResponseCollaboratorsInner>?> MaintainersOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Maintainers
+        /// 维护者列表（根据默认分支近期提交推断）。
         /// </summary>
+        /// <value>维护者列表（根据默认分支近期提交推断）。</value>
         /* <example>[{&quot;login&quot;:&quot;devA&quot;,&quot;name&quot;:&quot;Dev A&quot;,&quot;email&quot;:&quot;devA@users.noreply.github.com&quot;,&quot;url&quot;:&quot;https://github.com/devA&quot;}]</example> */
         [JsonPropertyName("maintainers")]
         public List<GetGithubRepo200ResponseCollaboratorsInner>? Maintainers { get { return this.MaintainersOption; } set { this.MaintainersOption = new(value); } }

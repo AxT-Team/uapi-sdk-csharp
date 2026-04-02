@@ -33,7 +33,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostSensitiveWordAnalyzeRequest" /> class.
         /// </summary>
-        /// <param name="keywords">要分析的关键词列表，单次最多100个，每个关键词最长50字符。</param>
+        /// <param name="keywords">要分析的关键词列表，单次最多100个。单条关键词最多1,000字符，总字符数最多20,000。</param>
         [JsonConstructor]
         public PostSensitiveWordAnalyzeRequest(List<string> keywords)
         {
@@ -44,9 +44,9 @@ namespace uapi-sdk-csharp.Model
         partial void OnCreated();
 
         /// <summary>
-        /// 要分析的关键词列表，单次最多100个，每个关键词最长50字符。
+        /// 要分析的关键词列表，单次最多100个。单条关键词最多1,000字符，总字符数最多20,000。
         /// </summary>
-        /// <value>要分析的关键词列表，单次最多100个，每个关键词最长50字符。</value>
+        /// <value>要分析的关键词列表，单次最多100个。单条关键词最多1,000字符，总字符数最多20,000。</value>
         /* <example>[&quot;喵&quot;,&quot;cnm&quot;,&quot;ccb&quot;]</example> */
         [JsonPropertyName("keywords")]
         public List<string> Keywords { get; set; }

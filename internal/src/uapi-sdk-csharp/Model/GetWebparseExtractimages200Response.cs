@@ -33,61 +33,47 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetWebparseExtractimages200Response" /> class.
         /// </summary>
-        /// <param name="count">count</param>
-        /// <param name="images">images</param>
-        /// <param name="url">url</param>
+        /// <param name="pageUrl">实际解析的网页地址。</param>
+        /// <param name="imageUrls">页面中提取到的图片链接列表。</param>
         [JsonConstructor]
-        public GetWebparseExtractimages200Response(Option<int?> count = default, Option<List<string>?> images = default, Option<string?> url = default)
+        public GetWebparseExtractimages200Response(Option<string?> pageUrl = default, Option<List<string>?> imageUrls = default)
         {
-            CountOption = count;
-            ImagesOption = images;
-            UrlOption = url;
+            PageUrlOption = pageUrl;
+            ImageUrlsOption = imageUrls;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Count
+        /// Used to track the state of PageUrl
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CountOption { get; private set; }
+        public Option<string?> PageUrlOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Count
+        /// 实际解析的网页地址。
         /// </summary>
-        /* <example>25</example> */
-        [JsonPropertyName("count")]
-        public int? Count { get { return this.CountOption; } set { this.CountOption = new(value); } }
+        /// <value>实际解析的网页地址。</value>
+        /* <example>https://cn.bing.com/</example> */
+        [JsonPropertyName("page_url")]
+        public string? PageUrl { get { return this.PageUrlOption; } set { this.PageUrlOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Images
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> ImagesOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Images
-        /// </summary>
-        /* <example>[&quot;https://example.com/image1.jpg&quot;,&quot;https://example.com/image2.png&quot;]</example> */
-        [JsonPropertyName("images")]
-        public List<string>? Images { get { return this.ImagesOption; } set { this.ImagesOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Url
+        /// Used to track the state of ImageUrls
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> UrlOption { get; private set; }
+        public Option<List<string>?> ImageUrlsOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Url
+        /// 页面中提取到的图片链接列表。
         /// </summary>
-        /* <example>https://example.com</example> */
-        [JsonPropertyName("url")]
-        public string? Url { get { return this.UrlOption; } set { this.UrlOption = new(value); } }
+        /// <value>页面中提取到的图片链接列表。</value>
+        /* <example>[&quot;https://example.com/image1.jpg&quot;,&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII&#x3D;&quot;]</example> */
+        [JsonPropertyName("image_urls")]
+        public List<string>? ImageUrls { get { return this.ImageUrlsOption; } set { this.ImageUrlsOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -97,9 +83,8 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetWebparseExtractimages200Response {\n");
-            sb.Append("  Count: ").Append(Count).Append("\n");
-            sb.Append("  Images: ").Append(Images).Append("\n");
-            sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("  PageUrl: ").Append(PageUrl).Append("\n");
+            sb.Append("  ImageUrls: ").Append(ImageUrls).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -137,9 +122,8 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> count = default;
-            Option<List<string>?> images = default;
-            Option<string?> url = default;
+            Option<string?> pageUrl = default;
+            Option<List<string>?> imageUrls = default;
 
             while (utf8JsonReader.Read())
             {
@@ -156,14 +140,11 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "count":
-                            count = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                        case "page_url":
+                            pageUrl = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "images":
-                            images = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "url":
-                            url = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "image_urls":
+                            imageUrls = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -171,16 +152,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (count.IsSet && count.Value == null)
-                throw new ArgumentNullException(nameof(count), "Property is not nullable for class GetWebparseExtractimages200Response.");
+            if (pageUrl.IsSet && pageUrl.Value == null)
+                throw new ArgumentNullException(nameof(pageUrl), "Property is not nullable for class GetWebparseExtractimages200Response.");
 
-            if (images.IsSet && images.Value == null)
-                throw new ArgumentNullException(nameof(images), "Property is not nullable for class GetWebparseExtractimages200Response.");
+            if (imageUrls.IsSet && imageUrls.Value == null)
+                throw new ArgumentNullException(nameof(imageUrls), "Property is not nullable for class GetWebparseExtractimages200Response.");
 
-            if (url.IsSet && url.Value == null)
-                throw new ArgumentNullException(nameof(url), "Property is not nullable for class GetWebparseExtractimages200Response.");
-
-            return new GetWebparseExtractimages200Response(count, images, url);
+            return new GetWebparseExtractimages200Response(pageUrl, imageUrls);
         }
 
         /// <summary>
@@ -207,22 +185,20 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetWebparseExtractimages200Response getWebparseExtractimages200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getWebparseExtractimages200Response.ImagesOption.IsSet && getWebparseExtractimages200Response.Images == null)
-                throw new ArgumentNullException(nameof(getWebparseExtractimages200Response.Images), "Property is required for class GetWebparseExtractimages200Response.");
+            if (getWebparseExtractimages200Response.PageUrlOption.IsSet && getWebparseExtractimages200Response.PageUrl == null)
+                throw new ArgumentNullException(nameof(getWebparseExtractimages200Response.PageUrl), "Property is required for class GetWebparseExtractimages200Response.");
 
-            if (getWebparseExtractimages200Response.UrlOption.IsSet && getWebparseExtractimages200Response.Url == null)
-                throw new ArgumentNullException(nameof(getWebparseExtractimages200Response.Url), "Property is required for class GetWebparseExtractimages200Response.");
+            if (getWebparseExtractimages200Response.ImageUrlsOption.IsSet && getWebparseExtractimages200Response.ImageUrls == null)
+                throw new ArgumentNullException(nameof(getWebparseExtractimages200Response.ImageUrls), "Property is required for class GetWebparseExtractimages200Response.");
 
-            if (getWebparseExtractimages200Response.CountOption.IsSet)
-                writer.WriteNumber("count", getWebparseExtractimages200Response.CountOption.Value!.Value);
+            if (getWebparseExtractimages200Response.PageUrlOption.IsSet)
+                writer.WriteString("page_url", getWebparseExtractimages200Response.PageUrl);
 
-            if (getWebparseExtractimages200Response.ImagesOption.IsSet)
+            if (getWebparseExtractimages200Response.ImageUrlsOption.IsSet)
             {
-                writer.WritePropertyName("images");
-                JsonSerializer.Serialize(writer, getWebparseExtractimages200Response.Images, jsonSerializerOptions);
+                writer.WritePropertyName("image_urls");
+                JsonSerializer.Serialize(writer, getWebparseExtractimages200Response.ImageUrls, jsonSerializerOptions);
             }
-            if (getWebparseExtractimages200Response.UrlOption.IsSet)
-                writer.WriteString("url", getWebparseExtractimages200Response.Url);
         }
     }
 }

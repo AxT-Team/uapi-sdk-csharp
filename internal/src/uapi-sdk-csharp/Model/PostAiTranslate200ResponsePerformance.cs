@@ -34,12 +34,10 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="PostAiTranslate200ResponsePerformance" /> class.
         /// </summary>
         /// <param name="processingTimeMs">processingTimeMs</param>
-        /// <param name="cacheHit">cacheHit</param>
         [JsonConstructor]
-        public PostAiTranslate200ResponsePerformance(Option<int?> processingTimeMs = default, Option<bool?> cacheHit = default)
+        public PostAiTranslate200ResponsePerformance(Option<int?> processingTimeMs = default)
         {
             ProcessingTimeMsOption = processingTimeMs;
-            CacheHitOption = cacheHit;
             OnCreated();
         }
 
@@ -60,20 +58,6 @@ namespace uapi-sdk-csharp.Model
         public int? ProcessingTimeMs { get { return this.ProcessingTimeMsOption; } set { this.ProcessingTimeMsOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of CacheHit
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> CacheHitOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets CacheHit
-        /// </summary>
-        /* <example>false</example> */
-        [JsonPropertyName("cache_hit")]
-        public bool? CacheHit { get { return this.CacheHitOption; } set { this.CacheHitOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -82,7 +66,6 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAiTranslate200ResponsePerformance {\n");
             sb.Append("  ProcessingTimeMs: ").Append(ProcessingTimeMs).Append("\n");
-            sb.Append("  CacheHit: ").Append(CacheHit).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -121,7 +104,6 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<int?> processingTimeMs = default;
-            Option<bool?> cacheHit = default;
 
             while (utf8JsonReader.Read())
             {
@@ -141,9 +123,6 @@ namespace uapi-sdk-csharp.Model
                         case "processing_time_ms":
                             processingTimeMs = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
-                        case "cache_hit":
-                            cacheHit = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         default:
                             break;
                     }
@@ -153,10 +132,7 @@ namespace uapi-sdk-csharp.Model
             if (processingTimeMs.IsSet && processingTimeMs.Value == null)
                 throw new ArgumentNullException(nameof(processingTimeMs), "Property is not nullable for class PostAiTranslate200ResponsePerformance.");
 
-            if (cacheHit.IsSet && cacheHit.Value == null)
-                throw new ArgumentNullException(nameof(cacheHit), "Property is not nullable for class PostAiTranslate200ResponsePerformance.");
-
-            return new PostAiTranslate200ResponsePerformance(processingTimeMs, cacheHit);
+            return new PostAiTranslate200ResponsePerformance(processingTimeMs);
         }
 
         /// <summary>
@@ -185,9 +161,6 @@ namespace uapi-sdk-csharp.Model
         {
             if (postAiTranslate200ResponsePerformance.ProcessingTimeMsOption.IsSet)
                 writer.WriteNumber("processing_time_ms", postAiTranslate200ResponsePerformance.ProcessingTimeMsOption.Value!.Value);
-
-            if (postAiTranslate200ResponsePerformance.CacheHitOption.IsSet)
-                writer.WriteBoolean("cache_hit", postAiTranslate200ResponsePerformance.CacheHitOption.Value!.Value);
         }
     }
 }

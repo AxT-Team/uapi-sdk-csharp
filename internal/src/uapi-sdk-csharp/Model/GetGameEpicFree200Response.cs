@@ -33,15 +33,32 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetGameEpicFree200Response" /> class.
         /// </summary>
+        /// <param name="message">操作结果描述。</param>
         /// <param name="data">免费游戏列表数组。</param>
         [JsonConstructor]
-        public GetGameEpicFree200Response(Option<List<GetGameEpicFree200ResponseDataInner>?> data = default)
+        public GetGameEpicFree200Response(Option<string?> message = default, Option<List<GetGameEpicFree200ResponseDataInner>?> data = default)
         {
+            MessageOption = message;
             DataOption = data;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// Used to track the state of Message
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> MessageOption { get; private set; }
+
+        /// <summary>
+        /// 操作结果描述。
+        /// </summary>
+        /// <value>操作结果描述。</value>
+        /* <example>获取成功</example> */
+        [JsonPropertyName("message")]
+        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Data
@@ -65,6 +82,7 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetGameEpicFree200Response {\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -103,6 +121,7 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
+            Option<string?> message = default;
             Option<List<GetGameEpicFree200ResponseDataInner>?> data = default;
 
             while (utf8JsonReader.Read())
@@ -120,6 +139,9 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
+                        case "message":
+                            message = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "data":
                             data = new Option<List<GetGameEpicFree200ResponseDataInner>?>(JsonSerializer.Deserialize<List<GetGameEpicFree200ResponseDataInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
@@ -129,10 +151,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
+            if (message.IsSet && message.Value == null)
+                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetGameEpicFree200Response.");
+
             if (data.IsSet && data.Value == null)
                 throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetGameEpicFree200Response.");
 
-            return new GetGameEpicFree200Response(data);
+            return new GetGameEpicFree200Response(message, data);
         }
 
         /// <summary>
@@ -159,8 +184,14 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetGameEpicFree200Response getGameEpicFree200Response, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (getGameEpicFree200Response.MessageOption.IsSet && getGameEpicFree200Response.Message == null)
+                throw new ArgumentNullException(nameof(getGameEpicFree200Response.Message), "Property is required for class GetGameEpicFree200Response.");
+
             if (getGameEpicFree200Response.DataOption.IsSet && getGameEpicFree200Response.Data == null)
                 throw new ArgumentNullException(nameof(getGameEpicFree200Response.Data), "Property is required for class GetGameEpicFree200Response.");
+
+            if (getGameEpicFree200Response.MessageOption.IsSet)
+                writer.WriteString("message", getGameEpicFree200Response.Message);
 
             if (getGameEpicFree200Response.DataOption.IsSet)
             {

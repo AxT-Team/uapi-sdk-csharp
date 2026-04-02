@@ -33,6 +33,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSocialBilibiliVideoinfo200ResponseStat" /> class.
         /// </summary>
+        /// <param name="aid">AV 号。</param>
         /// <param name="view">播放数。</param>
         /// <param name="danmaku">弹幕数。</param>
         /// <param name="reply">评论数。</param>
@@ -40,9 +41,15 @@ namespace uapi-sdk-csharp.Model
         /// <param name="coin">投币数。</param>
         /// <param name="share">分享数。</param>
         /// <param name="like">获赞数。</param>
+        /// <param name="nowRank">当前全站/分区排名。</param>
+        /// <param name="hisRank">历史排名。</param>
+        /// <param name="dislike">点踩量（通常为 0）。</param>
+        /// <param name="evaluation">评分/评估文案，通常为空。</param>
+        /// <param name="vt">视频类型相关历史字段。</param>
         [JsonConstructor]
-        public GetSocialBilibiliVideoinfo200ResponseStat(Option<decimal?> view = default, Option<decimal?> danmaku = default, Option<decimal?> reply = default, Option<decimal?> favorite = default, Option<decimal?> coin = default, Option<decimal?> share = default, Option<decimal?> like = default)
+        public GetSocialBilibiliVideoinfo200ResponseStat(Option<decimal?> aid = default, Option<decimal?> view = default, Option<decimal?> danmaku = default, Option<decimal?> reply = default, Option<decimal?> favorite = default, Option<decimal?> coin = default, Option<decimal?> share = default, Option<decimal?> like = default, Option<decimal?> nowRank = default, Option<decimal?> hisRank = default, Option<decimal?> dislike = default, Option<string?> evaluation = default, Option<decimal?> vt = default)
         {
+            AidOption = aid;
             ViewOption = view;
             DanmakuOption = danmaku;
             ReplyOption = reply;
@@ -50,10 +57,30 @@ namespace uapi-sdk-csharp.Model
             CoinOption = coin;
             ShareOption = share;
             LikeOption = like;
+            NowRankOption = nowRank;
+            HisRankOption = hisRank;
+            DislikeOption = dislike;
+            EvaluationOption = evaluation;
+            VtOption = vt;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// Used to track the state of Aid
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> AidOption { get; private set; }
+
+        /// <summary>
+        /// AV 号。
+        /// </summary>
+        /// <value>AV 号。</value>
+        /* <example>75836761</example> */
+        [JsonPropertyName("aid")]
+        public decimal? Aid { get { return this.AidOption; } set { this.AidOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of View
@@ -161,6 +188,80 @@ namespace uapi-sdk-csharp.Model
         public decimal? Like { get { return this.LikeOption; } set { this.LikeOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of NowRank
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> NowRankOption { get; private set; }
+
+        /// <summary>
+        /// 当前全站/分区排名。
+        /// </summary>
+        /// <value>当前全站/分区排名。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("now_rank")]
+        public decimal? NowRank { get { return this.NowRankOption; } set { this.NowRankOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of HisRank
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> HisRankOption { get; private set; }
+
+        /// <summary>
+        /// 历史排名。
+        /// </summary>
+        /// <value>历史排名。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("his_rank")]
+        public decimal? HisRank { get { return this.HisRankOption; } set { this.HisRankOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Dislike
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> DislikeOption { get; private set; }
+
+        /// <summary>
+        /// 点踩量（通常为 0）。
+        /// </summary>
+        /// <value>点踩量（通常为 0）。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("dislike")]
+        public decimal? Dislike { get { return this.DislikeOption; } set { this.DislikeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Evaluation
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> EvaluationOption { get; private set; }
+
+        /// <summary>
+        /// 评分/评估文案，通常为空。
+        /// </summary>
+        /// <value>评分/评估文案，通常为空。</value>
+        [JsonPropertyName("evaluation")]
+        public string? Evaluation { get { return this.EvaluationOption; } set { this.EvaluationOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Vt
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> VtOption { get; private set; }
+
+        /// <summary>
+        /// 视频类型相关历史字段。
+        /// </summary>
+        /// <value>视频类型相关历史字段。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("vt")]
+        public decimal? Vt { get { return this.VtOption; } set { this.VtOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -168,6 +269,7 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetSocialBilibiliVideoinfo200ResponseStat {\n");
+            sb.Append("  Aid: ").Append(Aid).Append("\n");
             sb.Append("  View: ").Append(View).Append("\n");
             sb.Append("  Danmaku: ").Append(Danmaku).Append("\n");
             sb.Append("  Reply: ").Append(Reply).Append("\n");
@@ -175,6 +277,11 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Coin: ").Append(Coin).Append("\n");
             sb.Append("  Share: ").Append(Share).Append("\n");
             sb.Append("  Like: ").Append(Like).Append("\n");
+            sb.Append("  NowRank: ").Append(NowRank).Append("\n");
+            sb.Append("  HisRank: ").Append(HisRank).Append("\n");
+            sb.Append("  Dislike: ").Append(Dislike).Append("\n");
+            sb.Append("  Evaluation: ").Append(Evaluation).Append("\n");
+            sb.Append("  Vt: ").Append(Vt).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -212,6 +319,7 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
+            Option<decimal?> aid = default;
             Option<decimal?> view = default;
             Option<decimal?> danmaku = default;
             Option<decimal?> reply = default;
@@ -219,6 +327,11 @@ namespace uapi-sdk-csharp.Model
             Option<decimal?> coin = default;
             Option<decimal?> share = default;
             Option<decimal?> like = default;
+            Option<decimal?> nowRank = default;
+            Option<decimal?> hisRank = default;
+            Option<decimal?> dislike = default;
+            Option<string?> evaluation = default;
+            Option<decimal?> vt = default;
 
             while (utf8JsonReader.Read())
             {
@@ -235,6 +348,9 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
+                        case "aid":
+                            aid = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         case "view":
                             view = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
@@ -256,11 +372,29 @@ namespace uapi-sdk-csharp.Model
                         case "like":
                             like = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
+                        case "now_rank":
+                            nowRank = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "his_rank":
+                            hisRank = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "dislike":
+                            dislike = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "evaluation":
+                            evaluation = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "vt":
+                            vt = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         default:
                             break;
                     }
                 }
             }
+
+            if (aid.IsSet && aid.Value == null)
+                throw new ArgumentNullException(nameof(aid), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
 
             if (view.IsSet && view.Value == null)
                 throw new ArgumentNullException(nameof(view), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
@@ -283,7 +417,22 @@ namespace uapi-sdk-csharp.Model
             if (like.IsSet && like.Value == null)
                 throw new ArgumentNullException(nameof(like), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
 
-            return new GetSocialBilibiliVideoinfo200ResponseStat(view, danmaku, reply, favorite, coin, share, like);
+            if (nowRank.IsSet && nowRank.Value == null)
+                throw new ArgumentNullException(nameof(nowRank), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            if (hisRank.IsSet && hisRank.Value == null)
+                throw new ArgumentNullException(nameof(hisRank), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            if (dislike.IsSet && dislike.Value == null)
+                throw new ArgumentNullException(nameof(dislike), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            if (evaluation.IsSet && evaluation.Value == null)
+                throw new ArgumentNullException(nameof(evaluation), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            if (vt.IsSet && vt.Value == null)
+                throw new ArgumentNullException(nameof(vt), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            return new GetSocialBilibiliVideoinfo200ResponseStat(aid, view, danmaku, reply, favorite, coin, share, like, nowRank, hisRank, dislike, evaluation, vt);
         }
 
         /// <summary>
@@ -310,6 +459,12 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetSocialBilibiliVideoinfo200ResponseStat getSocialBilibiliVideoinfo200ResponseStat, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (getSocialBilibiliVideoinfo200ResponseStat.EvaluationOption.IsSet && getSocialBilibiliVideoinfo200ResponseStat.Evaluation == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponseStat.Evaluation), "Property is required for class GetSocialBilibiliVideoinfo200ResponseStat.");
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.AidOption.IsSet)
+                writer.WriteNumber("aid", getSocialBilibiliVideoinfo200ResponseStat.AidOption.Value!.Value);
+
             if (getSocialBilibiliVideoinfo200ResponseStat.ViewOption.IsSet)
                 writer.WriteNumber("view", getSocialBilibiliVideoinfo200ResponseStat.ViewOption.Value!.Value);
 
@@ -330,6 +485,21 @@ namespace uapi-sdk-csharp.Model
 
             if (getSocialBilibiliVideoinfo200ResponseStat.LikeOption.IsSet)
                 writer.WriteNumber("like", getSocialBilibiliVideoinfo200ResponseStat.LikeOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.NowRankOption.IsSet)
+                writer.WriteNumber("now_rank", getSocialBilibiliVideoinfo200ResponseStat.NowRankOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.HisRankOption.IsSet)
+                writer.WriteNumber("his_rank", getSocialBilibiliVideoinfo200ResponseStat.HisRankOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.DislikeOption.IsSet)
+                writer.WriteNumber("dislike", getSocialBilibiliVideoinfo200ResponseStat.DislikeOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.EvaluationOption.IsSet)
+                writer.WriteString("evaluation", getSocialBilibiliVideoinfo200ResponseStat.Evaluation);
+
+            if (getSocialBilibiliVideoinfo200ResponseStat.VtOption.IsSet)
+                writer.WriteNumber("vt", getSocialBilibiliVideoinfo200ResponseStat.VtOption.Value!.Value);
         }
     }
 }

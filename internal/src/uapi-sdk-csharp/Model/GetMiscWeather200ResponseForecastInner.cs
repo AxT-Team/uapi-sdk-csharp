@@ -326,7 +326,7 @@ namespace uapi-sdk-csharp.Model
         /// 日落时间 HH:MM（可选）
         /// </summary>
         /// <value>日落时间 HH:MM（可选）</value>
-        /* <example>1076</example> */
+        /* <example>17:56</example> */
         [JsonPropertyName("sunset")]
         public string? Sunset { get { return this.SunsetOption; } set { this.SunsetOption = new(value); } }
 

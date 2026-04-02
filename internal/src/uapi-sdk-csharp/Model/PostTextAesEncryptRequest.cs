@@ -33,8 +33,8 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostTextAesEncryptRequest" /> class.
         /// </summary>
-        /// <param name="key">Key must be 16, 24, or 32 bytes long to select AES-128, AES-192, or AES-256.</param>
-        /// <param name="text">text</param>
+        /// <param name="key">密钥长度必须为 16、24 或 32 字节，分别对应 AES-128、AES-192、AES-256。</param>
+        /// <param name="text">待加密的明文文本。</param>
         [JsonConstructor]
         public PostTextAesEncryptRequest(string key, string text)
         {
@@ -46,17 +46,18 @@ namespace uapi-sdk-csharp.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Key must be 16, 24, or 32 bytes long to select AES-128, AES-192, or AES-256.
+        /// 密钥长度必须为 16、24 或 32 字节，分别对应 AES-128、AES-192、AES-256。
         /// </summary>
-        /// <value>Key must be 16, 24, or 32 bytes long to select AES-128, AES-192, or AES-256.</value>
+        /// <value>密钥长度必须为 16、24 或 32 字节，分别对应 AES-128、AES-192、AES-256。</value>
         /* <example>a-secret-key-123</example> */
         [JsonPropertyName("key")]
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or Sets Text
+        /// 待加密的明文文本。
         /// </summary>
-        /* <example>top secret message</example> */
+        /// <value>待加密的明文文本。</value>
+        /* <example>这是一段需要加密的消息</example> */
         [JsonPropertyName("text")]
         public string Text { get; set; }
 

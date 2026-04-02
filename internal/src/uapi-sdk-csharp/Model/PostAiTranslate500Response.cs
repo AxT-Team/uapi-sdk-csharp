@@ -36,14 +36,12 @@ namespace uapi-sdk-csharp.Model
         /// <param name="code">code</param>
         /// <param name="message">message</param>
         /// <param name="error">error</param>
-        /// <param name="isBatch">isBatch</param>
         [JsonConstructor]
-        public PostAiTranslate500Response(Option<int?> code = default, Option<string?> message = default, Option<string?> error = default, Option<bool?> isBatch = default)
+        public PostAiTranslate500Response(Option<int?> code = default, Option<string?> message = default, Option<string?> error = default)
         {
             CodeOption = code;
             MessageOption = message;
             ErrorOption = error;
-            IsBatchOption = isBatch;
             OnCreated();
         }
 
@@ -92,20 +90,6 @@ namespace uapi-sdk-csharp.Model
         public string? Error { get { return this.ErrorOption; } set { this.ErrorOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of IsBatch
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> IsBatchOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets IsBatch
-        /// </summary>
-        /* <example>false</example> */
-        [JsonPropertyName("is_batch")]
-        public bool? IsBatch { get { return this.IsBatchOption; } set { this.IsBatchOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -116,7 +100,6 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  Error: ").Append(Error).Append("\n");
-            sb.Append("  IsBatch: ").Append(IsBatch).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -157,7 +140,6 @@ namespace uapi-sdk-csharp.Model
             Option<int?> code = default;
             Option<string?> message = default;
             Option<string?> error = default;
-            Option<bool?> isBatch = default;
 
             while (utf8JsonReader.Read())
             {
@@ -183,9 +165,6 @@ namespace uapi-sdk-csharp.Model
                         case "error":
                             error = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "is_batch":
-                            isBatch = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         default:
                             break;
                     }
@@ -201,10 +180,7 @@ namespace uapi-sdk-csharp.Model
             if (error.IsSet && error.Value == null)
                 throw new ArgumentNullException(nameof(error), "Property is not nullable for class PostAiTranslate500Response.");
 
-            if (isBatch.IsSet && isBatch.Value == null)
-                throw new ArgumentNullException(nameof(isBatch), "Property is not nullable for class PostAiTranslate500Response.");
-
-            return new PostAiTranslate500Response(code, message, error, isBatch);
+            return new PostAiTranslate500Response(code, message, error);
         }
 
         /// <summary>
@@ -245,9 +221,6 @@ namespace uapi-sdk-csharp.Model
 
             if (postAiTranslate500Response.ErrorOption.IsSet)
                 writer.WriteString("error", postAiTranslate500Response.Error);
-
-            if (postAiTranslate500Response.IsBatchOption.IsSet)
-                writer.WriteBoolean("is_batch", postAiTranslate500Response.IsBatchOption.Value!.Value);
         }
     }
 }

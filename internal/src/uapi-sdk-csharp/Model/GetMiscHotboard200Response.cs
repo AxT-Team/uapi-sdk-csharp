@@ -33,144 +33,49 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMiscHotboard200Response" /> class.
         /// </summary>
-        /// <param name="list">热榜条目列表。</param>
-        /// <param name="type">type</param>
-        /// <param name="updateTime">updateTime</param>
-        /// <param name="snapshotTime">时光机模式返回的快照实际时间戳（毫秒）。</param>
-        /// <param name="keyword">搜索模式返回的搜索关键词。</param>
-        /// <param name="count">搜索模式返回的结果数量。</param>
-        /// <param name="results">搜索模式返回的结果数组。</param>
-        /// <param name="sources">数据源列表模式返回的可用历史数据源数组。</param>
-        [JsonConstructor]
-        public GetMiscHotboard200Response(Option<List<GetMiscHotboard200ResponseListInner>?> list = default, Option<string?> type = default, Option<string?> updateTime = default, Option<int?> snapshotTime = default, Option<string?> keyword = default, Option<int?> count = default, Option<List<GetMiscHotboard200ResponseResultsInner>?> results = default, Option<List<string>?> sources = default)
+        /// <param name="getMiscHotboard200ResponseOneOf"></param>
+        public GetMiscHotboard200Response(GetMiscHotboard200ResponseOneOf getMiscHotboard200ResponseOneOf)
         {
-            ListOption = list;
-            TypeOption = type;
-            UpdateTimeOption = updateTime;
-            SnapshotTimeOption = snapshotTime;
-            KeywordOption = keyword;
-            CountOption = count;
-            ResultsOption = results;
-            SourcesOption = sources;
+            GetMiscHotboard200ResponseOneOf = getMiscHotboard200ResponseOneOf;
+            OnCreated();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetMiscHotboard200Response" /> class.
+        /// </summary>
+        /// <param name="getMiscHotboard200ResponseOneOf1"></param>
+        public GetMiscHotboard200Response(GetMiscHotboard200ResponseOneOf1 getMiscHotboard200ResponseOneOf1)
+        {
+            GetMiscHotboard200ResponseOneOf1 = getMiscHotboard200ResponseOneOf1;
+            OnCreated();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetMiscHotboard200Response" /> class.
+        /// </summary>
+        /// <param name="getMiscHotboard200ResponseOneOf2"></param>
+        public GetMiscHotboard200Response(GetMiscHotboard200ResponseOneOf2 getMiscHotboard200ResponseOneOf2)
+        {
+            GetMiscHotboard200ResponseOneOf2 = getMiscHotboard200ResponseOneOf2;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of List
+        /// Gets or Sets GetMiscHotboard200ResponseOneOf
         /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<GetMiscHotboard200ResponseListInner>?> ListOption { get; private set; }
+        public GetMiscHotboard200ResponseOneOf? GetMiscHotboard200ResponseOneOf { get; set; }
 
         /// <summary>
-        /// 热榜条目列表。
+        /// Gets or Sets GetMiscHotboard200ResponseOneOf1
         /// </summary>
-        /// <value>热榜条目列表。</value>
-        [JsonPropertyName("list")]
-        public List<GetMiscHotboard200ResponseListInner>? List { get { return this.ListOption; } set { this.ListOption = new(value); } }
+        public GetMiscHotboard200ResponseOneOf1? GetMiscHotboard200ResponseOneOf1 { get; set; }
 
         /// <summary>
-        /// Used to track the state of Type
+        /// Gets or Sets GetMiscHotboard200ResponseOneOf2
         /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> TypeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Type
-        /// </summary>
-        /* <example>weibo</example> */
-        [JsonPropertyName("type")]
-        public string? Type { get { return this.TypeOption; } set { this.TypeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of UpdateTime
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> UpdateTimeOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets UpdateTime
-        /// </summary>
-        /* <example>2023-10-27 12:00:00</example> */
-        [JsonPropertyName("update_time")]
-        public string? UpdateTime { get { return this.UpdateTimeOption; } set { this.UpdateTimeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of SnapshotTime
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> SnapshotTimeOption { get; private set; }
-
-        /// <summary>
-        /// 时光机模式返回的快照实际时间戳（毫秒）。
-        /// </summary>
-        /// <value>时光机模式返回的快照实际时间戳（毫秒）。</value>
-        /* <example>1700000000000</example> */
-        [JsonPropertyName("snapshot_time")]
-        public int? SnapshotTime { get { return this.SnapshotTimeOption; } set { this.SnapshotTimeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Keyword
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> KeywordOption { get; private set; }
-
-        /// <summary>
-        /// 搜索模式返回的搜索关键词。
-        /// </summary>
-        /// <value>搜索模式返回的搜索关键词。</value>
-        /* <example>AI</example> */
-        [JsonPropertyName("keyword")]
-        public string? Keyword { get { return this.KeywordOption; } set { this.KeywordOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Count
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CountOption { get; private set; }
-
-        /// <summary>
-        /// 搜索模式返回的结果数量。
-        /// </summary>
-        /// <value>搜索模式返回的结果数量。</value>
-        /* <example>25</example> */
-        [JsonPropertyName("count")]
-        public int? Count { get { return this.CountOption; } set { this.CountOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Results
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<GetMiscHotboard200ResponseResultsInner>?> ResultsOption { get; private set; }
-
-        /// <summary>
-        /// 搜索模式返回的结果数组。
-        /// </summary>
-        /// <value>搜索模式返回的结果数组。</value>
-        [JsonPropertyName("results")]
-        public List<GetMiscHotboard200ResponseResultsInner>? Results { get { return this.ResultsOption; } set { this.ResultsOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Sources
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> SourcesOption { get; private set; }
-
-        /// <summary>
-        /// 数据源列表模式返回的可用历史数据源数组。
-        /// </summary>
-        /// <value>数据源列表模式返回的可用历史数据源数组。</value>
-        [JsonPropertyName("sources")]
-        public List<string>? Sources { get { return this.SourcesOption; } set { this.SourcesOption = new(value); } }
+        public GetMiscHotboard200ResponseOneOf2? GetMiscHotboard200ResponseOneOf2 { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -180,14 +85,6 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetMiscHotboard200Response {\n");
-            sb.Append("  List: ").Append(List).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
-            sb.Append("  SnapshotTime: ").Append(SnapshotTime).Append("\n");
-            sb.Append("  Keyword: ").Append(Keyword).Append("\n");
-            sb.Append("  Count: ").Append(Count).Append("\n");
-            sb.Append("  Results: ").Append(Results).Append("\n");
-            sb.Append("  Sources: ").Append(Sources).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -225,14 +122,31 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<List<GetMiscHotboard200ResponseListInner>?> list = default;
-            Option<string?> type = default;
-            Option<string?> updateTime = default;
-            Option<int?> snapshotTime = default;
-            Option<string?> keyword = default;
-            Option<int?> count = default;
-            Option<List<GetMiscHotboard200ResponseResultsInner>?> results = default;
-            Option<List<string>?> sources = default;
+            GetMiscHotboard200ResponseOneOf? getMiscHotboard200ResponseOneOf = default;
+            GetMiscHotboard200ResponseOneOf1? getMiscHotboard200ResponseOneOf1 = default;
+            GetMiscHotboard200ResponseOneOf2? getMiscHotboard200ResponseOneOf2 = default;
+
+            Utf8JsonReader utf8JsonReaderOneOf = utf8JsonReader;
+            while (utf8JsonReaderOneOf.Read())
+            {
+                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                    break;
+
+                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                    break;
+
+                if (utf8JsonReaderOneOf.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderOneOf.CurrentDepth - 1)
+                {
+                    Utf8JsonReader utf8JsonReaderGetMiscHotboard200ResponseOneOf = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetMiscHotboard200ResponseOneOf?>(ref utf8JsonReaderGetMiscHotboard200ResponseOneOf, jsonSerializerOptions, out getMiscHotboard200ResponseOneOf);
+
+                    Utf8JsonReader utf8JsonReaderGetMiscHotboard200ResponseOneOf1 = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetMiscHotboard200ResponseOneOf1?>(ref utf8JsonReaderGetMiscHotboard200ResponseOneOf1, jsonSerializerOptions, out getMiscHotboard200ResponseOneOf1);
+
+                    Utf8JsonReader utf8JsonReaderGetMiscHotboard200ResponseOneOf2 = utf8JsonReader;
+                    ClientUtils.TryDeserialize<GetMiscHotboard200ResponseOneOf2?>(ref utf8JsonReaderGetMiscHotboard200ResponseOneOf2, jsonSerializerOptions, out getMiscHotboard200ResponseOneOf2);
+                }
+            }
 
             while (utf8JsonReader.Read())
             {
@@ -249,61 +163,22 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "list":
-                            list = new Option<List<GetMiscHotboard200ResponseListInner>?>(JsonSerializer.Deserialize<List<GetMiscHotboard200ResponseListInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "type":
-                            type = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "update_time":
-                            updateTime = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "snapshot_time":
-                            snapshotTime = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
-                        case "keyword":
-                            keyword = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "count":
-                            count = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
-                        case "results":
-                            results = new Option<List<GetMiscHotboard200ResponseResultsInner>?>(JsonSerializer.Deserialize<List<GetMiscHotboard200ResponseResultsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "sources":
-                            sources = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
                         default:
                             break;
                     }
                 }
             }
 
-            if (list.IsSet && list.Value == null)
-                throw new ArgumentNullException(nameof(list), "Property is not nullable for class GetMiscHotboard200Response.");
+            if (getMiscHotboard200ResponseOneOf != null)
+                return new GetMiscHotboard200Response(getMiscHotboard200ResponseOneOf);
 
-            if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class GetMiscHotboard200Response.");
+            if (getMiscHotboard200ResponseOneOf1 != null)
+                return new GetMiscHotboard200Response(getMiscHotboard200ResponseOneOf1);
 
-            if (updateTime.IsSet && updateTime.Value == null)
-                throw new ArgumentNullException(nameof(updateTime), "Property is not nullable for class GetMiscHotboard200Response.");
+            if (getMiscHotboard200ResponseOneOf2 != null)
+                return new GetMiscHotboard200Response(getMiscHotboard200ResponseOneOf2);
 
-            if (snapshotTime.IsSet && snapshotTime.Value == null)
-                throw new ArgumentNullException(nameof(snapshotTime), "Property is not nullable for class GetMiscHotboard200Response.");
-
-            if (keyword.IsSet && keyword.Value == null)
-                throw new ArgumentNullException(nameof(keyword), "Property is not nullable for class GetMiscHotboard200Response.");
-
-            if (count.IsSet && count.Value == null)
-                throw new ArgumentNullException(nameof(count), "Property is not nullable for class GetMiscHotboard200Response.");
-
-            if (results.IsSet && results.Value == null)
-                throw new ArgumentNullException(nameof(results), "Property is not nullable for class GetMiscHotboard200Response.");
-
-            if (sources.IsSet && sources.Value == null)
-                throw new ArgumentNullException(nameof(sources), "Property is not nullable for class GetMiscHotboard200Response.");
-
-            return new GetMiscHotboard200Response(list, type, updateTime, snapshotTime, keyword, count, results, sources);
+            throw new JsonException();
         }
 
         /// <summary>
@@ -330,54 +205,7 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetMiscHotboard200Response getMiscHotboard200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getMiscHotboard200Response.ListOption.IsSet && getMiscHotboard200Response.List == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.List), "Property is required for class GetMiscHotboard200Response.");
 
-            if (getMiscHotboard200Response.TypeOption.IsSet && getMiscHotboard200Response.Type == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Type), "Property is required for class GetMiscHotboard200Response.");
-
-            if (getMiscHotboard200Response.UpdateTimeOption.IsSet && getMiscHotboard200Response.UpdateTime == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.UpdateTime), "Property is required for class GetMiscHotboard200Response.");
-
-            if (getMiscHotboard200Response.KeywordOption.IsSet && getMiscHotboard200Response.Keyword == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Keyword), "Property is required for class GetMiscHotboard200Response.");
-
-            if (getMiscHotboard200Response.ResultsOption.IsSet && getMiscHotboard200Response.Results == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Results), "Property is required for class GetMiscHotboard200Response.");
-
-            if (getMiscHotboard200Response.SourcesOption.IsSet && getMiscHotboard200Response.Sources == null)
-                throw new ArgumentNullException(nameof(getMiscHotboard200Response.Sources), "Property is required for class GetMiscHotboard200Response.");
-
-            if (getMiscHotboard200Response.ListOption.IsSet)
-            {
-                writer.WritePropertyName("list");
-                JsonSerializer.Serialize(writer, getMiscHotboard200Response.List, jsonSerializerOptions);
-            }
-            if (getMiscHotboard200Response.TypeOption.IsSet)
-                writer.WriteString("type", getMiscHotboard200Response.Type);
-
-            if (getMiscHotboard200Response.UpdateTimeOption.IsSet)
-                writer.WriteString("update_time", getMiscHotboard200Response.UpdateTime);
-
-            if (getMiscHotboard200Response.SnapshotTimeOption.IsSet)
-                writer.WriteNumber("snapshot_time", getMiscHotboard200Response.SnapshotTimeOption.Value!.Value);
-
-            if (getMiscHotboard200Response.KeywordOption.IsSet)
-                writer.WriteString("keyword", getMiscHotboard200Response.Keyword);
-
-            if (getMiscHotboard200Response.CountOption.IsSet)
-                writer.WriteNumber("count", getMiscHotboard200Response.CountOption.Value!.Value);
-
-            if (getMiscHotboard200Response.ResultsOption.IsSet)
-            {
-                writer.WritePropertyName("results");
-                JsonSerializer.Serialize(writer, getMiscHotboard200Response.Results, jsonSerializerOptions);
-            }
-            if (getMiscHotboard200Response.SourcesOption.IsSet)
-            {
-                writer.WritePropertyName("sources");
-                JsonSerializer.Serialize(writer, getMiscHotboard200Response.Sources, jsonSerializerOptions);
-            }
         }
     }
 }

@@ -33,37 +33,19 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAiTranslateLanguages200ResponsePerformance" /> class.
         /// </summary>
-        /// <param name="fastModeAvailable">fastModeAvailable</param>
         /// <param name="batchTranslationAvailable">batchTranslationAvailable</param>
-        /// <param name="maxTextLength">maxTextLength</param>
         /// <param name="maxBatchSize">maxBatchSize</param>
-        /// <param name="typicalResponseTimeMs">typicalResponseTimeMs</param>
+        /// <param name="maxTextLength">maxTextLength</param>
         [JsonConstructor]
-        public GetAiTranslateLanguages200ResponsePerformance(Option<bool?> fastModeAvailable = default, Option<bool?> batchTranslationAvailable = default, Option<int?> maxTextLength = default, Option<int?> maxBatchSize = default, Option<GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs?> typicalResponseTimeMs = default)
+        public GetAiTranslateLanguages200ResponsePerformance(Option<bool?> batchTranslationAvailable = default, Option<int?> maxBatchSize = default, Option<int?> maxTextLength = default)
         {
-            FastModeAvailableOption = fastModeAvailable;
             BatchTranslationAvailableOption = batchTranslationAvailable;
-            MaxTextLengthOption = maxTextLength;
             MaxBatchSizeOption = maxBatchSize;
-            TypicalResponseTimeMsOption = typicalResponseTimeMs;
+            MaxTextLengthOption = maxTextLength;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of FastModeAvailable
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> FastModeAvailableOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets FastModeAvailable
-        /// </summary>
-        /* <example>true</example> */
-        [JsonPropertyName("fast_mode_available")]
-        public bool? FastModeAvailable { get { return this.FastModeAvailableOption; } set { this.FastModeAvailableOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of BatchTranslationAvailable
@@ -80,20 +62,6 @@ namespace uapi-sdk-csharp.Model
         public bool? BatchTranslationAvailable { get { return this.BatchTranslationAvailableOption; } set { this.BatchTranslationAvailableOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of MaxTextLength
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> MaxTextLengthOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets MaxTextLength
-        /// </summary>
-        /* <example>10000</example> */
-        [JsonPropertyName("max_text_length")]
-        public int? MaxTextLength { get { return this.MaxTextLengthOption; } set { this.MaxTextLengthOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of MaxBatchSize
         /// </summary>
         [JsonIgnore]
@@ -108,17 +76,18 @@ namespace uapi-sdk-csharp.Model
         public int? MaxBatchSize { get { return this.MaxBatchSizeOption; } set { this.MaxBatchSizeOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of TypicalResponseTimeMs
+        /// Used to track the state of MaxTextLength
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs?> TypicalResponseTimeMsOption { get; private set; }
+        public Option<int?> MaxTextLengthOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets TypicalResponseTimeMs
+        /// Gets or Sets MaxTextLength
         /// </summary>
-        [JsonPropertyName("typical_response_time_ms")]
-        public GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs? TypicalResponseTimeMs { get { return this.TypicalResponseTimeMsOption; } set { this.TypicalResponseTimeMsOption = new(value); } }
+        /* <example>10000</example> */
+        [JsonPropertyName("max_text_length")]
+        public int? MaxTextLength { get { return this.MaxTextLengthOption; } set { this.MaxTextLengthOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -128,11 +97,9 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetAiTranslateLanguages200ResponsePerformance {\n");
-            sb.Append("  FastModeAvailable: ").Append(FastModeAvailable).Append("\n");
             sb.Append("  BatchTranslationAvailable: ").Append(BatchTranslationAvailable).Append("\n");
-            sb.Append("  MaxTextLength: ").Append(MaxTextLength).Append("\n");
             sb.Append("  MaxBatchSize: ").Append(MaxBatchSize).Append("\n");
-            sb.Append("  TypicalResponseTimeMs: ").Append(TypicalResponseTimeMs).Append("\n");
+            sb.Append("  MaxTextLength: ").Append(MaxTextLength).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -170,11 +137,9 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<bool?> fastModeAvailable = default;
             Option<bool?> batchTranslationAvailable = default;
-            Option<int?> maxTextLength = default;
             Option<int?> maxBatchSize = default;
-            Option<GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs?> typicalResponseTimeMs = default;
+            Option<int?> maxTextLength = default;
 
             while (utf8JsonReader.Read())
             {
@@ -191,20 +156,14 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "fast_mode_available":
-                            fastModeAvailable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         case "batch_translation_available":
                             batchTranslationAvailable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "max_text_length":
-                            maxTextLength = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         case "max_batch_size":
                             maxBatchSize = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
-                        case "typical_response_time_ms":
-                            typicalResponseTimeMs = new Option<GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs?>(JsonSerializer.Deserialize<GetAiTranslateLanguages200ResponsePerformanceTypicalResponseTimeMs>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "max_text_length":
+                            maxTextLength = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         default:
                             break;
@@ -212,22 +171,16 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (fastModeAvailable.IsSet && fastModeAvailable.Value == null)
-                throw new ArgumentNullException(nameof(fastModeAvailable), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
-
             if (batchTranslationAvailable.IsSet && batchTranslationAvailable.Value == null)
                 throw new ArgumentNullException(nameof(batchTranslationAvailable), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
-
-            if (maxTextLength.IsSet && maxTextLength.Value == null)
-                throw new ArgumentNullException(nameof(maxTextLength), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
 
             if (maxBatchSize.IsSet && maxBatchSize.Value == null)
                 throw new ArgumentNullException(nameof(maxBatchSize), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
 
-            if (typicalResponseTimeMs.IsSet && typicalResponseTimeMs.Value == null)
-                throw new ArgumentNullException(nameof(typicalResponseTimeMs), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
+            if (maxTextLength.IsSet && maxTextLength.Value == null)
+                throw new ArgumentNullException(nameof(maxTextLength), "Property is not nullable for class GetAiTranslateLanguages200ResponsePerformance.");
 
-            return new GetAiTranslateLanguages200ResponsePerformance(fastModeAvailable, batchTranslationAvailable, maxTextLength, maxBatchSize, typicalResponseTimeMs);
+            return new GetAiTranslateLanguages200ResponsePerformance(batchTranslationAvailable, maxBatchSize, maxTextLength);
         }
 
         /// <summary>
@@ -254,26 +207,14 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetAiTranslateLanguages200ResponsePerformance getAiTranslateLanguages200ResponsePerformance, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getAiTranslateLanguages200ResponsePerformance.TypicalResponseTimeMsOption.IsSet && getAiTranslateLanguages200ResponsePerformance.TypicalResponseTimeMs == null)
-                throw new ArgumentNullException(nameof(getAiTranslateLanguages200ResponsePerformance.TypicalResponseTimeMs), "Property is required for class GetAiTranslateLanguages200ResponsePerformance.");
-
-            if (getAiTranslateLanguages200ResponsePerformance.FastModeAvailableOption.IsSet)
-                writer.WriteBoolean("fast_mode_available", getAiTranslateLanguages200ResponsePerformance.FastModeAvailableOption.Value!.Value);
-
             if (getAiTranslateLanguages200ResponsePerformance.BatchTranslationAvailableOption.IsSet)
                 writer.WriteBoolean("batch_translation_available", getAiTranslateLanguages200ResponsePerformance.BatchTranslationAvailableOption.Value!.Value);
-
-            if (getAiTranslateLanguages200ResponsePerformance.MaxTextLengthOption.IsSet)
-                writer.WriteNumber("max_text_length", getAiTranslateLanguages200ResponsePerformance.MaxTextLengthOption.Value!.Value);
 
             if (getAiTranslateLanguages200ResponsePerformance.MaxBatchSizeOption.IsSet)
                 writer.WriteNumber("max_batch_size", getAiTranslateLanguages200ResponsePerformance.MaxBatchSizeOption.Value!.Value);
 
-            if (getAiTranslateLanguages200ResponsePerformance.TypicalResponseTimeMsOption.IsSet)
-            {
-                writer.WritePropertyName("typical_response_time_ms");
-                JsonSerializer.Serialize(writer, getAiTranslateLanguages200ResponsePerformance.TypicalResponseTimeMs, jsonSerializerOptions);
-            }
+            if (getAiTranslateLanguages200ResponsePerformance.MaxTextLengthOption.IsSet)
+                writer.WriteNumber("max_text_length", getAiTranslateLanguages200ResponsePerformance.MaxTextLengthOption.Value!.Value);
         }
     }
 }

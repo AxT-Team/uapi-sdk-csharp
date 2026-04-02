@@ -33,60 +33,46 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMiscTrackingCarriers200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="message">message</param>
-        /// <param name="data">data</param>
+        /// <param name="carriers">快递公司列表</param>
+        /// <param name="total">支持的快递公司总数</param>
         [JsonConstructor]
-        public GetMiscTrackingCarriers200Response(Option<string?> code = default, Option<string?> message = default, Option<GetMiscTrackingCarriers200ResponseData?> data = default)
+        public GetMiscTrackingCarriers200Response(Option<List<GetMiscTrackingCarriers200ResponseCarriersInner>?> carriers = default, Option<int?> total = default)
         {
-            CodeOption = code;
-            MessageOption = message;
-            DataOption = data;
+            CarriersOption = carriers;
+            TotalOption = total;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of Carriers
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> CodeOption { get; private set; }
+        public Option<List<GetMiscTrackingCarriers200ResponseCarriersInner>?> CarriersOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// 快递公司列表
         /// </summary>
-        /* <example>SUCCESS</example> */
-        [JsonPropertyName("code")]
-        public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
+        /// <value>快递公司列表</value>
+        [JsonPropertyName("carriers")]
+        public List<GetMiscTrackingCarriers200ResponseCarriersInner>? Carriers { get { return this.CarriersOption; } set { this.CarriersOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Message
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> MessageOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Message
-        /// </summary>
-        /* <example>操作成功</example> */
-        [JsonPropertyName("message")]
-        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Data
+        /// Used to track the state of Total
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<GetMiscTrackingCarriers200ResponseData?> DataOption { get; private set; }
+        public Option<int?> TotalOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Data
+        /// 支持的快递公司总数
         /// </summary>
-        [JsonPropertyName("data")]
-        public GetMiscTrackingCarriers200ResponseData? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
+        /// <value>支持的快递公司总数</value>
+        /* <example>13</example> */
+        [JsonPropertyName("total")]
+        public int? Total { get { return this.TotalOption; } set { this.TotalOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -96,9 +82,8 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetMiscTrackingCarriers200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("  Carriers: ").Append(Carriers).Append("\n");
+            sb.Append("  Total: ").Append(Total).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,9 +121,8 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string?> code = default;
-            Option<string?> message = default;
-            Option<GetMiscTrackingCarriers200ResponseData?> data = default;
+            Option<List<GetMiscTrackingCarriers200ResponseCarriersInner>?> carriers = default;
+            Option<int?> total = default;
 
             while (utf8JsonReader.Read())
             {
@@ -155,14 +139,11 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "carriers":
+                            carriers = new Option<List<GetMiscTrackingCarriers200ResponseCarriersInner>?>(JsonSerializer.Deserialize<List<GetMiscTrackingCarriers200ResponseCarriersInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
-                        case "message":
-                            message = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "data":
-                            data = new Option<GetMiscTrackingCarriers200ResponseData?>(JsonSerializer.Deserialize<GetMiscTrackingCarriers200ResponseData>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "total":
+                            total = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         default:
                             break;
@@ -170,16 +151,13 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetMiscTrackingCarriers200Response.");
+            if (carriers.IsSet && carriers.Value == null)
+                throw new ArgumentNullException(nameof(carriers), "Property is not nullable for class GetMiscTrackingCarriers200Response.");
 
-            if (message.IsSet && message.Value == null)
-                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetMiscTrackingCarriers200Response.");
+            if (total.IsSet && total.Value == null)
+                throw new ArgumentNullException(nameof(total), "Property is not nullable for class GetMiscTrackingCarriers200Response.");
 
-            if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetMiscTrackingCarriers200Response.");
-
-            return new GetMiscTrackingCarriers200Response(code, message, data);
+            return new GetMiscTrackingCarriers200Response(carriers, total);
         }
 
         /// <summary>
@@ -206,26 +184,16 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetMiscTrackingCarriers200Response getMiscTrackingCarriers200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getMiscTrackingCarriers200Response.CodeOption.IsSet && getMiscTrackingCarriers200Response.Code == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingCarriers200Response.Code), "Property is required for class GetMiscTrackingCarriers200Response.");
+            if (getMiscTrackingCarriers200Response.CarriersOption.IsSet && getMiscTrackingCarriers200Response.Carriers == null)
+                throw new ArgumentNullException(nameof(getMiscTrackingCarriers200Response.Carriers), "Property is required for class GetMiscTrackingCarriers200Response.");
 
-            if (getMiscTrackingCarriers200Response.MessageOption.IsSet && getMiscTrackingCarriers200Response.Message == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingCarriers200Response.Message), "Property is required for class GetMiscTrackingCarriers200Response.");
-
-            if (getMiscTrackingCarriers200Response.DataOption.IsSet && getMiscTrackingCarriers200Response.Data == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingCarriers200Response.Data), "Property is required for class GetMiscTrackingCarriers200Response.");
-
-            if (getMiscTrackingCarriers200Response.CodeOption.IsSet)
-                writer.WriteString("code", getMiscTrackingCarriers200Response.Code);
-
-            if (getMiscTrackingCarriers200Response.MessageOption.IsSet)
-                writer.WriteString("message", getMiscTrackingCarriers200Response.Message);
-
-            if (getMiscTrackingCarriers200Response.DataOption.IsSet)
+            if (getMiscTrackingCarriers200Response.CarriersOption.IsSet)
             {
-                writer.WritePropertyName("data");
-                JsonSerializer.Serialize(writer, getMiscTrackingCarriers200Response.Data, jsonSerializerOptions);
+                writer.WritePropertyName("carriers");
+                JsonSerializer.Serialize(writer, getMiscTrackingCarriers200Response.Carriers, jsonSerializerOptions);
             }
+            if (getMiscTrackingCarriers200Response.TotalOption.IsSet)
+                writer.WriteNumber("total", getMiscTrackingCarriers200Response.TotalOption.Value!.Value);
         }
     }
 }

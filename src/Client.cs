@@ -1,37 +1,79 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace uapi;
+
+public class RateLimitPolicyEntry {
+    public string Name { get; init; } = "";
+    public long? Quota { get; init; }
+    public string? Unit { get; init; }
+    public int? WindowSeconds { get; init; }
+}
+
+public class RateLimitStateEntry {
+    public string Name { get; init; } = "";
+    public long? Remaining { get; init; }
+    public string? Unit { get; init; }
+    public int? ResetAfterSeconds { get; init; }
+}
+
+public class ResponseMeta {
+    public string? RequestId { get; set; }
+    public int? RetryAfterSeconds { get; set; }
+    public string? DebitStatus { get; set; }
+    public long? CreditsRequested { get; set; }
+    public long? CreditsCharged { get; set; }
+    public string? CreditsPricing { get; set; }
+    public int? ActiveQuotaBuckets { get; set; }
+    public bool? StopOnEmpty { get; set; }
+    public string? RateLimitPolicyRaw { get; set; }
+    public string? RateLimitRaw { get; set; }
+    public Dictionary<string, RateLimitPolicyEntry> RateLimitPolicies { get; } = new(StringComparer.OrdinalIgnoreCase);
+    public Dictionary<string, RateLimitStateEntry> RateLimits { get; } = new(StringComparer.OrdinalIgnoreCase);
+    public long? BalanceLimitCents { get; set; }
+    public long? BalanceRemainingCents { get; set; }
+    public long? QuotaLimitCredits { get; set; }
+    public long? QuotaRemainingCredits { get; set; }
+    public long? VisitorQuotaLimitCredits { get; set; }
+    public long? VisitorQuotaRemainingCredits { get; set; }
+    public Dictionary<string, string> RawHeaders { get; } = new(StringComparer.OrdinalIgnoreCase);
+}
 
 public class UapiError: Exception {
     public string Code { get; }
     public int Status { get; }
-    public object? Details { get; }
-    public UapiError(string code, int status, string message, object? details = null) : base($"[{status}] {code}: {message}") { Code = code; Status = status; Details = details; }
+    public JsonElement? Details { get; }
+    public JsonElement? Payload { get; }
+    public ResponseMeta? Meta { get; }
+    public UapiError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base($"[{status}] {code}: {message}") { Code = code; Status = status; Details = details; Payload = payload; Meta = meta; }
 }
 
-public class ApiErrorError: UapiError { public ApiErrorError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class AvatarNotFoundError: UapiError { public AvatarNotFoundError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class ConversionFailedError: UapiError { public ConversionFailedError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class FileOpenErrorError: UapiError { public FileOpenErrorError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class FileRequiredError: UapiError { public FileRequiredError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class InternalServerErrorError: UapiError { public InternalServerErrorError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class InvalidParameterError: UapiError { public InvalidParameterError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class InvalidParamsError: UapiError { public InvalidParamsError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class NotFoundError: UapiError { public NotFoundError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class NoMatchError: UapiError { public NoMatchError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class NoTrackingDataError: UapiError { public NoTrackingDataError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class PhoneInfoFailedError: UapiError { public PhoneInfoFailedError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class RecognitionFailedError: UapiError { public RecognitionFailedError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class RequestEntityTooLargeError: UapiError { public RequestEntityTooLargeError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class ServiceBusyError: UapiError { public ServiceBusyError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class TimezoneNotFoundError: UapiError { public TimezoneNotFoundError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class UnauthorizedError: UapiError { public UnauthorizedError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class UnsupportedCarrierError: UapiError { public UnsupportedCarrierError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
-public class UnsupportedFormatError: UapiError { public UnsupportedFormatError(string code, int status, string message, object? details = null) : base(code,status,message,details) {} }
+public class ApiErrorError: UapiError { public ApiErrorError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class AvatarNotFoundError: UapiError { public AvatarNotFoundError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class ConversionFailedError: UapiError { public ConversionFailedError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class FileOpenErrorError: UapiError { public FileOpenErrorError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class FileRequiredError: UapiError { public FileRequiredError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class InsufficientCreditsError: UapiError { public InsufficientCreditsError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class InternalServerErrorError: UapiError { public InternalServerErrorError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class InvalidParameterError: UapiError { public InvalidParameterError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class InvalidParamsError: UapiError { public InvalidParamsError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class NotFoundError: UapiError { public NotFoundError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class NoMatchError: UapiError { public NoMatchError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class NoTrackingDataError: UapiError { public NoTrackingDataError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class PhoneInfoFailedError: UapiError { public PhoneInfoFailedError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class RecognitionFailedError: UapiError { public RecognitionFailedError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class RequestEntityTooLargeError: UapiError { public RequestEntityTooLargeError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class ServiceBusyError: UapiError { public ServiceBusyError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class TimezoneNotFoundError: UapiError { public TimezoneNotFoundError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class UnauthorizedError: UapiError { public UnauthorizedError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class UnsupportedCarrierError: UapiError { public UnsupportedCarrierError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class UnsupportedFormatError: UapiError { public UnsupportedFormatError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
+public class VisitorMonthlyQuotaExhaustedError: UapiError { public VisitorMonthlyQuotaExhaustedError(string code, int status, string message, JsonElement? details = null, JsonElement? payload = null, ResponseMeta? meta = null) : base(code,status,message,details,payload,meta) {} }
 
 
 public class Client {
     private readonly HttpClient _http;
+    public ResponseMeta? LastResponseMeta { get; private set; }
     public Client(string baseUrl, string? token = null) {
         var normalized = baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
         _http = new HttpClient { BaseAddress = new Uri(normalized) };
@@ -46,40 +88,161 @@ public class Client {
         var msg = new HttpRequestMessage(new HttpMethod(method), uri);
         if (body is not null) msg.Content = JsonContent.Create(body);
         var res = await _http.SendAsync(msg);
+        LastResponseMeta = ExtractMeta(res);
         if (!res.IsSuccessStatusCode) {
-            var json = await res.Content.ReadFromJsonAsync<Dictionary<string,object?>>();
-            var code = (json != null && json.TryGetValue("code", out var c) && c is string) ? ((string)c).ToUpper() : DefaultCode((int)res.StatusCode);
-            var message = (json != null && json.TryGetValue("message", out var m) && m is string) ? (string)m : res.ReasonPhrase ?? "";
-            throw From(code, (int)res.StatusCode, message, json != null && json.TryGetValue("details", out var d) ? d : null);
+            var text = await res.Content.ReadAsStringAsync();
+            var payload = ParseJson(text);
+            var code = (ReadString(payload, "code") ?? ReadString(payload, "error") ?? DefaultCode((int)res.StatusCode)).ToUpperInvariant();
+            var message = ReadString(payload, "message") ?? (!string.IsNullOrWhiteSpace(text) ? text : res.ReasonPhrase ?? "");
+            throw From(code, (int)res.StatusCode, message, PickDetails(payload), payload, LastResponseMeta);
         }
         var ct = res.Content.Headers.ContentType?.MediaType ?? "";
         if (ct.Contains("json")) return await res.Content.ReadFromJsonAsync<object>();
         return await res.Content.ReadAsStringAsync();
     }
     private static string DefaultCode(int status) => status switch {
-        400 => "INVALID_PARAMETER", 401 => "UNAUTHORIZED", 404 => "NOT_FOUND", 429 => "SERVICE_BUSY", 500 => "INTERNAL_SERVER_ERROR", _ => "API_ERROR",
+        400 => "INVALID_PARAMETER", 401 => "UNAUTHORIZED", 402 => "INSUFFICIENT_CREDITS", 404 => "NOT_FOUND", 429 => "SERVICE_BUSY", 500 => "INTERNAL_SERVER_ERROR", _ => "API_ERROR",
     };
-    private static UapiError From(string code, int status, string message, object? details) => code switch {
-        "API_ERROR" => new ApiErrorError(code, status, message, details),
-        "AVATAR_NOT_FOUND" => new AvatarNotFoundError(code, status, message, details),
-        "CONVERSION_FAILED" => new ConversionFailedError(code, status, message, details),
-        "FILE_OPEN_ERROR" => new FileOpenErrorError(code, status, message, details),
-        "FILE_REQUIRED" => new FileRequiredError(code, status, message, details),
-        "INTERNAL_SERVER_ERROR" => new InternalServerErrorError(code, status, message, details),
-        "INVALID_PARAMETER" => new InvalidParameterError(code, status, message, details),
-        "INVALID_PARAMS" => new InvalidParamsError(code, status, message, details),
-        "NOT_FOUND" => new NotFoundError(code, status, message, details),
-        "NO_MATCH" => new NoMatchError(code, status, message, details),
-        "NO_TRACKING_DATA" => new NoTrackingDataError(code, status, message, details),
-        "PHONE_INFO_FAILED" => new PhoneInfoFailedError(code, status, message, details),
-        "RECOGNITION_FAILED" => new RecognitionFailedError(code, status, message, details),
-        "REQUEST_ENTITY_TOO_LARGE" => new RequestEntityTooLargeError(code, status, message, details),
-        "SERVICE_BUSY" => new ServiceBusyError(code, status, message, details),
-        "TIMEZONE_NOT_FOUND" => new TimezoneNotFoundError(code, status, message, details),
-        "UNAUTHORIZED" => new UnauthorizedError(code, status, message, details),
-        "UNSUPPORTED_CARRIER" => new UnsupportedCarrierError(code, status, message, details),
-        "UNSUPPORTED_FORMAT" => new UnsupportedFormatError(code, status, message, details),
-        _ => new UapiError(code,status,message,details)
+    private static UapiError From(string code, int status, string message, JsonElement? details, JsonElement? payload, ResponseMeta? meta) => code switch {
+        "API_ERROR" => new ApiErrorError(code, status, message, details, payload, meta),
+        "AVATAR_NOT_FOUND" => new AvatarNotFoundError(code, status, message, details, payload, meta),
+        "CONVERSION_FAILED" => new ConversionFailedError(code, status, message, details, payload, meta),
+        "FILE_OPEN_ERROR" => new FileOpenErrorError(code, status, message, details, payload, meta),
+        "FILE_REQUIRED" => new FileRequiredError(code, status, message, details, payload, meta),
+        "INSUFFICIENT_CREDITS" => new InsufficientCreditsError(code, status, message, details, payload, meta),
+        "INTERNAL_SERVER_ERROR" => new InternalServerErrorError(code, status, message, details, payload, meta),
+        "INVALID_PARAMETER" => new InvalidParameterError(code, status, message, details, payload, meta),
+        "INVALID_PARAMS" => new InvalidParamsError(code, status, message, details, payload, meta),
+        "NOT_FOUND" => new NotFoundError(code, status, message, details, payload, meta),
+        "NO_MATCH" => new NoMatchError(code, status, message, details, payload, meta),
+        "NO_TRACKING_DATA" => new NoTrackingDataError(code, status, message, details, payload, meta),
+        "PHONE_INFO_FAILED" => new PhoneInfoFailedError(code, status, message, details, payload, meta),
+        "RECOGNITION_FAILED" => new RecognitionFailedError(code, status, message, details, payload, meta),
+        "REQUEST_ENTITY_TOO_LARGE" => new RequestEntityTooLargeError(code, status, message, details, payload, meta),
+        "SERVICE_BUSY" => new ServiceBusyError(code, status, message, details, payload, meta),
+        "TIMEZONE_NOT_FOUND" => new TimezoneNotFoundError(code, status, message, details, payload, meta),
+        "UNAUTHORIZED" => new UnauthorizedError(code, status, message, details, payload, meta),
+        "UNSUPPORTED_CARRIER" => new UnsupportedCarrierError(code, status, message, details, payload, meta),
+        "UNSUPPORTED_FORMAT" => new UnsupportedFormatError(code, status, message, details, payload, meta),
+        "VISITOR_MONTHLY_QUOTA_EXHAUSTED" => new VisitorMonthlyQuotaExhaustedError(code, status, message, details, payload, meta),
+        _ => new UapiError(code,status,message,details,payload,meta)
+    };
+
+    private static JsonElement? ParseJson(string text) {
+        if (string.IsNullOrWhiteSpace(text)) {
+            return null;
+        }
+        try {
+            return JsonDocument.Parse(text).RootElement.Clone();
+        } catch {
+            return null;
+        }
+    }
+
+    private static string? ReadString(JsonElement? payload, string key) {
+        if (payload is not JsonElement element || element.ValueKind != JsonValueKind.Object) {
+            return null;
+        }
+        return element.TryGetProperty(key, out var value) && value.ValueKind != JsonValueKind.Null ? value.ToString() : null;
+    }
+
+    private static JsonElement? PickDetails(JsonElement? payload) {
+        if (payload is not JsonElement element || element.ValueKind != JsonValueKind.Object) {
+            return null;
+        }
+        foreach (var key in new[] { "details", "quota", "docs" }) {
+            if (element.TryGetProperty(key, out var value)) {
+                return value.Clone();
+            }
+        }
+        return null;
+    }
+
+    private static ResponseMeta ExtractMeta(HttpResponseMessage response) {
+        var meta = new ResponseMeta();
+        foreach (var header in response.Headers) {
+            meta.RawHeaders[header.Key] = string.Join(", ", header.Value);
+        }
+        foreach (var header in response.Content.Headers) {
+            meta.RawHeaders[header.Key] = string.Join(", ", header.Value);
+        }
+
+        meta.RequestId = GetHeader(meta.RawHeaders, "X-Request-ID");
+        meta.RetryAfterSeconds = ParseInt(GetHeader(meta.RawHeaders, "Retry-After"));
+        meta.DebitStatus = GetHeader(meta.RawHeaders, "UAPI-Debit-Status");
+        meta.CreditsRequested = ParseLong(GetHeader(meta.RawHeaders, "UAPI-Credits-Requested"));
+        meta.CreditsCharged = ParseLong(GetHeader(meta.RawHeaders, "UAPI-Credits-Charged"));
+        meta.CreditsPricing = GetHeader(meta.RawHeaders, "UAPI-Credits-Pricing");
+        meta.ActiveQuotaBuckets = ParseInt(GetHeader(meta.RawHeaders, "UAPI-Quota-Active-Buckets"));
+        meta.StopOnEmpty = ParseBool(GetHeader(meta.RawHeaders, "UAPI-Stop-On-Empty"));
+        meta.RateLimitPolicyRaw = GetHeader(meta.RawHeaders, "RateLimit-Policy");
+        meta.RateLimitRaw = GetHeader(meta.RawHeaders, "RateLimit");
+
+        foreach (var item in ParseStructuredItems(meta.RateLimitPolicyRaw)) {
+            meta.RateLimitPolicies[item.Name] = new RateLimitPolicyEntry {
+                Name = item.Name,
+                Quota = ParseLong(item.Params.GetValueOrDefault("q")),
+                Unit = item.Params.GetValueOrDefault("uapi-unit"),
+                WindowSeconds = ParseInt(item.Params.GetValueOrDefault("w")),
+            };
+        }
+        foreach (var item in ParseStructuredItems(meta.RateLimitRaw)) {
+            meta.RateLimits[item.Name] = new RateLimitStateEntry {
+                Name = item.Name,
+                Remaining = ParseLong(item.Params.GetValueOrDefault("r")),
+                Unit = item.Params.GetValueOrDefault("uapi-unit"),
+                ResetAfterSeconds = ParseInt(item.Params.GetValueOrDefault("t")),
+            };
+        }
+
+        meta.BalanceLimitCents = meta.RateLimitPolicies.TryGetValue("billing-balance", out var balancePolicy) ? balancePolicy.Quota : null;
+        meta.BalanceRemainingCents = meta.RateLimits.TryGetValue("billing-balance", out var balanceState) ? balanceState.Remaining : null;
+        meta.QuotaLimitCredits = meta.RateLimitPolicies.TryGetValue("billing-quota", out var quotaPolicy) ? quotaPolicy.Quota : null;
+        meta.QuotaRemainingCredits = meta.RateLimits.TryGetValue("billing-quota", out var quotaState) ? quotaState.Remaining : null;
+        meta.VisitorQuotaLimitCredits = meta.RateLimitPolicies.TryGetValue("visitor-quota", out var visitorQuotaPolicy) ? visitorQuotaPolicy.Quota : null;
+        meta.VisitorQuotaRemainingCredits = meta.RateLimits.TryGetValue("visitor-quota", out var visitorQuotaState) ? visitorQuotaState.Remaining : null;
+        return meta;
+    }
+
+    private sealed class StructuredItem {
+        public string Name { get; init; } = "";
+        public Dictionary<string, string> Params { get; } = new(StringComparer.OrdinalIgnoreCase);
+    }
+
+    private static IEnumerable<StructuredItem> ParseStructuredItems(string? raw) {
+        if (string.IsNullOrWhiteSpace(raw)) {
+            yield break;
+        }
+        foreach (var chunk in raw.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+            var parts = chunk.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (parts.Length == 0) {
+                continue;
+            }
+            var item = new StructuredItem { Name = Unquote(parts[0]) };
+            foreach (var part in parts.Skip(1)) {
+                var eq = part.IndexOf('=');
+                if (eq <= 0) {
+                    continue;
+                }
+                item.Params[part[..eq].Trim()] = Unquote(part[(eq + 1)..]);
+            }
+            yield return item;
+        }
+    }
+
+    private static string Unquote(string value) {
+        var text = value.Trim();
+        return text.Length >= 2 && text.StartsWith('"') && text.EndsWith('"') ? text[1..^1] : text;
+    }
+
+    private static string? GetHeader(Dictionary<string, string> headers, string key) => headers.TryGetValue(key, out var value) ? value : null;
+
+    private static int? ParseInt(string? value) => int.TryParse(value, out var parsed) ? parsed : null;
+    private static long? ParseLong(string? value) => long.TryParse(value, out var parsed) ? parsed : null;
+    private static bool? ParseBool(string? value) => value?.Trim().ToLowerInvariant() switch {
+        "true" => true,
+        "false" => false,
+        _ => null,
     };
     public ClipzyZaiXianJianTieBanApi ClipzyZaiXianJianTieBan => new ClipzyZaiXianJianTieBanApi(this);
     public class ClipzyZaiXianJianTieBanApi {
@@ -741,13 +904,10 @@ public class Client {
             var body = new Dictionary<string, object?>();
             if (args != null && args.ContainsKey("target_lang")) query["target_lang"] = args["target_lang"];
             if (args != null && args.ContainsKey("context")) body["context"] = args["context"];
-            if (args != null && args.ContainsKey("fast_mode")) body["fast_mode"] = args["fast_mode"];
-            if (args != null && args.ContainsKey("max_concurrency")) body["max_concurrency"] = args["max_concurrency"];
             if (args != null && args.ContainsKey("preserve_format")) body["preserve_format"] = args["preserve_format"];
             if (args != null && args.ContainsKey("source_lang")) body["source_lang"] = args["source_lang"];
             if (args != null && args.ContainsKey("style")) body["style"] = args["style"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            if (args != null && args.ContainsKey("texts")) body["texts"] = args["texts"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null);
         }
         public Task<object?> postTranslateStreamAsync(Dictionary<string,object?>? args = null) {

@@ -35,10 +35,10 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         /// <param name="query">待翻译的文本内容</param>
         /// <param name="toLang">目标语言，支持：中文、英文</param>
-        /// <param name="fromLang">源语言，支持：中文、英文、auto（自动检测）。默认为auto (default to FromLangEnum.Auto)</param>
+        /// <param name="fromLang">源语言，支持：中文、英文、auto（自动检测）。默认为auto (default to &quot;auto&quot;)</param>
         /// <param name="tone">语气参数，可选</param>
         [JsonConstructor]
-        public PostTranslateStreamRequest(string query, ToLangEnum toLang, Option<FromLangEnum?> fromLang = default, Option<string?> tone = default)
+        public PostTranslateStreamRequest(string query, string toLang, Option<string?> fromLang = default, Option<string?> tone = default)
         {
             Query = query;
             ToLang = toLang;
@@ -50,71 +50,12 @@ namespace uapi-sdk-csharp.Model
         partial void OnCreated();
 
         /// <summary>
-        /// 目标语言，支持：中文、英文
+        /// 待翻译的文本内容
         /// </summary>
-        /// <value>目标语言，支持：中文、英文</value>
-        public enum ToLangEnum
-        {
-            /// <summary>
-            /// Enum  for value: 中文
-            /// </summary>
-             = 1,
-
-            /// <summary>
-            /// Enum 2 for value: 英文
-            /// </summary>
-            2 = 2
-        }
-
-        /// <summary>
-        /// Returns a <see cref="ToLangEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static ToLangEnum ToLangEnumFromString(string value)
-        {
-            if (value.Equals("中文"))
-                return ToLangEnum.;
-
-            if (value.Equals("英文"))
-                return ToLangEnum.2;
-
-            throw new NotImplementedException($"Could not convert value to type ToLangEnum: '{value}'");
-        }
-
-        /// <summary>
-        /// Returns a <see cref="ToLangEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static ToLangEnum? ToLangEnumFromStringOrDefault(string value)
-        {
-            if (value.Equals("中文"))
-                return ToLangEnum.;
-
-            if (value.Equals("英文"))
-                return ToLangEnum.2;
-
-            return null;
-        }
-
-        /// <summary>
-        /// Converts the <see cref="ToLangEnum"/> to the json value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static string ToLangEnumToJsonValue(ToLangEnum value)
-        {
-            if (value == ToLangEnum.)
-                return "中文";
-
-            if (value == ToLangEnum.2)
-                return "英文";
-
-            throw new NotImplementedException($"Value could not be handled: '{value}'");
-        }
+        /// <value>待翻译的文本内容</value>
+        /* <example>Hello, how are you?</example> */
+        [JsonPropertyName("query")]
+        public string Query { get; set; }
 
         /// <summary>
         /// 目标语言，支持：中文、英文
@@ -122,95 +63,14 @@ namespace uapi-sdk-csharp.Model
         /// <value>目标语言，支持：中文、英文</value>
         /* <example>中文</example> */
         [JsonPropertyName("to_lang")]
-        public ToLangEnum ToLang { get; set; }
-
-        /// <summary>
-        /// 源语言，支持：中文、英文、auto（自动检测）。默认为auto
-        /// </summary>
-        /// <value>源语言，支持：中文、英文、auto（自动检测）。默认为auto</value>
-        public enum FromLangEnum
-        {
-            /// <summary>
-            /// Enum  for value: 中文
-            /// </summary>
-             = 1,
-
-            /// <summary>
-            /// Enum 2 for value: 英文
-            /// </summary>
-            2 = 2,
-
-            /// <summary>
-            /// Enum Auto for value: auto
-            /// </summary>
-            Auto = 3
-        }
-
-        /// <summary>
-        /// Returns a <see cref="FromLangEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static FromLangEnum FromLangEnumFromString(string value)
-        {
-            if (value.Equals("中文"))
-                return FromLangEnum.;
-
-            if (value.Equals("英文"))
-                return FromLangEnum.2;
-
-            if (value.Equals("auto"))
-                return FromLangEnum.Auto;
-
-            throw new NotImplementedException($"Could not convert value to type FromLangEnum: '{value}'");
-        }
-
-        /// <summary>
-        /// Returns a <see cref="FromLangEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static FromLangEnum? FromLangEnumFromStringOrDefault(string value)
-        {
-            if (value.Equals("中文"))
-                return FromLangEnum.;
-
-            if (value.Equals("英文"))
-                return FromLangEnum.2;
-
-            if (value.Equals("auto"))
-                return FromLangEnum.Auto;
-
-            return null;
-        }
-
-        /// <summary>
-        /// Converts the <see cref="FromLangEnum"/> to the json value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static string FromLangEnumToJsonValue(FromLangEnum? value)
-        {
-            if (value == FromLangEnum.)
-                return "中文";
-
-            if (value == FromLangEnum.2)
-                return "英文";
-
-            if (value == FromLangEnum.Auto)
-                return "auto";
-
-            throw new NotImplementedException($"Value could not be handled: '{value}'");
-        }
+        public string ToLang { get; set; }
 
         /// <summary>
         /// Used to track the state of FromLang
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<FromLangEnum?> FromLangOption { get; private set; }
+        public Option<string?> FromLangOption { get; private set; }
 
         /// <summary>
         /// 源语言，支持：中文、英文、auto（自动检测）。默认为auto
@@ -218,15 +78,7 @@ namespace uapi-sdk-csharp.Model
         /// <value>源语言，支持：中文、英文、auto（自动检测）。默认为auto</value>
         /* <example>英文</example> */
         [JsonPropertyName("from_lang")]
-        public FromLangEnum? FromLang { get { return this.FromLangOption; } set { this.FromLangOption = new(value); } }
-
-        /// <summary>
-        /// 待翻译的文本内容
-        /// </summary>
-        /// <value>待翻译的文本内容</value>
-        /* <example>Hello, how are you?</example> */
-        [JsonPropertyName("query")]
-        public string Query { get; set; }
+        public string? FromLang { get { return this.FromLangOption; } set { this.FromLangOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Tone
@@ -292,8 +144,8 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> query = default;
-            Option<PostTranslateStreamRequest.ToLangEnum?> toLang = default;
-            Option<PostTranslateStreamRequest.FromLangEnum?> fromLang = default;
+            Option<string?> toLang = default;
+            Option<string?> fromLang = default;
             Option<string?> tone = default;
 
             while (utf8JsonReader.Read())
@@ -315,14 +167,10 @@ namespace uapi-sdk-csharp.Model
                             query = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "to_lang":
-                            string? toLangRawValue = utf8JsonReader.GetString();
-                            if (toLangRawValue != null)
-                                toLang = new Option<PostTranslateStreamRequest.ToLangEnum?>(PostTranslateStreamRequest.ToLangEnumFromStringOrDefault(toLangRawValue));
+                            toLang = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "from_lang":
-                            string? fromLangRawValue = utf8JsonReader.GetString();
-                            if (fromLangRawValue != null)
-                                fromLang = new Option<PostTranslateStreamRequest.FromLangEnum?>(PostTranslateStreamRequest.FromLangEnumFromStringOrDefault(fromLangRawValue));
+                            fromLang = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "tone":
                             tone = new Option<string?>(utf8JsonReader.GetString()!);
@@ -351,7 +199,7 @@ namespace uapi-sdk-csharp.Model
             if (tone.IsSet && tone.Value == null)
                 throw new ArgumentNullException(nameof(tone), "Property is not nullable for class PostTranslateStreamRequest.");
 
-            return new PostTranslateStreamRequest(query.Value!, toLang.Value!.Value!, fromLang, tone);
+            return new PostTranslateStreamRequest(query.Value!, toLang.Value!, fromLang, tone);
         }
 
         /// <summary>
@@ -381,15 +229,22 @@ namespace uapi-sdk-csharp.Model
             if (postTranslateStreamRequest.Query == null)
                 throw new ArgumentNullException(nameof(postTranslateStreamRequest.Query), "Property is required for class PostTranslateStreamRequest.");
 
+            if (postTranslateStreamRequest.ToLang == null)
+                throw new ArgumentNullException(nameof(postTranslateStreamRequest.ToLang), "Property is required for class PostTranslateStreamRequest.");
+
+            if (postTranslateStreamRequest.FromLangOption.IsSet && postTranslateStreamRequest.FromLang == null)
+                throw new ArgumentNullException(nameof(postTranslateStreamRequest.FromLang), "Property is required for class PostTranslateStreamRequest.");
+
             if (postTranslateStreamRequest.ToneOption.IsSet && postTranslateStreamRequest.Tone == null)
                 throw new ArgumentNullException(nameof(postTranslateStreamRequest.Tone), "Property is required for class PostTranslateStreamRequest.");
 
             writer.WriteString("query", postTranslateStreamRequest.Query);
 
-            var toLangRawValue = PostTranslateStreamRequest.ToLangEnumToJsonValue(postTranslateStreamRequest.ToLang);
-            writer.WriteString("to_lang", toLangRawValue);
-            var fromLangRawValue = PostTranslateStreamRequest.FromLangEnumToJsonValue(postTranslateStreamRequest.FromLangOption.Value!.Value);
-            writer.WriteString("from_lang", fromLangRawValue);
+            writer.WriteString("to_lang", postTranslateStreamRequest.ToLang);
+
+            if (postTranslateStreamRequest.FromLangOption.IsSet)
+                writer.WriteString("from_lang", postTranslateStreamRequest.FromLang);
+
             if (postTranslateStreamRequest.ToneOption.IsSet)
                 writer.WriteString("tone", postTranslateStreamRequest.Tone);
         }

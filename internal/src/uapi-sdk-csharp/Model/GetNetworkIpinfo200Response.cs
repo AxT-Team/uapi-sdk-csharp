@@ -42,9 +42,8 @@ namespace uapi-sdk-csharp.Model
         /// <param name="longitude">经度</param>
         /// <param name="beginip">IP段起始地址（标准查询）</param>
         /// <param name="endip">IP段结束地址（标准查询）</param>
-        /// <param name="district">行政区（商业查询）</param>
         [JsonConstructor]
-        public GetNetworkIpinfo200Response(Option<string?> ip = default, Option<string?> region = default, Option<string?> isp = default, Option<string?> llc = default, Option<string?> asn = default, Option<decimal?> latitude = default, Option<decimal?> longitude = default, Option<string?> beginip = default, Option<string?> endip = default, Option<string?> district = default)
+        public GetNetworkIpinfo200Response(Option<string?> ip = default, Option<string?> region = default, Option<string?> isp = default, Option<string?> llc = default, Option<string?> asn = default, Option<decimal?> latitude = default, Option<decimal?> longitude = default, Option<string?> beginip = default, Option<string?> endip = default)
         {
             IpOption = ip;
             RegionOption = region;
@@ -55,7 +54,6 @@ namespace uapi-sdk-csharp.Model
             LongitudeOption = longitude;
             BeginipOption = beginip;
             EndipOption = endip;
-            DistrictOption = district;
             OnCreated();
         }
 
@@ -197,21 +195,6 @@ namespace uapi-sdk-csharp.Model
         public string? Endip { get { return this.EndipOption; } set { this.EndipOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of District
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> DistrictOption { get; private set; }
-
-        /// <summary>
-        /// 行政区（商业查询）
-        /// </summary>
-        /// <value>行政区（商业查询）</value>
-        /* <example>龙岗区</example> */
-        [JsonPropertyName("district")]
-        public string? District { get { return this.DistrictOption; } set { this.DistrictOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -228,7 +211,6 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Longitude: ").Append(Longitude).Append("\n");
             sb.Append("  Beginip: ").Append(Beginip).Append("\n");
             sb.Append("  Endip: ").Append(Endip).Append("\n");
-            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -275,7 +257,6 @@ namespace uapi-sdk-csharp.Model
             Option<decimal?> longitude = default;
             Option<string?> beginip = default;
             Option<string?> endip = default;
-            Option<string?> district = default;
 
             while (utf8JsonReader.Read())
             {
@@ -319,9 +300,6 @@ namespace uapi-sdk-csharp.Model
                         case "endip":
                             endip = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "district":
-                            district = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
                         default:
                             break;
                     }
@@ -355,10 +333,7 @@ namespace uapi-sdk-csharp.Model
             if (endip.IsSet && endip.Value == null)
                 throw new ArgumentNullException(nameof(endip), "Property is not nullable for class GetNetworkIpinfo200Response.");
 
-            if (district.IsSet && district.Value == null)
-                throw new ArgumentNullException(nameof(district), "Property is not nullable for class GetNetworkIpinfo200Response.");
-
-            return new GetNetworkIpinfo200Response(ip, region, isp, llc, asn, latitude, longitude, beginip, endip, district);
+            return new GetNetworkIpinfo200Response(ip, region, isp, llc, asn, latitude, longitude, beginip, endip);
         }
 
         /// <summary>
@@ -406,9 +381,6 @@ namespace uapi-sdk-csharp.Model
             if (getNetworkIpinfo200Response.EndipOption.IsSet && getNetworkIpinfo200Response.Endip == null)
                 throw new ArgumentNullException(nameof(getNetworkIpinfo200Response.Endip), "Property is required for class GetNetworkIpinfo200Response.");
 
-            if (getNetworkIpinfo200Response.DistrictOption.IsSet && getNetworkIpinfo200Response.District == null)
-                throw new ArgumentNullException(nameof(getNetworkIpinfo200Response.District), "Property is required for class GetNetworkIpinfo200Response.");
-
             if (getNetworkIpinfo200Response.IpOption.IsSet)
                 writer.WriteString("ip", getNetworkIpinfo200Response.Ip);
 
@@ -435,9 +407,6 @@ namespace uapi-sdk-csharp.Model
 
             if (getNetworkIpinfo200Response.EndipOption.IsSet)
                 writer.WriteString("endip", getNetworkIpinfo200Response.Endip);
-
-            if (getNetworkIpinfo200Response.DistrictOption.IsSet)
-                writer.WriteString("district", getNetworkIpinfo200Response.District);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetMiscWeather200ResponseMinutelyPrecipDataInner" /> class.
         /// </summary>
         /// <param name="time">预报时间 ISO8601</param>
-        /// <param name="precip">5分钟累计降水量 mm</param>
+        /// <param name="precip">该时间点的降水量 mm</param>
         /// <param name="type">降水类型：rain / snow</param>
         [JsonConstructor]
         public GetMiscWeather200ResponseMinutelyPrecipDataInner(Option<string?> time = default, Option<decimal?> precip = default, Option<string?> type = default)
@@ -70,9 +70,9 @@ namespace uapi-sdk-csharp.Model
         public Option<decimal?> PrecipOption { get; private set; }
 
         /// <summary>
-        /// 5分钟累计降水量 mm
+        /// 该时间点的降水量 mm
         /// </summary>
-        /// <value>5分钟累计降水量 mm</value>
+        /// <value>该时间点的降水量 mm</value>
         /* <example>0</example> */
         [JsonPropertyName("precip")]
         public decimal? Precip { get { return this.PrecipOption; } set { this.PrecipOption = new(value); } }

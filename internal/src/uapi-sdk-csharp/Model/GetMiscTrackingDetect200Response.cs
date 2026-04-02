@@ -33,60 +33,81 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMiscTrackingDetect200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="message">message</param>
-        /// <param name="data">data</param>
+        /// <param name="trackingNumber">查询的快递单号</param>
+        /// <param name="carrierCode">识别出的快递公司编码</param>
+        /// <param name="carrierName">识别出的快递公司名称</param>
+        /// <param name="alternatives">其他可能的快递公司列表。如果没有备选项，会返回空数组。</param>
         [JsonConstructor]
-        public GetMiscTrackingDetect200Response(Option<string?> code = default, Option<string?> message = default, Option<GetMiscTrackingDetect200ResponseData?> data = default)
+        public GetMiscTrackingDetect200Response(Option<string?> trackingNumber = default, Option<string?> carrierCode = default, Option<string?> carrierName = default, Option<List<GetMiscTrackingDetect200ResponseAlternativesInner>?> alternatives = default)
         {
-            CodeOption = code;
-            MessageOption = message;
-            DataOption = data;
+            TrackingNumberOption = trackingNumber;
+            CarrierCodeOption = carrierCode;
+            CarrierNameOption = carrierName;
+            AlternativesOption = alternatives;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of TrackingNumber
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> CodeOption { get; private set; }
+        public Option<string?> TrackingNumberOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// 查询的快递单号
         /// </summary>
-        /* <example>SUCCESS</example> */
-        [JsonPropertyName("code")]
-        public string? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
+        /// <value>查询的快递单号</value>
+        /* <example>SF1234567890123</example> */
+        [JsonPropertyName("tracking_number")]
+        public string? TrackingNumber { get { return this.TrackingNumberOption; } set { this.TrackingNumberOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Message
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> MessageOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Message
-        /// </summary>
-        /* <example>操作成功</example> */
-        [JsonPropertyName("message")]
-        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Data
+        /// Used to track the state of CarrierCode
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<GetMiscTrackingDetect200ResponseData?> DataOption { get; private set; }
+        public Option<string?> CarrierCodeOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Data
+        /// 识别出的快递公司编码
         /// </summary>
-        [JsonPropertyName("data")]
-        public GetMiscTrackingDetect200ResponseData? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
+        /// <value>识别出的快递公司编码</value>
+        /* <example>shunfeng</example> */
+        [JsonPropertyName("carrier_code")]
+        public string? CarrierCode { get { return this.CarrierCodeOption; } set { this.CarrierCodeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of CarrierName
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CarrierNameOption { get; private set; }
+
+        /// <summary>
+        /// 识别出的快递公司名称
+        /// </summary>
+        /// <value>识别出的快递公司名称</value>
+        /* <example>顺丰速运</example> */
+        [JsonPropertyName("carrier_name")]
+        public string? CarrierName { get { return this.CarrierNameOption; } set { this.CarrierNameOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Alternatives
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetMiscTrackingDetect200ResponseAlternativesInner>?> AlternativesOption { get; private set; }
+
+        /// <summary>
+        /// 其他可能的快递公司列表。如果没有备选项，会返回空数组。
+        /// </summary>
+        /// <value>其他可能的快递公司列表。如果没有备选项，会返回空数组。</value>
+        /* <example>[{&quot;code&quot;:&quot;ems&quot;,&quot;name&quot;:&quot;EMS&quot;}]</example> */
+        [JsonPropertyName("alternatives")]
+        public List<GetMiscTrackingDetect200ResponseAlternativesInner>? Alternatives { get { return this.AlternativesOption; } set { this.AlternativesOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -96,9 +117,10 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetMiscTrackingDetect200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("  TrackingNumber: ").Append(TrackingNumber).Append("\n");
+            sb.Append("  CarrierCode: ").Append(CarrierCode).Append("\n");
+            sb.Append("  CarrierName: ").Append(CarrierName).Append("\n");
+            sb.Append("  Alternatives: ").Append(Alternatives).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,9 +158,10 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string?> code = default;
-            Option<string?> message = default;
-            Option<GetMiscTrackingDetect200ResponseData?> data = default;
+            Option<string?> trackingNumber = default;
+            Option<string?> carrierCode = default;
+            Option<string?> carrierName = default;
+            Option<List<GetMiscTrackingDetect200ResponseAlternativesInner>?> alternatives = default;
 
             while (utf8JsonReader.Read())
             {
@@ -155,14 +178,17 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "tracking_number":
+                            trackingNumber = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "message":
-                            message = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "carrier_code":
+                            carrierCode = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "data":
-                            data = new Option<GetMiscTrackingDetect200ResponseData?>(JsonSerializer.Deserialize<GetMiscTrackingDetect200ResponseData>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "carrier_name":
+                            carrierName = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "alternatives":
+                            alternatives = new Option<List<GetMiscTrackingDetect200ResponseAlternativesInner>?>(JsonSerializer.Deserialize<List<GetMiscTrackingDetect200ResponseAlternativesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -170,16 +196,19 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetMiscTrackingDetect200Response.");
+            if (trackingNumber.IsSet && trackingNumber.Value == null)
+                throw new ArgumentNullException(nameof(trackingNumber), "Property is not nullable for class GetMiscTrackingDetect200Response.");
 
-            if (message.IsSet && message.Value == null)
-                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetMiscTrackingDetect200Response.");
+            if (carrierCode.IsSet && carrierCode.Value == null)
+                throw new ArgumentNullException(nameof(carrierCode), "Property is not nullable for class GetMiscTrackingDetect200Response.");
 
-            if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetMiscTrackingDetect200Response.");
+            if (carrierName.IsSet && carrierName.Value == null)
+                throw new ArgumentNullException(nameof(carrierName), "Property is not nullable for class GetMiscTrackingDetect200Response.");
 
-            return new GetMiscTrackingDetect200Response(code, message, data);
+            if (alternatives.IsSet && alternatives.Value == null)
+                throw new ArgumentNullException(nameof(alternatives), "Property is not nullable for class GetMiscTrackingDetect200Response.");
+
+            return new GetMiscTrackingDetect200Response(trackingNumber, carrierCode, carrierName, alternatives);
         }
 
         /// <summary>
@@ -206,25 +235,31 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetMiscTrackingDetect200Response getMiscTrackingDetect200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getMiscTrackingDetect200Response.CodeOption.IsSet && getMiscTrackingDetect200Response.Code == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.Code), "Property is required for class GetMiscTrackingDetect200Response.");
+            if (getMiscTrackingDetect200Response.TrackingNumberOption.IsSet && getMiscTrackingDetect200Response.TrackingNumber == null)
+                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.TrackingNumber), "Property is required for class GetMiscTrackingDetect200Response.");
 
-            if (getMiscTrackingDetect200Response.MessageOption.IsSet && getMiscTrackingDetect200Response.Message == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.Message), "Property is required for class GetMiscTrackingDetect200Response.");
+            if (getMiscTrackingDetect200Response.CarrierCodeOption.IsSet && getMiscTrackingDetect200Response.CarrierCode == null)
+                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.CarrierCode), "Property is required for class GetMiscTrackingDetect200Response.");
 
-            if (getMiscTrackingDetect200Response.DataOption.IsSet && getMiscTrackingDetect200Response.Data == null)
-                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.Data), "Property is required for class GetMiscTrackingDetect200Response.");
+            if (getMiscTrackingDetect200Response.CarrierNameOption.IsSet && getMiscTrackingDetect200Response.CarrierName == null)
+                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.CarrierName), "Property is required for class GetMiscTrackingDetect200Response.");
 
-            if (getMiscTrackingDetect200Response.CodeOption.IsSet)
-                writer.WriteString("code", getMiscTrackingDetect200Response.Code);
+            if (getMiscTrackingDetect200Response.AlternativesOption.IsSet && getMiscTrackingDetect200Response.Alternatives == null)
+                throw new ArgumentNullException(nameof(getMiscTrackingDetect200Response.Alternatives), "Property is required for class GetMiscTrackingDetect200Response.");
 
-            if (getMiscTrackingDetect200Response.MessageOption.IsSet)
-                writer.WriteString("message", getMiscTrackingDetect200Response.Message);
+            if (getMiscTrackingDetect200Response.TrackingNumberOption.IsSet)
+                writer.WriteString("tracking_number", getMiscTrackingDetect200Response.TrackingNumber);
 
-            if (getMiscTrackingDetect200Response.DataOption.IsSet)
+            if (getMiscTrackingDetect200Response.CarrierCodeOption.IsSet)
+                writer.WriteString("carrier_code", getMiscTrackingDetect200Response.CarrierCode);
+
+            if (getMiscTrackingDetect200Response.CarrierNameOption.IsSet)
+                writer.WriteString("carrier_name", getMiscTrackingDetect200Response.CarrierName);
+
+            if (getMiscTrackingDetect200Response.AlternativesOption.IsSet)
             {
-                writer.WritePropertyName("data");
-                JsonSerializer.Serialize(writer, getMiscTrackingDetect200Response.Data, jsonSerializerOptions);
+                writer.WritePropertyName("alternatives");
+                JsonSerializer.Serialize(writer, getMiscTrackingDetect200Response.Alternatives, jsonSerializerOptions);
             }
         }
     }

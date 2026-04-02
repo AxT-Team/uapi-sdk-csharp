@@ -34,22 +34,16 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="PostAiTranslate200Response" /> class.
         /// </summary>
         /// <param name="message">message</param>
-        /// <param name="isBatch">标识是否为批量翻译请求。</param>
         /// <param name="data">data</param>
-        /// <param name="batchData">批量翻译结果列表，仅在批量翻译时返回。</param>
-        /// <param name="batchSummary">batchSummary</param>
         /// <param name="performance">performance</param>
-        /// <param name="qualityMetrics">qualityMetrics</param>
+        /// <param name="isBatch">是否为批量翻译请求。</param>
         [JsonConstructor]
-        public PostAiTranslate200Response(Option<string?> message = default, Option<bool?> isBatch = default, Option<PostAiTranslate200ResponseData?> data = default, Option<List<PostAiTranslate200ResponseBatchDataInner>?> batchData = default, Option<PostAiTranslate200ResponseBatchSummary?> batchSummary = default, Option<PostAiTranslate200ResponsePerformance?> performance = default, Option<PostAiTranslate200ResponseQualityMetrics?> qualityMetrics = default)
+        public PostAiTranslate200Response(Option<string?> message = default, Option<PostAiTranslate200ResponseData?> data = default, Option<PostAiTranslate200ResponsePerformance?> performance = default, Option<bool?> isBatch = default)
         {
             MessageOption = message;
-            IsBatchOption = isBatch;
             DataOption = data;
-            BatchDataOption = batchData;
-            BatchSummaryOption = batchSummary;
             PerformanceOption = performance;
-            QualityMetricsOption = qualityMetrics;
+            IsBatchOption = isBatch;
             OnCreated();
         }
 
@@ -70,21 +64,6 @@ namespace uapi-sdk-csharp.Model
         public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of IsBatch
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> IsBatchOption { get; private set; }
-
-        /// <summary>
-        /// 标识是否为批量翻译请求。
-        /// </summary>
-        /// <value>标识是否为批量翻译请求。</value>
-        /* <example>false</example> */
-        [JsonPropertyName("is_batch")]
-        public bool? IsBatch { get { return this.IsBatchOption; } set { this.IsBatchOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of Data
         /// </summary>
         [JsonIgnore]
@@ -96,33 +75,6 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         [JsonPropertyName("data")]
         public PostAiTranslate200ResponseData? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of BatchData
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<PostAiTranslate200ResponseBatchDataInner>?> BatchDataOption { get; private set; }
-
-        /// <summary>
-        /// 批量翻译结果列表，仅在批量翻译时返回。
-        /// </summary>
-        /// <value>批量翻译结果列表，仅在批量翻译时返回。</value>
-        [JsonPropertyName("batch_data")]
-        public List<PostAiTranslate200ResponseBatchDataInner>? BatchData { get { return this.BatchDataOption; } set { this.BatchDataOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of BatchSummary
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<PostAiTranslate200ResponseBatchSummary?> BatchSummaryOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets BatchSummary
-        /// </summary>
-        [JsonPropertyName("batch_summary")]
-        public PostAiTranslate200ResponseBatchSummary? BatchSummary { get { return this.BatchSummaryOption; } set { this.BatchSummaryOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Performance
@@ -138,17 +90,19 @@ namespace uapi-sdk-csharp.Model
         public PostAiTranslate200ResponsePerformance? Performance { get { return this.PerformanceOption; } set { this.PerformanceOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of QualityMetrics
+        /// Used to track the state of IsBatch
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<PostAiTranslate200ResponseQualityMetrics?> QualityMetricsOption { get; private set; }
+        public Option<bool?> IsBatchOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets QualityMetrics
+        /// 是否为批量翻译请求。
         /// </summary>
-        [JsonPropertyName("quality_metrics")]
-        public PostAiTranslate200ResponseQualityMetrics? QualityMetrics { get { return this.QualityMetricsOption; } set { this.QualityMetricsOption = new(value); } }
+        /// <value>是否为批量翻译请求。</value>
+        /* <example>false</example> */
+        [JsonPropertyName("is_batch")]
+        public bool? IsBatch { get { return this.IsBatchOption; } set { this.IsBatchOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -159,12 +113,9 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAiTranslate200Response {\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  IsBatch: ").Append(IsBatch).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  BatchData: ").Append(BatchData).Append("\n");
-            sb.Append("  BatchSummary: ").Append(BatchSummary).Append("\n");
             sb.Append("  Performance: ").Append(Performance).Append("\n");
-            sb.Append("  QualityMetrics: ").Append(QualityMetrics).Append("\n");
+            sb.Append("  IsBatch: ").Append(IsBatch).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -203,12 +154,9 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> message = default;
-            Option<bool?> isBatch = default;
             Option<PostAiTranslate200ResponseData?> data = default;
-            Option<List<PostAiTranslate200ResponseBatchDataInner>?> batchData = default;
-            Option<PostAiTranslate200ResponseBatchSummary?> batchSummary = default;
             Option<PostAiTranslate200ResponsePerformance?> performance = default;
-            Option<PostAiTranslate200ResponseQualityMetrics?> qualityMetrics = default;
+            Option<bool?> isBatch = default;
 
             while (utf8JsonReader.Read())
             {
@@ -228,23 +176,14 @@ namespace uapi-sdk-csharp.Model
                         case "message":
                             message = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "is_batch":
-                            isBatch = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         case "data":
                             data = new Option<PostAiTranslate200ResponseData?>(JsonSerializer.Deserialize<PostAiTranslate200ResponseData>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "batch_data":
-                            batchData = new Option<List<PostAiTranslate200ResponseBatchDataInner>?>(JsonSerializer.Deserialize<List<PostAiTranslate200ResponseBatchDataInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "batch_summary":
-                            batchSummary = new Option<PostAiTranslate200ResponseBatchSummary?>(JsonSerializer.Deserialize<PostAiTranslate200ResponseBatchSummary>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "performance":
                             performance = new Option<PostAiTranslate200ResponsePerformance?>(JsonSerializer.Deserialize<PostAiTranslate200ResponsePerformance>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
-                        case "quality_metrics":
-                            qualityMetrics = new Option<PostAiTranslate200ResponseQualityMetrics?>(JsonSerializer.Deserialize<PostAiTranslate200ResponseQualityMetrics>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "is_batch":
+                            isBatch = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         default:
                             break;
@@ -255,25 +194,16 @@ namespace uapi-sdk-csharp.Model
             if (message.IsSet && message.Value == null)
                 throw new ArgumentNullException(nameof(message), "Property is not nullable for class PostAiTranslate200Response.");
 
-            if (isBatch.IsSet && isBatch.Value == null)
-                throw new ArgumentNullException(nameof(isBatch), "Property is not nullable for class PostAiTranslate200Response.");
-
             if (data.IsSet && data.Value == null)
                 throw new ArgumentNullException(nameof(data), "Property is not nullable for class PostAiTranslate200Response.");
-
-            if (batchData.IsSet && batchData.Value == null)
-                throw new ArgumentNullException(nameof(batchData), "Property is not nullable for class PostAiTranslate200Response.");
-
-            if (batchSummary.IsSet && batchSummary.Value == null)
-                throw new ArgumentNullException(nameof(batchSummary), "Property is not nullable for class PostAiTranslate200Response.");
 
             if (performance.IsSet && performance.Value == null)
                 throw new ArgumentNullException(nameof(performance), "Property is not nullable for class PostAiTranslate200Response.");
 
-            if (qualityMetrics.IsSet && qualityMetrics.Value == null)
-                throw new ArgumentNullException(nameof(qualityMetrics), "Property is not nullable for class PostAiTranslate200Response.");
+            if (isBatch.IsSet && isBatch.Value == null)
+                throw new ArgumentNullException(nameof(isBatch), "Property is not nullable for class PostAiTranslate200Response.");
 
-            return new PostAiTranslate200Response(message, isBatch, data, batchData, batchSummary, performance, qualityMetrics);
+            return new PostAiTranslate200Response(message, data, performance, isBatch);
         }
 
         /// <summary>
@@ -306,49 +236,24 @@ namespace uapi-sdk-csharp.Model
             if (postAiTranslate200Response.DataOption.IsSet && postAiTranslate200Response.Data == null)
                 throw new ArgumentNullException(nameof(postAiTranslate200Response.Data), "Property is required for class PostAiTranslate200Response.");
 
-            if (postAiTranslate200Response.BatchDataOption.IsSet && postAiTranslate200Response.BatchData == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200Response.BatchData), "Property is required for class PostAiTranslate200Response.");
-
-            if (postAiTranslate200Response.BatchSummaryOption.IsSet && postAiTranslate200Response.BatchSummary == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200Response.BatchSummary), "Property is required for class PostAiTranslate200Response.");
-
             if (postAiTranslate200Response.PerformanceOption.IsSet && postAiTranslate200Response.Performance == null)
                 throw new ArgumentNullException(nameof(postAiTranslate200Response.Performance), "Property is required for class PostAiTranslate200Response.");
 
-            if (postAiTranslate200Response.QualityMetricsOption.IsSet && postAiTranslate200Response.QualityMetrics == null)
-                throw new ArgumentNullException(nameof(postAiTranslate200Response.QualityMetrics), "Property is required for class PostAiTranslate200Response.");
-
             if (postAiTranslate200Response.MessageOption.IsSet)
                 writer.WriteString("message", postAiTranslate200Response.Message);
-
-            if (postAiTranslate200Response.IsBatchOption.IsSet)
-                writer.WriteBoolean("is_batch", postAiTranslate200Response.IsBatchOption.Value!.Value);
 
             if (postAiTranslate200Response.DataOption.IsSet)
             {
                 writer.WritePropertyName("data");
                 JsonSerializer.Serialize(writer, postAiTranslate200Response.Data, jsonSerializerOptions);
             }
-            if (postAiTranslate200Response.BatchDataOption.IsSet)
-            {
-                writer.WritePropertyName("batch_data");
-                JsonSerializer.Serialize(writer, postAiTranslate200Response.BatchData, jsonSerializerOptions);
-            }
-            if (postAiTranslate200Response.BatchSummaryOption.IsSet)
-            {
-                writer.WritePropertyName("batch_summary");
-                JsonSerializer.Serialize(writer, postAiTranslate200Response.BatchSummary, jsonSerializerOptions);
-            }
             if (postAiTranslate200Response.PerformanceOption.IsSet)
             {
                 writer.WritePropertyName("performance");
                 JsonSerializer.Serialize(writer, postAiTranslate200Response.Performance, jsonSerializerOptions);
             }
-            if (postAiTranslate200Response.QualityMetricsOption.IsSet)
-            {
-                writer.WritePropertyName("quality_metrics");
-                JsonSerializer.Serialize(writer, postAiTranslate200Response.QualityMetrics, jsonSerializerOptions);
-            }
+            if (postAiTranslate200Response.IsBatchOption.IsSet)
+                writer.WriteBoolean("is_batch", postAiTranslate200Response.IsBatchOption.Value!.Value);
         }
     }
 }

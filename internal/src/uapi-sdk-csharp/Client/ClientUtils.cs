@@ -111,8 +111,10 @@ namespace uapi-sdk-csharp.Client
                 return boolean
                     ? "true"
                     : "false";
-            if (obj is GetMiscHolidayCalendar200ResponseDataHolidaysInner.TypeEnum getMiscHolidayCalendar200ResponseDataHolidaysInnerTypeEnum)
-                return GetMiscHolidayCalendar200ResponseDataHolidaysInner.TypeEnumToJsonValue(getMiscHolidayCalendar200ResponseDataHolidaysInnerTypeEnum);
+            if (obj is GetMiscHolidayCalendar200ResponseHolidaysInner.TypeEnum getMiscHolidayCalendar200ResponseHolidaysInnerTypeEnum)
+                return GetMiscHolidayCalendar200ResponseHolidaysInner.TypeEnumToJsonValue(getMiscHolidayCalendar200ResponseHolidaysInnerTypeEnum);
+            if (obj is GetMiscWeather200Response.WeatherIconEnum getMiscWeather200ResponseWeatherIconEnum)
+                return GetMiscWeather200Response.WeatherIconEnumToJsonValue(getMiscWeather200ResponseWeatherIconEnum);
             if (obj is PostAiTranslateRequest.StyleEnum postAiTranslateRequestStyleEnum)
                 return PostAiTranslateRequest.StyleEnumToJsonValue(postAiTranslateRequestStyleEnum);
             if (obj is PostAiTranslateRequest.ContextEnum postAiTranslateRequestContextEnum)
@@ -141,10 +143,6 @@ namespace uapi-sdk-csharp.Client
                 return PostTextConvertRequest.ToEnumToJsonValue(postTextConvertRequestToEnum);
             if (obj is PostTranslateStream400Response.CodeEnum postTranslateStream400ResponseCodeEnum)
                 return PostTranslateStream400Response.CodeEnumToJsonValue(postTranslateStream400ResponseCodeEnum);
-            if (obj is PostTranslateStreamRequest.ToLangEnum postTranslateStreamRequestToLangEnum)
-                return PostTranslateStreamRequest.ToLangEnumToJsonValue(postTranslateStreamRequestToLangEnum);
-            if (obj is PostTranslateStreamRequest.FromLangEnum postTranslateStreamRequestFromLangEnum)
-                return PostTranslateStreamRequest.FromLangEnumToJsonValue(postTranslateStreamRequestFromLangEnum);
             if (obj is ICollection collection)
             {
                 List<string?> entries = new();

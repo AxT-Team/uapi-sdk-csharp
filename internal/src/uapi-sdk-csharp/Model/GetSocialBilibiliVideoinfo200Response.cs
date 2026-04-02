@@ -36,6 +36,7 @@ namespace uapi-sdk-csharp.Model
         /// <param name="bvid">稿件的BV号。</param>
         /// <param name="aid">稿件的AV号。</param>
         /// <param name="videos">稿件分P总数。如果是单P视频，则为1。</param>
+        /// <param name="tid">视频所属的子分区 ID。</param>
         /// <param name="tname">视频所属的子分区名称。</param>
         /// <param name="copyright">视频类型。1代表原创，2代表转载。</param>
         /// <param name="pic">稿件封面图片的URL。这是一个可以直接在网页上展示的链接。</param>
@@ -43,16 +44,30 @@ namespace uapi-sdk-csharp.Model
         /// <param name="pubdate">稿件发布时间的Unix时间戳（秒）。</param>
         /// <param name="ctime">用户投稿时间的Unix时间戳（秒）。</param>
         /// <param name="desc">视频简介。可能会包含HTML换行符。</param>
+        /// <param name="descV2">结构化简介片段。</param>
+        /// <param name="state">视频状态码。</param>
         /// <param name="duration">稿件总时长（所有分P累加），单位为秒。</param>
+        /// <param name="rights">rights</param>
         /// <param name="owner">owner</param>
         /// <param name="stat">stat</param>
+        /// <param name="dynamic">投稿时附带的动态文字。</param>
+        /// <param name="cid">主分P的 CID（弹幕 ID）。</param>
+        /// <param name="dimension">dimension</param>
+        /// <param name="noCache">不缓存标记。</param>
         /// <param name="pages">视频分P列表。即使是单P视频，该数组也包含一个元素。</param>
+        /// <param name="subtitle">subtitle</param>
+        /// <param name="staff">联合投稿成员列表。</param>
+        /// <param name="ugcSeason">ugcSeason</param>
+        /// <param name="isChargeableSeason">是否为付费合集。</param>
+        /// <param name="isStory">是否为剧情类视频。</param>
+        /// <param name="honorReply">honorReply</param>
         [JsonConstructor]
-        public GetSocialBilibiliVideoinfo200Response(Option<string?> bvid = default, Option<decimal?> aid = default, Option<decimal?> videos = default, Option<string?> tname = default, Option<decimal?> copyright = default, Option<string?> pic = default, Option<string?> title = default, Option<decimal?> pubdate = default, Option<decimal?> ctime = default, Option<string?> desc = default, Option<decimal?> duration = default, Option<GetSocialBilibiliVideoinfo200ResponseOwner?> owner = default, Option<GetSocialBilibiliVideoinfo200ResponseStat?> stat = default, Option<List<GetSocialBilibiliVideoinfo200ResponsePagesInner>?> pages = default)
+        public GetSocialBilibiliVideoinfo200Response(Option<string?> bvid = default, Option<decimal?> aid = default, Option<decimal?> videos = default, Option<decimal?> tid = default, Option<string?> tname = default, Option<decimal?> copyright = default, Option<string?> pic = default, Option<string?> title = default, Option<decimal?> pubdate = default, Option<decimal?> ctime = default, Option<string?> desc = default, Option<List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>?> descV2 = default, Option<decimal?> state = default, Option<decimal?> duration = default, Option<GetSocialBilibiliVideoinfo200ResponseRights?> rights = default, Option<GetSocialBilibiliVideoinfo200ResponseOwner?> owner = default, Option<GetSocialBilibiliVideoinfo200ResponseStat?> stat = default, Option<string?> dynamic = default, Option<decimal?> cid = default, Option<GetSocialBilibiliVideoinfo200ResponseDimension?> dimension = default, Option<bool?> noCache = default, Option<List<GetSocialBilibiliVideoinfo200ResponsePagesInner>?> pages = default, Option<GetSocialBilibiliVideoinfo200ResponseSubtitle?> subtitle = default, Option<List<GetSocialBilibiliVideoinfo200ResponseStaffInner>?> staff = default, Option<GetSocialBilibiliVideoinfo200ResponseUgcSeason?> ugcSeason = default, Option<bool?> isChargeableSeason = default, Option<bool?> isStory = default, Option<GetSocialBilibiliVideoinfo200ResponseHonorReply?> honorReply = default)
         {
             BvidOption = bvid;
             AidOption = aid;
             VideosOption = videos;
+            TidOption = tid;
             TnameOption = tname;
             CopyrightOption = copyright;
             PicOption = pic;
@@ -60,10 +75,23 @@ namespace uapi-sdk-csharp.Model
             PubdateOption = pubdate;
             CtimeOption = ctime;
             DescOption = desc;
+            DescV2Option = descV2;
+            StateOption = state;
             DurationOption = duration;
+            RightsOption = rights;
             OwnerOption = owner;
             StatOption = stat;
+            DynamicOption = dynamic;
+            CidOption = cid;
+            DimensionOption = dimension;
+            NoCacheOption = noCache;
             PagesOption = pages;
+            SubtitleOption = subtitle;
+            StaffOption = staff;
+            UgcSeasonOption = ugcSeason;
+            IsChargeableSeasonOption = isChargeableSeason;
+            IsStoryOption = isStory;
+            HonorReplyOption = honorReply;
             OnCreated();
         }
 
@@ -113,6 +141,21 @@ namespace uapi-sdk-csharp.Model
         /* <example>1</example> */
         [JsonPropertyName("videos")]
         public decimal? Videos { get { return this.VideosOption; } set { this.VideosOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Tid
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> TidOption { get; private set; }
+
+        /// <summary>
+        /// 视频所属的子分区 ID。
+        /// </summary>
+        /// <value>视频所属的子分区 ID。</value>
+        /* <example>31</example> */
+        [JsonPropertyName("tid")]
+        public decimal? Tid { get { return this.TidOption; } set { this.TidOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Tname
@@ -220,6 +263,35 @@ namespace uapi-sdk-csharp.Model
         public string? Desc { get { return this.DescOption; } set { this.DescOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of DescV2
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>?> DescV2Option { get; private set; }
+
+        /// <summary>
+        /// 结构化简介片段。
+        /// </summary>
+        /// <value>结构化简介片段。</value>
+        [JsonPropertyName("desc_v2")]
+        public List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>? DescV2 { get { return this.DescV2Option; } set { this.DescV2Option = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of State
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> StateOption { get; private set; }
+
+        /// <summary>
+        /// 视频状态码。
+        /// </summary>
+        /// <value>视频状态码。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("state")]
+        public decimal? State { get { return this.StateOption; } set { this.StateOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of Duration
         /// </summary>
         [JsonIgnore]
@@ -233,6 +305,19 @@ namespace uapi-sdk-csharp.Model
         /* <example>213</example> */
         [JsonPropertyName("duration")]
         public decimal? Duration { get { return this.DurationOption; } set { this.DurationOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Rights
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponseRights?> RightsOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Rights
+        /// </summary>
+        [JsonPropertyName("rights")]
+        public GetSocialBilibiliVideoinfo200ResponseRights? Rights { get { return this.RightsOption; } set { this.RightsOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Owner
@@ -261,6 +346,63 @@ namespace uapi-sdk-csharp.Model
         public GetSocialBilibiliVideoinfo200ResponseStat? Stat { get { return this.StatOption; } set { this.StatOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Dynamic
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> DynamicOption { get; private set; }
+
+        /// <summary>
+        /// 投稿时附带的动态文字。
+        /// </summary>
+        /// <value>投稿时附带的动态文字。</value>
+        [JsonPropertyName("dynamic")]
+        public string? Dynamic { get { return this.DynamicOption; } set { this.DynamicOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Cid
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> CidOption { get; private set; }
+
+        /// <summary>
+        /// 主分P的 CID（弹幕 ID）。
+        /// </summary>
+        /// <value>主分P的 CID（弹幕 ID）。</value>
+        /* <example>130283995</example> */
+        [JsonPropertyName("cid")]
+        public decimal? Cid { get { return this.CidOption; } set { this.CidOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Dimension
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponseDimension?> DimensionOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Dimension
+        /// </summary>
+        [JsonPropertyName("dimension")]
+        public GetSocialBilibiliVideoinfo200ResponseDimension? Dimension { get { return this.DimensionOption; } set { this.DimensionOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of NoCache
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> NoCacheOption { get; private set; }
+
+        /// <summary>
+        /// 不缓存标记。
+        /// </summary>
+        /// <value>不缓存标记。</value>
+        /* <example>false</example> */
+        [JsonPropertyName("no_cache")]
+        public bool? NoCache { get { return this.NoCacheOption; } set { this.NoCacheOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of Pages
         /// </summary>
         [JsonIgnore]
@@ -275,6 +417,89 @@ namespace uapi-sdk-csharp.Model
         public List<GetSocialBilibiliVideoinfo200ResponsePagesInner>? Pages { get { return this.PagesOption; } set { this.PagesOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Subtitle
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponseSubtitle?> SubtitleOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Subtitle
+        /// </summary>
+        [JsonPropertyName("subtitle")]
+        public GetSocialBilibiliVideoinfo200ResponseSubtitle? Subtitle { get { return this.SubtitleOption; } set { this.SubtitleOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Staff
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetSocialBilibiliVideoinfo200ResponseStaffInner>?> StaffOption { get; private set; }
+
+        /// <summary>
+        /// 联合投稿成员列表。
+        /// </summary>
+        /// <value>联合投稿成员列表。</value>
+        [JsonPropertyName("staff")]
+        public List<GetSocialBilibiliVideoinfo200ResponseStaffInner>? Staff { get { return this.StaffOption; } set { this.StaffOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of UgcSeason
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponseUgcSeason?> UgcSeasonOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets UgcSeason
+        /// </summary>
+        [JsonPropertyName("ugc_season")]
+        public GetSocialBilibiliVideoinfo200ResponseUgcSeason? UgcSeason { get { return this.UgcSeasonOption; } set { this.UgcSeasonOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of IsChargeableSeason
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> IsChargeableSeasonOption { get; private set; }
+
+        /// <summary>
+        /// 是否为付费合集。
+        /// </summary>
+        /// <value>是否为付费合集。</value>
+        /* <example>false</example> */
+        [JsonPropertyName("is_chargeable_season")]
+        public bool? IsChargeableSeason { get { return this.IsChargeableSeasonOption; } set { this.IsChargeableSeasonOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of IsStory
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> IsStoryOption { get; private set; }
+
+        /// <summary>
+        /// 是否为剧情类视频。
+        /// </summary>
+        /// <value>是否为剧情类视频。</value>
+        /* <example>false</example> */
+        [JsonPropertyName("is_story")]
+        public bool? IsStory { get { return this.IsStoryOption; } set { this.IsStoryOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of HonorReply
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponseHonorReply?> HonorReplyOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets HonorReply
+        /// </summary>
+        [JsonPropertyName("honor_reply")]
+        public GetSocialBilibiliVideoinfo200ResponseHonorReply? HonorReply { get { return this.HonorReplyOption; } set { this.HonorReplyOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -285,6 +510,7 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Bvid: ").Append(Bvid).Append("\n");
             sb.Append("  Aid: ").Append(Aid).Append("\n");
             sb.Append("  Videos: ").Append(Videos).Append("\n");
+            sb.Append("  Tid: ").Append(Tid).Append("\n");
             sb.Append("  Tname: ").Append(Tname).Append("\n");
             sb.Append("  Copyright: ").Append(Copyright).Append("\n");
             sb.Append("  Pic: ").Append(Pic).Append("\n");
@@ -292,10 +518,23 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Pubdate: ").Append(Pubdate).Append("\n");
             sb.Append("  Ctime: ").Append(Ctime).Append("\n");
             sb.Append("  Desc: ").Append(Desc).Append("\n");
+            sb.Append("  DescV2: ").Append(DescV2).Append("\n");
+            sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  Duration: ").Append(Duration).Append("\n");
+            sb.Append("  Rights: ").Append(Rights).Append("\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Stat: ").Append(Stat).Append("\n");
+            sb.Append("  Dynamic: ").Append(Dynamic).Append("\n");
+            sb.Append("  Cid: ").Append(Cid).Append("\n");
+            sb.Append("  Dimension: ").Append(Dimension).Append("\n");
+            sb.Append("  NoCache: ").Append(NoCache).Append("\n");
             sb.Append("  Pages: ").Append(Pages).Append("\n");
+            sb.Append("  Subtitle: ").Append(Subtitle).Append("\n");
+            sb.Append("  Staff: ").Append(Staff).Append("\n");
+            sb.Append("  UgcSeason: ").Append(UgcSeason).Append("\n");
+            sb.Append("  IsChargeableSeason: ").Append(IsChargeableSeason).Append("\n");
+            sb.Append("  IsStory: ").Append(IsStory).Append("\n");
+            sb.Append("  HonorReply: ").Append(HonorReply).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -336,6 +575,7 @@ namespace uapi-sdk-csharp.Model
             Option<string?> bvid = default;
             Option<decimal?> aid = default;
             Option<decimal?> videos = default;
+            Option<decimal?> tid = default;
             Option<string?> tname = default;
             Option<decimal?> copyright = default;
             Option<string?> pic = default;
@@ -343,10 +583,23 @@ namespace uapi-sdk-csharp.Model
             Option<decimal?> pubdate = default;
             Option<decimal?> ctime = default;
             Option<string?> desc = default;
+            Option<List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>?> descV2 = default;
+            Option<decimal?> state = default;
             Option<decimal?> duration = default;
+            Option<GetSocialBilibiliVideoinfo200ResponseRights?> rights = default;
             Option<GetSocialBilibiliVideoinfo200ResponseOwner?> owner = default;
             Option<GetSocialBilibiliVideoinfo200ResponseStat?> stat = default;
+            Option<string?> dynamic = default;
+            Option<decimal?> cid = default;
+            Option<GetSocialBilibiliVideoinfo200ResponseDimension?> dimension = default;
+            Option<bool?> noCache = default;
             Option<List<GetSocialBilibiliVideoinfo200ResponsePagesInner>?> pages = default;
+            Option<GetSocialBilibiliVideoinfo200ResponseSubtitle?> subtitle = default;
+            Option<List<GetSocialBilibiliVideoinfo200ResponseStaffInner>?> staff = default;
+            Option<GetSocialBilibiliVideoinfo200ResponseUgcSeason?> ugcSeason = default;
+            Option<bool?> isChargeableSeason = default;
+            Option<bool?> isStory = default;
+            Option<GetSocialBilibiliVideoinfo200ResponseHonorReply?> honorReply = default;
 
             while (utf8JsonReader.Read())
             {
@@ -372,6 +625,9 @@ namespace uapi-sdk-csharp.Model
                         case "videos":
                             videos = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
+                        case "tid":
+                            tid = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         case "tname":
                             tname = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -393,8 +649,17 @@ namespace uapi-sdk-csharp.Model
                         case "desc":
                             desc = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "desc_v2":
+                            descV2 = new Option<List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>?>(JsonSerializer.Deserialize<List<GetSocialBilibiliVideoinfo200ResponseDescV2Inner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "state":
+                            state = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         case "duration":
                             duration = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "rights":
+                            rights = new Option<GetSocialBilibiliVideoinfo200ResponseRights?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseRights>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "owner":
                             owner = new Option<GetSocialBilibiliVideoinfo200ResponseOwner?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseOwner>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -402,8 +667,38 @@ namespace uapi-sdk-csharp.Model
                         case "stat":
                             stat = new Option<GetSocialBilibiliVideoinfo200ResponseStat?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseStat>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
+                        case "dynamic":
+                            dynamic = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "cid":
+                            cid = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "dimension":
+                            dimension = new Option<GetSocialBilibiliVideoinfo200ResponseDimension?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseDimension>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "no_cache":
+                            noCache = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "pages":
                             pages = new Option<List<GetSocialBilibiliVideoinfo200ResponsePagesInner>?>(JsonSerializer.Deserialize<List<GetSocialBilibiliVideoinfo200ResponsePagesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "subtitle":
+                            subtitle = new Option<GetSocialBilibiliVideoinfo200ResponseSubtitle?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseSubtitle>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "staff":
+                            staff = new Option<List<GetSocialBilibiliVideoinfo200ResponseStaffInner>?>(JsonSerializer.Deserialize<List<GetSocialBilibiliVideoinfo200ResponseStaffInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "ugc_season":
+                            ugcSeason = new Option<GetSocialBilibiliVideoinfo200ResponseUgcSeason?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseUgcSeason>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "is_chargeable_season":
+                            isChargeableSeason = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "is_story":
+                            isStory = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "honor_reply":
+                            honorReply = new Option<GetSocialBilibiliVideoinfo200ResponseHonorReply?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponseHonorReply>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -419,6 +714,9 @@ namespace uapi-sdk-csharp.Model
 
             if (videos.IsSet && videos.Value == null)
                 throw new ArgumentNullException(nameof(videos), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (tid.IsSet && tid.Value == null)
+                throw new ArgumentNullException(nameof(tid), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
 
             if (tname.IsSet && tname.Value == null)
                 throw new ArgumentNullException(nameof(tname), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
@@ -441,8 +739,17 @@ namespace uapi-sdk-csharp.Model
             if (desc.IsSet && desc.Value == null)
                 throw new ArgumentNullException(nameof(desc), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
 
+            if (descV2.IsSet && descV2.Value == null)
+                throw new ArgumentNullException(nameof(descV2), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (state.IsSet && state.Value == null)
+                throw new ArgumentNullException(nameof(state), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
             if (duration.IsSet && duration.Value == null)
                 throw new ArgumentNullException(nameof(duration), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (rights.IsSet && rights.Value == null)
+                throw new ArgumentNullException(nameof(rights), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
 
             if (owner.IsSet && owner.Value == null)
                 throw new ArgumentNullException(nameof(owner), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
@@ -450,10 +757,37 @@ namespace uapi-sdk-csharp.Model
             if (stat.IsSet && stat.Value == null)
                 throw new ArgumentNullException(nameof(stat), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
 
+            if (dynamic.IsSet && dynamic.Value == null)
+                throw new ArgumentNullException(nameof(dynamic), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (cid.IsSet && cid.Value == null)
+                throw new ArgumentNullException(nameof(cid), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (dimension.IsSet && dimension.Value == null)
+                throw new ArgumentNullException(nameof(dimension), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (noCache.IsSet && noCache.Value == null)
+                throw new ArgumentNullException(nameof(noCache), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
             if (pages.IsSet && pages.Value == null)
                 throw new ArgumentNullException(nameof(pages), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
 
-            return new GetSocialBilibiliVideoinfo200Response(bvid, aid, videos, tname, copyright, pic, title, pubdate, ctime, desc, duration, owner, stat, pages);
+            if (subtitle.IsSet && subtitle.Value == null)
+                throw new ArgumentNullException(nameof(subtitle), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (staff.IsSet && staff.Value == null)
+                throw new ArgumentNullException(nameof(staff), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (isChargeableSeason.IsSet && isChargeableSeason.Value == null)
+                throw new ArgumentNullException(nameof(isChargeableSeason), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (isStory.IsSet && isStory.Value == null)
+                throw new ArgumentNullException(nameof(isStory), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (honorReply.IsSet && honorReply.Value == null)
+                throw new ArgumentNullException(nameof(honorReply), "Property is not nullable for class GetSocialBilibiliVideoinfo200Response.");
+
+            return new GetSocialBilibiliVideoinfo200Response(bvid, aid, videos, tid, tname, copyright, pic, title, pubdate, ctime, desc, descV2, state, duration, rights, owner, stat, dynamic, cid, dimension, noCache, pages, subtitle, staff, ugcSeason, isChargeableSeason, isStory, honorReply);
         }
 
         /// <summary>
@@ -495,14 +829,35 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliVideoinfo200Response.DescOption.IsSet && getSocialBilibiliVideoinfo200Response.Desc == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Desc), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
 
+            if (getSocialBilibiliVideoinfo200Response.DescV2Option.IsSet && getSocialBilibiliVideoinfo200Response.DescV2 == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.DescV2), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (getSocialBilibiliVideoinfo200Response.RightsOption.IsSet && getSocialBilibiliVideoinfo200Response.Rights == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Rights), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
             if (getSocialBilibiliVideoinfo200Response.OwnerOption.IsSet && getSocialBilibiliVideoinfo200Response.Owner == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Owner), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
 
             if (getSocialBilibiliVideoinfo200Response.StatOption.IsSet && getSocialBilibiliVideoinfo200Response.Stat == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Stat), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
 
+            if (getSocialBilibiliVideoinfo200Response.DynamicOption.IsSet && getSocialBilibiliVideoinfo200Response.Dynamic == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Dynamic), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (getSocialBilibiliVideoinfo200Response.DimensionOption.IsSet && getSocialBilibiliVideoinfo200Response.Dimension == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Dimension), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
             if (getSocialBilibiliVideoinfo200Response.PagesOption.IsSet && getSocialBilibiliVideoinfo200Response.Pages == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Pages), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (getSocialBilibiliVideoinfo200Response.SubtitleOption.IsSet && getSocialBilibiliVideoinfo200Response.Subtitle == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Subtitle), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (getSocialBilibiliVideoinfo200Response.StaffOption.IsSet && getSocialBilibiliVideoinfo200Response.Staff == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.Staff), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
+
+            if (getSocialBilibiliVideoinfo200Response.HonorReplyOption.IsSet && getSocialBilibiliVideoinfo200Response.HonorReply == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200Response.HonorReply), "Property is required for class GetSocialBilibiliVideoinfo200Response.");
 
             if (getSocialBilibiliVideoinfo200Response.BvidOption.IsSet)
                 writer.WriteString("bvid", getSocialBilibiliVideoinfo200Response.Bvid);
@@ -512,6 +867,9 @@ namespace uapi-sdk-csharp.Model
 
             if (getSocialBilibiliVideoinfo200Response.VideosOption.IsSet)
                 writer.WriteNumber("videos", getSocialBilibiliVideoinfo200Response.VideosOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200Response.TidOption.IsSet)
+                writer.WriteNumber("tid", getSocialBilibiliVideoinfo200Response.TidOption.Value!.Value);
 
             if (getSocialBilibiliVideoinfo200Response.TnameOption.IsSet)
                 writer.WriteString("tname", getSocialBilibiliVideoinfo200Response.Tname);
@@ -534,9 +892,22 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliVideoinfo200Response.DescOption.IsSet)
                 writer.WriteString("desc", getSocialBilibiliVideoinfo200Response.Desc);
 
+            if (getSocialBilibiliVideoinfo200Response.DescV2Option.IsSet)
+            {
+                writer.WritePropertyName("desc_v2");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.DescV2, jsonSerializerOptions);
+            }
+            if (getSocialBilibiliVideoinfo200Response.StateOption.IsSet)
+                writer.WriteNumber("state", getSocialBilibiliVideoinfo200Response.StateOption.Value!.Value);
+
             if (getSocialBilibiliVideoinfo200Response.DurationOption.IsSet)
                 writer.WriteNumber("duration", getSocialBilibiliVideoinfo200Response.DurationOption.Value!.Value);
 
+            if (getSocialBilibiliVideoinfo200Response.RightsOption.IsSet)
+            {
+                writer.WritePropertyName("rights");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Rights, jsonSerializerOptions);
+            }
             if (getSocialBilibiliVideoinfo200Response.OwnerOption.IsSet)
             {
                 writer.WritePropertyName("owner");
@@ -547,10 +918,53 @@ namespace uapi-sdk-csharp.Model
                 writer.WritePropertyName("stat");
                 JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Stat, jsonSerializerOptions);
             }
+            if (getSocialBilibiliVideoinfo200Response.DynamicOption.IsSet)
+                writer.WriteString("dynamic", getSocialBilibiliVideoinfo200Response.Dynamic);
+
+            if (getSocialBilibiliVideoinfo200Response.CidOption.IsSet)
+                writer.WriteNumber("cid", getSocialBilibiliVideoinfo200Response.CidOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200Response.DimensionOption.IsSet)
+            {
+                writer.WritePropertyName("dimension");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Dimension, jsonSerializerOptions);
+            }
+            if (getSocialBilibiliVideoinfo200Response.NoCacheOption.IsSet)
+                writer.WriteBoolean("no_cache", getSocialBilibiliVideoinfo200Response.NoCacheOption.Value!.Value);
+
             if (getSocialBilibiliVideoinfo200Response.PagesOption.IsSet)
             {
                 writer.WritePropertyName("pages");
                 JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Pages, jsonSerializerOptions);
+            }
+            if (getSocialBilibiliVideoinfo200Response.SubtitleOption.IsSet)
+            {
+                writer.WritePropertyName("subtitle");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Subtitle, jsonSerializerOptions);
+            }
+            if (getSocialBilibiliVideoinfo200Response.StaffOption.IsSet)
+            {
+                writer.WritePropertyName("staff");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.Staff, jsonSerializerOptions);
+            }
+            if (getSocialBilibiliVideoinfo200Response.UgcSeasonOption.IsSet)
+                if (getSocialBilibiliVideoinfo200Response.UgcSeasonOption.Value != null)
+                {
+                    writer.WritePropertyName("ugc_season");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.UgcSeason, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("ugc_season");
+            if (getSocialBilibiliVideoinfo200Response.IsChargeableSeasonOption.IsSet)
+                writer.WriteBoolean("is_chargeable_season", getSocialBilibiliVideoinfo200Response.IsChargeableSeasonOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200Response.IsStoryOption.IsSet)
+                writer.WriteBoolean("is_story", getSocialBilibiliVideoinfo200Response.IsStoryOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200Response.HonorReplyOption.IsSet)
+            {
+                writer.WritePropertyName("honor_reply");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200Response.HonorReply, jsonSerializerOptions);
             }
         }
     }

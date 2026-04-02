@@ -33,7 +33,7 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostTranslateTextRequest" /> class.
         /// </summary>
-        /// <param name="text">待翻译的文本内容。</param>
+        /// <param name="text">待翻译的文本内容，最大长度3000字符。</param>
         [JsonConstructor]
         public PostTranslateTextRequest(string text)
         {
@@ -44,9 +44,9 @@ namespace uapi-sdk-csharp.Model
         partial void OnCreated();
 
         /// <summary>
-        /// 待翻译的文本内容。
+        /// 待翻译的文本内容，最大长度3000字符。
         /// </summary>
-        /// <value>待翻译的文本内容。</value>
+        /// <value>待翻译的文本内容，最大长度3000字符。</value>
         /* <example>hello world</example> */
         [JsonPropertyName("text")]
         public string Text { get; set; }
@@ -71,6 +71,12 @@ namespace uapi-sdk-csharp.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Text (string) maxLength
+            if (this.Text != null && this.Text.Length > 3000)
+            {
+                yield return new ValidationResult("Invalid value for Text, length must be less than 3000.", new [] { "Text" });
+            }
+
             yield break;
         }
     }

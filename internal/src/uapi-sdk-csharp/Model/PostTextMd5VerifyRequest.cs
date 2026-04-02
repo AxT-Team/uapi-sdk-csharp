@@ -33,8 +33,8 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostTextMd5VerifyRequest" /> class.
         /// </summary>
-        /// <param name="hash">hash</param>
-        /// <param name="text">text</param>
+        /// <param name="hash">用于比对的 MD5 哈希值（32 位小写十六进制字符串）。</param>
+        /// <param name="text">待校验的原始文本，会先计算其 MD5 再与 hash 进行比对。</param>
         [JsonConstructor]
         public PostTextMd5VerifyRequest(string hash, string text)
         {
@@ -46,15 +46,17 @@ namespace uapi-sdk-csharp.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Gets or Sets Hash
+        /// 用于比对的 MD5 哈希值（32 位小写十六进制字符串）。
         /// </summary>
+        /// <value>用于比对的 MD5 哈希值（32 位小写十六进制字符串）。</value>
         /* <example>5d41402abc4b2a76b9719d911017c592</example> */
         [JsonPropertyName("hash")]
         public string Hash { get; set; }
 
         /// <summary>
-        /// Gets or Sets Text
+        /// 待校验的原始文本，会先计算其 MD5 再与 hash 进行比对。
         /// </summary>
+        /// <value>待校验的原始文本，会先计算其 MD5 再与 hash 进行比对。</value>
         /* <example>hello world</example> */
         [JsonPropertyName("text")]
         public string Text { get; set; }

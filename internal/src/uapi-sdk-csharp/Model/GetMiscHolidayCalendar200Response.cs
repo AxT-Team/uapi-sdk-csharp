@@ -33,60 +33,107 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMiscHolidayCalendar200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="message">message</param>
-        /// <param name="data">data</param>
+        /// <param name="mode">查询模式：day、month、year。</param>
+        /// <param name="query">query</param>
+        /// <param name="summary">summary</param>
+        /// <param name="days">日期明细列表。</param>
+        /// <param name="holidays">节日事件列表。</param>
+        /// <param name="nearby">nearby</param>
         [JsonConstructor]
-        public GetMiscHolidayCalendar200Response(Option<int?> code = default, Option<string?> message = default, Option<GetMiscHolidayCalendar200ResponseData?> data = default)
+        public GetMiscHolidayCalendar200Response(Option<string?> mode = default, Option<GetMiscHolidayCalendar200ResponseQuery?> query = default, Option<GetMiscHolidayCalendar200ResponseSummary?> summary = default, Option<List<GetMiscHolidayCalendar200ResponseDaysInner>?> days = default, Option<List<GetMiscHolidayCalendar200ResponseHolidaysInner>?> holidays = default, Option<GetMiscHolidayCalendar200ResponseNearby?> nearby = default)
         {
-            CodeOption = code;
-            MessageOption = message;
-            DataOption = data;
+            ModeOption = mode;
+            QueryOption = query;
+            SummaryOption = summary;
+            DaysOption = days;
+            HolidaysOption = holidays;
+            NearbyOption = nearby;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of Mode
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
+        public Option<string?> ModeOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// 查询模式：day、month、year。
         /// </summary>
-        /* <example>200</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
+        /// <value>查询模式：day、month、year。</value>
+        /* <example>day</example> */
+        [JsonPropertyName("mode")]
+        public string? Mode { get { return this.ModeOption; } set { this.ModeOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Message
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> MessageOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Message
-        /// </summary>
-        /* <example>success</example> */
-        [JsonPropertyName("message")]
-        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Data
+        /// Used to track the state of Query
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<GetMiscHolidayCalendar200ResponseData?> DataOption { get; private set; }
+        public Option<GetMiscHolidayCalendar200ResponseQuery?> QueryOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Data
+        /// Gets or Sets Query
         /// </summary>
-        [JsonPropertyName("data")]
-        public GetMiscHolidayCalendar200ResponseData? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
+        [JsonPropertyName("query")]
+        public GetMiscHolidayCalendar200ResponseQuery? Query { get { return this.QueryOption; } set { this.QueryOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Summary
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetMiscHolidayCalendar200ResponseSummary?> SummaryOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Summary
+        /// </summary>
+        [JsonPropertyName("summary")]
+        public GetMiscHolidayCalendar200ResponseSummary? Summary { get { return this.SummaryOption; } set { this.SummaryOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Days
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetMiscHolidayCalendar200ResponseDaysInner>?> DaysOption { get; private set; }
+
+        /// <summary>
+        /// 日期明细列表。
+        /// </summary>
+        /// <value>日期明细列表。</value>
+        [JsonPropertyName("days")]
+        public List<GetMiscHolidayCalendar200ResponseDaysInner>? Days { get { return this.DaysOption; } set { this.DaysOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Holidays
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<GetMiscHolidayCalendar200ResponseHolidaysInner>?> HolidaysOption { get; private set; }
+
+        /// <summary>
+        /// 节日事件列表。
+        /// </summary>
+        /// <value>节日事件列表。</value>
+        [JsonPropertyName("holidays")]
+        public List<GetMiscHolidayCalendar200ResponseHolidaysInner>? Holidays { get { return this.HolidaysOption; } set { this.HolidaysOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Nearby
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetMiscHolidayCalendar200ResponseNearby?> NearbyOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Nearby
+        /// </summary>
+        [JsonPropertyName("nearby")]
+        public GetMiscHolidayCalendar200ResponseNearby? Nearby { get { return this.NearbyOption; } set { this.NearbyOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -96,9 +143,12 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetMiscHolidayCalendar200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("  Mode: ").Append(Mode).Append("\n");
+            sb.Append("  Query: ").Append(Query).Append("\n");
+            sb.Append("  Summary: ").Append(Summary).Append("\n");
+            sb.Append("  Days: ").Append(Days).Append("\n");
+            sb.Append("  Holidays: ").Append(Holidays).Append("\n");
+            sb.Append("  Nearby: ").Append(Nearby).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,9 +186,12 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
-            Option<string?> message = default;
-            Option<GetMiscHolidayCalendar200ResponseData?> data = default;
+            Option<string?> mode = default;
+            Option<GetMiscHolidayCalendar200ResponseQuery?> query = default;
+            Option<GetMiscHolidayCalendar200ResponseSummary?> summary = default;
+            Option<List<GetMiscHolidayCalendar200ResponseDaysInner>?> days = default;
+            Option<List<GetMiscHolidayCalendar200ResponseHolidaysInner>?> holidays = default;
+            Option<GetMiscHolidayCalendar200ResponseNearby?> nearby = default;
 
             while (utf8JsonReader.Read())
             {
@@ -155,14 +208,23 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                        case "mode":
+                            mode = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "message":
-                            message = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "query":
+                            query = new Option<GetMiscHolidayCalendar200ResponseQuery?>(JsonSerializer.Deserialize<GetMiscHolidayCalendar200ResponseQuery>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
-                        case "data":
-                            data = new Option<GetMiscHolidayCalendar200ResponseData?>(JsonSerializer.Deserialize<GetMiscHolidayCalendar200ResponseData>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "summary":
+                            summary = new Option<GetMiscHolidayCalendar200ResponseSummary?>(JsonSerializer.Deserialize<GetMiscHolidayCalendar200ResponseSummary>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "days":
+                            days = new Option<List<GetMiscHolidayCalendar200ResponseDaysInner>?>(JsonSerializer.Deserialize<List<GetMiscHolidayCalendar200ResponseDaysInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "holidays":
+                            holidays = new Option<List<GetMiscHolidayCalendar200ResponseHolidaysInner>?>(JsonSerializer.Deserialize<List<GetMiscHolidayCalendar200ResponseHolidaysInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "nearby":
+                            nearby = new Option<GetMiscHolidayCalendar200ResponseNearby?>(JsonSerializer.Deserialize<GetMiscHolidayCalendar200ResponseNearby>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -170,16 +232,25 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+            if (mode.IsSet && mode.Value == null)
+                throw new ArgumentNullException(nameof(mode), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
 
-            if (message.IsSet && message.Value == null)
-                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+            if (query.IsSet && query.Value == null)
+                throw new ArgumentNullException(nameof(query), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
 
-            if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+            if (summary.IsSet && summary.Value == null)
+                throw new ArgumentNullException(nameof(summary), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
 
-            return new GetMiscHolidayCalendar200Response(code, message, data);
+            if (days.IsSet && days.Value == null)
+                throw new ArgumentNullException(nameof(days), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+
+            if (holidays.IsSet && holidays.Value == null)
+                throw new ArgumentNullException(nameof(holidays), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+
+            if (nearby.IsSet && nearby.Value == null)
+                throw new ArgumentNullException(nameof(nearby), "Property is not nullable for class GetMiscHolidayCalendar200Response.");
+
+            return new GetMiscHolidayCalendar200Response(mode, query, summary, days, holidays, nearby);
         }
 
         /// <summary>
@@ -206,22 +277,51 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetMiscHolidayCalendar200Response getMiscHolidayCalendar200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getMiscHolidayCalendar200Response.MessageOption.IsSet && getMiscHolidayCalendar200Response.Message == null)
-                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Message), "Property is required for class GetMiscHolidayCalendar200Response.");
+            if (getMiscHolidayCalendar200Response.ModeOption.IsSet && getMiscHolidayCalendar200Response.Mode == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Mode), "Property is required for class GetMiscHolidayCalendar200Response.");
 
-            if (getMiscHolidayCalendar200Response.DataOption.IsSet && getMiscHolidayCalendar200Response.Data == null)
-                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Data), "Property is required for class GetMiscHolidayCalendar200Response.");
+            if (getMiscHolidayCalendar200Response.QueryOption.IsSet && getMiscHolidayCalendar200Response.Query == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Query), "Property is required for class GetMiscHolidayCalendar200Response.");
 
-            if (getMiscHolidayCalendar200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getMiscHolidayCalendar200Response.CodeOption.Value!.Value);
+            if (getMiscHolidayCalendar200Response.SummaryOption.IsSet && getMiscHolidayCalendar200Response.Summary == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Summary), "Property is required for class GetMiscHolidayCalendar200Response.");
 
-            if (getMiscHolidayCalendar200Response.MessageOption.IsSet)
-                writer.WriteString("message", getMiscHolidayCalendar200Response.Message);
+            if (getMiscHolidayCalendar200Response.DaysOption.IsSet && getMiscHolidayCalendar200Response.Days == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Days), "Property is required for class GetMiscHolidayCalendar200Response.");
 
-            if (getMiscHolidayCalendar200Response.DataOption.IsSet)
+            if (getMiscHolidayCalendar200Response.HolidaysOption.IsSet && getMiscHolidayCalendar200Response.Holidays == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Holidays), "Property is required for class GetMiscHolidayCalendar200Response.");
+
+            if (getMiscHolidayCalendar200Response.NearbyOption.IsSet && getMiscHolidayCalendar200Response.Nearby == null)
+                throw new ArgumentNullException(nameof(getMiscHolidayCalendar200Response.Nearby), "Property is required for class GetMiscHolidayCalendar200Response.");
+
+            if (getMiscHolidayCalendar200Response.ModeOption.IsSet)
+                writer.WriteString("mode", getMiscHolidayCalendar200Response.Mode);
+
+            if (getMiscHolidayCalendar200Response.QueryOption.IsSet)
             {
-                writer.WritePropertyName("data");
-                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Data, jsonSerializerOptions);
+                writer.WritePropertyName("query");
+                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Query, jsonSerializerOptions);
+            }
+            if (getMiscHolidayCalendar200Response.SummaryOption.IsSet)
+            {
+                writer.WritePropertyName("summary");
+                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Summary, jsonSerializerOptions);
+            }
+            if (getMiscHolidayCalendar200Response.DaysOption.IsSet)
+            {
+                writer.WritePropertyName("days");
+                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Days, jsonSerializerOptions);
+            }
+            if (getMiscHolidayCalendar200Response.HolidaysOption.IsSet)
+            {
+                writer.WritePropertyName("holidays");
+                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Holidays, jsonSerializerOptions);
+            }
+            if (getMiscHolidayCalendar200Response.NearbyOption.IsSet)
+            {
+                writer.WritePropertyName("nearby");
+                JsonSerializer.Serialize(writer, getMiscHolidayCalendar200Response.Nearby, jsonSerializerOptions);
             }
         }
     }

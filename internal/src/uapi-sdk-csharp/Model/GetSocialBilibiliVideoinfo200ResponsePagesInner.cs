@@ -36,14 +36,22 @@ namespace uapi-sdk-csharp.Model
         /// <param name="cid">分P的唯一标识CID，用于获取弹幕等。</param>
         /// <param name="page">分P的序号，从1开始。</param>
         /// <param name="part">分P的标题。对于单P视频，通常是视频主标题。</param>
+        /// <param name="from">视频来源。</param>
         /// <param name="duration">该分P的持续时间，单位为秒。</param>
+        /// <param name="vid">外部视频源 ID，通常为空。</param>
+        /// <param name="weblink">外链地址，通常为空。</param>
+        /// <param name="dimension">dimension</param>
         [JsonConstructor]
-        public GetSocialBilibiliVideoinfo200ResponsePagesInner(Option<decimal?> cid = default, Option<decimal?> page = default, Option<string?> part = default, Option<decimal?> duration = default)
+        public GetSocialBilibiliVideoinfo200ResponsePagesInner(Option<decimal?> cid = default, Option<decimal?> page = default, Option<string?> part = default, Option<string?> from = default, Option<decimal?> duration = default, Option<string?> vid = default, Option<string?> weblink = default, Option<GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension?> dimension = default)
         {
             CidOption = cid;
             PageOption = page;
             PartOption = part;
+            FromOption = from;
             DurationOption = duration;
+            VidOption = vid;
+            WeblinkOption = weblink;
+            DimensionOption = dimension;
             OnCreated();
         }
 
@@ -95,6 +103,21 @@ namespace uapi-sdk-csharp.Model
         public string? Part { get { return this.PartOption; } set { this.PartOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of From
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> FromOption { get; private set; }
+
+        /// <summary>
+        /// 视频来源。
+        /// </summary>
+        /// <value>视频来源。</value>
+        /* <example>vupload</example> */
+        [JsonPropertyName("from")]
+        public string? From { get { return this.FromOption; } set { this.FromOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of Duration
         /// </summary>
         [JsonIgnore]
@@ -110,6 +133,47 @@ namespace uapi-sdk-csharp.Model
         public decimal? Duration { get { return this.DurationOption; } set { this.DurationOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Vid
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> VidOption { get; private set; }
+
+        /// <summary>
+        /// 外部视频源 ID，通常为空。
+        /// </summary>
+        /// <value>外部视频源 ID，通常为空。</value>
+        [JsonPropertyName("vid")]
+        public string? Vid { get { return this.VidOption; } set { this.VidOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Weblink
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> WeblinkOption { get; private set; }
+
+        /// <summary>
+        /// 外链地址，通常为空。
+        /// </summary>
+        /// <value>外链地址，通常为空。</value>
+        [JsonPropertyName("weblink")]
+        public string? Weblink { get { return this.WeblinkOption; } set { this.WeblinkOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Dimension
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension?> DimensionOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Dimension
+        /// </summary>
+        [JsonPropertyName("dimension")]
+        public GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension? Dimension { get { return this.DimensionOption; } set { this.DimensionOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -120,7 +184,11 @@ namespace uapi-sdk-csharp.Model
             sb.Append("  Cid: ").Append(Cid).Append("\n");
             sb.Append("  Page: ").Append(Page).Append("\n");
             sb.Append("  Part: ").Append(Part).Append("\n");
+            sb.Append("  From: ").Append(From).Append("\n");
             sb.Append("  Duration: ").Append(Duration).Append("\n");
+            sb.Append("  Vid: ").Append(Vid).Append("\n");
+            sb.Append("  Weblink: ").Append(Weblink).Append("\n");
+            sb.Append("  Dimension: ").Append(Dimension).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -161,7 +229,11 @@ namespace uapi-sdk-csharp.Model
             Option<decimal?> cid = default;
             Option<decimal?> page = default;
             Option<string?> part = default;
+            Option<string?> from = default;
             Option<decimal?> duration = default;
+            Option<string?> vid = default;
+            Option<string?> weblink = default;
+            Option<GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension?> dimension = default;
 
             while (utf8JsonReader.Read())
             {
@@ -187,8 +259,20 @@ namespace uapi-sdk-csharp.Model
                         case "part":
                             part = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "from":
+                            from = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "duration":
                             duration = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "vid":
+                            vid = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "weblink":
+                            weblink = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "dimension":
+                            dimension = new Option<GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension?>(JsonSerializer.Deserialize<GetSocialBilibiliVideoinfo200ResponsePagesInnerDimension>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -205,10 +289,22 @@ namespace uapi-sdk-csharp.Model
             if (part.IsSet && part.Value == null)
                 throw new ArgumentNullException(nameof(part), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
 
+            if (from.IsSet && from.Value == null)
+                throw new ArgumentNullException(nameof(from), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
             if (duration.IsSet && duration.Value == null)
                 throw new ArgumentNullException(nameof(duration), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
 
-            return new GetSocialBilibiliVideoinfo200ResponsePagesInner(cid, page, part, duration);
+            if (vid.IsSet && vid.Value == null)
+                throw new ArgumentNullException(nameof(vid), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            if (weblink.IsSet && weblink.Value == null)
+                throw new ArgumentNullException(nameof(weblink), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            if (dimension.IsSet && dimension.Value == null)
+                throw new ArgumentNullException(nameof(dimension), "Property is not nullable for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            return new GetSocialBilibiliVideoinfo200ResponsePagesInner(cid, page, part, from, duration, vid, weblink, dimension);
         }
 
         /// <summary>
@@ -238,6 +334,18 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliVideoinfo200ResponsePagesInner.PartOption.IsSet && getSocialBilibiliVideoinfo200ResponsePagesInner.Part == null)
                 throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponsePagesInner.Part), "Property is required for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
 
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.FromOption.IsSet && getSocialBilibiliVideoinfo200ResponsePagesInner.From == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponsePagesInner.From), "Property is required for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.VidOption.IsSet && getSocialBilibiliVideoinfo200ResponsePagesInner.Vid == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponsePagesInner.Vid), "Property is required for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.WeblinkOption.IsSet && getSocialBilibiliVideoinfo200ResponsePagesInner.Weblink == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponsePagesInner.Weblink), "Property is required for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.DimensionOption.IsSet && getSocialBilibiliVideoinfo200ResponsePagesInner.Dimension == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliVideoinfo200ResponsePagesInner.Dimension), "Property is required for class GetSocialBilibiliVideoinfo200ResponsePagesInner.");
+
             if (getSocialBilibiliVideoinfo200ResponsePagesInner.CidOption.IsSet)
                 writer.WriteNumber("cid", getSocialBilibiliVideoinfo200ResponsePagesInner.CidOption.Value!.Value);
 
@@ -247,8 +355,23 @@ namespace uapi-sdk-csharp.Model
             if (getSocialBilibiliVideoinfo200ResponsePagesInner.PartOption.IsSet)
                 writer.WriteString("part", getSocialBilibiliVideoinfo200ResponsePagesInner.Part);
 
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.FromOption.IsSet)
+                writer.WriteString("from", getSocialBilibiliVideoinfo200ResponsePagesInner.From);
+
             if (getSocialBilibiliVideoinfo200ResponsePagesInner.DurationOption.IsSet)
                 writer.WriteNumber("duration", getSocialBilibiliVideoinfo200ResponsePagesInner.DurationOption.Value!.Value);
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.VidOption.IsSet)
+                writer.WriteString("vid", getSocialBilibiliVideoinfo200ResponsePagesInner.Vid);
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.WeblinkOption.IsSet)
+                writer.WriteString("weblink", getSocialBilibiliVideoinfo200ResponsePagesInner.Weblink);
+
+            if (getSocialBilibiliVideoinfo200ResponsePagesInner.DimensionOption.IsSet)
+            {
+                writer.WritePropertyName("dimension");
+                JsonSerializer.Serialize(writer, getSocialBilibiliVideoinfo200ResponsePagesInner.Dimension, jsonSerializerOptions);
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **DewPoint** | **decimal** | 露点温度 °C（可选） | [optional] 
 **Visibility** | **decimal** | 能见度 km（可选） | [optional] 
 **Pop** | **decimal** | 降水概率 %（可选） | [optional] 
-**UvIndex** | **decimal** | 紫外线指数（可选） | [optional] 
+**UvIndex** | **decimal** | 紫外线指数（可选，国内城市通常不返回） | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

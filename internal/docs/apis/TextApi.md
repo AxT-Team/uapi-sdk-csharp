@@ -66,7 +66,7 @@ AES 解密
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextAesDecryptRequest** | [**PostTextAesDecryptRequest**](PostTextAesDecryptRequest.md) | 包含待解密文本 &#39;text&#39;、密钥 &#39;key&#39; 和随机数 &#39;nonce&#39; 的JSON对象 |  |
+| **postTextAesDecryptRequest** | [**PostTextAesDecryptRequest**](PostTextAesDecryptRequest.md) |  |  |
 
 ### Return type
 
@@ -104,7 +104,7 @@ AES高级解密
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextAesDecryptAdvancedRequest** | [**PostTextAesDecryptAdvancedRequest**](PostTextAesDecryptAdvancedRequest.md) | 包含解密配置的JSON对象 |  |
+| **postTextAesDecryptAdvancedRequest** | [**PostTextAesDecryptAdvancedRequest**](PostTextAesDecryptAdvancedRequest.md) |  |  |
 
 ### Return type
 
@@ -141,7 +141,7 @@ AES 加密
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextAesEncryptRequest** | [**PostTextAesEncryptRequest**](PostTextAesEncryptRequest.md) | 包含待加密文本 &#39;text&#39; 和密钥 &#39;key&#39; 的JSON对象 |  |
+| **postTextAesEncryptRequest** | [**PostTextAesEncryptRequest**](PostTextAesEncryptRequest.md) |  |  |
 
 ### Return type
 
@@ -179,7 +179,7 @@ AES高级加密
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextAesEncryptAdvancedRequest** | [**PostTextAesEncryptAdvancedRequest**](PostTextAesEncryptAdvancedRequest.md) | 包含加密配置的JSON对象 |  |
+| **postTextAesEncryptAdvancedRequest** | [**PostTextAesEncryptAdvancedRequest**](PostTextAesEncryptAdvancedRequest.md) |  |  |
 
 ### Return type
 
@@ -216,7 +216,7 @@ No authorization required
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextAnalyzeRequest** | [**PostTextAnalyzeRequest**](PostTextAnalyzeRequest.md) | 包含待分析文本 &#39;text&#39; 的JSON对象 |  |
+| **postTextAnalyzeRequest** | [**PostTextAnalyzeRequest**](PostTextAnalyzeRequest.md) |  |  |
 
 ### Return type
 
@@ -253,7 +253,7 @@ Base64 解码
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextBase64DecodeRequest** | [**PostTextBase64DecodeRequest**](PostTextBase64DecodeRequest.md) | 包含待解码文本 &#39;text&#39; 的JSON对象 |  |
+| **postTextBase64DecodeRequest** | [**PostTextBase64DecodeRequest**](PostTextBase64DecodeRequest.md) |  |  |
 
 ### Return type
 
@@ -290,7 +290,7 @@ Base64 编码
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextBase64EncodeRequest** | [**PostTextBase64EncodeRequest**](PostTextBase64EncodeRequest.md) | 包含待编码文本 &#39;text&#39; 的JSON对象 |  |
+| **postTextBase64EncodeRequest** | [**PostTextBase64EncodeRequest**](PostTextBase64EncodeRequest.md) |  |  |
 
 ### Return type
 
@@ -327,7 +327,7 @@ No authorization required
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextConvertRequest** | [**PostTextConvertRequest**](PostTextConvertRequest.md) | 包含转换配置的JSON对象 |  |
+| **postTextConvertRequest** | [**PostTextConvertRequest**](PostTextConvertRequest.md) |  |  |
 
 ### Return type
 
@@ -401,7 +401,7 @@ MD5 校验
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **postTextMd5VerifyRequest** | [**PostTextMd5VerifyRequest**](PostTextMd5VerifyRequest.md) | 包含待校验文本 &#39;text&#39; 和哈希值 &#39;hash&#39; 的JSON对象 |  |
+| **postTextMd5VerifyRequest** | [**PostTextMd5VerifyRequest**](PostTextMd5VerifyRequest.md) |  |  |
 
 ### Return type
 

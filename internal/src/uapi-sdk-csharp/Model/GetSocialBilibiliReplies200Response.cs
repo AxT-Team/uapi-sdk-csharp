@@ -34,14 +34,30 @@ namespace uapi-sdk-csharp.Model
         /// Initializes a new instance of the <see cref="GetSocialBilibiliReplies200Response" /> class.
         /// </summary>
         /// <param name="page">page</param>
+        /// <param name="config">评论区配置。不同视频或不同权限下可能为 null。</param>
         /// <param name="hots">热门评论列表。结构与 &#x60;replies&#x60; 中的对象一致。如果当前页是第一页，且有热门评论，则此数组非空。</param>
         /// <param name="replies">当前页的评论列表。</param>
+        /// <param name="upper">UP 主相关信息。无数据时为 null。</param>
+        /// <param name="top">置顶评论信息。没有置顶评论时为 null。</param>
+        /// <param name="notice">评论区公告信息。没有公告时为 null。</param>
+        /// <param name="vote">评论区投票相关状态值。没有投票时通常为 0。</param>
+        /// <param name="folder">评论折叠相关信息。没有数据时为 null。</param>
+        /// <param name="control">评论区控制信息。没有数据时为 null。</param>
+        /// <param name="cursor">游标翻页信息。部分场景下为 null。</param>
         [JsonConstructor]
-        public GetSocialBilibiliReplies200Response(Option<GetSocialBilibiliReplies200ResponsePage?> page = default, Option<List<Object>?> hots = default, Option<List<GetSocialBilibiliReplies200ResponseRepliesInner>?> replies = default)
+        public GetSocialBilibiliReplies200Response(Option<GetSocialBilibiliReplies200ResponsePage?> page = default, Option<Object?> config = default, Option<List<Object>?> hots = default, Option<List<GetSocialBilibiliReplies200ResponseRepliesInner>?> replies = default, Option<Object?> upper = default, Option<Object?> top = default, Option<Object?> notice = default, Option<decimal?> vote = default, Option<Object?> folder = default, Option<Object?> control = default, Option<Object?> cursor = default)
         {
             PageOption = page;
+            ConfigOption = config;
             HotsOption = hots;
             RepliesOption = replies;
+            UpperOption = upper;
+            TopOption = top;
+            NoticeOption = notice;
+            VoteOption = vote;
+            FolderOption = folder;
+            ControlOption = control;
+            CursorOption = cursor;
             OnCreated();
         }
 
@@ -59,6 +75,20 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         [JsonPropertyName("page")]
         public GetSocialBilibiliReplies200ResponsePage? Page { get { return this.PageOption; } set { this.PageOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Config
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> ConfigOption { get; private set; }
+
+        /// <summary>
+        /// 评论区配置。不同视频或不同权限下可能为 null。
+        /// </summary>
+        /// <value>评论区配置。不同视频或不同权限下可能为 null。</value>
+        [JsonPropertyName("config")]
+        public Object? Config { get { return this.ConfigOption; } set { this.ConfigOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Hots
@@ -89,6 +119,105 @@ namespace uapi-sdk-csharp.Model
         public List<GetSocialBilibiliReplies200ResponseRepliesInner>? Replies { get { return this.RepliesOption; } set { this.RepliesOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of Upper
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> UpperOption { get; private set; }
+
+        /// <summary>
+        /// UP 主相关信息。无数据时为 null。
+        /// </summary>
+        /// <value>UP 主相关信息。无数据时为 null。</value>
+        [JsonPropertyName("upper")]
+        public Object? Upper { get { return this.UpperOption; } set { this.UpperOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Top
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> TopOption { get; private set; }
+
+        /// <summary>
+        /// 置顶评论信息。没有置顶评论时为 null。
+        /// </summary>
+        /// <value>置顶评论信息。没有置顶评论时为 null。</value>
+        [JsonPropertyName("top")]
+        public Object? Top { get { return this.TopOption; } set { this.TopOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Notice
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> NoticeOption { get; private set; }
+
+        /// <summary>
+        /// 评论区公告信息。没有公告时为 null。
+        /// </summary>
+        /// <value>评论区公告信息。没有公告时为 null。</value>
+        [JsonPropertyName("notice")]
+        public Object? Notice { get { return this.NoticeOption; } set { this.NoticeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Vote
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> VoteOption { get; private set; }
+
+        /// <summary>
+        /// 评论区投票相关状态值。没有投票时通常为 0。
+        /// </summary>
+        /// <value>评论区投票相关状态值。没有投票时通常为 0。</value>
+        /* <example>0</example> */
+        [JsonPropertyName("vote")]
+        public decimal? Vote { get { return this.VoteOption; } set { this.VoteOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Folder
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> FolderOption { get; private set; }
+
+        /// <summary>
+        /// 评论折叠相关信息。没有数据时为 null。
+        /// </summary>
+        /// <value>评论折叠相关信息。没有数据时为 null。</value>
+        [JsonPropertyName("folder")]
+        public Object? Folder { get { return this.FolderOption; } set { this.FolderOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Control
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> ControlOption { get; private set; }
+
+        /// <summary>
+        /// 评论区控制信息。没有数据时为 null。
+        /// </summary>
+        /// <value>评论区控制信息。没有数据时为 null。</value>
+        [JsonPropertyName("control")]
+        public Object? Control { get { return this.ControlOption; } set { this.ControlOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Cursor
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object?> CursorOption { get; private set; }
+
+        /// <summary>
+        /// 游标翻页信息。部分场景下为 null。
+        /// </summary>
+        /// <value>游标翻页信息。部分场景下为 null。</value>
+        [JsonPropertyName("cursor")]
+        public Object? Cursor { get { return this.CursorOption; } set { this.CursorOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -97,8 +226,16 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetSocialBilibiliReplies200Response {\n");
             sb.Append("  Page: ").Append(Page).Append("\n");
+            sb.Append("  Config: ").Append(Config).Append("\n");
             sb.Append("  Hots: ").Append(Hots).Append("\n");
             sb.Append("  Replies: ").Append(Replies).Append("\n");
+            sb.Append("  Upper: ").Append(Upper).Append("\n");
+            sb.Append("  Top: ").Append(Top).Append("\n");
+            sb.Append("  Notice: ").Append(Notice).Append("\n");
+            sb.Append("  Vote: ").Append(Vote).Append("\n");
+            sb.Append("  Folder: ").Append(Folder).Append("\n");
+            sb.Append("  Control: ").Append(Control).Append("\n");
+            sb.Append("  Cursor: ").Append(Cursor).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -137,8 +274,16 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<GetSocialBilibiliReplies200ResponsePage?> page = default;
+            Option<Object?> config = default;
             Option<List<Object>?> hots = default;
             Option<List<GetSocialBilibiliReplies200ResponseRepliesInner>?> replies = default;
+            Option<Object?> upper = default;
+            Option<Object?> top = default;
+            Option<Object?> notice = default;
+            Option<decimal?> vote = default;
+            Option<Object?> folder = default;
+            Option<Object?> control = default;
+            Option<Object?> cursor = default;
 
             while (utf8JsonReader.Read())
             {
@@ -158,11 +303,35 @@ namespace uapi-sdk-csharp.Model
                         case "page":
                             page = new Option<GetSocialBilibiliReplies200ResponsePage?>(JsonSerializer.Deserialize<GetSocialBilibiliReplies200ResponsePage>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
+                        case "config":
+                            config = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "hots":
                             hots = new Option<List<Object>?>(JsonSerializer.Deserialize<List<Object>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "replies":
                             replies = new Option<List<GetSocialBilibiliReplies200ResponseRepliesInner>?>(JsonSerializer.Deserialize<List<GetSocialBilibiliReplies200ResponseRepliesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "upper":
+                            upper = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "top":
+                            top = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "notice":
+                            notice = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "vote":
+                            vote = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "folder":
+                            folder = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "control":
+                            control = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "cursor":
+                            cursor = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -176,7 +345,10 @@ namespace uapi-sdk-csharp.Model
             if (replies.IsSet && replies.Value == null)
                 throw new ArgumentNullException(nameof(replies), "Property is not nullable for class GetSocialBilibiliReplies200Response.");
 
-            return new GetSocialBilibiliReplies200Response(page, hots, replies);
+            if (vote.IsSet && vote.Value == null)
+                throw new ArgumentNullException(nameof(vote), "Property is not nullable for class GetSocialBilibiliReplies200Response.");
+
+            return new GetSocialBilibiliReplies200Response(page, config, hots, replies, upper, top, notice, vote, folder, control, cursor);
         }
 
         /// <summary>
@@ -214,6 +386,14 @@ namespace uapi-sdk-csharp.Model
                 writer.WritePropertyName("page");
                 JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Page, jsonSerializerOptions);
             }
+            if (getSocialBilibiliReplies200Response.ConfigOption.IsSet)
+                if (getSocialBilibiliReplies200Response.ConfigOption.Value != null)
+                {
+                    writer.WritePropertyName("config");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Config, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("config");
             if (getSocialBilibiliReplies200Response.HotsOption.IsSet)
                 if (getSocialBilibiliReplies200Response.HotsOption.Value != null)
                 {
@@ -227,6 +407,57 @@ namespace uapi-sdk-csharp.Model
                 writer.WritePropertyName("replies");
                 JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Replies, jsonSerializerOptions);
             }
+            if (getSocialBilibiliReplies200Response.UpperOption.IsSet)
+                if (getSocialBilibiliReplies200Response.UpperOption.Value != null)
+                {
+                    writer.WritePropertyName("upper");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Upper, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("upper");
+            if (getSocialBilibiliReplies200Response.TopOption.IsSet)
+                if (getSocialBilibiliReplies200Response.TopOption.Value != null)
+                {
+                    writer.WritePropertyName("top");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Top, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("top");
+            if (getSocialBilibiliReplies200Response.NoticeOption.IsSet)
+                if (getSocialBilibiliReplies200Response.NoticeOption.Value != null)
+                {
+                    writer.WritePropertyName("notice");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Notice, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("notice");
+            if (getSocialBilibiliReplies200Response.VoteOption.IsSet)
+                writer.WriteNumber("vote", getSocialBilibiliReplies200Response.VoteOption.Value!.Value);
+
+            if (getSocialBilibiliReplies200Response.FolderOption.IsSet)
+                if (getSocialBilibiliReplies200Response.FolderOption.Value != null)
+                {
+                    writer.WritePropertyName("folder");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Folder, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("folder");
+            if (getSocialBilibiliReplies200Response.ControlOption.IsSet)
+                if (getSocialBilibiliReplies200Response.ControlOption.Value != null)
+                {
+                    writer.WritePropertyName("control");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Control, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("control");
+            if (getSocialBilibiliReplies200Response.CursorOption.IsSet)
+                if (getSocialBilibiliReplies200Response.CursorOption.Value != null)
+                {
+                    writer.WritePropertyName("cursor");
+                    JsonSerializer.Serialize(writer, getSocialBilibiliReplies200Response.Cursor, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("cursor");
         }
     }
 }

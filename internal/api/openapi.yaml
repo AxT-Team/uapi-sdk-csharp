@@ -783,12 +783,7 @@ paths:
         这个接口会获取 Bing 搜索引擎当天全球同步的每日壁纸，并直接以图片形式返回。你可以用它来做应用的启动页、网站背景，或者任何需要每日更新精美图片的地方。
 
         ## 使用须知
-
-        > [!NOTE]
-        > **响应格式是图片**
-        > 请注意，此接口成功时直接返回图片二进制数据（通常为 `image/jpeg`），而非 JSON 格式。请确保客户端能够正确处理。
-
-        我们内置了备用方案：如果从必应官方获取图片失败，系统会尝试返回一张预存的高质量风景图，以保证服务的稳定性。
+        此接口成功时直接返回图片二进制数据，通常是 `image/jpeg`，不是 JSON 格式。接入时请按图片响应来处理。
       operationId: get-image-bing-daily
       parameters: []
       responses:
@@ -928,7 +923,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_image_frombase64_request"
-        description: 一个JSON对象，包含 `imageData` 字段，其值为你想要上传图片的完整Base64 Data URI。
+        description: ""
         required: true
       responses:
         "200":
@@ -1012,10 +1007,6 @@ paths:
           - transparent
           example: transparent
           type: string
-          x-enumLabels:
-            white: 白色
-            black: 黑色
-            transparent: 透明
         style: form
         x-tooltip: "可选值为 'white', 'black', 'transparent'。推荐使用 'transparent'。"
       responses:
@@ -1210,21 +1201,6 @@ paths:
 
         ## 功能概述
         你提供一段文本内容，我们为你生成对应的二维码图片。你可以自定义尺寸、前景色、背景色，还支持透明背景，并选择不同的返回格式以适应不同场景。
-
-        ## 使用须知
-
-        > [!IMPORTANT]
-        > **关键参数 `format`**
-        > 此参数决定了成功响应的内容类型和结构，请务必根据你的需求选择并正确处理响应：
-        > - **`image`** (默认): 直接返回 `image/png` 格式的图片二进制数据，适合在 `<img>` 标签中直接使用。
-        > - **`json`**: 返回一个包含 Base64 Data URI 的 JSON 对象，适合需要在前端直接嵌入CSS或HTML的场景。
-        > - **`json_url`**: 返回一个包含图片临时URL的JSON对象，适合需要图片链接的场景。
-
-        > [!TIP]
-        > **颜色参数说明**
-        > - 颜色参数使用十六进制格式（如 `#FF0000`）
-        > - URL 中需要对 `#` 进行编码，即 `%23`（例如：`fgcolor=%23FF0000`）
-        > - 当 `transparent=true` 时，`bgcolor` 参数会被忽略
       operationId: get-image-qrcode
       parameters:
       - description: 你希望编码到二维码中的任何文本内容，比如一个URL、一段话或者一个JSON字符串。
@@ -1262,10 +1238,6 @@ paths:
           - json_url
           example: image
           type: string
-          x-enumLabels:
-            image: 图片
-            json: JSON数据
-            json_url: JSON+URL
         style: form
         x-tooltip: 默认为'image'，直接返回图片。
       - description: 是否使用透明背景。启用后生成的 PNG 图片将具有 alpha 通道，背景透明。
@@ -1734,9 +1706,6 @@ paths:
       description: |-
         这是一个图片内容审核接口，自动识别图片中的违规内容并返回处理建议。
 
-        > [!VIP]
-        > 此接口限时免费开放，无需企业认证即可使用。
-
         ## 功能概述
         上传图片文件或提供图片URL，接口会自动分析图片内容，返回是否违规、风险等级和处理建议。适合对接到用户上传流程中，实现自动化内容审核。
 
@@ -1877,7 +1846,7 @@ paths:
           description: 是否涉黄、风险等级、处理建议
   /misc/hotboard:
     get:
-      description: |
+      description: |-
         想快速跟上网络热点？这个接口让你一网打尽各大主流平台的实时热榜/热搜！
 
         ## 功能概述
@@ -1896,21 +1865,9 @@ paths:
 
         ### 数据源列表
         传 `sources=true`，返回所有支持历史数据的平台列表。
-
-        ## 可选值
-        `type` 参数接受多种不同的值，每种值对应一个不同的热榜来源。以下是目前支持的所有值：
-
-        | 分类       | 支持的 type 值 |
-        |------------|-----------------------------------------------------------------------------------------------------------------------------------|
-        | 视频/社区  | bilibili（哔哩哔哩弹幕网）, acfun（A站弹幕视频网站）, weibo（新浪微博热搜）, zhihu（知乎热榜）, zhihu-daily（知乎日报热榜）, douyin（抖音热榜）, kuaishou（快手热榜）, douban-movie（豆瓣电影榜单）, douban-group（豆瓣小组话题）, tieba（百度贴吧热帖）, hupu（虎扑热帖）, ngabbs（NGA游戏论坛热帖）, v2ex（V2EX技术社区热帖）, 52pojie（吾爱破解热帖）, hostloc（全球主机交流论坛）, coolapk（酷安热榜） |
-        | 新闻/资讯  | baidu（百度热搜）, thepaper（澎湃新闻热榜）, toutiao（今日头条热榜）, qq-news（腾讯新闻热榜）, sina（新浪热搜）, sina-news（新浪新闻热榜）, netease-news（网易新闻热榜）, huxiu（虎嗅网热榜）, ifanr（爱范儿热榜） |
-        | 技术/IT    | sspai（少数派热榜）, ithome（IT之家热榜）, ithome-xijiayi（IT之家·喜加一栏目）, juejin（掘金社区热榜）, jianshu（简书热榜）, guokr（果壳热榜）, 36kr（36氪热榜）, 51cto（51CTO热榜）, csdn（CSDN博客热榜）, nodeseek（NodeSeek 技术社区）, hellogithub（HelloGitHub 项目推荐） |
-        | 游戏       | lol（英雄联盟热帖）, genshin（原神热榜）, honkai（崩坏3热榜）, starrail（星穹铁道热榜） |
-        | 音乐       | netease-music（网易云音乐热歌榜）, qq-music（QQ音乐热歌榜） |
-        | 其他       | weread（微信读书热门书籍）, weatheralarm（天气预警信息）, earthquake（地震速报）, history（历史上的今天） |
       operationId: get-misc-hotboard
       parameters:
-      - description: "你想要查询的热榜平台。支持多种主流平台类型，详见下方[可选值](#可选值)表格。"
+      - description: "你想要查询的热榜平台。请从[支持的平台列表](#enum-list)中选择。"
         explode: true
         in: query
         name: type
@@ -1965,54 +1922,6 @@ paths:
           - history
           example: weibo
           type: string
-          x-enumIconPattern: "/icons/hotboard/{value}.png"
-          x-enumLabels:
-            bilibili: 哔哩哔哩
-            acfun: A站
-            weibo: 微博热搜
-            zhihu: 知乎热榜
-            zhihu-daily: 知乎日报
-            douyin: 抖音
-            kuaishou: 快手
-            douban-movie: 豆瓣电影
-            douban-group: 豆瓣小组
-            tieba: 百度贴吧
-            hupu: 虎扑
-            ngabbs: NGA论坛
-            v2ex: V2EX
-            "52pojie": 吾爱破解
-            hostloc: 全球主机交流
-            coolapk: 酷安
-            baidu: 百度热搜
-            thepaper: 澎湃新闻
-            toutiao: 今日头条
-            qq-news: 腾讯新闻
-            sina: 新浪热搜
-            sina-news: 新浪新闻
-            netease-news: 网易新闻
-            huxiu: 虎嗅
-            ifanr: 爱范儿
-            sspai: 少数派
-            ithome: IT之家
-            ithome-xijiayi: IT之家喜加一
-            juejin: 掘金
-            jianshu: 简书
-            guokr: 果壳
-            "36kr": 36氪
-            "51cto": 51CTO
-            csdn: CSDN
-            nodeseek: NodeSeek
-            hellogithub: HelloGitHub
-            lol: 英雄联盟
-            genshin: 原神
-            honkai: 崩坏3
-            starrail: 星穹铁道
-            netease-music: 网易云音乐热歌榜
-            qq-music: QQ音乐热歌榜
-            weread: 微信读书
-            weatheralarm: 天气预警
-            earthquake: 地震速报
-            history: 历史上的今天
         style: form
         x-tooltip: 例如，'weibo' 代表微博热搜。
       - description: 时光机模式：毫秒时间戳，返回最接近该时间的热榜快照。不传则返回当前实时热榜。
@@ -2021,7 +1930,6 @@ paths:
         name: time
         required: false
         schema:
-          example: 1700000000000
           format: int64
           type: integer
         style: form
@@ -2032,7 +1940,6 @@ paths:
         name: keyword
         required: false
         schema:
-          example: AI
           type: string
         style: form
         x-tooltip: 搜索历史热榜中包含该关键词的条目。
@@ -2042,7 +1949,6 @@ paths:
         name: time_start
         required: false
         schema:
-          example: 1699900000000
           format: int64
           type: integer
         style: form
@@ -2053,7 +1959,6 @@ paths:
         name: time_end
         required: false
         schema:
-          example: 1700100000000
           format: int64
           type: integer
         style: form
@@ -2064,8 +1969,6 @@ paths:
         name: limit
         required: false
         schema:
-          default: 50
-          example: 50
           maximum: 200
           type: integer
         style: form
@@ -2076,7 +1979,6 @@ paths:
         name: sources
         required: false
         schema:
-          example: true
           type: boolean
         style: form
         x-tooltip: 传 true 可查看支持时光机/搜索的数据源列表。
@@ -2407,9 +2309,9 @@ paths:
 
         ## 可选功能模块
         - `extended=true`：扩展气象字段（体感温度、能见度、气压、紫外线、空气质量及污染物分项数据）
-        - `forecast=true`：多天预报（最多7天，含日出日落、风速等详细数据）
+        - `forecast=true`：多天预报（最多7天，会额外返回每天的最高温度、最低温度，以及日出日落、风速等详细数据）
         - `hourly=true`：逐小时预报（24小时）
-        - `minutely=true`：分钟级降水预报（仅国内城市）
+        - `minutely=true`：分钟级降水预报（仅国内城市，精确到2分钟）
         - `indices=true`：18项生活指数（穿衣、紫外线、洗车、运动、花粉等）
 
         ## 天气字段说明
@@ -2417,7 +2319,7 @@ paths:
 
         常见值包括：晴、多云、阴、小雨、中雨、大雨、雷阵雨、小雪、中雪、大雪、雨夹雪、雾、霾、沙尘。
 
-        如果你的业务需要稳定分类，建议结合 `weather_code` 做自己的映射归类。
+        如果你的业务需要稳定的天气分类，建议使用 `weather_code` 进行映射。完整的天气图标代码请参考[天气图标代码表](#enum-list)。
       operationId: get-misc-weather
       parameters:
       - description: 城市名称，支持中文（`北京`）和英文（`Tokyo`）。可选参数，不传时会尝试 IP 自动定位。
@@ -2446,23 +2348,17 @@ paths:
         required: false
         schema:
           type: boolean
-          x-enumLabels:
-            "false": 不返回扩展字段（默认）
-            "true": 返回扩展气象字段
         style: form
         x-tooltip: 设为 true 获取更多气象数据
-      - description: 返回多天预报数据（最多7天），含白天夜间天气、风向风力、日出日落等。
+      - description: 返回多天预报数据（最多7天），含每天的最高温度、最低温度、白天夜间天气、风向风力、日出日落等。
         explode: true
         in: query
         name: forecast
         required: false
         schema:
           type: boolean
-          x-enumLabels:
-            "false": 不返回预报数据（默认）
-            "true": 返回多天预报
         style: form
-        x-tooltip: 设为 true 获取最多7天天气预报
+        x-tooltip: 设为 true 获取最多 7 天预报，并返回每天的最高温度和最低温度
       - description: 返回逐小时预报（24小时），含温度、天气、风向风速、湿度、降水概率等。
         explode: true
         in: query
@@ -2470,23 +2366,17 @@ paths:
         required: false
         schema:
           type: boolean
-          x-enumLabels:
-            "false": 不返回逐小时预报（默认）
-            "true": 返回逐小时预报
         style: form
         x-tooltip: 设为 true 获取逐小时预报
-      - description: 返回分钟级降水预报（仅国内城市），每5分钟一个数据点，共24个。
+      - description: 返回分钟级降水预报（仅国内城市），精确到2分钟。
         explode: true
         in: query
         name: minutely
         required: false
         schema:
           type: boolean
-          x-enumLabels:
-            "false": 不返回分钟级降水（默认）
-            "true": 返回分钟级降水预报
         style: form
-        x-tooltip: 仅国内城市可用，设为 true 获取分钟级降水
+        x-tooltip: 仅国内城市可用，设为 true 获取精确到2分钟的分钟级降水
       - description: 返回18项生活指数（穿衣、紫外线、洗车、晾晒、空调、感冒、运动、舒适度、出行、钓鱼、过敏、防晒、心情、啤酒、雨伞、交通、空气净化器、花粉）。
         explode: true
         in: query
@@ -2494,9 +2384,6 @@ paths:
         required: false
         schema:
           type: boolean
-          x-enumLabels:
-            "false": 不返回生活指数（默认）
-            "true": 返回18项生活指数
         style: form
         x-tooltip: 设为 true 获取18项生活建议指数
       - description: 返回语言。`zh` 返回中文（默认），`en` 返回英文。城市名翻译覆盖 7000+ 城市。生活指数（`indices`）目前仅支持中文。
@@ -2510,9 +2397,6 @@ paths:
           - zh
           - en
           type: string
-          x-enumLabels:
-            zh: 中文（默认）
-            en: English
         style: form
         x-tooltip: 国际化场景建议传 en。
       responses:
@@ -2607,10 +2491,10 @@ paths:
         answer: 天气数据实时获取，每次调用都会返回最新的气象信息，数据来源于权威气象服务。
       - question: 返回的数据包含哪些信息？
         answer: 基础数据包括：天气现象、温度、湿度、风向、风力、更新时间。通过 extended=true 可获取体感温度、能见度、气压、紫外线、空气质量及污染物分项数据。通过
-          forecast=true 可获取最多7天天气预报（含日出日落等详细数据）。通过 hourly=true 可获取逐小时预报（24小时）。通过 minutely=true
-          可获取分钟级降水预报（仅国内）。通过 indices=true 可获取18项生活指数。
+          forecast=true 可获取最多7天天气预报，并返回每天的最高温度、最低温度、日出日落等详细数据。通过 hourly=true 可获取逐小时预报（24小时）。通过
+          minutely=true 可获取精确到2分钟的分钟级降水预报（仅国内）。通过 indices=true 可获取18项生活指数。
       - question: 逐小时预报和分钟级降水有什么区别？
-        answer: 逐小时预报（hourly）返回未来24小时每小时的温度、天气、风向等完整气象数据。分钟级降水（minutely）返回未来2小时每5分钟的降水量和降水类型，适合精确判断短期内是否会下雨。分钟级降水仅国内城市可用。
+        answer: 逐小时预报（hourly）返回未来24小时每小时的温度、天气、风向等完整气象数据。分钟级降水（minutely）返回精确到2分钟的降水量和降水类型，适合精确判断短期内是否会下雨。分钟级降水仅国内城市可用。
       - question: 生活指数包含哪些内容？
         answer: 共18项：穿衣、紫外线、洗车、晾晒、空调开启、感冒、运动、舒适度、出行、钓鱼、过敏、防晒、心情、啤酒、雨伞、交通、空气净化器、花粉扩散。每项包含等级、简短描述和详细建议。所有城市均可用，基于当前气象数据实时计算。
       - question: lang=en 时哪些字段会翻译？
@@ -2846,14 +2730,6 @@ paths:
           - term
           example: legal
           type: string
-          x-enumLabels:
-            all: 全部节日类型
-            legal: 法定相关（休假 + 调休上班）
-            legal_rest: 仅法定休假日
-            legal_workday: 仅法定调休上班日
-            solar: 仅公历节日
-            lunar: 仅农历节日
-            term: 仅节气
         style: form
         x-tooltip: 不传就是 all；新手可先不传。
       - description: 是否返回前后最近节日，仅 date 模式生效，默认 false。month/year 模式会忽略此参数。
@@ -2865,9 +2741,6 @@ paths:
           default: false
           example: true
           type: boolean
-          x-enumLabels:
-            "false": 不返回前后节日（默认）
-            "true": 返回前后最近节日
         style: form
         x-tooltip: 想看前后节日时设为 true（仅 date 模式）。
       - description: 返回最近节日数量限制，默认 7，最大 30。仅 date 模式 + include_nearby=true 生效。
@@ -3025,16 +2898,15 @@ paths:
       description: |-
         买了东西想知道快递到哪儿了？这个接口帮你实时追踪物流状态。
 
-        > [!VIP]
-        > 本API目前处于**限时免费**阶段，我们鼓励开发者集成和测试。未来，它将转为付费API，为用户提供更稳定和强大的服务。
-
         ## 功能概述
-        提供一个快递单号，系统会自动识别快递公司并返回完整的物流轨迹信息。支持中通、圆通、韵达、申通、极兔、顺丰、京东、EMS、德邦等60+国内外主流快递公司。
+        提供一个快递单号，系统会自动识别快递公司并返回完整的物流轨迹信息。这个接口目前可以查询中通、圆通、韵达、申通、极兔、京东、EMS、德邦等主流快递公司的物流信息。
 
         ## 使用须知
+        目前暂不支持顺丰快递单号的物流查询。
+
         - **自动识别**：不知道是哪家快递？系统会根据单号规则自动识别快递公司（推荐使用）
         - **手动指定**：如果已知快递公司，可以传递 `carrier_code` 参数，查询速度会更快
-        - **手机尾号验证**：部分快递公司需要验证收件人手机尾号才能查询详细物流，如果返回「暂无物流信息」，建议尝试传入 `phone` 参数
+        - **手机尾号验证**：部分快递公司需要验证收件人手机尾号才能查询详细物流，如果返回 `暂无物流信息`，建议尝试传入 `phone` 参数
         - **查询时效**：物流信息实时查询，响应时间通常在1-2秒内
       operationId: get-misc-tracking-query
       parameters:
@@ -3044,6 +2916,7 @@ paths:
         name: tracking_number
         required: true
         schema:
+          example: YT1234567890123
           type: string
         style: form
         x-tooltip: 输入完整的快递单号
@@ -3055,7 +2928,7 @@ paths:
         schema:
           type: string
         style: form
-        x-tooltip: 例如：zhongtong、shunfeng、yuantong 等
+        x-tooltip: 例如：zhongtong、yuantong、yunda 等
       - description: 收件人手机尾号，4位数字（可选）。部分快递公司需要验证手机尾号才能查询详细物流信息。
         explode: true
         in: query
@@ -3072,7 +2945,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/get_misc_tracking_query_200_response"
-          description: 查询成功！返回快递的完整物流轨迹。
+          description: 查询成功！直接返回快递的完整物流轨迹。
         "400":
           content:
             application/json:
@@ -3100,16 +2973,14 @@ paths:
       - 中通
       - 圆通
       - 韵达
-      - 顺丰
       - 京东
       - EMS
       - 快递追踪
-      x-seo-optimized-text: 免费快递物流查询API接口，支持顺丰、中通、圆通、韵达、京东、EMS等60+快递公司。自动识别快递公司，实时追踪物流轨迹。无需注册，一个接口查询所有快递。适用于电商平台、物流系统、快递查询应用等场景。
+      x-seo-optimized-text: 免费快递物流查询API接口，支持中通、圆通、韵达、京东、EMS等多家主流快递公司。自动识别快递公司，实时追踪物流轨迹。无需注册，一个接口查询常见快递。适用于电商平台、物流系统、快递查询应用等场景。
       x-seo-keywords:
       - 免费快递查询API
       - 物流查询接口
       - 快递单号查询
-      - 顺丰快递API
       - 中通快递查询
       - 圆通物流API
       - 快递追踪接口
@@ -3117,7 +2988,7 @@ paths:
       - 快递公司识别
       - 包裹追踪API
       - express tracking API
-      x-seo-title: 【限时免费】快递物流查询API - 60+快递公司一键查询
+      x-seo-title: 【限时免费】快递物流查询API - 多家快递公司一键查询
       x-seo-usage-scenarios: 适用于电商平台物流追踪、快递查询小程序、物流管理系统、订单跟踪功能、客服系统集成、仓储管理、供应链系统等场景
       x-seo-related-apis:
       - 热榜查询
@@ -3128,9 +2999,6 @@ paths:
     get:
       description: |-
         不确定手里的快递单号属于哪家快递公司？这个接口专门做识别，不查物流。
-
-        > [!VIP]
-        > 本API目前处于**限时免费**阶段，我们鼓励开发者集成和测试。未来，它将转为付费API，为用户提供更稳定和强大的服务。
 
         ## 功能概述
         输入快递单号，系统会根据单号规则快速识别出最可能的快递公司。如果存在多个可能的匹配结果，还会在 `alternatives` 字段中返回备选项，供你参考选择。
@@ -3156,7 +3024,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/get_misc_tracking_detect_200_response"
-          description: 识别成功！返回识别结果和可能的备选项。
+          description: 识别成功！直接返回识别结果和可能的备选项。
         "404":
           content:
             application/json:
@@ -3178,9 +3046,6 @@ paths:
     get:
       description: |-
         不确定系统支持哪些快递公司？这个接口返回完整的支持列表。
-
-        > [!VIP]
-        > 本API目前处于**限时免费**阶段，我们鼓励开发者集成和测试。未来，它将转为付费API，为用户提供更稳定和强大的服务。
 
         ## 功能概述
         获取系统当前支持的所有快递公司列表，包括每家公司的标准编码（code）和中文名称（name）。
@@ -3227,7 +3092,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_misc_date_diff_request"
-        description: 包含日期信息的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -3331,11 +3196,6 @@ paths:
           - district
           - street
           type: string
-          x-enumLabels:
-            province: 省/直辖市/自治区
-            city: 市/地级
-            district: 区/县
-            street: 街道/乡镇
         style: form
         x-tooltip: 可选值：province / city / district / street。
       - description: 过滤国家代码（ISO 3166-1 alpha-2），如 `CN`、`JP`、`US`、`GB`。
@@ -3496,13 +3356,6 @@ paths:
           - TXT
           example: A
           type: string
-          x-enumLabels:
-            A: IPv4地址
-            AAAA: IPv6地址
-            CNAME: 别名记录
-            MX: 邮件服务器
-            NS: 域名服务器
-            TXT: 文本记录
         style: form
         x-tooltip: 默认为 'A' 记录。
       responses:
@@ -3654,8 +3507,6 @@ paths:
           enum:
           - commercial
           type: string
-          x-enumLabels:
-            commercial: 商业数据源
         style: form
         x-tooltip: "例如: commercial"
       responses:
@@ -3734,8 +3585,6 @@ paths:
           enum:
           - commercial
           type: string
-          x-enumLabels:
-            commercial: 商业数据源
         style: form
         x-tooltip: "例如: commercial"
       responses:
@@ -4307,16 +4156,6 @@ paths:
           - furry
           example: acg
           type: string
-          x-enumLabels:
-            acg: 二次元
-            landscape: 风景图
-            anime: 混合动漫
-            pc_wallpaper: 电脑壁纸
-            mobile_wallpaper: 手机壁纸
-            general_anime: 动漫图
-            ai_drawing: AI绘画
-            bq: 表情包
-            furry: 福瑞
         style: form
         x-tooltip: 可选，如 `furry`、`ai_drawing` 或 `anime`，可筛选图片主类别。
       - description: |
@@ -4347,18 +4186,6 @@ paths:
           - waiguoren
           example: pc
           type: string
-          x-enumLabels:
-            pc: 电脑
-            mb: 手机
-            eciyuan: 二次元
-            ikun: iKun
-            "4k": 4K
-            s4k: 横屏4K
-            z4k: 竖屏4K
-            szs8k: 竖屏8K
-            xiongmao: 熊猫
-            maomao: 猫猫
-            waiguoren: 外国人
         style: form
         x-tooltip: 可选，如 `z4k`，进一步筛选UapiPro服务器图片子类别。
       responses:
@@ -4542,13 +4369,6 @@ paths:
           - hex
           example: alphanumeric
           type: string
-          x-enumLabels:
-            numeric: 纯数字
-            lower: 小写字母
-            upper: 大写字母
-            alpha: 大小写字母
-            alphanumeric: 字母+数字
-            hex: 十六进制
         style: form
         x-tooltip: 默认为'alphanumeric' (数字+字母)。
       responses:
@@ -4660,7 +4480,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_answerbook_ask_request"
-        description: 包含问题的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -4714,14 +4534,14 @@ paths:
           example: "483307278"
           type: string
         style: form
-        x-tooltip: "例如: 483307278 (shuakami的UID)"
+        x-tooltip: "例如: 483307278"
       responses:
         "200":
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/get_social_bilibili_userinfo_200_response"
-          description: 查询成功！返回用户的详细信息。请注意，我们直接透传了B站官方API的返回结构。
+          description: 查询成功！返回 B 站用户公开数据。
         "400":
           content:
             application/json:
@@ -4773,10 +4593,17 @@ paths:
       - 视频数据API
   /social/qq/userinfo:
     get:
-      description: "这是一个功能丰富的QQ用户信息查询接口，能够获取QQ用户的详细公开信息。\n\n> [!VIP]\n> 我们在近日优化了此接\
-        口，速度应该会更加快了。 \n\n## 功能概述\n通过QQ号查询用户的详细信息，包括基础资料、等级信息、VIP状态等。返回的信息丰富全面，适合用于\
-        用户画像分析、社交应用集成等场景。\n\n## 数据字段说明\n- **基础信息**: 昵称、个性签名、头像、年龄、性别\n- **联系信息**:\
-        \ QQ邮箱、个性域名(QID)\n- **等级信息**: QQ等级、VIP状态和等级\n- **时间信息**: 注册时间、最后更新时间"
+      description: |-
+        这是一个功能丰富的QQ用户信息查询接口，能够获取QQ用户的详细公开信息。
+
+        ## 功能概述
+        通过QQ号查询用户的详细信息，包括基础资料、等级信息、VIP状态等。返回的信息丰富全面，适合用于用户画像分析、社交应用集成等场景。
+
+        ## 数据字段说明
+        - **基础信息**: 昵称、个性签名、头像、年龄、性别
+        - **联系信息**: QQ邮箱、个性域名(QID)
+        - **等级信息**: QQ等级、VIP状态和等级
+        - **时间信息**: 注册时间、最后更新时间
       operationId: get-social-qq-userinfo
       parameters:
       - description: 需要查询的QQ号
@@ -4868,7 +4695,7 @@ paths:
           example: "483307278"
           type: string
         style: form
-        x-tooltip: "例如: 483307278 (shuakami的UID)"
+        x-tooltip: "例如: 483307278"
       - description: 搜索关键词，可为空
         explode: true
         in: query
@@ -5068,30 +4895,8 @@ paths:
         name: sort
         required: false
         schema:
-          enum:
-          - "0"
-          - time
-          - "1"
-          - like
-          - "2"
-          - reply
-          - "3"
-          - hot
-          - hottest
-          - 最热
           example: hot
           type: string
-          x-enumLabels:
-            "0": 按时间
-            "1": 按点赞
-            "2": 按回复数
-            "3": 按最热
-            time: 按时间
-            like: 按点赞
-            reply: 按回复数
-            hot: 按最热
-            hottest: 按最热
-            最热: 按最热
         style: form
         x-tooltip: 推荐使用 hot 查看最热评论。
       - description: 每页获取的评论数量，范围是1到20。默认为 `20`。
@@ -5220,10 +5025,7 @@ paths:
   /social/qq/groupinfo:
     get:
       description: |-
-        想在你的应用里展示QQ群信息？这个接口让你轻松获取群名称、群头像、群简介、成员数量等详细公开信息。它能帮你快速构建社群导航站、群聊推荐系统，或是为你的数据分析工具提供可靠的数据源。
-
-        > [!VIP]
-        > 本API目前处于**限时免费**阶段，我们鼓励开发者集成和测试。未来，它将转为付费API，为用户提供更稳定和强大的服务。
+        想在你的应用里展示QQ群信息？这个接口让你轻松获取群名称、群头像、群简介、成员数量等详细公开信息。
 
         ## 功能概述
         你只需要提供一个QQ群号（5-12位纯数字），接口就会返回该群的完整公开信息。我们会先验证群号的有效性，确保返回的数据准确可靠。接口响应速度快，数据结构清晰，非常适合集成到各类应用场景中。
@@ -5517,7 +5319,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_aes_decrypt_request"
-        description: 包含待解密文本 'text'、密钥 'key' 和随机数 'nonce' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5585,7 +5387,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_aes_encrypt_request"
-        description: 包含待加密文本 'text' 和密钥 'key' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5649,7 +5451,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_analyze_request"
-        description: 包含待分析文本 'text' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5690,7 +5492,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_base64_decode_request"
-        description: 包含待解码文本 'text' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5728,7 +5530,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_base64_encode_request"
-        description: 包含待编码文本 'text' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5867,7 +5669,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_md5_verify_request"
-        description: 包含待校验文本 'text' 和哈希值 'hash' 的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -5929,7 +5731,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_aes_encrypt_advanced_request"
-        description: 包含加密配置的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -6038,7 +5840,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_aes_decrypt_advanced_request"
-        description: 包含解密配置的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -6110,7 +5912,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_text_convert_request"
-        description: 包含转换配置的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -6181,7 +5983,7 @@ paths:
         我们支持超过100种语言的互译，包括但不限于：中文（简体/繁体）、英语、日语、韩语、法语、德语、西班牙语、俄语、阿拉伯语等主流语言，以及各种小语种。详见下方参数列表。
       operationId: post-translate-text
       parameters:
-      - description: 目标语言代码。请从支持的语言列表中选择一个语言代码。
+      - description: "目标语言代码。请从[支持的语言列表](#enum-list)中选择一个语言代码。"
         explode: true
         in: query
         name: to_lang
@@ -6247,7 +6049,7 @@ paths:
           - xh
           - zu
           - ne
-          - "false"
+          - "no"
           - pa
           - ps
           - pt
@@ -6295,18 +6097,18 @@ paths:
           - yua
           - yo
           - vi
-          - zh-CHS
-          - zh-CHT
-          example: zh-CHS
+          - zh
+          - zh-TW
+          example: zh
           type: string
         style: form
-        x-tooltip: 例如，'zh-CHS' 代表中文简体，'en' 代表英语。
+        x-tooltip: 例如，'zh' 代表中文简体，'en' 代表英语。
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/post_translate_text_request"
-        description: 包含待翻译文本的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -6361,22 +6163,19 @@ paths:
       description: |-
         这是一个商业级的AI智能翻译服务，采用最新的神经网络翻译技术和大语言模型，提供远超传统机器翻译的质量。
 
-        > [!VIP]
-        > 本API目前处于**限时免费**阶段，我们鼓励开发者深度集成和测试。未来，它将转为付费API，为用户提供更稳定、更智能的翻译服务。
-
         ## 功能概述
 
-        - **智能双模式**: 支持单个文本翻译和批量文本翻译的统一接口设计，自动识别请求类型并提供相应的翻译服务。系统会根据输入自动判断是处理单条文本还是批量文本，无需使用不同的接口。
+        - **单文本翻译**: 专注处理单条文本翻译，适合需要高质量译文的业务场景。
         - **多风格适配**: 提供随意口语化、专业商务、学术正式、文学艺术四种翻译风格，能够根据不同场景需求调整翻译的语言风格和表达方式。
         - **上下文感知**: 支持通用、商务、技术、医疗、法律、市场营销、娱乐、教育、新闻等九种专业领域的上下文翻译，确保术语准确性和表达地道性。
-        - **高质量保证**: 内置质量评估系统，对每次翻译结果进行流畅度、准确度、完整性评分，并提供置信度分数和替代翻译建议。
-        - **智能解释**: 提供关键词组翻译注释、文化背景说明和语法结构分析，帮助用户理解翻译逻辑和文化差异。
-        - **高效批量**: 批量翻译支持最多50条文本，总计10万字符，配备智能并发控制（1-10并发）和失败重试机制。
-        - **快速模式**: 提供快速模式选项，在保证95%+准确率的前提下，响应时间缩短至800ms内，适合实时翻译和聊天应用。
         - **格式保留**: 智能识别并保持原文的格式结构，包括换行、缩进、特殊符号等，确保翻译后的文本保持良好的可读性。
+
+        ## 支持的语言
+
+        我们支持超过100种语言的互译，详见下方参数列表。
       operationId: post-ai-translate
       parameters:
-      - description: 目标语言代码。请从支持的语言列表中选择一个语言代码。
+      - description: "目标语言代码。请从[支持的语言列表](#enum-list)中选择一个语言代码。"
         explode: true
         in: query
         name: target_lang
@@ -6442,7 +6241,7 @@ paths:
           - xh
           - zu
           - ne
-          - "false"
+          - "no"
           - pa
           - ps
           - pt
@@ -6490,18 +6289,18 @@ paths:
           - yua
           - yo
           - vi
-          - zh-CHS
-          - zh-CHT
-          example: zh-CHS
+          - zh
+          - zh-TW
+          example: zh
           type: string
         style: form
-        x-tooltip: 例如，'zh-CHS' 代表中文简体，'en' 代表英语。
+        x-tooltip: 例如，'zh' 代表中文简体，'en' 代表英语。
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/post_ai_translate_request"
-        description: 包含翻译参数的JSON对象，支持单个文本或批量文本翻译
+        description: ""
         required: true
       responses:
         "200":
@@ -6509,7 +6308,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/post_ai_translate_200_response"
-          description: 翻译成功！返回翻译结果、质量指标和性能统计。
+          description: 翻译成功！返回翻译结果和性能统计。
         "400":
           content:
             application/json:
@@ -6540,7 +6339,6 @@ paths:
       x-search-words:
       - AI翻译
       - 智能翻译
-      - 批量翻译
       - AI translate
       - 翻译风格
       - 上下文翻译
@@ -6548,7 +6346,7 @@ paths:
       - 专业翻译
       - 文学翻译
       - 学术翻译
-      - 快速翻译
+      - 格式保留
   /ai/translate/languages:
     get:
       description: 获取AI智能翻译服务支持的完整语言列表、翻译风格选项、上下文场景选项以及性能指标信息。
@@ -6560,7 +6358,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/get_ai_translate_languages_200_response"
-          description: 成功获取AI翻译配置信息！
+          description: 成功获取AI翻译配置信息
       summary: AI翻译配置
       tags:
       - Translate
@@ -6600,7 +6398,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_translate_stream_request"
-        description: 包含翻译参数的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -6778,9 +6576,6 @@ paths:
         想把一个网页的内容转成干净的 Markdown 文本？这个异步接口可以帮你搞定，特别适合处理大型或复杂的网页。
 
         ## 功能概述
-
-        > [!VIP]
-        > 本 API 目前处于**限时免费**阶段，未来将转为付费服务。
 
         提交一个网页 URL，我们会自动抓取主体内容，剔除广告、导航栏等干扰元素，并转换为 Markdown 格式。同时会提取标题、作者、发布日期等元数据，生成 YAML Front Matter。
 
@@ -7051,8 +6846,7 @@ paths:
         以限定在特定网站或特定文件类型中搜索。\n\n- **实时网页搜索**: 毫秒级响应，快速返回搜索结果\n- **智能排序**: 采用机器学习回归排\
         序算法，结果更精准\n- **时间排序**: 支持按发布时间排序，获取最新内容\n- **时间范围过滤**: 支持按天/周/月/年过滤结果\n- **站\
         内搜索**: 支持 `site:` 操作符，在指定网站内搜索\n- **文件类型过滤**: 支持 `filetype:` 操作符，快速找到 PDF、\
-        Word 等特定格式文件\n\n> [!VIP]\n> 本API目前处于**限时免费**阶段，我们鼓励开发者集成和测试。未来，它将转为付费API，为\
-        用户提供更稳定和强大的服务。\n      "
+        Word 等特定格式文件\n      "
       operationId: post-search-aggregate
       parameters: []
       requestBody:
@@ -7060,7 +6854,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_search_aggregate_request"
-        description: 包含搜索参数的JSON对象
+        description: ""
         required: true
       responses:
         "200":
@@ -7159,14 +6953,14 @@ paths:
       - 配置
   /sensitive-word/analyze:
     post:
-      description: "分析单个或多个关键词的敏感程度，返回标准化风险标签与置信度结果。\n\n> [!VIP]\n> 本API基于先进的分析模型，\
-        提供三级缓存策略和并发处理能力。\n\n## 功能概述\n\n- **模型驱动**: 使用先进的分析模型进行语义分析。\n- **高性能**: 采用\
-        三级缓存策略（持久化存储 → 统一缓存 → 模型分析），确保高频请求的响应速度。\n- **并发支持**: 支持批量并发处理，单次最多可分析100个\
-        关键词。\n- **标准标签**: 返回 `label` 字段，明确区分 `sensitive` 与 `normal`。\n- **分类清晰**:\
-        \ 返回 `category` 字段，用于标识具体风险类别。\n- **置信度输出**: 返回 `confidence` 字段，范围为0.0到1.0。\
-        \n\n## 响应字段说明\n\n| 字段 | 类型 | 说明 |\n|------|------|------|\n| `results` | array\
-        \ | 分析结果对象的数组。 |\n| `results[].k` | string | 您在请求中提供的原始关键词。 |\n| `results[].label`\
-        \ | string | 核心判断字段：`sensitive`(敏感)、`normal`(正常)。 |\n| `results[].category`\
+      description: "分析单个或多个关键词的敏感程度，返回标准化风险标签与置信度结果。\n\n## 功能概述\n\n- **模型驱动**: 使用先\
+        进的分析模型进行语义分析。\n- **高性能**: 采用三级缓存策略（持久化存储 → 统一缓存 → 模型分析），确保高频请求的响应速度。\n- **并\
+        发支持**: 支持批量并发处理，单次最多可分析100个关键词。\n- **输入限制**: 单条关键词最多 1,000 字符，总字符数最多 20,000。\
+        \n- **标准标签**: 返回 `label` 字段，明确区分 `sensitive` 与 `normal`。\n- **分类清晰**: 返回 `category`\
+        \ 字段，用于标识具体风险类别。\n- **置信度输出**: 返回 `confidence` 字段，范围为0.0到1.0。\n\n## 响应字段说明\
+        \n\n| 字段 | 类型 | 说明 |\n|------|------|------|\n| `results` | array | 分析结果对象\
+        的数组。 |\n| `results[].k` | string | 您在请求中提供的原始关键词。 |\n| `results[].label` |\
+        \ string | 核心判断字段：`sensitive`(敏感)、`normal`(正常)。 |\n| `results[].category`\
         \ | string | 风险分类：`safe`(安全)、`threat`(威胁)、`porn`(色情)、`fraud`(欺诈)、`insult`(辱\
         骂)。 |\n| `results[].confidence` | number | 当前分类的置信度，范围0.0到1.0。 |\n| `total`\
         \ | integer | 本次请求成功分析的关键词总数。 |\n      "
@@ -7177,7 +6971,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/post_sensitive_word_analyze_request"
-        description: 包含待检测文本 'keywords' 的JSON对象
+        description: "包含待检测关键词列表 `keywords` 的 JSON 对象。单条关键词最多 1,000 字符，总字符数最多 20,000。"
         required: true
       responses:
         "200":
@@ -7228,13 +7022,14 @@ paths:
       description: 通过URL查询参数分析单个关键词，便于GET请求调用。
       operationId: get-sensitive-word-analyze-query
       parameters:
-      - description: 要分析的关键词，最长50字符。
-        example: 喵
+      - description: "要分析的关键词，最长1,000字符。"
         explode: true
         in: query
         name: keyword
         required: true
         schema:
+          example: 喵
+          maxLength: 1000
           type: string
         style: form
       responses:
@@ -7331,7 +7126,7 @@ components:
           type: string
       type: object
     get_misc_weather_200_response_minutely_precip:
-      description: 分钟级降水预报（minutely=true 时返回，仅国内城市可用）
+      description: 分钟级降水预报（minutely=true 时返回，仅国内城市可用，精确到2分钟）
       example:
         summary: 未来2小时无降水
         update_time: 2026-02-19T15:30:00+08:00
@@ -7352,7 +7147,7 @@ components:
           example: 2026-02-19T15:30:00+08:00
           type: string
         data:
-          description: 每5分钟一个数据点，共24个
+          description: 精确到2分钟的数据点
           items:
             $ref: "#/components/schemas/get_misc_weather_200_response_minutely_precip_data_inner"
           type: array
@@ -7367,6 +7162,20 @@ components:
           type: string
         message:
           example: 指定的 Gravatar 头像不存在
+          type: string
+      type: object
+    get_misc_tracking_carriers_200_response_carriers_inner:
+      example:
+        code: zhongtong
+        name: 中通快递
+      properties:
+        code:
+          description: 快递公司编码，用于 API 调用时的 carrier_code 参数
+          example: zhongtong
+          type: string
+        name:
+          description: 快递公司中文名称，用于界面显示
+          example: 中通快递
           type: string
       type: object
     get_misc_weather_200_response_life_indices_beer:
@@ -7448,6 +7257,17 @@ components:
             $ref: "#/components/schemas/get_history_programmer_200_response_events_inner"
           type: array
       type: object
+    get_misc_tracking_detect_200_response_alternatives_inner:
+      properties:
+        code:
+          description: 快递公司编码
+          example: ems
+          type: string
+        name:
+          description: 快递公司名称
+          example: EMS
+          type: string
+      type: object
     get_social_qq_userinfo_400_response:
       example:
         code: INVALID_ARGUMENT
@@ -7509,7 +7329,12 @@ components:
           id: epic-game-123456
           free_end: 2025/01/17 00:00:00
           is_free_now: true
+        message: 获取成功
       properties:
+        message:
+          description: 操作结果描述。
+          example: 获取成功
+          type: string
         data:
           description: 免费游戏列表数组。
           items:
@@ -7655,36 +7480,68 @@ components:
           example: SERVICE_ERROR
           type: string
       type: object
-    get_misc_hotboard_200_response_list_inner:
+    get_misc_hotboard_200_response_oneOf:
       example:
-        cover: https://p1.music.126.net/xxx/109951170483249998.jpg
-        hot_value: "1234567"
-        extra:
-          key: ""
-        index: 1
-        title: 今天天气真好
-        url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
+        snapshot_time: 1700000000000
+        update_time: 2026-03-20 21:39:16
+        type: weibo
+        list:
+        - cover: https://p1.music.126.net/xxx/109951170483249998.jpg
+          hot_value: "1234567"
+          extra:
+            key: ""
+          index: 1
+          title: 今天天气真好
+          url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
+        - cover: https://p1.music.126.net/xxx/109951170483249998.jpg
+          hot_value: "1234567"
+          extra:
+            key: ""
+          index: 1
+          title: 今天天气真好
+          url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
       properties:
-        extra:
-          additionalProperties: true
-          description: 额外信息，不同平台该字段内容不同，例如微博热搜的标签（如'新'、'爆'）。
-          type: object
-        hot_value:
-          example: "1234567"
+        type:
+          example: weibo
           type: string
-        index:
-          example: 1
+        update_time:
+          description: 热榜更新时间。时光机无匹配快照时可能为空字符串。
+          example: 2026-03-20 21:39:16
+          type: string
+        snapshot_time:
+          description: 时光机模式返回的快照实际时间戳（毫秒）。当前热榜模式下通常不返回。
+          example: 1700000000000
           type: integer
-        title:
-          example: 今天天气真好
+        list:
+          description: 热榜条目列表。
+          items:
+            $ref: "#/components/schemas/get_misc_hotboard_200_response_oneOf_list_inner"
+          type: array
+      title: 默认模式 / 时光机模式
+      type: object
+    get_misc_holiday_calendar_200_response_nearby_previous_inner_events_inner:
+      example:
+        date: 2025-09-28
+        is_workday: true
+        name: 国庆中秋
+        type: legal_workday_adjust
+      properties:
+        date:
+          description: 事件日期。
+          example: 2025-09-28
           type: string
-        url:
-          example: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
+        name:
+          description: 事件名称。
+          example: 国庆中秋
           type: string
-        cover:
-          description: 封面图 URL，音乐类热榜返回专辑封面，其他平台无此字段。
-          example: https://p1.music.126.net/xxx/109951170483249998.jpg
+        type:
+          description: 事件类型。
+          example: legal_workday_adjust
           type: string
+        is_workday:
+          description: 仅调休上班事件返回。
+          example: true
+          type: boolean
       type: object
     get_game_steam_summary_401_response:
       example:
@@ -7700,35 +7557,6 @@ components:
         message:
           example: Missing or invalid API Key.
           type: string
-      type: object
-    get_misc_tracking_detect_200_response_data:
-      example:
-        tracking_number: SF1234567890123
-        alternatives:
-        - code: ems
-          name: EMS
-        - code: ems
-          name: EMS
-        carrier_name: 顺丰速运
-        carrier_code: shunfeng
-      properties:
-        tracking_number:
-          description: 查询的快递单号
-          example: SF1234567890123
-          type: string
-        carrier_code:
-          description: 最可能的快递公司编码
-          example: shunfeng
-          type: string
-        carrier_name:
-          description: 最可能的快递公司名称
-          example: 顺丰速运
-          type: string
-        alternatives:
-          description: 其他可能的快递公司列表（如果存在）
-          items:
-            $ref: "#/components/schemas/get_misc_tracking_detect_200_response_data_alternatives_inner"
-          type: array
       type: object
     get_network_dns_400_response:
       example:
@@ -7790,9 +7618,39 @@ components:
           example: Failed to generate image from URL
           type: string
       type: object
+    get_misc_hotboard_200_response_oneOf_list_inner:
+      example:
+        cover: https://p1.music.126.net/xxx/109951170483249998.jpg
+        hot_value: "1234567"
+        extra:
+          key: ""
+        index: 1
+        title: 今天天气真好
+        url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
+      properties:
+        extra:
+          additionalProperties: true
+          description: 额外信息，不同平台该字段内容不同，例如微博热搜的标签（如“新”“爆”）。
+          type: object
+        hot_value:
+          example: "1234567"
+          type: string
+        index:
+          example: 1
+          type: integer
+        title:
+          example: 今天天气真好
+          type: string
+        url:
+          example: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
+          type: string
+        cover:
+          description: 封面图 URL，音乐类热榜返回专辑封面，其他平台一般不返回。
+          example: https://p1.music.126.net/xxx/109951170483249998.jpg
+          type: string
+      type: object
     post_ai_translate_500_response:
       example:
-        is_batch: false
         code: 500
         message: Translation service error
         error: Translation request failed
@@ -7806,9 +7664,6 @@ components:
         error:
           example: Translation request failed
           type: string
-        is_batch:
-          example: false
-          type: boolean
       type: object
     post_convert_json_400_response:
       example:
@@ -7829,20 +7684,6 @@ components:
         message:
           description: 人类可读的错误描述信息。
           example: The provided JSON string is invalid.
-          type: string
-      type: object
-    get_misc_tracking_detect_200_response_data_alternatives_inner:
-      example:
-        code: ems
-        name: EMS
-      properties:
-        code:
-          description: 快递公司编码
-          example: ems
-          type: string
-        name:
-          description: 快递公司名称
-          example: EMS
           type: string
       type: object
     get_webparse_extractimages_500_response:
@@ -7871,6 +7712,22 @@ components:
           example: https://example.invalid
           type: string
       title: 不可达响应
+      type: object
+    get_social_bilibili_liveroom_200_response_new_pendants_badge:
+      description: 徽章信息。
+      example:
+        name: 舰长徽章
+        desc: 年度舰长
+      nullable: true
+      properties:
+        name:
+          description: 徽章名称。
+          example: 舰长徽章
+          type: string
+        desc:
+          description: 徽章描述。
+          example: 年度舰长
+          type: string
       type: object
     get_misc_worldtime_404_response:
       example:
@@ -7971,6 +7828,46 @@ components:
           example: top secret message
           type: string
       type: object
+    get_misc_holiday_calendar_200_response_summary:
+      description: 统计摘要。
+      example:
+        legal_rest_days: 1
+        legal_workdays: 0
+        workdays: 0
+        rest_days: 1
+        weekend_days: 0
+        holiday_events: 1
+        total_days: 1
+      properties:
+        total_days:
+          description: 查询范围内总天数。
+          example: 1
+          type: integer
+        weekend_days:
+          description: 查询范围内周末天数。
+          example: 0
+          type: integer
+        workdays:
+          description: 查询范围内工作日天数（含法定调休上班）。
+          example: 0
+          type: integer
+        rest_days:
+          description: 查询范围内休息日天数（含周末和法定休假）。
+          example: 1
+          type: integer
+        holiday_events:
+          description: 按 holiday_type 过滤后的节日事件总数。
+          example: 1
+          type: integer
+        legal_rest_days:
+          description: 法定休假日天数。
+          example: 1
+          type: integer
+        legal_workdays:
+          description: 法定调休上班天数。
+          example: 0
+          type: integer
+      type: object
     post_image_motou_400_response:
       example:
         error: Either image_url or file is required
@@ -8009,25 +7906,47 @@ components:
           example: Missing 'mid' parameter.
           type: string
       type: object
-    post_ai_translate_200_response_quality_metrics:
-      description: 翻译质量指标，仅在单个翻译时返回。
+    get_social_bilibili_videoinfo_200_response_honor_reply_honor_inner:
       example:
-        fluency_score: 0.95
-        accuracy_score: 0.92
-        completeness_score: 0.98
-        total_score: 0.95
+        weekly_recommend_num: 105
+        type: 1
+        aid: 75836761
+        desc: 每周必看
       properties:
-        fluency_score:
-          example: 0.95
+        aid:
+          description: 关联 AV 号。
+          example: 75836761
           type: number
-        accuracy_score:
-          example: 0.92
+        type:
+          description: 荣誉类型。
+          example: 1
           type: number
-        completeness_score:
-          example: 0.98
+        desc:
+          description: 荣誉名称。
+          example: 每周必看
+          type: string
+        weekly_recommend_num:
+          description: 周推荐序号。
+          example: 105
           type: number
-        total_score:
-          example: 0.95
+      type: object
+    get_social_bilibili_videoinfo_200_response_desc_v2_inner:
+      example:
+        raw_text: 视频简介文本
+        type: 1
+        biz_id: 483307278
+      properties:
+        raw_text:
+          description: 简介文本。
+          example: 视频简介文本
+          type: string
+        type:
+          description: 片段类型。
+          example: 1
+          type: number
+        biz_id:
+          description: 业务 ID，被关联对象的 ID。
+          example: 483307278
           type: number
       type: object
     post_search_aggregate_429_response:
@@ -8131,7 +8050,7 @@ components:
           example: 2026-02-19T15:30:00+08:00
           type: string
         precip:
-          description: 5分钟累计降水量 mm
+          description: 该时间点的降水量 mm
           example: 0
           type: number
         type:
@@ -8142,14 +8061,9 @@ components:
     post_ai_translate_request:
       properties:
         text:
-          description: "单个翻译时使用的待翻译文本，与texts参数二选一。最大长度10,000字符。"
+          description: "待翻译的文本内容。最大长度10,000字符。"
           example: "Hello, how are you today?"
           type: string
-        texts:
-          description: "批量翻译时使用的待翻译文本列表，与text参数二选一。最多50条，总计最大100,000字符。"
-          items:
-            type: string
-          type: array
         source_lang:
           description: 源语言代码，可选。如果不指定，系统会自动检测源语言。
           example: en
@@ -8164,11 +8078,6 @@ components:
           - literary
           example: professional
           type: string
-          x-enumLabels:
-            casual: 口语化
-            professional: 专业商务
-            academic: 学术正式
-            literary: 文学艺术
         context:
           default: general
           description: 翻译上下文场景，可选。支持general(通用，默认)、business(商务)、technical(技术)、medical(医疗)、legal(法律)、marketing(市场营销)、entertainment(娱乐)、education(教育)、news(新闻)。
@@ -8184,33 +8093,13 @@ components:
           - news
           example: business
           type: string
-          x-enumLabels:
-            general: 通用
-            business: 商务
-            technical: 技术
-            medical: 医疗
-            legal: 法律
-            marketing: 市场营销
-            entertainment: 娱乐
-            education: 教育
-            news: 新闻
         preserve_format:
           default: true
           description: 是否保留原文格式，包括换行、缩进等。
           example: true
           type: boolean
-        fast_mode:
-          default: false
-          description: 是否启用快速模式。快速模式响应时间约800ms，准确率95%+；普通模式响应时间约2000ms，准确率98%+。
-          example: true
-          type: boolean
-        max_concurrency:
-          default: 3
-          description: 批量翻译时的最大并发数，范围1-10。仅在批量翻译时有效。
-          example: 3
-          maximum: 10
-          minimum: 1
-          type: integer
+      required:
+      - text
       type: object
     get_web_tomarkdown_async_status_200_response_anyOf_1:
       properties:
@@ -8340,6 +8229,35 @@ components:
           example: 感冒风险较低
           type: string
       type: object
+    get_social_bilibili_videoinfo_200_response_staff_inner:
+      example:
+        face: http://i0.hdslb.com/bfs/face/....jpg
+        follower: 100000
+        name: 某某
+        mid: 111111
+        title: UP主
+      properties:
+        mid:
+          description: 成员 UID。
+          example: 111111
+          type: number
+        title:
+          description: 成员角色标题。
+          example: UP主
+          type: string
+        name:
+          description: 成员昵称。
+          example: 某某
+          type: string
+        face:
+          description: 成员头像链接。
+          example: http://i0.hdslb.com/bfs/face/....jpg
+          type: string
+        follower:
+          description: 成员粉丝数。
+          example: 100000
+          type: number
+      type: object
     get_game_epic_free_200_response_data_inner:
       example:
         seller: Remedy Entertainment
@@ -8428,7 +8346,6 @@ components:
         ip: 8.8.8.8
         isp: GOOGLE
         latitude: 37.751
-        district: 龙岗区
         beginip: 8.8.8.0
         region: 美国
         asn: AS15169
@@ -8469,10 +8386,6 @@ components:
         endip:
           description: IP段结束地址（标准查询）
           example: 8.8.8.255
-          type: string
-        district:
-          description: 行政区（商业查询）
-          example: 龙岗区
           type: string
       type: object
     get_network_whois_404_response:
@@ -8589,6 +8502,82 @@ components:
           example: aK3fP7bQ9zRjT1vN
           type: string
       type: object
+    get_social_bilibili_videoinfo_200_response_subtitle_list_inner:
+      example:
+        subtitle_url: //i0.hdslb.com/bfs/subtitle/xxxx.json
+        lan_doc: 中文（简体）
+        author:
+          face: http://i0.hdslb.com/bfs/face/....jpg
+          name: 字幕君
+          mid: 483307278
+        lan: zh-CN
+        is_lock: false
+        id: 123456
+        author_mid: 483307278
+      properties:
+        id:
+          description: 字幕 ID。
+          example: 123456
+          type: number
+        lan:
+          description: 语言代码。
+          example: zh-CN
+          type: string
+        lan_doc:
+          description: 语言名称。
+          example: 中文（简体）
+          type: string
+        is_lock:
+          description: 是否锁定。
+          example: false
+          type: boolean
+        author_mid:
+          description: 字幕作者 UID。
+          example: 483307278
+          type: number
+        subtitle_url:
+          description: 字幕文件链接。
+          example: //i0.hdslb.com/bfs/subtitle/xxxx.json
+          type: string
+        author:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_subtitle_list_inner_author"
+      type: object
+    get_social_bilibili_videoinfo_200_response_ugc_season:
+      description: 合集信息。若视频不属于合集则为 null。
+      example:
+        cover: http://i0.hdslb.com/bfs/archive/....jpg
+        intro: 这是一个合集
+        mid: 483307278
+        id: 12345
+        title: 系列视频合集
+        ep_count: 12
+      nullable: true
+      properties:
+        id:
+          description: 合集 ID。
+          example: 12345
+          type: number
+        title:
+          description: 合集标题。
+          example: 系列视频合集
+          type: string
+        cover:
+          description: 合集封面。
+          example: http://i0.hdslb.com/bfs/archive/....jpg
+          type: string
+        mid:
+          description: 合集作者 UID。
+          example: 483307278
+          type: number
+        intro:
+          description: 合集简介。
+          example: 这是一个合集
+          type: string
+        ep_count:
+          description: 合集内视频数量。
+          example: 12
+          type: number
+      type: object
     post_translate_stream_400_response:
       example:
         code: MISSING_QUERY
@@ -8698,45 +8687,13 @@ components:
           type: string
       type: object
     post_ai_translate_200_response_data:
-      description: 单个翻译的详细结果，仅在单个翻译时返回。
+      description: 翻译结果的详细信息。
       example:
         translated_text: 你好，你今天怎么样？
-        confidence_score: 0.98
-        alternatives:
-        - 你好，今天过得如何？
-        original_text: "Hello, how are you today?"
-        explanation:
-          cultural_notes:
-          - cultural_notes
-          - cultural_notes
-          grammar_notes:
-          - grammar_notes
-          - grammar_notes
-          key_phrases:
-          - "{}"
-          - "{}"
-        detected_lang: en
       properties:
-        original_text:
-          example: "Hello, how are you today?"
-          type: string
         translated_text:
           example: 你好，你今天怎么样？
           type: string
-        detected_lang:
-          example: en
-          type: string
-        confidence_score:
-          example: 0.98
-          type: number
-        alternatives:
-          example:
-          - 你好，今天过得如何？
-          items:
-            type: string
-          type: array
-        explanation:
-          $ref: "#/components/schemas/post_ai_translate_200_response_data_explanation"
       type: object
     get_game_steam_summary_404_response:
       example:
@@ -8866,129 +8823,6 @@ components:
         pollen:
           $ref: "#/components/schemas/get_misc_weather_200_response_life_indices_pollen"
       type: object
-    get_misc_lunartime_200_response_data:
-      description: 万年历查询结果。
-      example:
-        query_timezone: Asia/Shanghai
-        ganzhi_year: 甲辰
-        ganzhi_day: 甲辰
-        timezone: Asia/Shanghai
-        zodiac: 龙
-        weekday: Saturday
-        lunar_day_cn: 初一
-        lunar_festivals:
-        - 春节
-        - 春节
-        weekday_cn: 星期六
-        lunar_month: 1
-        ganzhi_month: 丙寅
-        datetime: 2024-02-10 12:00:00
-        lunar_year_cn: 二零二四
-        solar_term: ""
-        timestamp_unix: 1707537600
-        lunar_month_cn: 正月
-        query_timestamp: "1707537600"
-        lunar_day: 1
-        lunar_year: 2024
-        datetime_rfc3339: 2024-02-10T12:00:00+08:00
-        is_leap_month: false
-        solar_festivals:
-        - 元旦
-        - 元旦
-      properties:
-        query_timestamp:
-          description: 原始 ts 入参。
-          example: "1707537600"
-          type: string
-        query_timezone:
-          description: 原始 timezone 入参。
-          example: Asia/Shanghai
-          type: string
-        timezone:
-          description: 解析后的时区。
-          example: Asia/Shanghai
-          type: string
-        datetime:
-          description: 本地化时间，格式 YYYY-MM-DD HH:mm:ss。
-          example: 2024-02-10 12:00:00
-          type: string
-        datetime_rfc3339:
-          description: RFC3339 时间格式。
-          example: 2024-02-10T12:00:00+08:00
-          type: string
-        timestamp_unix:
-          description: 秒级 Unix 时间戳。
-          example: 1707537600
-          type: integer
-        weekday:
-          description: 星期英文。
-          example: Saturday
-          type: string
-        weekday_cn:
-          description: 星期中文。
-          example: 星期六
-          type: string
-        lunar_year:
-          description: 农历年份（数字）。
-          example: 2024
-          type: integer
-        lunar_month:
-          description: 农历月份（数字）。
-          example: 1
-          type: integer
-        lunar_day:
-          description: 农历日期（数字）。
-          example: 1
-          type: integer
-        is_leap_month:
-          description: 是否闰月。
-          example: false
-          type: boolean
-        lunar_year_cn:
-          description: 农历年份中文表示。
-          example: 二零二四
-          type: string
-        lunar_month_cn:
-          description: 农历月份中文表示。
-          example: 正月
-          type: string
-        lunar_day_cn:
-          description: 农历日期中文表示。
-          example: 初一
-          type: string
-        ganzhi_year:
-          description: 干支年。
-          example: 甲辰
-          type: string
-        ganzhi_month:
-          description: 干支月。
-          example: 丙寅
-          type: string
-        ganzhi_day:
-          description: 干支日。
-          example: 甲辰
-          type: string
-        zodiac:
-          description: 生肖。
-          example: 龙
-          type: string
-        solar_term:
-          description: 节气，无则为空字符串。
-          example: ""
-          type: string
-        lunar_festivals:
-          description: 农历节日数组。
-          items:
-            example: 春节
-            type: string
-          type: array
-        solar_festivals:
-          description: 公历节日数组。
-          items:
-            example: 元旦
-            type: string
-          type: array
-      type: object
     get_saying_200_response:
       example:
         text: 无论多么微小的邂逅，都必定有着某种意义。
@@ -9015,31 +8849,10 @@ components:
     post_ai_translate_200_response_performance:
       example:
         processing_time_ms: 850
-        cache_hit: false
       properties:
         processing_time_ms:
           example: 850
           type: integer
-        cache_hit:
-          example: false
-          type: boolean
-      type: object
-    post_ai_translate_200_response_batch_summary:
-      description: 批量翻译汇总信息，仅在批量翻译时返回。
-      example:
-        average_quality: 5.637376656633329
-        failed_items: 5
-        success_items: 1
-        total_items: 6
-      properties:
-        total_items:
-          type: integer
-        success_items:
-          type: integer
-        failed_items:
-          type: integer
-        average_quality:
-          type: number
       type: object
     get_network_ipinfo_400_response:
       example:
@@ -9073,6 +8886,120 @@ components:
           example: 天气较好，适合晾晒
           type: string
       type: object
+    get_misc_holiday_calendar_200_response_days_inner:
+      example:
+        date: 2025-10-01
+        is_holiday: true
+        ganzhi_year: 乙巳
+        is_workday: false
+        ganzhi_day: 癸卯
+        year: 2025
+        legal_holiday_name: 国庆中秋
+        lunar_festival: ""
+        weekday_cn: 星期三
+        lunar_month: 8
+        ganzhi_month: 乙酉
+        month: 10
+        legal_holiday_type: rest
+        solar_term: ""
+        lunar_day_name: 初十
+        solar_festival: 国庆节
+        lunar_month_name: 八月
+        lunar_day: 10
+        day: 1
+        lunar_year: 2025
+        is_rest_day: true
+        is_weekend: false
+      properties:
+        date:
+          description: 公历日期（YYYY-MM-DD）。
+          example: 2025-10-01
+          type: string
+        year:
+          description: 公历年份。
+          example: 2025
+          type: integer
+        month:
+          description: 公历月份。
+          example: 10
+          type: integer
+        day:
+          description: 公历日期（天）。
+          example: 1
+          type: integer
+        weekday_cn:
+          description: 中文星期，如星期三。
+          example: 星期三
+          type: string
+        is_weekend:
+          description: 是否为周末。
+          example: false
+          type: boolean
+        is_workday:
+          description: 是否为工作日（含法定调休上班日）。
+          example: false
+          type: boolean
+        is_rest_day:
+          description: 是否为休息日。
+          example: true
+          type: boolean
+        is_holiday:
+          description: 当天是否存在节日、节气或法定事件。
+          example: true
+          type: boolean
+        legal_holiday_name:
+          description: 法定节假日名称，无则为空或不返回。
+          example: 国庆中秋
+          type: string
+        legal_holiday_type:
+          description: 法定假日类型：rest 或 workday_adjust。
+          example: rest
+          type: string
+        solar_festival:
+          description: 公历节日名称。有值时返回。
+          example: 国庆节
+          type: string
+        lunar_festival:
+          description: 农历节日名称。有值时返回。
+          example: ""
+          type: string
+        solar_term:
+          description: 节气名称。有值时返回。
+          example: ""
+          type: string
+        lunar_year:
+          description: 农历年份（数字）。
+          example: 2025
+          type: integer
+        lunar_month:
+          description: 农历月份（数字）。
+          example: 8
+          type: integer
+        lunar_day:
+          description: 农历日期（数字）。
+          example: 10
+          type: integer
+        lunar_month_name:
+          description: 农历月份中文名称。
+          example: 八月
+          type: string
+        lunar_day_name:
+          description: 农历日期中文名称。
+          example: 初十
+          type: string
+        ganzhi_year:
+          description: 干支年。
+          example: 乙巳
+          type: string
+        ganzhi_month:
+          description: 干支月。
+          example: 乙酉
+          type: string
+        ganzhi_day:
+          description: 干支日。
+          example: 癸卯
+          type: string
+      type: object
     get_random_image_500_response:
       example:
         code: INTERNAL_SERVER_ERROR
@@ -9085,34 +9012,18 @@ components:
           example: 选择随机图片时发生错误。
           type: string
       type: object
-    get_ai_translate_languages_200_response_performance_typical_response_time_ms:
-      example:
-        fast_mode: 800
-        normal_mode: 2000
-      properties:
-        fast_mode:
-          example: 800
-          type: integer
-        normal_mode:
-          example: 2000
-          type: integer
-      type: object
     get_ai_translate_languages_200_response:
       example:
         performance:
-          typical_response_time_ms:
-            fast_mode: 800
-            normal_mode: 2000
           batch_translation_available: true
           max_batch_size: 50
-          fast_mode_available: true
           max_text_length: 10000
         data:
           languages:
-          - code: zh-CHS
+          - code: zh
             native: 中文(简体)
             name: Chinese (Simplified)
-          - code: zh-CHS
+          - code: zh
             native: 中文(简体)
             name: Chinese (Simplified)
           styles:
@@ -9138,6 +9049,23 @@ components:
           $ref: "#/components/schemas/get_ai_translate_languages_200_response_data"
         performance:
           $ref: "#/components/schemas/get_ai_translate_languages_200_response_performance"
+      type: object
+    get_social_bilibili_liveroom_200_response_new_pendants:
+      description: 主播佩戴信息。
+      example:
+        badge:
+          name: 舰长徽章
+          desc: 年度舰长
+        frame:
+          name: 头像框
+          value: frame_value
+          desc: 年度纪念头像框
+      nullable: true
+      properties:
+        frame:
+          $ref: "#/components/schemas/get_social_bilibili_liveroom_200_response_new_pendants_frame"
+        badge:
+          $ref: "#/components/schemas/get_social_bilibili_liveroom_200_response_new_pendants_badge"
       type: object
     post_text_base64_decode_200_response:
       example:
@@ -9223,105 +9151,12 @@ components:
     post_translate_text_request:
       properties:
         text:
-          description: 待翻译的文本内容。
+          description: 待翻译的文本内容，最大长度3000字符。
           example: hello world
+          maxLength: 3000
           type: string
       required:
       - text
-      type: object
-    get_misc_holiday_calendar_200_response_data_summary:
-      description: 统计摘要。
-      example:
-        legal_rest_days: 3
-        legal_workdays: 1
-        workdays: 23
-        rest_days: 10
-        weekend_days: 8
-        holiday_events: 5
-        total_days: 31
-      properties:
-        total_days:
-          description: 查询范围内总天数。
-          example: 31
-          type: integer
-        weekend_days:
-          description: 查询范围内周末天数。
-          example: 8
-          type: integer
-        workdays:
-          description: 查询范围内工作日天数（含法定调休上班）。
-          example: 23
-          type: integer
-        rest_days:
-          description: 查询范围内休息日天数（含周末和法定休假）。
-          example: 10
-          type: integer
-        holiday_events:
-          description: 按 holiday_type 过滤后的节日事件总数。
-          example: 5
-          type: integer
-        legal_rest_days:
-          description: 法定休假日天数。
-          example: 3
-          type: integer
-        legal_workdays:
-          description: 法定调休上班天数。
-          example: 1
-          type: integer
-      type: object
-    post_ai_translate_200_response_data_explanation:
-      example:
-        cultural_notes:
-        - cultural_notes
-        - cultural_notes
-        grammar_notes:
-        - grammar_notes
-        - grammar_notes
-        key_phrases:
-        - "{}"
-        - "{}"
-      properties:
-        key_phrases:
-          items:
-            type: object
-          type: array
-        cultural_notes:
-          items:
-            type: string
-          type: array
-        grammar_notes:
-          items:
-            type: string
-          type: array
-      type: object
-    get_misc_holiday_calendar_200_response_data_nearby:
-      description: 前后最近节日，仅 include_nearby=true 且 date 模式返回。
-      example:
-        next:
-        - date: 2025-10-01
-          name: 国庆节
-          type: legal_rest
-        - date: 2025-10-01
-          name: 国庆节
-          type: legal_rest
-        previous:
-        - date: 2025-09-17
-          name: 中秋节
-          type: lunar_festival
-        - date: 2025-09-17
-          name: 中秋节
-          type: lunar_festival
-      properties:
-        previous:
-          description: 当前查询日期之前最近的节日列表（按时间倒序）。
-          items:
-            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_nearby_previous_inner"
-          type: array
-        next:
-          description: 当前查询日期之后最近的节日列表（按时间正序）。
-          items:
-            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_nearby_next_inner"
-          type: array
       type: object
     get_image_tobase64_502_response:
       example:
@@ -9415,135 +9250,6 @@ components:
           example: An internal error occurred while processing IP information.
           type: string
       type: object
-    get_misc_holiday_calendar_200_response_data:
-      example:
-        mode: day
-        summary:
-          legal_rest_days: 3
-          legal_workdays: 1
-          workdays: 23
-          rest_days: 10
-          weekend_days: 8
-          holiday_events: 5
-          total_days: 31
-        holidays:
-        - date: 2025-10-01
-          is_workday: false
-          name: 国庆节
-          type: legal_rest
-        - date: 2025-10-01
-          is_workday: false
-          name: 国庆节
-          type: legal_rest
-        query:
-          date: 2025-10-01
-          include_nearby: true
-          month: 2025-10
-          year: "2026"
-          timezone: Asia/Shanghai
-          nearby_limit: 7
-          holiday_type: all
-        days:
-        - date: 2025-10-01
-          is_holiday: true
-          ganzhi_year: 乙巳
-          is_workday: false
-          ganzhi_day: 甲子
-          year: 2025
-          legal_holiday_name: 国庆节
-          lunar_festival: 中秋节
-          weekday_cn: 星期三
-          lunar_month: 8
-          ganzhi_month: 乙酉
-          month: 10
-          legal_holiday_type: rest
-          solar_term: ""
-          lunar_day_name: 十五
-          solar_festival: 国庆节
-          lunar_month_name: 八月
-          lunar_day: 15
-          day: 1
-          lunar_year: 2025
-          is_rest_day: true
-          is_weekend: false
-        - date: 2025-10-01
-          is_holiday: true
-          ganzhi_year: 乙巳
-          is_workday: false
-          ganzhi_day: 甲子
-          year: 2025
-          legal_holiday_name: 国庆节
-          lunar_festival: 中秋节
-          weekday_cn: 星期三
-          lunar_month: 8
-          ganzhi_month: 乙酉
-          month: 10
-          legal_holiday_type: rest
-          solar_term: ""
-          lunar_day_name: 十五
-          solar_festival: 国庆节
-          lunar_month_name: 八月
-          lunar_day: 15
-          day: 1
-          lunar_year: 2025
-          is_rest_day: true
-          is_weekend: false
-        nearby:
-          next:
-          - date: 2025-10-01
-            name: 国庆节
-            type: legal_rest
-          - date: 2025-10-01
-            name: 国庆节
-            type: legal_rest
-          previous:
-          - date: 2025-09-17
-            name: 中秋节
-            type: lunar_festival
-          - date: 2025-09-17
-            name: 中秋节
-            type: lunar_festival
-      properties:
-        mode:
-          description: 查询模式：day、month、year。
-          example: day
-          type: string
-        query:
-          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_query"
-        summary:
-          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_summary"
-        days:
-          description: 日期明细列表。
-          items:
-            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_days_inner"
-          type: array
-        holidays:
-          description: 节日事件列表。
-          items:
-            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_holidays_inner"
-          type: array
-        nearby:
-          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data_nearby"
-      type: object
-    get_misc_holiday_calendar_200_response_data_nearby_previous_inner:
-      example:
-        date: 2025-09-17
-        name: 中秋节
-        type: lunar_festival
-      properties:
-        date:
-          description: 事件日期。
-          example: 2025-09-17
-          type: string
-        name:
-          description: 事件名称。
-          example: 中秋节
-          type: string
-        type:
-          description: 事件类型。
-          example: lunar_festival
-          type: string
-      type: object
     post_text_aes_encrypt_advanced_request:
       properties:
         text:
@@ -9565,13 +9271,6 @@ components:
           - CFB
           example: GCM
           type: string
-          x-enumLabels:
-            GCM: GCM模式（推荐）
-            CBC: CBC模式
-            ECB: ECB模式
-            CTR: CTR模式
-            OFB: OFB模式
-            CFB: CFB模式
         padding:
           description: 填充方式：PKCS7/ZERO/NONE（可选，默认PKCS7）
           enum:
@@ -9580,10 +9279,6 @@ components:
           - NONE
           example: PKCS7
           type: string
-          x-enumLabels:
-            PKCS7: PKCS7填充
-            ZERO: 零填充
-            NONE: 无填充
         iv:
           description: 自定义IV（可选，Base64编码，16字节）。GCM模式无需此参数
           example: cmFuZG9tSVZoZXJl
@@ -9595,9 +9290,6 @@ components:
           - hex
           example: hex
           type: string
-          x-enumLabels:
-            base64: Base64编码
-            hex: 十六进制
       required:
       - key
       - text
@@ -9735,47 +9427,89 @@ components:
       type: object
     get_misc_tracking_detect_200_response:
       example:
-        code: SUCCESS
-        data:
-          tracking_number: SF1234567890123
-          alternatives:
-          - code: ems
-            name: EMS
-          - code: ems
-            name: EMS
-          carrier_name: 顺丰速运
-          carrier_code: shunfeng
-        message: 操作成功
+        tracking_number: SF1234567890123
+        alternatives:
+        - code: ems
+          name: EMS
+        carrier_name: 顺丰速运
+        carrier_code: shunfeng
       properties:
-        code:
-          example: SUCCESS
+        tracking_number:
+          description: 查询的快递单号
+          example: SF1234567890123
           type: string
-        message:
-          example: 操作成功
+        carrier_code:
+          description: 识别出的快递公司编码
+          example: shunfeng
           type: string
-        data:
-          $ref: "#/components/schemas/get_misc_tracking_detect_200_response_data"
+        carrier_name:
+          description: 识别出的快递公司名称
+          example: 顺丰速运
+          type: string
+        alternatives:
+          description: 其他可能的快递公司列表。如果没有备选项，会返回空数组。
+          example:
+          - code: ems
+            name: EMS
+          items:
+            $ref: "#/components/schemas/get_misc_tracking_detect_200_response_alternatives_inner"
+          type: array
       type: object
     get_social_bilibili_userinfo_200_response:
       example:
-        code: 0
-        data:
-          face: http://i0.hdslb.com/bfs/face/....jpg
-          level: 6
-          sex: 保密
-          name: bishi
-          sign: 嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~
-          mid: 2
-        message: "0"
+        birthday: 10-24
+        follower: 123456
+        level: 6
+        sex: 保密
+        sign: 嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~
+        mid: 483307278
+        archive_count: 321
+        face: http://i0.hdslb.com/bfs/face/....jpg
+        vip_type: 2
+        article_count: 12
+        following: 148
+        name: bishi
+        vip_status: 1
       properties:
-        code:
-          example: 0
+        mid:
+          example: 483307278
           type: integer
-        data:
-          $ref: "#/components/schemas/get_social_bilibili_userinfo_200_response_data"
-        message:
-          example: "0"
+        name:
+          example: bishi
           type: string
+        sex:
+          example: 保密
+          type: string
+        face:
+          example: http://i0.hdslb.com/bfs/face/....jpg
+          type: string
+        sign:
+          example: 嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~
+          type: string
+        level:
+          example: 6
+          type: integer
+        birthday:
+          example: 10-24
+          type: string
+        vip_type:
+          example: 2
+          type: integer
+        vip_status:
+          example: 1
+          type: integer
+        following:
+          example: 148
+          type: integer
+        follower:
+          example: 123456
+          type: integer
+        archive_count:
+          example: 321
+          type: integer
+        article_count:
+          example: 12
+          type: integer
       type: object
     get_misc_randomnumber_200_response:
       example:
@@ -10041,6 +9775,27 @@ components:
           example: Missing 'text' parameter in form data.
           type: string
       type: object
+    get_social_bilibili_liveroom_200_response_new_pendants_frame:
+      description: 头像框信息。
+      example:
+        name: 头像框
+        value: frame_value
+        desc: 年度纪念头像框
+      nullable: true
+      properties:
+        name:
+          description: 头像框名称。
+          example: 头像框
+          type: string
+        value:
+          description: 头像框值。
+          example: frame_value
+          type: string
+        desc:
+          description: 头像框描述。
+          example: 年度纪念头像框
+          type: string
+      type: object
     post_text_md5_request:
       properties:
         text:
@@ -10141,39 +9896,51 @@ components:
         homepage: https://www.kernel.org
       properties:
         full_name:
+          description: 仓库完整名称。
           example: torvalds/linux
           type: string
         description:
+          description: 仓库简介。
           example: Linux kernel source tree
           type: string
         homepage:
+          description: 仓库主页链接。
           example: https://www.kernel.org
           type: string
         default_branch:
+          description: 默认分支名称。
           example: master
           type: string
         primary_branch:
+          description: 主要分支名称（通常与默认分支一致）。
           example: master
           type: string
         default_branch_sha:
+          description: 默认分支最新提交的 SHA 哈希。
           example: abc123...
           type: string
         visibility:
+          description: 仓库可见性，常见值为 `public` 或 `private`。
           example: public
           type: string
         archived:
+          description: 仓库是否已归档。
           example: false
           type: boolean
         disabled:
+          description: 仓库是否被禁用。
           example: false
           type: boolean
         fork:
+          description: 是否为 Fork 仓库。
           example: false
           type: boolean
         language:
+          description: 主要语言。
           example: C
           type: string
         topics:
+          description: 话题标签列表。
           example:
           - kernel
           - linux
@@ -10181,40 +9948,50 @@ components:
             type: string
           type: array
         license:
+          description: 开源许可证名称。
           example: GPL-2.0
           type: string
         stargazers:
+          description: Star 数。
           example: 170000
           type: integer
         forks:
+          description: Fork 数。
           example: 85000
           type: integer
         open_issues:
+          description: 开放 Issue 数。
           example: 500
           type: integer
         watchers:
+          description: 关注者数量（watchers/subscribers）。
           example: 3000
           type: integer
         pushed_at:
+          description: 最后推送时间（ISO 8601）。
           example: 2025-09-24T12:34:56Z
           format: date-time
           type: string
         created_at:
+          description: 创建时间（ISO 8601）。
           example: 2011-07-04T22:42:00Z
           format: date-time
           type: string
         updated_at:
+          description: 更新时间（ISO 8601）。
           example: 2025-09-24T12:34:56Z
           format: date-time
           type: string
         languages:
           additionalProperties:
             type: integer
+          description: 语言统计（键为语言名，值为代码字节数）。
           example:
             C: 123456789
             Assembly: 2345678
           type: object
         collaborators:
+          description: 协作者列表。受权限限制时可能为 null 或空数组。
           example:
           - login: octocat
             name: The Octocat
@@ -10225,6 +10002,7 @@ components:
           nullable: true
           type: array
         maintainers:
+          description: 维护者列表（根据默认分支近期提交推断）。
           example:
           - login: devA
             name: Dev A
@@ -10341,6 +10119,26 @@ components:
           example: success
           type: string
       type: object
+    get_social_bilibili_videoinfo_200_response_subtitle_list_inner_author:
+      description: 字幕作者信息。
+      example:
+        face: http://i0.hdslb.com/bfs/face/....jpg
+        name: 字幕君
+        mid: 483307278
+      properties:
+        mid:
+          description: 作者 UID。
+          example: 483307278
+          type: number
+        name:
+          description: 作者昵称。
+          example: 字幕君
+          type: string
+        face:
+          description: 作者头像链接。
+          example: http://i0.hdslb.com/bfs/face/....jpg
+          type: string
+      type: object
     post_misc_date_diff_200_response:
       example:
         hours: 8736
@@ -10378,9 +10176,11 @@ components:
     post_text_md5_verify_request:
       properties:
         hash:
+          description: 用于比对的 MD5 哈希值（32 位小写十六进制字符串）。
           example: 5d41402abc4b2a76b9719d911017c592
           type: string
         text:
+          description: 待校验的原始文本，会先计算其 MD5 再与 hash 进行比对。
           example: hello world
           type: string
       required:
@@ -10500,6 +10300,8 @@ components:
       type: object
     get_social_bilibili_replies_200_response:
       example:
+        cursor: "{}"
+        folder: "{}"
         replies:
         - parent: 4189337300
           replies:
@@ -10539,17 +10341,28 @@ components:
           rpid: 4189337397
           content:
             message: 十年B站无人问，一朝发现宝藏歌。
+        top: "{}"
         hots:
         - "{}"
         - "{}"
+        upper: "{}"
+        control: "{}"
         page:
           acount: 123456
           size: 5
           num: 1
           count: 81682
+        config: "{}"
+        vote: 0
+        notice: "{}"
       properties:
         page:
           $ref: "#/components/schemas/get_social_bilibili_replies_200_response_page"
+        config:
+          description: 评论区配置。不同视频或不同权限下可能为 null。
+          nullable: true
+          type: object
+          example: null
         hots:
           description: 热门评论列表。结构与 `replies` 中的对象一致。如果当前页是第一页，且有热门评论，则此数组非空。
           items:
@@ -10561,16 +10374,54 @@ components:
           items:
             $ref: "#/components/schemas/get_social_bilibili_replies_200_response_replies_inner"
           type: array
+        upper:
+          description: UP 主相关信息。无数据时为 null。
+          nullable: true
+          type: object
+          example: null
+        top:
+          description: 置顶评论信息。没有置顶评论时为 null。
+          nullable: true
+          type: object
+          example: null
+        notice:
+          description: 评论区公告信息。没有公告时为 null。
+          nullable: true
+          type: object
+          example: null
+        vote:
+          description: 评论区投票相关状态值。没有投票时通常为 0。
+          example: 0
+          type: number
+        folder:
+          description: 评论折叠相关信息。没有数据时为 null。
+          nullable: true
+          type: object
+          example: null
+        control:
+          description: 评论区控制信息。没有数据时为 null。
+          nullable: true
+          type: object
+          example: null
+        cursor:
+          description: 游标翻页信息。部分场景下为 null。
+          nullable: true
+          type: object
+          example: null
       type: object
     get_github_repo_200_response_collaborators_inner:
       properties:
         login:
+          description: GitHub 登录名。
           type: string
         name:
+          description: 显示名称。
           type: string
         email:
+          description: 公开邮箱。
           type: string
         url:
+          description: GitHub 主页链接。
           type: string
       type: object
     post_text_base64_encode_200_response:
@@ -10607,25 +10458,6 @@ components:
           example: Failed to fetch data from Bilibili API or request was blocked.
           type: string
       type: object
-    get_misc_tracking_carriers_200_response_data:
-      example:
-        total: 60
-        carriers:
-        - code: zhongtong
-          name: 中通快递
-        - code: zhongtong
-          name: 中通快递
-      properties:
-        total:
-          description: 支持的快递公司总数
-          example: 60
-          type: integer
-        carriers:
-          description: 快递公司列表
-          items:
-            $ref: "#/components/schemas/get_misc_tracking_carriers_200_response_data_carriers_inner"
-          type: array
-      type: object
     get_network_icp_404_response:
       example:
         code: NOT_FOUND
@@ -10656,10 +10488,10 @@ components:
     get_ai_translate_languages_200_response_data:
       example:
         languages:
-        - code: zh-CHS
+        - code: zh
           native: 中文(简体)
           name: Chinese (Simplified)
-        - code: zh-CHS
+        - code: zh
           native: 中文(简体)
           name: Chinese (Simplified)
         styles:
@@ -10714,36 +10546,47 @@ components:
       required:
       - text
       type: object
+    get_misc_holiday_calendar_200_response_nearby_next_inner:
+      example:
+        date: 2025-10-02
+        events:
+        - date: 2025-10-02
+          is_workday: true
+          name: 国庆中秋
+          type: legal_rest
+        - date: 2025-10-02
+          is_workday: true
+          name: 国庆中秋
+          type: legal_rest
+      properties:
+        date:
+          description: 聚合日期。
+          example: 2025-10-02
+          type: string
+        events:
+          description: 该日期上的节日事件列表。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_nearby_next_inner_events_inner"
+          type: array
+      type: object
     get_network_pingmyip_200_response:
       example:
-        avg: 35.4
-        min: 32.8
-        max: 40.1
-        ip: 123.123.123.123
-        host: 123.123.123.123
-        location: 中国 北京
+        ping_successful: true
+        client_ip: 117.140.191.159
+        message: "Ping successful, avg latency: 35.43 ms"
       properties:
-        avg:
-          description: 平均延迟(ms)
-          example: 35.4
-          type: number
-        host:
-          example: 123.123.123.123
+        client_ip:
+          description: 当前客户端的公网 IP 地址。
+          example: 117.140.191.159
           type: string
-        ip:
-          example: 123.123.123.123
+        ping_successful:
+          description: 是否成功完成对当前客户端 IP 的 Ping。
+          example: true
+          type: boolean
+        message:
+          description: 操作结果说明。成功时通常会附带平均延迟信息。
+          example: "Ping successful, avg latency: 35.43 ms"
           type: string
-        location:
-          example: 中国 北京
-          type: string
-        max:
-          description: 最大延迟(ms)
-          example: 40.1
-          type: number
-        min:
-          description: 最小延迟(ms)
-          example: 32.8
-          type: number
       type: object
     get_history_programmer_400_response:
       example:
@@ -10757,28 +10600,26 @@ components:
           example: Invalid month or day parameter.
           type: string
       type: object
-    get_misc_tracking_query_200_response_data_tracks_inner:
-      example:
-        context: 快件已签收，感谢使用圆通速递
-        time: 2025-10-27 15:30:00
+    get_misc_hotboard_200_response_oneOf_1_results_inner:
       properties:
-        time:
-          description: 物流更新时间
-          example: 2025-10-27 15:30:00
+        title:
+          example: AI技术突破
           type: string
-        context:
-          description: 物流状态描述
-          example: 快件已签收，感谢使用圆通速递
+        hot_value:
+          example: "999999"
+          type: string
+        url:
+          example: https://example.com
           type: string
       type: object
     get_ai_translate_languages_200_response_data_languages_inner:
       example:
-        code: zh-CHS
+        code: zh
         native: 中文(简体)
         name: Chinese (Simplified)
       properties:
         code:
-          example: zh-CHS
+          example: zh
           type: string
         name:
           example: Chinese (Simplified)
@@ -10802,12 +10643,12 @@ components:
     post_text_aes_encrypt_request:
       properties:
         key:
-          description: "Key must be 16, 24, or 32 bytes long to select AES-128, AES-192,\
-            \ or AES-256."
+          description: 密钥长度必须为 16、24 或 32 字节，分别对应 AES-128、AES-192、AES-256。
           example: a-secret-key-123
           type: string
         text:
-          example: top secret message
+          description: 待加密的明文文本。
+          example: 这是一段需要加密的消息
           type: string
       required:
       - key
@@ -10874,7 +10715,7 @@ components:
         precip: 0
         wind_dir_night: 北风
         uv_index: 5
-        sunset: "1076"
+        sunset: 17:56
         wind_scale_night: 微风
         humidity: 40
         wind_dir_day: 西南风
@@ -10946,7 +10787,7 @@ components:
           type: string
         sunset:
           description: 日落时间 HH:MM（可选）
-          example: "1076"
+          example: 17:56
           type: string
       type: object
     get_game_epic_free_500_response:
@@ -10989,46 +10830,6 @@ components:
         advice:
           example: 建议涂抹防晒霜
           type: string
-      type: object
-    get_misc_holiday_calendar_200_response_data_query:
-      description: 请求参数回显。
-      example:
-        date: 2025-10-01
-        include_nearby: true
-        month: 2025-10
-        year: "2026"
-        timezone: Asia/Shanghai
-        nearby_limit: 7
-        holiday_type: all
-      properties:
-        date:
-          description: 日视图查询参数（YYYY-MM-DD）。非日视图时可能为空。
-          example: 2025-10-01
-          type: string
-        month:
-          description: 月视图查询参数（YYYY-MM）。非月视图时可能为空。
-          example: 2025-10
-          type: string
-        year:
-          description: 年视图查询参数（YYYY）。非年视图时可能为空。
-          example: "2026"
-          type: string
-        timezone:
-          description: 实际生效的时区。
-          example: Asia/Shanghai
-          type: string
-        holiday_type:
-          description: 节日筛选类型。
-          example: all
-          type: string
-        include_nearby:
-          description: 是否开启前后最近节日查询。
-          example: true
-          type: boolean
-        nearby_limit:
-          description: 前后最近节日返回数量上限。
-          example: 7
-          type: integer
       type: object
     get_network_whois_200_response_oneOf:
       description: |-
@@ -11074,21 +10875,35 @@ components:
           example: Data exceeds the 8MB limit for the given TTL.
           type: string
       type: object
-    get_misc_hotboard_200_response_results_inner:
-      example:
-        hot_value: "999999"
-        title: AI技术突破
-        url: https://example.com
+    get_misc_hotboard_200_response_oneOf_1:
       properties:
-        title:
-          example: AI技术突破
+        type:
+          example: weibo
           type: string
-        hot_value:
-          example: "999999"
+        keyword:
+          description: 搜索关键词。
+          example: AI
           type: string
-        url:
-          example: https://example.com
-          type: string
+        count:
+          description: 匹配到的结果数量。
+          example: 0
+          type: integer
+        results:
+          description: 搜索结果数组。
+          items:
+            $ref: "#/components/schemas/get_misc_hotboard_200_response_oneOf_1_results_inner"
+          type: array
+      title: 搜索模式
+      type: object
+    get_misc_hotboard_200_response_oneOf_2:
+      properties:
+        sources:
+          description: 支持历史数据的平台列表。
+          items:
+            example: weibo
+            type: string
+          type: array
+      title: 数据源列表模式
       type: object
     get_game_steam_summary_400_response:
       example:
@@ -11141,66 +10956,38 @@ components:
       type: object
     post_ai_translate_200_response:
       example:
-        quality_metrics:
-          fluency_score: 0.95
-          accuracy_score: 0.92
-          completeness_score: 0.98
-          total_score: 0.95
-        batch_data:
-        - translated_text: translated_text
-          confidence_score: 0.8008281904610115
-          original_text: original_text
-        - translated_text: translated_text
-          confidence_score: 0.8008281904610115
-          original_text: original_text
         is_batch: false
-        batch_summary:
-          average_quality: 5.637376656633329
-          failed_items: 5
-          success_items: 1
-          total_items: 6
         performance:
           processing_time_ms: 850
-          cache_hit: false
         data:
           translated_text: 你好，你今天怎么样？
-          confidence_score: 0.98
-          alternatives:
-          - 你好，今天过得如何？
-          original_text: "Hello, how are you today?"
-          explanation:
-            cultural_notes:
-            - cultural_notes
-            - cultural_notes
-            grammar_notes:
-            - grammar_notes
-            - grammar_notes
-            key_phrases:
-            - "{}"
-            - "{}"
-          detected_lang: en
         message: Translation completed successfully
       properties:
         message:
           example: Translation completed successfully
           type: string
-        is_batch:
-          description: 标识是否为批量翻译请求。
-          example: false
-          type: boolean
         data:
           $ref: "#/components/schemas/post_ai_translate_200_response_data"
-        batch_data:
-          description: 批量翻译结果列表，仅在批量翻译时返回。
-          items:
-            $ref: "#/components/schemas/post_ai_translate_200_response_batch_data_inner"
-          type: array
-        batch_summary:
-          $ref: "#/components/schemas/post_ai_translate_200_response_batch_summary"
         performance:
           $ref: "#/components/schemas/post_ai_translate_200_response_performance"
-        quality_metrics:
-          $ref: "#/components/schemas/post_ai_translate_200_response_quality_metrics"
+        is_batch:
+          description: 是否为批量翻译请求。
+          example: false
+          type: boolean
+      type: object
+    get_misc_tracking_query_200_response_tracks_inner:
+      example:
+        context: 快件已签收，感谢使用圆通速递
+        time: 2025-10-27 15:30:00
+      properties:
+        time:
+          description: 物流更新时间
+          example: 2025-10-27 15:30:00
+          type: string
+        context:
+          description: 物流状态描述
+          example: 快件已签收，感谢使用圆通速递
+          type: string
       type: object
     get_network_ipinfo_404_response:
       example:
@@ -11575,73 +11362,10 @@ components:
           type: object
       type: object
     get_misc_hotboard_200_response:
-      example:
-        snapshot_time: 1700000000000
-        update_time: 2023-10-27 12:00:00
-        sources:
-        - weibo
-        - weibo
-        count: 25
-        list:
-        - cover: https://p1.music.126.net/xxx/109951170483249998.jpg
-          hot_value: "1234567"
-          extra:
-            key: ""
-          index: 1
-          title: 今天天气真好
-          url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
-        - cover: https://p1.music.126.net/xxx/109951170483249998.jpg
-          hot_value: "1234567"
-          extra:
-            key: ""
-          index: 1
-          title: 今天天气真好
-          url: https://s.weibo.com/weibo?q=%23%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E7%9C%9F%E5%A5%BD%23
-        type: weibo
-        keyword: AI
-        results:
-        - hot_value: "999999"
-          title: AI技术突破
-          url: https://example.com
-        - hot_value: "999999"
-          title: AI技术突破
-          url: https://example.com
-      properties:
-        list:
-          description: 热榜条目列表。
-          items:
-            $ref: "#/components/schemas/get_misc_hotboard_200_response_list_inner"
-          type: array
-        type:
-          example: weibo
-          type: string
-        update_time:
-          example: 2023-10-27 12:00:00
-          type: string
-        snapshot_time:
-          description: 时光机模式返回的快照实际时间戳（毫秒）。
-          example: 1700000000000
-          type: integer
-        keyword:
-          description: 搜索模式返回的搜索关键词。
-          example: AI
-          type: string
-        count:
-          description: 搜索模式返回的结果数量。
-          example: 25
-          type: integer
-        results:
-          description: 搜索模式返回的结果数组。
-          items:
-            $ref: "#/components/schemas/get_misc_hotboard_200_response_results_inner"
-          type: array
-        sources:
-          description: 数据源列表模式返回的可用历史数据源数组。
-          items:
-            example: weibo
-            type: string
-          type: array
-      type: object
+      oneOf:
+      - $ref: "#/components/schemas/get_misc_hotboard_200_response_oneOf"
+      - $ref: "#/components/schemas/get_misc_hotboard_200_response_oneOf_1"
+      - $ref: "#/components/schemas/get_misc_hotboard_200_response_oneOf_2"
     post_translate_stream_request:
       properties:
         query:
@@ -11650,18 +11374,11 @@ components:
           type: string
         to_lang:
           description: 目标语言，支持：中文、英文
-          enum:
-          - 中文
-          - 英文
           example: 中文
           type: string
         from_lang:
           default: auto
           description: 源语言，支持：中文、英文、auto（自动检测）。默认为auto
-          enum:
-          - 中文
-          - 英文
-          - auto
           example: 英文
           type: string
         tone:
@@ -11749,6 +11466,7 @@ components:
             level: 良好
             advice: 天气对交通无明显影响
         city: 北京
+        weather_icon: "100"
         aqi_primary: PM10
         temp_max: 14
         aqi_category: 良
@@ -11786,7 +11504,7 @@ components:
           precip: 0
           wind_dir_night: 北风
           uv_index: 5
-          sunset: "1076"
+          sunset: 17:56
           wind_scale_night: 微风
           humidity: 40
           wind_dir_day: 西南风
@@ -11803,7 +11521,7 @@ components:
           precip: 0
           wind_dir_night: 北风
           uv_index: 5
-          sunset: "1076"
+          sunset: 17:56
           wind_scale_night: 微风
           humidity: 40
           wind_dir_day: 西南风
@@ -11812,6 +11530,7 @@ components:
         feels_like: 6
         wind_power: 微风
         report_time: 2026-02-19 15:25:58
+        district: 海淀区
         aqi: 56
         air_pollutants:
           no2: 13
@@ -11860,6 +11579,10 @@ components:
           description: 城市名
           example: 北京
           type: string
+        district:
+          description: 区县或更细一级的行政区名称。自动按 IP 定位时更常见。
+          example: 海淀区
+          type: string
         adcode:
           description: 行政区划代码（部分数据源可能为空）
           example: ""
@@ -11867,6 +11590,454 @@ components:
         weather:
           description: 天气状况描述。默认返回中文，传 `lang=en` 时返回英文。非固定枚举。
           example: 晴
+          type: string
+        weather_icon:
+          description: "天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。"
+          enum:
+          - "100"
+          - "101"
+          - "102"
+          - "103"
+          - "104"
+          - "150"
+          - "151"
+          - "152"
+          - "153"
+          - "300"
+          - "301"
+          - "302"
+          - "303"
+          - "304"
+          - "305"
+          - "306"
+          - "307"
+          - "308"
+          - "309"
+          - "310"
+          - "311"
+          - "312"
+          - "313"
+          - "314"
+          - "315"
+          - "316"
+          - "317"
+          - "318"
+          - "350"
+          - "351"
+          - "399"
+          - "400"
+          - "401"
+          - "402"
+          - "403"
+          - "404"
+          - "405"
+          - "406"
+          - "407"
+          - "408"
+          - "409"
+          - "410"
+          - "456"
+          - "457"
+          - "499"
+          - "500"
+          - "501"
+          - "502"
+          - "503"
+          - "504"
+          - "507"
+          - "508"
+          - "509"
+          - "510"
+          - "511"
+          - "512"
+          - "513"
+          - "514"
+          - "515"
+          - "800"
+          - "801"
+          - "802"
+          - "803"
+          - "804"
+          - "805"
+          - "806"
+          - "807"
+          - "900"
+          - "901"
+          - "999"
+          - "1001"
+          - "1002"
+          - "1003"
+          - "1004"
+          - "1005"
+          - "1006"
+          - "1007"
+          - "1008"
+          - "1009"
+          - "1010"
+          - "1011"
+          - "1012"
+          - "1013"
+          - "1014"
+          - "1015"
+          - "1016"
+          - "1017"
+          - "1018"
+          - "1019"
+          - "1020"
+          - "1021"
+          - "1022"
+          - "1023"
+          - "1024"
+          - "1025"
+          - "1026"
+          - "1027"
+          - "1028"
+          - "1029"
+          - "1030"
+          - "1031"
+          - "1032"
+          - "1033"
+          - "1034"
+          - "1035"
+          - "1036"
+          - "1037"
+          - "1038"
+          - "1039"
+          - "1040"
+          - "1041"
+          - "1042"
+          - "1043"
+          - "1044"
+          - "1045"
+          - "1046"
+          - "1047"
+          - "1048"
+          - "1049"
+          - "1050"
+          - "1051"
+          - "1052"
+          - "1053"
+          - "1054"
+          - "1055"
+          - "1056"
+          - "1057"
+          - "1058"
+          - "1059"
+          - "1060"
+          - "1061"
+          - "1062"
+          - "1063"
+          - "1064"
+          - "1065"
+          - "1066"
+          - "1067"
+          - "1068"
+          - "1069"
+          - "1071"
+          - "1072"
+          - "1073"
+          - "1074"
+          - "1075"
+          - "1076"
+          - "1077"
+          - "1078"
+          - "1079"
+          - "1080"
+          - "1081"
+          - "1082"
+          - "1084"
+          - "1085"
+          - "1086"
+          - "1087"
+          - "1088"
+          - "1089"
+          - "1201"
+          - "1202"
+          - "1203"
+          - "1204"
+          - "1205"
+          - "1206"
+          - "1207"
+          - "1208"
+          - "1209"
+          - "1210"
+          - "1211"
+          - "1212"
+          - "1213"
+          - "1214"
+          - "1215"
+          - "1216"
+          - "1217"
+          - "1218"
+          - "1219"
+          - "1221"
+          - "1241"
+          - "1242"
+          - "1243"
+          - "1244"
+          - "1245"
+          - "1246"
+          - "1247"
+          - "1248"
+          - "1249"
+          - "1250"
+          - "1251"
+          - "1271"
+          - "1272"
+          - "1273"
+          - "1274"
+          - "1601"
+          - "1602"
+          - "1603"
+          - "1604"
+          - "1605"
+          - "1606"
+          - "1607"
+          - "1608"
+          - "1609"
+          - "1610"
+          - "1701"
+          - "1702"
+          - "1703"
+          - "1704"
+          - "1705"
+          - "1706"
+          - "1707"
+          - "1708"
+          - "1709"
+          - "1710"
+          - "1801"
+          - "1802"
+          - "1803"
+          - "1804"
+          - "1805"
+          - "2001"
+          - "2002"
+          - "2003"
+          - "2004"
+          - "2005"
+          - "2006"
+          - "2007"
+          - "2029"
+          - "2030"
+          - "2031"
+          - "2032"
+          - "2033"
+          - "2050"
+          - "2051"
+          - "2052"
+          - "2053"
+          - "2054"
+          - "2070"
+          - "2071"
+          - "2072"
+          - "2073"
+          - "2074"
+          - "2075"
+          - "2076"
+          - "2077"
+          - "2078"
+          - "2079"
+          - "2080"
+          - "2081"
+          - "2082"
+          - "2083"
+          - "2084"
+          - "2085"
+          - "2100"
+          - "2101"
+          - "2102"
+          - "2103"
+          - "2104"
+          - "2105"
+          - "2106"
+          - "2107"
+          - "2108"
+          - "2109"
+          - "2111"
+          - "2120"
+          - "2121"
+          - "2122"
+          - "2123"
+          - "2124"
+          - "2125"
+          - "2126"
+          - "2127"
+          - "2128"
+          - "2129"
+          - "2130"
+          - "2131"
+          - "2132"
+          - "2133"
+          - "2134"
+          - "2135"
+          - "2150"
+          - "2151"
+          - "2152"
+          - "2153"
+          - "2154"
+          - "2155"
+          - "2156"
+          - "2157"
+          - "2158"
+          - "2159"
+          - "2160"
+          - "2161"
+          - "2162"
+          - "2163"
+          - "2164"
+          - "2165"
+          - "2166"
+          - "2167"
+          - "2190"
+          - "2191"
+          - "2192"
+          - "2193"
+          - "2200"
+          - "2201"
+          - "2202"
+          - "2203"
+          - "2204"
+          - "2205"
+          - "2207"
+          - "2208"
+          - "2209"
+          - "2210"
+          - "2211"
+          - "2212"
+          - "2213"
+          - "2214"
+          - "2215"
+          - "2216"
+          - "2217"
+          - "2218"
+          - "2300"
+          - "2301"
+          - "2302"
+          - "2303"
+          - "2304"
+          - "2305"
+          - "2306"
+          - "2307"
+          - "2308"
+          - "2309"
+          - "2311"
+          - "2312"
+          - "2313"
+          - "2314"
+          - "2315"
+          - "2316"
+          - "2317"
+          - "2318"
+          - "2319"
+          - "2320"
+          - "2321"
+          - "2322"
+          - "2323"
+          - "2324"
+          - "2325"
+          - "2326"
+          - "2327"
+          - "2328"
+          - "2330"
+          - "2331"
+          - "2332"
+          - "2333"
+          - "2341"
+          - "2343"
+          - "2345"
+          - "2346"
+          - "2348"
+          - "2349"
+          - "2350"
+          - "2351"
+          - "2352"
+          - "2353"
+          - "2354"
+          - "2355"
+          - "2356"
+          - "2357"
+          - "2358"
+          - "2359"
+          - "2360"
+          - "2361"
+          - "2362"
+          - "2363"
+          - "2364"
+          - "2365"
+          - "2366"
+          - "2367"
+          - "2368"
+          - "2369"
+          - "2370"
+          - "2371"
+          - "2372"
+          - "2373"
+          - "2374"
+          - "2375"
+          - "2376"
+          - "2377"
+          - "2378"
+          - "2379"
+          - "2380"
+          - "2381"
+          - "2382"
+          - "2383"
+          - "2384"
+          - "2385"
+          - "2386"
+          - "2387"
+          - "2388"
+          - "2389"
+          - "2390"
+          - "2391"
+          - "2392"
+          - "2393"
+          - "2394"
+          - "2395"
+          - "2396"
+          - "2397"
+          - "2398"
+          - "2399"
+          - "2400"
+          - "2409"
+          - "2411"
+          - "2412"
+          - "2413"
+          - "2414"
+          - "2415"
+          - "2416"
+          - "2417"
+          - "2418"
+          - "2419"
+          - "2420"
+          - "2421"
+          - "2422"
+          - "2423"
+          - "2424"
+          - "2425"
+          - "2426"
+          - "2501"
+          - "2502"
+          - "2521"
+          - "2522"
+          - "2523"
+          - "2524"
+          - "2525"
+          - "2526"
+          - "2527"
+          - "2528"
+          - "2529"
+          - "2530"
+          - "2531"
+          - "2532"
+          - "2550"
+          - "2551"
+          - "2552"
+          - "2553"
+          - "2554"
+          - "9999"
+          example: "100"
           type: string
         temperature:
           description: 当前温度 °C
@@ -12116,45 +12287,149 @@ components:
           - transparent
           example: transparent
           type: string
-          x-enumLabels:
-            white: 白色
-            black: 黑色
-            transparent: 透明
       type: object
     get_social_bilibili_videoinfo_200_response:
       example:
+        bvid: BV17x411w79F
+        copyright: 2
+        is_chargeable_season: false
+        ugc_season:
+          cover: http://i0.hdslb.com/bfs/archive/....jpg
+          intro: 这是一个合集
+          mid: 483307278
+          id: 12345
+          title: 系列视频合集
+          ep_count: 12
+        videos: 1
+        pic: http://i2.hdslb.com/bfs/archive/f769f330138980456159345c6139c8e9b265c2f5.jpg
+        title: 【官方MV】Rick Astley - Never Gonna Give You Up
+        tid: 31
+        is_story: false
+        duration: 213
+        pages:
+        - duration: 213
+          vid: ""
+          part: 【官方MV】Rick Astley - Never Gonna Give You Up
+          weblink: ""
+          from: vupload
+          page: 1
+          dimension:
+            rotate: 0
+            width: 1920
+            height: 1080
+          cid: 130283995
+        - duration: 213
+          vid: ""
+          part: 【官方MV】Rick Astley - Never Gonna Give You Up
+          weblink: ""
+          from: vupload
+          page: 1
+          dimension:
+            rotate: 0
+            width: 1920
+            height: 1080
+          cid: 130283995
+        no_cache: false
+        rights:
+          clean_mode: 0
+          free_watch: 1
+          movie: 0
+          is_cooperation: 0
+          ugc_pay: 0
+          no_background: 0
+          pay: 0
+          elec: 1
+          ugc_pay_preview: 1
+          bp: 0
+          autoplay: 1
+          download: 1
+          no_reprint: 1
+          is_360: 0
+          no_share: 0
+          hd5: 0
+          is_stein_gate: 0
+          arc_pay: 0
+        ctime: 1573884313
+        dynamic: ""
+        state: 0
+        dimension:
+          rotate: 0
+          width: 1920
+          height: 1080
+        pubdate: 1573884313
         owner:
           face: http://i2.hdslb.com/bfs/face/b0b721e6cb13e31af88cc45c432d6728c3065a6e.jpg
           name: bishi
           mid: 2
-        bvid: BV17x411w79F
-        copyright: 2
+        desc_v2:
+        - raw_text: 视频简介文本
+          type: 1
+          biz_id: 483307278
+        - raw_text: 视频简介文本
+          type: 1
+          biz_id: 483307278
         stat:
-          view: 14227982
+          now_rank: 0
           like: 989718
+          dislike: 0
+          his_rank: 0
+          evaluation: ""
+          view: 14227982
           danmaku: 269829
           share: 98661
           reply: 81682
+          aid: 75836761
           favorite: 498308
+          vt: 0
           coin: 787228
         tname: Vocaloid·UTAU
-        videos: 1
-        pic: http://i2.hdslb.com/bfs/archive/f769f330138980456159345c6139c8e9b265c2f5.jpg
-        title: 【官方MV】Rick Astley - Never Gonna Give You Up
-        duration: 213
-        pages:
-        - duration: 213
-          part: 【官方MV】Rick Astley - Never Gonna Give You Up
-          page: 1
-          cid: 130283995
-        - duration: 213
-          part: 【官方MV】Rick Astley - Never Gonna Give You Up
-          page: 1
-          cid: 130283995
-        ctime: 1573884313
+        staff:
+        - face: http://i0.hdslb.com/bfs/face/....jpg
+          follower: 100000
+          name: 某某
+          mid: 111111
+          title: UP主
+        - face: http://i0.hdslb.com/bfs/face/....jpg
+          follower: 100000
+          name: 某某
+          mid: 111111
+          title: UP主
+        honor_reply:
+          honor:
+          - weekly_recommend_num: 105
+            type: 1
+            aid: 75836761
+            desc: 每周必看
+          - weekly_recommend_num: 105
+            type: 1
+            aid: 75836761
+            desc: 每周必看
+        subtitle:
+          allow_submit: false
+          list:
+          - subtitle_url: //i0.hdslb.com/bfs/subtitle/xxxx.json
+            lan_doc: 中文（简体）
+            author:
+              face: http://i0.hdslb.com/bfs/face/....jpg
+              name: 字幕君
+              mid: 483307278
+            lan: zh-CN
+            is_lock: false
+            id: 123456
+            author_mid: 483307278
+          - subtitle_url: //i0.hdslb.com/bfs/subtitle/xxxx.json
+            lan_doc: 中文（简体）
+            author:
+              face: http://i0.hdslb.com/bfs/face/....jpg
+              name: 字幕君
+              mid: 483307278
+            lan: zh-CN
+            is_lock: false
+            id: 123456
+            author_mid: 483307278
         aid: 75836761
-        pubdate: 1573884313
         desc: 你被骗了
+        cid: 130283995
       properties:
         bvid:
           description: 稿件的BV号。
@@ -12167,6 +12442,10 @@ components:
         videos:
           description: 稿件分P总数。如果是单P视频，则为1。
           example: 1
+          type: number
+        tid:
+          description: 视频所属的子分区 ID。
+          example: 31
           type: number
         tname:
           description: 视频所属的子分区名称。
@@ -12196,19 +12475,63 @@ components:
           description: 视频简介。可能会包含HTML换行符。
           example: 你被骗了
           type: string
+        desc_v2:
+          description: 结构化简介片段。
+          items:
+            $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_desc_v2_inner"
+          type: array
+        state:
+          description: 视频状态码。
+          example: 0
+          type: number
         duration:
           description: 稿件总时长（所有分P累加），单位为秒。
           example: 213
           type: number
+        rights:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_rights"
         owner:
           $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_owner"
         stat:
           $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_stat"
+        dynamic:
+          description: 投稿时附带的动态文字。
+          example: ""
+          type: string
+        cid:
+          description: 主分P的 CID（弹幕 ID）。
+          example: 130283995
+          type: number
+        dimension:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_dimension"
+        no_cache:
+          description: 不缓存标记。
+          example: false
+          type: boolean
         pages:
           description: 视频分P列表。即使是单P视频，该数组也包含一个元素。
           items:
             $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_pages_inner"
           type: array
+        subtitle:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_subtitle"
+        staff:
+          description: 联合投稿成员列表。
+          items:
+            $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_staff_inner"
+          type: array
+        ugc_season:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_ugc_season"
+        is_chargeable_season:
+          description: 是否为付费合集。
+          example: false
+          type: boolean
+        is_story:
+          description: 是否为剧情类视频。
+          example: false
+          type: boolean
+        honor_reply:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_honor_reply"
       type: object
     post_image_frombase64_400_response:
       example:
@@ -12254,13 +12577,15 @@ components:
     post_sensitive_word_analyze_request:
       properties:
         keywords:
-          description: 要分析的关键词列表，单次最多100个，每个关键词最长50字符。
+          description: "要分析的关键词列表，单次最多100个。单条关键词最多1,000字符，总字符数最多20,000。"
           example:
           - 喵
           - cnm
           - ccb
           items:
+            maxLength: 1000
             type: string
+          maxItems: 100
           type: array
       required:
       - keywords
@@ -12278,36 +12603,6 @@ components:
           description: 当时使用的用户名。
           example: jeb_
           type: string
-      type: object
-    get_misc_holiday_calendar_200_response_data_holidays_inner:
-      example:
-        date: 2025-10-01
-        is_workday: false
-        name: 国庆节
-        type: legal_rest
-      properties:
-        date:
-          description: 事件日期（YYYY-MM-DD）。
-          example: 2025-10-01
-          type: string
-        name:
-          description: 事件名称。
-          example: 国庆节
-          type: string
-        type:
-          description: 事件类型。
-          enum:
-          - legal_rest
-          - legal_workday_adjust
-          - solar_festival
-          - lunar_festival
-          - solar_term
-          example: legal_rest
-          type: string
-        is_workday:
-          description: 仅 legal_workday_adjust 场景有意义。
-          example: false
-          type: boolean
       type: object
     post_text_aes_decrypt_request:
       properties:
@@ -12328,19 +12623,6 @@ components:
       - nonce
       - text
       type: object
-    post_ai_translate_200_response_batch_data_inner:
-      example:
-        translated_text: translated_text
-        confidence_score: 0.8008281904610115
-        original_text: original_text
-      properties:
-        original_text:
-          type: string
-        translated_text:
-          type: string
-        confidence_score:
-          type: number
-      type: object
     post_ai_translate_401_response:
       example:
         code: 401
@@ -12359,28 +12641,19 @@ components:
       type: object
     get_ai_translate_languages_200_response_performance:
       example:
-        typical_response_time_ms:
-          fast_mode: 800
-          normal_mode: 2000
         batch_translation_available: true
         max_batch_size: 50
-        fast_mode_available: true
         max_text_length: 10000
       properties:
-        fast_mode_available:
-          example: true
-          type: boolean
         batch_translation_available:
           example: true
           type: boolean
-        max_text_length:
-          example: 10000
-          type: integer
         max_batch_size:
           example: 50
           type: integer
-        typical_response_time_ms:
-          $ref: "#/components/schemas/get_ai_translate_languages_200_response_performance_typical_response_time_ms"
+        max_text_length:
+          example: 10000
+          type: integer
       type: object
     get_random_string_400_response:
       example:
@@ -12478,18 +12751,6 @@ components:
           - sha512
           example: plain
           type: string
-          x-enumLabels:
-            plain: 纯文本
-            base64: Base64
-            hex: 十六进制
-            url: URL编码
-            html: HTML实体
-            unicode: Unicode转义
-            binary: 二进制
-            md5: MD5哈希
-            sha1: SHA1哈希
-            sha256: SHA256哈希
-            sha512: SHA512哈希
         to:
           description: 目标格式类型
           enum:
@@ -12506,18 +12767,6 @@ components:
           - sha512
           example: base64
           type: string
-          x-enumLabels:
-            plain: 纯文本
-            base64: Base64
-            hex: 十六进制
-            url: URL编码
-            html: HTML实体
-            unicode: Unicode转义
-            binary: 二进制
-            md5: MD5哈希
-            sha1: SHA1哈希
-            sha256: SHA256哈希
-            sha512: SHA512哈希
         options:
           additionalProperties: true
           description: 可选参数（预留，当前未使用）
@@ -12625,6 +12874,29 @@ components:
           example: 必须提供图片文件或图片URL
           type: string
       type: object
+    get_misc_holiday_calendar_200_response_nearby_previous_inner:
+      example:
+        date: 2025-09-28
+        events:
+        - date: 2025-09-28
+          is_workday: true
+          name: 国庆中秋
+          type: legal_workday_adjust
+        - date: 2025-09-28
+          is_workday: true
+          name: 国庆中秋
+          type: legal_workday_adjust
+      properties:
+        date:
+          description: 聚合日期。
+          example: 2025-09-28
+          type: string
+        events:
+          description: 该日期上的节日事件列表。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_nearby_previous_inner_events_inner"
+          type: array
+      type: object
     get_search_engines_200_response:
       example:
         engine:
@@ -12708,14 +12980,24 @@ components:
     get_social_bilibili_videoinfo_200_response_stat:
       description: 视频的核心数据统计。
       example:
-        view: 14227982
+        now_rank: 0
         like: 989718
+        dislike: 0
+        his_rank: 0
+        evaluation: ""
+        view: 14227982
         danmaku: 269829
         share: 98661
         reply: 81682
+        aid: 75836761
         favorite: 498308
+        vt: 0
         coin: 787228
       properties:
+        aid:
+          description: AV 号。
+          example: 75836761
+          type: number
         view:
           description: 播放数。
           example: 14227982
@@ -12743,6 +13025,26 @@ components:
         like:
           description: 获赞数。
           example: 989718
+          type: number
+        now_rank:
+          description: 当前全站/分区排名。
+          example: 0
+          type: number
+        his_rank:
+          description: 历史排名。
+          example: 0
+          type: number
+        dislike:
+          description: 点踩量（通常为 0）。
+          example: 0
+          type: number
+        evaluation:
+          description: 评分/评估文案，通常为空。
+          example: ""
+          type: string
+        vt:
+          description: 视频类型相关历史字段。
+          example: 0
           type: number
       type: object
     get_misc_weather_200_response_life_indices_comfort:
@@ -13023,6 +13325,63 @@ components:
         total:
           type: integer
       type: object
+    get_misc_holiday_calendar_200_response_nearby:
+      description: 前后最近节日，仅 include_nearby=true 且 date 模式返回。
+      example:
+        next:
+        - date: 2025-10-02
+          events:
+          - date: 2025-10-02
+            is_workday: true
+            name: 国庆中秋
+            type: legal_rest
+          - date: 2025-10-02
+            is_workday: true
+            name: 国庆中秋
+            type: legal_rest
+        - date: 2025-10-02
+          events:
+          - date: 2025-10-02
+            is_workday: true
+            name: 国庆中秋
+            type: legal_rest
+          - date: 2025-10-02
+            is_workday: true
+            name: 国庆中秋
+            type: legal_rest
+        previous:
+        - date: 2025-09-28
+          events:
+          - date: 2025-09-28
+            is_workday: true
+            name: 国庆中秋
+            type: legal_workday_adjust
+          - date: 2025-09-28
+            is_workday: true
+            name: 国庆中秋
+            type: legal_workday_adjust
+        - date: 2025-09-28
+          events:
+          - date: 2025-09-28
+            is_workday: true
+            name: 国庆中秋
+            type: legal_workday_adjust
+          - date: 2025-09-28
+            is_workday: true
+            name: 国庆中秋
+            type: legal_workday_adjust
+      properties:
+        previous:
+          description: 当前查询日期之前最近的节日列表（按时间倒序）。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_nearby_previous_inner"
+          type: array
+        next:
+          description: 当前查询日期之后最近的节日列表（按时间正序）。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_nearby_next_inner"
+          type: array
+      type: object
     get_network_ipinfo_500_response:
       example:
         code: INTERNAL_SERVER_ERROR
@@ -13042,7 +13401,14 @@ components:
       example:
         room_id: 22637261
         area_name: 虚拟偶像
-        new_pendants: "{}"
+        new_pendants:
+          badge:
+            name: 舰长徽章
+            desc: 年度舰长
+          frame:
+            name: 头像框
+            value: frame_value
+            desc: 年度纪念头像框
         live_time: 2023-10-27 20:00:00
         hot_words:
         - 嘉门
@@ -13052,12 +13418,15 @@ components:
         area_id: 372
         title: 【B限】杂谈~来聊聊天吧~
         user_cover: http://i0.hdslb.com/bfs/live/user_cover/672328094.jpg
+        keyframe: http://i0.hdslb.com/bfs/live-key-frame/keyframe.jpg
         tags: "VUP,虚拟偶像,A-SOUL,嘉然"
         uid: 672328094
         parent_area_name: 虚拟主播
         background: http://i0.hdslb.com/bfs/live/room_bg/672328094.jpg
+        is_portrait: false
         attention: 1789089
         online: 3662242
+        parent_area_id: 9
         live_status: 1
       properties:
         uid:
@@ -13077,9 +13446,13 @@ components:
           example: 1789089
           type: number
         online:
-          description: 直播间当前的人气值。注意这不是真实在线人数。
+          description: 直播间当前的人气值（对应你文档里的 PopularValue，不代表真实在线人数）。
           example: 3662242
           type: number
+        is_portrait:
+          description: 是否为竖屏直播。
+          example: false
+          type: boolean
         live_status:
           description: "直播状态。0:未开播, 1:直播中, 2:轮播中。"
           example: 1
@@ -13092,6 +13465,10 @@ components:
           description: 父分区名称。
           example: 虚拟主播
           type: string
+        parent_area_id:
+          description: 父分区 ID。
+          example: 9
+          type: number
         area_name:
           description: 子分区名称。
           example: 虚拟偶像
@@ -13116,6 +13493,10 @@ components:
           description: 本次直播开始的时间，格式为 `YYYY-MM-DD HH:mm:ss`。如果未开播，则为空字符串。
           example: 2023-10-27 20:00:00
           type: string
+        keyframe:
+          description: 关键帧封面图链接。
+          example: http://i0.hdslb.com/bfs/live-key-frame/keyframe.jpg
+          type: string
         tags:
           description: 直播间设置的标签，以逗号分隔。
           example: "VUP,虚拟偶像,A-SOUL,嘉然"
@@ -13127,9 +13508,7 @@ components:
             type: string
           type: array
         new_pendants:
-          description: 主播佩戴的头像框、大航海等级等信息，结构可能比较复杂。
-          properties: {}
-          type: object
+          $ref: "#/components/schemas/get_social_bilibili_liveroom_200_response_new_pendants"
       type: object
     get_clipzy_raw_403_response:
       example:
@@ -13141,46 +13520,125 @@ components:
       type: object
     get_misc_lunartime_200_response:
       example:
-        code: 200
-        data:
-          query_timezone: Asia/Shanghai
-          ganzhi_year: 甲辰
-          ganzhi_day: 甲辰
-          timezone: Asia/Shanghai
-          zodiac: 龙
-          weekday: Saturday
-          lunar_day_cn: 初一
-          lunar_festivals:
-          - 春节
-          - 春节
-          weekday_cn: 星期六
-          lunar_month: 1
-          ganzhi_month: 丙寅
-          datetime: 2024-02-10 12:00:00
-          lunar_year_cn: 二零二四
-          solar_term: ""
-          timestamp_unix: 1707537600
-          lunar_month_cn: 正月
-          query_timestamp: "1707537600"
-          lunar_day: 1
-          lunar_year: 2024
-          datetime_rfc3339: 2024-02-10T12:00:00+08:00
-          is_leap_month: false
-          solar_festivals:
-          - 元旦
-          - 元旦
-        message: success
+        query_timezone: Asia/Shanghai
+        ganzhi_year: 甲辰
+        ganzhi_day: 甲辰
+        timezone: Asia/Shanghai
+        zodiac: 龙
+        weekday: Saturday
+        lunar_day_cn: 初一
+        lunar_festivals:
+        - 春节
+        - 春节
+        weekday_cn: 星期六
+        lunar_month: 1
+        ganzhi_month: 丙寅
+        datetime: 2024-02-10 12:00:00
+        lunar_year_cn: 二〇二四
+        solar_term: ""
+        timestamp_unix: 1707537600
+        lunar_month_cn: 正月
+        query_timestamp: "1707537600"
+        lunar_day: 1
+        lunar_year: 2024
+        datetime_rfc3339: 2024-02-10T12:00:00+08:00
+        is_leap_month: false
+        solar_festivals:
+        - 元旦
+        - 元旦
       properties:
-        code:
-          description: 业务状态码，200 表示成功。
-          example: 200
-          type: integer
-        message:
-          description: 状态描述。
-          example: success
+        query_timestamp:
+          description: 原始 ts 入参。
+          example: "1707537600"
           type: string
-        data:
-          $ref: "#/components/schemas/get_misc_lunartime_200_response_data"
+        query_timezone:
+          description: 原始 timezone 入参。
+          example: Asia/Shanghai
+          type: string
+        timezone:
+          description: 解析后的时区。
+          example: Asia/Shanghai
+          type: string
+        datetime:
+          description: 本地化时间，格式 YYYY-MM-DD HH:mm:ss。
+          example: 2024-02-10 12:00:00
+          type: string
+        datetime_rfc3339:
+          description: RFC3339 时间格式。
+          example: 2024-02-10T12:00:00+08:00
+          type: string
+        timestamp_unix:
+          description: 秒级 Unix 时间戳。
+          example: 1707537600
+          type: integer
+        weekday:
+          description: 星期英文。
+          example: Saturday
+          type: string
+        weekday_cn:
+          description: 星期中文。
+          example: 星期六
+          type: string
+        lunar_year:
+          description: 农历年份（数字）。
+          example: 2024
+          type: integer
+        lunar_month:
+          description: 农历月份（数字）。
+          example: 1
+          type: integer
+        lunar_day:
+          description: 农历日期（数字）。
+          example: 1
+          type: integer
+        is_leap_month:
+          description: 是否闰月。
+          example: false
+          type: boolean
+        lunar_year_cn:
+          description: 农历年份中文表示。
+          example: 二〇二四
+          type: string
+        lunar_month_cn:
+          description: 农历月份中文表示。
+          example: 正月
+          type: string
+        lunar_day_cn:
+          description: 农历日期中文表示。
+          example: 初一
+          type: string
+        ganzhi_year:
+          description: 干支年。
+          example: 甲辰
+          type: string
+        ganzhi_month:
+          description: 干支月。
+          example: 丙寅
+          type: string
+        ganzhi_day:
+          description: 干支日。
+          example: 甲辰
+          type: string
+        zodiac:
+          description: 生肖。
+          example: 龙
+          type: string
+        solar_term:
+          description: 节气名称。有值时返回，无值时可能为空字符串或不返回。
+          example: ""
+          type: string
+        lunar_festivals:
+          description: 农历节日数组。
+          items:
+            example: 春节
+            type: string
+          type: array
+        solar_festivals:
+          description: 公历节日数组。
+          items:
+            example: 元旦
+            type: string
+          type: array
       type: object
     get_history_programmer_today_200_response:
       example:
@@ -13353,33 +13811,50 @@ components:
       type: object
     get_misc_tracking_query_200_response:
       example:
-        code: SUCCESS
-        data:
-          tracking_number: YT1234567890123
-          carrier_name: 圆通速递
-          track_count: 3
-          tracks:
-          - context: 快件已签收，感谢使用圆通速递
-            time: 2025-10-27 15:30:00
-          - context: 快件已签收，感谢使用圆通速递
-            time: 2025-10-27 15:30:00
-          carrier_code: yuantong
-        message: 操作成功
+        tracking_number: YT1234567890123
+        carrier_name: 圆通速递
+        track_count: 3
+        tracks:
+        - context: 快件已签收，感谢使用圆通速递
+          time: 2025-10-27 15:30:00
+        - context: 快件已签收，感谢使用圆通速递
+          time: 2025-10-27 15:30:00
+        carrier_code: yuantong
       properties:
-        code:
-          example: SUCCESS
+        tracking_number:
+          description: 快递单号
+          example: YT1234567890123
           type: string
-        message:
-          example: 操作成功
+        carrier_code:
+          description: 快递公司编码
+          example: yuantong
           type: string
-        data:
-          $ref: "#/components/schemas/get_misc_tracking_query_200_response_data"
+        carrier_name:
+          description: 快递公司名称
+          example: 圆通速递
+          type: string
+        track_count:
+          description: 物流轨迹数量
+          example: 3
+          type: integer
+        tracks:
+          description: 物流轨迹列表，按时间倒序排列
+          items:
+            $ref: "#/components/schemas/get_misc_tracking_query_200_response_tracks_inner"
+          type: array
       type: object
     get_social_bilibili_videoinfo_200_response_pages_inner:
       example:
         duration: 213
+        vid: ""
         part: 【官方MV】Rick Astley - Never Gonna Give You Up
+        weblink: ""
+        from: vupload
         page: 1
+        dimension:
+          rotate: 0
+          width: 1920
+          height: 1080
         cid: 130283995
       properties:
         cid:
@@ -13394,10 +13869,24 @@ components:
           description: 分P的标题。对于单P视频，通常是视频主标题。
           example: 【官方MV】Rick Astley - Never Gonna Give You Up
           type: string
+        from:
+          description: 视频来源。
+          example: vupload
+          type: string
         duration:
           description: 该分P的持续时间，单位为秒。
           example: 213
           type: number
+        vid:
+          description: 外部视频源 ID，通常为空。
+          example: ""
+          type: string
+        weblink:
+          description: 外链地址，通常为空。
+          example: ""
+          type: string
+        dimension:
+          $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_pages_inner_dimension"
       type: object
     get_misc_weather_200_response_life_indices_travel:
       description: 出行指数
@@ -13426,6 +13915,46 @@ components:
           type: string
         message:
           example: 文件大小超过限制（最大20MB）
+          type: string
+      type: object
+    get_misc_holiday_calendar_200_response_query:
+      description: 请求参数回显。
+      example:
+        date: 2025-10-01
+        include_nearby: true
+        month: ""
+        year: ""
+        timezone: Asia/Shanghai
+        nearby_limit: 7
+        holiday_type: legal
+      properties:
+        date:
+          description: 日视图查询参数。date 模式下为 YYYY-MM-DD，其余模式下为空字符串。
+          example: 2025-10-01
+          type: string
+        holiday_type:
+          description: 节日筛选类型。
+          example: legal
+          type: string
+        include_nearby:
+          description: 是否开启前后最近节日查询。
+          example: true
+          type: boolean
+        month:
+          description: 月视图查询参数。month 模式下为 YYYY-MM，其余模式下为空字符串。
+          example: ""
+          type: string
+        nearby_limit:
+          description: 前后最近节日返回数量上限。
+          example: 7
+          type: integer
+        timezone:
+          description: 实际生效的时区。
+          example: Asia/Shanghai
+          type: string
+        year:
+          description: 年视图查询参数。year 模式下为 YYYY，其余模式下为空字符串。
+          example: ""
           type: string
       type: object
     get_misc_worldtime_200_response:
@@ -13474,120 +14003,6 @@ components:
           example: success
           type: string
       type: object
-    get_misc_holiday_calendar_200_response_data_days_inner:
-      example:
-        date: 2025-10-01
-        is_holiday: true
-        ganzhi_year: 乙巳
-        is_workday: false
-        ganzhi_day: 甲子
-        year: 2025
-        legal_holiday_name: 国庆节
-        lunar_festival: 中秋节
-        weekday_cn: 星期三
-        lunar_month: 8
-        ganzhi_month: 乙酉
-        month: 10
-        legal_holiday_type: rest
-        solar_term: ""
-        lunar_day_name: 十五
-        solar_festival: 国庆节
-        lunar_month_name: 八月
-        lunar_day: 15
-        day: 1
-        lunar_year: 2025
-        is_rest_day: true
-        is_weekend: false
-      properties:
-        date:
-          description: 公历日期（YYYY-MM-DD）。
-          example: 2025-10-01
-          type: string
-        year:
-          description: 公历年份。
-          example: 2025
-          type: integer
-        month:
-          description: 公历月份。
-          example: 10
-          type: integer
-        day:
-          description: 公历日期（天）。
-          example: 1
-          type: integer
-        weekday_cn:
-          description: 中文星期，如星期三。
-          example: 星期三
-          type: string
-        is_weekend:
-          description: 是否为周末。
-          example: false
-          type: boolean
-        is_workday:
-          description: 是否为工作日（含法定调休上班日）。
-          example: false
-          type: boolean
-        is_rest_day:
-          description: 是否为休息日。
-          example: true
-          type: boolean
-        is_holiday:
-          description: 当天是否存在节日/节气/法定事件。
-          example: true
-          type: boolean
-        legal_holiday_name:
-          description: 法定节假日名称，无则为空。
-          example: 国庆节
-          type: string
-        legal_holiday_type:
-          description: 法定假日类型：rest 或 workday_adjust。
-          example: rest
-          type: string
-        solar_festival:
-          description: 公历节日名称，无则为空。
-          example: 国庆节
-          type: string
-        lunar_festival:
-          description: 农历节日名称，无则为空。
-          example: 中秋节
-          type: string
-        solar_term:
-          description: 节气名称，无则为空。
-          example: ""
-          type: string
-        lunar_year:
-          description: 农历年份（数字）。
-          example: 2025
-          type: integer
-        lunar_month:
-          description: 农历月份（数字）。
-          example: 8
-          type: integer
-        lunar_day:
-          description: 农历日期（数字）。
-          example: 15
-          type: integer
-        lunar_month_name:
-          description: 农历月份中文名称。
-          example: 八月
-          type: string
-        lunar_day_name:
-          description: 农历日期中文名称。
-          example: 十五
-          type: string
-        ganzhi_year:
-          description: 干支年。
-          example: 乙巳
-          type: string
-        ganzhi_month:
-          description: 干支月。
-          example: 乙酉
-          type: string
-        ganzhi_day:
-          description: 干支日。
-          example: 甲子
-          type: string
-      type: object
     post_text_aes_decrypt_advanced_request:
       properties:
         text:
@@ -13609,13 +14024,6 @@ components:
           - CFB
           example: GCM
           type: string
-          x-enumLabels:
-            GCM: GCM模式（推荐）
-            CBC: CBC模式
-            ECB: ECB模式
-            CTR: CTR模式
-            OFB: OFB模式
-            CFB: CFB模式
         padding:
           description: 填充方式（可选，必须与加密时相同）：PKCS7/ZERO/NONE。GCM模式默认为NONE
           enum:
@@ -13624,10 +14032,6 @@ components:
           - NONE
           example: NONE
           type: string
-          x-enumLabels:
-            PKCS7: PKCS7填充
-            ZERO: 零填充
-            NONE: 无填充
         iv:
           description: 初始化向量（非GCM模式必须提供，Base64编码）。此值来自加密接口返回的iv字段
           example: cmFuZG9tSVZoZXJl
@@ -13639,104 +14043,141 @@ components:
       type: object
     get_misc_holiday_calendar_200_response:
       example:
-        code: 200
-        data:
-          mode: day
-          summary:
-            legal_rest_days: 3
-            legal_workdays: 1
-            workdays: 23
-            rest_days: 10
-            weekend_days: 8
-            holiday_events: 5
-            total_days: 31
-          holidays:
-          - date: 2025-10-01
-            is_workday: false
-            name: 国庆节
-            type: legal_rest
-          - date: 2025-10-01
-            is_workday: false
-            name: 国庆节
-            type: legal_rest
-          query:
-            date: 2025-10-01
-            include_nearby: true
-            month: 2025-10
-            year: "2026"
-            timezone: Asia/Shanghai
-            nearby_limit: 7
-            holiday_type: all
-          days:
-          - date: 2025-10-01
-            is_holiday: true
-            ganzhi_year: 乙巳
-            is_workday: false
-            ganzhi_day: 甲子
-            year: 2025
-            legal_holiday_name: 国庆节
-            lunar_festival: 中秋节
-            weekday_cn: 星期三
-            lunar_month: 8
-            ganzhi_month: 乙酉
-            month: 10
-            legal_holiday_type: rest
-            solar_term: ""
-            lunar_day_name: 十五
-            solar_festival: 国庆节
-            lunar_month_name: 八月
-            lunar_day: 15
-            day: 1
-            lunar_year: 2025
-            is_rest_day: true
-            is_weekend: false
-          - date: 2025-10-01
-            is_holiday: true
-            ganzhi_year: 乙巳
-            is_workday: false
-            ganzhi_day: 甲子
-            year: 2025
-            legal_holiday_name: 国庆节
-            lunar_festival: 中秋节
-            weekday_cn: 星期三
-            lunar_month: 8
-            ganzhi_month: 乙酉
-            month: 10
-            legal_holiday_type: rest
-            solar_term: ""
-            lunar_day_name: 十五
-            solar_festival: 国庆节
-            lunar_month_name: 八月
-            lunar_day: 15
-            day: 1
-            lunar_year: 2025
-            is_rest_day: true
-            is_weekend: false
-          nearby:
-            next:
-            - date: 2025-10-01
-              name: 国庆节
+        mode: day
+        summary:
+          legal_rest_days: 1
+          legal_workdays: 0
+          workdays: 0
+          rest_days: 1
+          weekend_days: 0
+          holiday_events: 1
+          total_days: 1
+        holidays:
+        - date: 2025-10-01
+          is_workday: true
+          name: 国庆中秋
+          type: legal_rest
+        - date: 2025-10-01
+          is_workday: true
+          name: 国庆中秋
+          type: legal_rest
+        query:
+          date: 2025-10-01
+          include_nearby: true
+          month: ""
+          year: ""
+          timezone: Asia/Shanghai
+          nearby_limit: 7
+          holiday_type: legal
+        days:
+        - date: 2025-10-01
+          is_holiday: true
+          ganzhi_year: 乙巳
+          is_workday: false
+          ganzhi_day: 癸卯
+          year: 2025
+          legal_holiday_name: 国庆中秋
+          lunar_festival: ""
+          weekday_cn: 星期三
+          lunar_month: 8
+          ganzhi_month: 乙酉
+          month: 10
+          legal_holiday_type: rest
+          solar_term: ""
+          lunar_day_name: 初十
+          solar_festival: 国庆节
+          lunar_month_name: 八月
+          lunar_day: 10
+          day: 1
+          lunar_year: 2025
+          is_rest_day: true
+          is_weekend: false
+        - date: 2025-10-01
+          is_holiday: true
+          ganzhi_year: 乙巳
+          is_workday: false
+          ganzhi_day: 癸卯
+          year: 2025
+          legal_holiday_name: 国庆中秋
+          lunar_festival: ""
+          weekday_cn: 星期三
+          lunar_month: 8
+          ganzhi_month: 乙酉
+          month: 10
+          legal_holiday_type: rest
+          solar_term: ""
+          lunar_day_name: 初十
+          solar_festival: 国庆节
+          lunar_month_name: 八月
+          lunar_day: 10
+          day: 1
+          lunar_year: 2025
+          is_rest_day: true
+          is_weekend: false
+        nearby:
+          next:
+          - date: 2025-10-02
+            events:
+            - date: 2025-10-02
+              is_workday: true
+              name: 国庆中秋
               type: legal_rest
-            - date: 2025-10-01
-              name: 国庆节
+            - date: 2025-10-02
+              is_workday: true
+              name: 国庆中秋
               type: legal_rest
-            previous:
-            - date: 2025-09-17
-              name: 中秋节
-              type: lunar_festival
-            - date: 2025-09-17
-              name: 中秋节
-              type: lunar_festival
-        message: success
+          - date: 2025-10-02
+            events:
+            - date: 2025-10-02
+              is_workday: true
+              name: 国庆中秋
+              type: legal_rest
+            - date: 2025-10-02
+              is_workday: true
+              name: 国庆中秋
+              type: legal_rest
+          previous:
+          - date: 2025-09-28
+            events:
+            - date: 2025-09-28
+              is_workday: true
+              name: 国庆中秋
+              type: legal_workday_adjust
+            - date: 2025-09-28
+              is_workday: true
+              name: 国庆中秋
+              type: legal_workday_adjust
+          - date: 2025-09-28
+            events:
+            - date: 2025-09-28
+              is_workday: true
+              name: 国庆中秋
+              type: legal_workday_adjust
+            - date: 2025-09-28
+              is_workday: true
+              name: 国庆中秋
+              type: legal_workday_adjust
       properties:
-        code:
-          example: 200
-          type: integer
-        message:
-          example: success
+        mode:
+          description: 查询模式：day、month、year。
+          example: day
           type: string
-        data:
-          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_data"
+        query:
+          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_query"
+        summary:
+          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_summary"
+        days:
+          description: 日期明细列表。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_days_inner"
+          type: array
+        holidays:
+          description: 节日事件列表。
+          items:
+            $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_holidays_inner"
+          type: array
+        nearby:
+          $ref: "#/components/schemas/get_misc_holiday_calendar_200_response_nearby"
       type: object
     get_network_wxdomain_502_response:
       example:
@@ -13781,9 +14222,6 @@ components:
           - relevance
           - date
           type: string
-          x-enumLabels:
-            relevance: 按相关性排序（默认）
-            date: 按发布时间排序，最新优先
         time_range:
           description: 时间范围过滤
           enum:
@@ -13792,13 +14230,38 @@ components:
           - month
           - year
           type: string
-          x-enumLabels:
-            day: 最近24小时
-            week: 最近一周
-            month: 最近一月
-            year: 最近一年
       required:
       - query
+      type: object
+    get_misc_holiday_calendar_200_response_holidays_inner:
+      example:
+        date: 2025-10-01
+        is_workday: true
+        name: 国庆中秋
+        type: legal_rest
+      properties:
+        date:
+          description: 事件日期（YYYY-MM-DD）。
+          example: 2025-10-01
+          type: string
+        name:
+          description: 事件名称。
+          example: 国庆中秋
+          type: string
+        type:
+          description: 事件类型。
+          enum:
+          - legal_rest
+          - legal_workday_adjust
+          - solar_festival
+          - lunar_festival
+          - solar_term
+          example: legal_rest
+          type: string
+        is_workday:
+          description: 仅 legal_workday_adjust 场景才会返回。
+          example: true
+          type: boolean
       type: object
     get_network_ping_429_response:
       example:
@@ -13915,6 +14378,25 @@ components:
           example: Failed to save the image.
           type: string
       type: object
+    get_social_bilibili_videoinfo_200_response_honor_reply:
+      description: 视频荣誉信息。
+      example:
+        honor:
+        - weekly_recommend_num: 105
+          type: 1
+          aid: 75836761
+          desc: 每周必看
+        - weekly_recommend_num: 105
+          type: 1
+          aid: 75836761
+          desc: 每周必看
+      properties:
+        honor:
+          description: 荣誉列表。
+          items:
+            $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_honor_reply_honor_inner"
+          type: array
+      type: object
     get_social_bilibili_replies_200_response_replies_inner_member:
       description: 发表评论的用户信息。
       example:
@@ -13967,20 +14449,6 @@ components:
           example: "Formal, business-appropriate style"
           type: string
       type: object
-    get_misc_tracking_carriers_200_response_data_carriers_inner:
-      example:
-        code: zhongtong
-        name: 中通快递
-      properties:
-        code:
-          description: 快递公司编码，用于API调用时的carrier_code参数
-          example: zhongtong
-          type: string
-        name:
-          description: 快递公司中文名称，用于界面显示
-          example: 中通快递
-          type: string
-      type: object
     get_misc_hotboard_400_response:
       example:
         code: INVALID_ARGUMENT
@@ -14021,6 +14489,101 @@ components:
           description: 具体错误原因提示。
           example: date/month/year 只能传一个
           type: string
+      type: object
+    get_social_bilibili_videoinfo_200_response_rights:
+      description: 视频权限开关（0 或 1）。
+      example:
+        clean_mode: 0
+        free_watch: 1
+        movie: 0
+        is_cooperation: 0
+        ugc_pay: 0
+        no_background: 0
+        pay: 0
+        elec: 1
+        ugc_pay_preview: 1
+        bp: 0
+        autoplay: 1
+        download: 1
+        no_reprint: 1
+        is_360: 0
+        no_share: 0
+        hd5: 0
+        is_stein_gate: 0
+        arc_pay: 0
+      properties:
+        bp:
+          description: 是否可以承包/付费（老字段）。
+          example: 0
+          type: number
+        elec:
+          description: 是否允许付费充电。
+          example: 1
+          type: number
+        download:
+          description: 是否允许缓存/下载。
+          example: 1
+          type: number
+        movie:
+          description: 是否为电影。
+          example: 0
+          type: number
+        pay:
+          description: 是否需要付费观看。
+          example: 0
+          type: number
+        hd5:
+          description: 高码率相关老字段。
+          example: 0
+          type: number
+        no_reprint:
+          description: 是否禁止转载（1 表示禁止）。
+          example: 1
+          type: number
+        autoplay:
+          description: 是否允许自动播放。
+          example: 1
+          type: number
+        ugc_pay:
+          description: 是否为 UGC 付费内容。
+          example: 0
+          type: number
+        is_cooperation:
+          description: 是否为合作视频。
+          example: 0
+          type: number
+        ugc_pay_preview:
+          description: 是否允许付费内容试看。
+          example: 1
+          type: number
+        no_background:
+          description: 背景相关控制字段。
+          example: 0
+          type: number
+        clean_mode:
+          description: 是否为纯净模式。
+          example: 0
+          type: number
+        is_stein_gate:
+          description: 互动剧情相关字段。
+          example: 0
+          type: number
+        is_360:
+          description: 是否为 360° 全景视频。
+          example: 0
+          type: number
+        no_share:
+          description: 是否禁止分享（1 表示禁止）。
+          example: 0
+          type: number
+        arc_pay:
+          description: 是否为付费视频。
+          example: 0
+          type: number
+        free_watch:
+          description: 付费视频是否允许免费试看。
+          example: 1
+          type: number
       type: object
     post_image_svg_400_response:
       example:
@@ -14101,6 +14664,42 @@ components:
         error:
           example: Invalid or missing ID.
           type: string
+      type: object
+    get_social_bilibili_videoinfo_200_response_subtitle:
+      description: 字幕信息。
+      example:
+        allow_submit: false
+        list:
+        - subtitle_url: //i0.hdslb.com/bfs/subtitle/xxxx.json
+          lan_doc: 中文（简体）
+          author:
+            face: http://i0.hdslb.com/bfs/face/....jpg
+            name: 字幕君
+            mid: 483307278
+          lan: zh-CN
+          is_lock: false
+          id: 123456
+          author_mid: 483307278
+        - subtitle_url: //i0.hdslb.com/bfs/subtitle/xxxx.json
+          lan_doc: 中文（简体）
+          author:
+            face: http://i0.hdslb.com/bfs/face/....jpg
+            name: 字幕君
+            mid: 483307278
+          lan: zh-CN
+          is_lock: false
+          id: 123456
+          author_mid: 483307278
+      properties:
+        allow_submit:
+          description: 是否允许观众投稿字幕。
+          example: false
+          type: boolean
+        list:
+          description: 字幕列表。
+          items:
+            $ref: "#/components/schemas/get_social_bilibili_videoinfo_200_response_subtitle_list_inner"
+          type: array
       type: object
     post_text_aes_decrypt_advanced_400_response:
       example:
@@ -14254,6 +14853,50 @@ components:
           example: Invalid key length.
           type: string
       type: object
+    get_misc_holiday_calendar_200_response_nearby_next_inner_events_inner:
+      example:
+        date: 2025-10-02
+        is_workday: true
+        name: 国庆中秋
+        type: legal_rest
+      properties:
+        date:
+          description: 事件日期。
+          example: 2025-10-02
+          type: string
+        name:
+          description: 事件名称。
+          example: 国庆中秋
+          type: string
+        type:
+          description: 事件类型。
+          example: legal_rest
+          type: string
+        is_workday:
+          description: 仅调休上班事件返回。
+          example: true
+          type: boolean
+      type: object
+    get_social_bilibili_videoinfo_200_response_dimension:
+      description: 视频分辨率信息。
+      example:
+        rotate: 0
+        width: 1920
+        height: 1080
+      properties:
+        width:
+          description: 视频宽度。
+          example: 1920
+          type: number
+        height:
+          description: 视频高度。
+          example: 1080
+          type: number
+        rotate:
+          description: 旋转角度。
+          example: 0
+          type: number
+      type: object
     get_social_qq_userinfo_200_response:
       example:
         qq: "12519212"
@@ -14328,6 +14971,26 @@ components:
           example: 2024-08-14T15:45:30Z
           type: string
       type: object
+    get_social_bilibili_videoinfo_200_response_pages_inner_dimension:
+      description: 该分P的视频分辨率。
+      example:
+        rotate: 0
+        width: 1920
+        height: 1080
+      properties:
+        width:
+          description: 宽度。
+          example: 1920
+          type: number
+        height:
+          description: 高度。
+          example: 1080
+          type: number
+        rotate:
+          description: 旋转角度。
+          example: 0
+          type: number
+      type: object
     get_status_ratelimit_401_response:
       example:
         code: UNAUTHENTICATED
@@ -14373,25 +15036,6 @@ components:
           example: 100
           type: integer
       type: object
-    get_misc_holiday_calendar_200_response_data_nearby_next_inner:
-      example:
-        date: 2025-10-01
-        name: 国庆节
-        type: legal_rest
-      properties:
-        date:
-          description: 事件日期。
-          example: 2025-10-01
-          type: string
-        name:
-          description: 事件名称。
-          example: 国庆节
-          type: string
-        type:
-          description: 事件类型。
-          example: legal_rest
-          type: string
-      type: object
     get_misc_weather_200_response_life_indices_umbrella:
       description: 雨伞指数
       example:
@@ -14428,7 +15072,7 @@ components:
       example:
         code: 400
         message: Invalid request parameters
-        error: either 'text' or 'texts' must be provided
+        error: '''text'' must be provided'
       properties:
         code:
           example: 400
@@ -14437,7 +15081,7 @@ components:
           example: Invalid request parameters
           type: string
         error:
-          example: either 'text' or 'texts' must be provided
+          example: '''text'' must be provided'
           type: string
       type: object
     get_network_myip_200_response:
@@ -14447,9 +15091,10 @@ components:
         ip: 117.182.103.101
         isp: "China Mobile Communications Group Co., Ltd."
         latitude: 22.8111
-        district: 青秀区
+        district: 临桂区
         beginip: 117.182.64.0
         region: 中国 广西 南宁市
+        time_zone: Asia/Shanghai
         asn: AS9808
         longitude: 108.3168
       properties:
@@ -14490,8 +15135,12 @@ components:
           example: 117.182.127.255
           type: string
         district:
-          description: 行政区（商业查询）
-          example: 青秀区
+          description: 行政区。仅 `source=commercial` 时可能返回。
+          example: 临桂区
+          type: string
+        time_zone:
+          description: 时区名称。仅 `source=commercial` 时可能返回。
+          example: Asia/Shanghai
           type: string
       type: object
     get_misc_district_400_response:
@@ -14522,25 +15171,23 @@ components:
       type: object
     get_webparse_extractimages_200_response:
       example:
-        images:
+        page_url: https://cn.bing.com/
+        image_urls:
         - https://example.com/image1.jpg
-        - https://example.com/image2.png
-        count: 25
-        url: https://example.com
+        - "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
       properties:
-        count:
-          example: 25
-          type: integer
-        images:
+        page_url:
+          description: 实际解析的网页地址。
+          example: https://cn.bing.com/
+          type: string
+        image_urls:
+          description: 页面中提取到的图片链接列表。
           example:
           - https://example.com/image1.jpg
-          - https://example.com/image2.png
+          - "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
           items:
             type: string
           type: array
-        url:
-          example: https://example.com
-          type: string
       type: object
     get_misc_tracking_query_404_response:
       example:
@@ -14666,24 +15313,22 @@ components:
       type: object
     get_misc_tracking_carriers_200_response:
       example:
-        code: SUCCESS
-        data:
-          total: 60
-          carriers:
-          - code: zhongtong
-            name: 中通快递
-          - code: zhongtong
-            name: 中通快递
-        message: 操作成功
+        total: 13
+        carriers:
+        - code: zhongtong
+          name: 中通快递
+        - code: zhongtong
+          name: 中通快递
       properties:
-        code:
-          example: SUCCESS
-          type: string
-        message:
-          example: 操作成功
-          type: string
-        data:
-          $ref: "#/components/schemas/get_misc_tracking_carriers_200_response_data"
+        carriers:
+          description: 快递公司列表
+          items:
+            $ref: "#/components/schemas/get_misc_tracking_carriers_200_response_carriers_inner"
+          type: array
+        total:
+          description: 支持的快递公司总数
+          example: 13
+          type: integer
       type: object
     get_web_tomarkdown_async_status_200_response_anyOf:
       example:
@@ -15018,7 +15663,7 @@ components:
           example: 0
           type: number
         uv_index:
-          description: 紫外线指数（可选）
+          description: 紫外线指数（可选，国内城市通常不返回）
           example: 0
           type: number
       type: object
@@ -15080,40 +15725,6 @@ components:
           format: date-time
           type: string
       type: object
-    get_misc_tracking_query_200_response_data:
-      example:
-        tracking_number: YT1234567890123
-        carrier_name: 圆通速递
-        track_count: 3
-        tracks:
-        - context: 快件已签收，感谢使用圆通速递
-          time: 2025-10-27 15:30:00
-        - context: 快件已签收，感谢使用圆通速递
-          time: 2025-10-27 15:30:00
-        carrier_code: yuantong
-      properties:
-        tracking_number:
-          description: 快递单号
-          example: YT1234567890123
-          type: string
-        carrier_code:
-          description: 快递公司编码
-          example: yuantong
-          type: string
-        carrier_name:
-          description: 快递公司名称
-          example: 圆通速递
-          type: string
-        track_count:
-          description: 物流轨迹数量
-          example: 3
-          type: integer
-        tracks:
-          description: 物流轨迹列表，按时间倒序排列
-          items:
-            $ref: "#/components/schemas/get_misc_tracking_query_200_response_data_tracks_inner"
-          type: array
-      type: object
     get_answerbook_ask_400_response:
       example:
         code: 400
@@ -15124,34 +15735,6 @@ components:
           type: integer
         message:
           example: 问题不能为空
-          type: string
-      type: object
-    get_social_bilibili_userinfo_200_response_data:
-      example:
-        face: http://i0.hdslb.com/bfs/face/....jpg
-        level: 6
-        sex: 保密
-        name: bishi
-        sign: 嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~
-        mid: 2
-      properties:
-        face:
-          example: http://i0.hdslb.com/bfs/face/....jpg
-          type: string
-        level:
-          example: 6
-          type: integer
-        mid:
-          example: 2
-          type: integer
-        name:
-          example: bishi
-          type: string
-        sex:
-          example: 保密
-          type: string
-        sign:
-          example: 嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~
           type: string
       type: object
     post_text_aes_encrypt_200_response:

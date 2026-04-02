@@ -33,25 +33,19 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PostAiTranslateRequest" /> class.
         /// </summary>
-        /// <param name="text">单个翻译时使用的待翻译文本，与texts参数二选一。最大长度10,000字符。</param>
-        /// <param name="texts">批量翻译时使用的待翻译文本列表，与text参数二选一。最多50条，总计最大100,000字符。</param>
+        /// <param name="text">待翻译的文本内容。最大长度10,000字符。</param>
         /// <param name="sourceLang">源语言代码，可选。如果不指定，系统会自动检测源语言。</param>
         /// <param name="style">翻译风格，可选。支持casual(随意口语化)、professional(专业商务，默认)、academic(学术正式)、literary(文学艺术)。 (default to StyleEnum.Professional)</param>
         /// <param name="context">翻译上下文场景，可选。支持general(通用，默认)、business(商务)、technical(技术)、medical(医疗)、legal(法律)、marketing(市场营销)、entertainment(娱乐)、education(教育)、news(新闻)。 (default to ContextEnum.General)</param>
         /// <param name="preserveFormat">是否保留原文格式，包括换行、缩进等。 (default to true)</param>
-        /// <param name="fastMode">是否启用快速模式。快速模式响应时间约800ms，准确率95%+；普通模式响应时间约2000ms，准确率98%+。 (default to false)</param>
-        /// <param name="maxConcurrency">批量翻译时的最大并发数，范围1-10。仅在批量翻译时有效。 (default to 3)</param>
         [JsonConstructor]
-        public PostAiTranslateRequest(Option<string?> text = default, Option<List<string>?> texts = default, Option<string?> sourceLang = default, Option<StyleEnum?> style = default, Option<ContextEnum?> context = default, Option<bool?> preserveFormat = default, Option<bool?> fastMode = default, Option<int?> maxConcurrency = default)
+        public PostAiTranslateRequest(string text, Option<string?> sourceLang = default, Option<StyleEnum?> style = default, Option<ContextEnum?> context = default, Option<bool?> preserveFormat = default)
         {
-            TextOption = text;
-            TextsOption = texts;
+            Text = text;
             SourceLangOption = sourceLang;
             StyleOption = style;
             ContextOption = context;
             PreserveFormatOption = preserveFormat;
-            FastModeOption = fastMode;
-            MaxConcurrencyOption = maxConcurrency;
             OnCreated();
         }
 
@@ -348,33 +342,12 @@ namespace uapi-sdk-csharp.Model
         public ContextEnum? Context { get { return this.ContextOption; } set { this.ContextOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Text
+        /// 待翻译的文本内容。最大长度10,000字符。
         /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> TextOption { get; private set; }
-
-        /// <summary>
-        /// 单个翻译时使用的待翻译文本，与texts参数二选一。最大长度10,000字符。
-        /// </summary>
-        /// <value>单个翻译时使用的待翻译文本，与texts参数二选一。最大长度10,000字符。</value>
+        /// <value>待翻译的文本内容。最大长度10,000字符。</value>
         /* <example>Hello, how are you today?</example> */
         [JsonPropertyName("text")]
-        public string? Text { get { return this.TextOption; } set { this.TextOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Texts
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<string>?> TextsOption { get; private set; }
-
-        /// <summary>
-        /// 批量翻译时使用的待翻译文本列表，与text参数二选一。最多50条，总计最大100,000字符。
-        /// </summary>
-        /// <value>批量翻译时使用的待翻译文本列表，与text参数二选一。最多50条，总计最大100,000字符。</value>
-        [JsonPropertyName("texts")]
-        public List<string>? Texts { get { return this.TextsOption; } set { this.TextsOption = new(value); } }
+        public string Text { get; set; }
 
         /// <summary>
         /// Used to track the state of SourceLang
@@ -407,36 +380,6 @@ namespace uapi-sdk-csharp.Model
         public bool? PreserveFormat { get { return this.PreserveFormatOption; } set { this.PreserveFormatOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of FastMode
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> FastModeOption { get; private set; }
-
-        /// <summary>
-        /// 是否启用快速模式。快速模式响应时间约800ms，准确率95%+；普通模式响应时间约2000ms，准确率98%+。
-        /// </summary>
-        /// <value>是否启用快速模式。快速模式响应时间约800ms，准确率95%+；普通模式响应时间约2000ms，准确率98%+。</value>
-        /* <example>true</example> */
-        [JsonPropertyName("fast_mode")]
-        public bool? FastMode { get { return this.FastModeOption; } set { this.FastModeOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of MaxConcurrency
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> MaxConcurrencyOption { get; private set; }
-
-        /// <summary>
-        /// 批量翻译时的最大并发数，范围1-10。仅在批量翻译时有效。
-        /// </summary>
-        /// <value>批量翻译时的最大并发数，范围1-10。仅在批量翻译时有效。</value>
-        /* <example>3</example> */
-        [JsonPropertyName("max_concurrency")]
-        public int? MaxConcurrency { get { return this.MaxConcurrencyOption; } set { this.MaxConcurrencyOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -445,13 +388,10 @@ namespace uapi-sdk-csharp.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class PostAiTranslateRequest {\n");
             sb.Append("  Text: ").Append(Text).Append("\n");
-            sb.Append("  Texts: ").Append(Texts).Append("\n");
             sb.Append("  SourceLang: ").Append(SourceLang).Append("\n");
             sb.Append("  Style: ").Append(Style).Append("\n");
             sb.Append("  Context: ").Append(Context).Append("\n");
             sb.Append("  PreserveFormat: ").Append(PreserveFormat).Append("\n");
-            sb.Append("  FastMode: ").Append(FastMode).Append("\n");
-            sb.Append("  MaxConcurrency: ").Append(MaxConcurrency).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -463,18 +403,6 @@ namespace uapi-sdk-csharp.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // MaxConcurrency (int) maximum
-            if (this.MaxConcurrencyOption.IsSet && this.MaxConcurrencyOption.Value > (int)10)
-            {
-                yield return new ValidationResult("Invalid value for MaxConcurrency, must be a value less than or equal to 10.", new [] { "MaxConcurrency" });
-            }
-
-            // MaxConcurrency (int) minimum
-            if (this.MaxConcurrencyOption.IsSet && this.MaxConcurrencyOption.Value < (int)1)
-            {
-                yield return new ValidationResult("Invalid value for MaxConcurrency, must be a value greater than or equal to 1.", new [] { "MaxConcurrency" });
-            }
-
             yield break;
         }
     }
@@ -502,13 +430,10 @@ namespace uapi-sdk-csharp.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> text = default;
-            Option<List<string>?> texts = default;
             Option<string?> sourceLang = default;
             Option<PostAiTranslateRequest.StyleEnum?> style = default;
             Option<PostAiTranslateRequest.ContextEnum?> context = default;
             Option<bool?> preserveFormat = default;
-            Option<bool?> fastMode = default;
-            Option<int?> maxConcurrency = default;
 
             while (utf8JsonReader.Read())
             {
@@ -528,9 +453,6 @@ namespace uapi-sdk-csharp.Model
                         case "text":
                             text = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "texts":
-                            texts = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
                         case "source_lang":
                             sourceLang = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -547,23 +469,17 @@ namespace uapi-sdk-csharp.Model
                         case "preserve_format":
                             preserveFormat = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
-                        case "fast_mode":
-                            fastMode = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "max_concurrency":
-                            maxConcurrency = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
                         default:
                             break;
                     }
                 }
             }
 
+            if (!text.IsSet)
+                throw new ArgumentException("Property is required for class PostAiTranslateRequest.", nameof(text));
+
             if (text.IsSet && text.Value == null)
                 throw new ArgumentNullException(nameof(text), "Property is not nullable for class PostAiTranslateRequest.");
-
-            if (texts.IsSet && texts.Value == null)
-                throw new ArgumentNullException(nameof(texts), "Property is not nullable for class PostAiTranslateRequest.");
 
             if (sourceLang.IsSet && sourceLang.Value == null)
                 throw new ArgumentNullException(nameof(sourceLang), "Property is not nullable for class PostAiTranslateRequest.");
@@ -577,13 +493,7 @@ namespace uapi-sdk-csharp.Model
             if (preserveFormat.IsSet && preserveFormat.Value == null)
                 throw new ArgumentNullException(nameof(preserveFormat), "Property is not nullable for class PostAiTranslateRequest.");
 
-            if (fastMode.IsSet && fastMode.Value == null)
-                throw new ArgumentNullException(nameof(fastMode), "Property is not nullable for class PostAiTranslateRequest.");
-
-            if (maxConcurrency.IsSet && maxConcurrency.Value == null)
-                throw new ArgumentNullException(nameof(maxConcurrency), "Property is not nullable for class PostAiTranslateRequest.");
-
-            return new PostAiTranslateRequest(text, texts, sourceLang, style, context, preserveFormat, fastMode, maxConcurrency);
+            return new PostAiTranslateRequest(text.Value!, sourceLang, style, context, preserveFormat);
         }
 
         /// <summary>
@@ -610,23 +520,14 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PostAiTranslateRequest postAiTranslateRequest, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (postAiTranslateRequest.TextOption.IsSet && postAiTranslateRequest.Text == null)
+            if (postAiTranslateRequest.Text == null)
                 throw new ArgumentNullException(nameof(postAiTranslateRequest.Text), "Property is required for class PostAiTranslateRequest.");
-
-            if (postAiTranslateRequest.TextsOption.IsSet && postAiTranslateRequest.Texts == null)
-                throw new ArgumentNullException(nameof(postAiTranslateRequest.Texts), "Property is required for class PostAiTranslateRequest.");
 
             if (postAiTranslateRequest.SourceLangOption.IsSet && postAiTranslateRequest.SourceLang == null)
                 throw new ArgumentNullException(nameof(postAiTranslateRequest.SourceLang), "Property is required for class PostAiTranslateRequest.");
 
-            if (postAiTranslateRequest.TextOption.IsSet)
-                writer.WriteString("text", postAiTranslateRequest.Text);
+            writer.WriteString("text", postAiTranslateRequest.Text);
 
-            if (postAiTranslateRequest.TextsOption.IsSet)
-            {
-                writer.WritePropertyName("texts");
-                JsonSerializer.Serialize(writer, postAiTranslateRequest.Texts, jsonSerializerOptions);
-            }
             if (postAiTranslateRequest.SourceLangOption.IsSet)
                 writer.WriteString("source_lang", postAiTranslateRequest.SourceLang);
 
@@ -636,12 +537,6 @@ namespace uapi-sdk-csharp.Model
             writer.WriteString("context", contextRawValue);
             if (postAiTranslateRequest.PreserveFormatOption.IsSet)
                 writer.WriteBoolean("preserve_format", postAiTranslateRequest.PreserveFormatOption.Value!.Value);
-
-            if (postAiTranslateRequest.FastModeOption.IsSet)
-                writer.WriteBoolean("fast_mode", postAiTranslateRequest.FastModeOption.Value!.Value);
-
-            if (postAiTranslateRequest.MaxConcurrencyOption.IsSet)
-                writer.WriteNumber("max_concurrency", postAiTranslateRequest.MaxConcurrencyOption.Value!.Value);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace uapi-sdk-csharp.Model
         /// <param name="dewPoint">露点温度 °C（可选）</param>
         /// <param name="visibility">能见度 km（可选）</param>
         /// <param name="pop">降水概率 %（可选）</param>
-        /// <param name="uvIndex">紫外线指数（可选）</param>
+        /// <param name="uvIndex">紫外线指数（可选，国内城市通常不返回）</param>
         [JsonConstructor]
         public GetMiscWeather200ResponseHourlyForecastInner(Option<string?> time = default, Option<decimal?> temperature = default, Option<string?> weather = default, Option<string?> windDirection = default, Option<decimal?> windSpeed = default, Option<string?> windScale = default, Option<decimal?> humidity = default, Option<decimal?> precip = default, Option<decimal?> pressure = default, Option<decimal?> cloud = default, Option<decimal?> feelsLike = default, Option<decimal?> dewPoint = default, Option<decimal?> visibility = default, Option<decimal?> pop = default, Option<decimal?> uvIndex = default)
         {
@@ -289,9 +289,9 @@ namespace uapi-sdk-csharp.Model
         public Option<decimal?> UvIndexOption { get; private set; }
 
         /// <summary>
-        /// 紫外线指数（可选）
+        /// 紫外线指数（可选，国内城市通常不返回）
         /// </summary>
-        /// <value>紫外线指数（可选）</value>
+        /// <value>紫外线指数（可选，国内城市通常不返回）</value>
         /* <example>0</example> */
         [JsonPropertyName("uv_index")]
         public decimal? UvIndex { get { return this.UvIndexOption; } set { this.UvIndexOption = new(value); } }

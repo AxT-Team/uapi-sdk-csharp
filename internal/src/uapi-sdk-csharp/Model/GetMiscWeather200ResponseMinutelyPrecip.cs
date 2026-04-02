@@ -26,7 +26,7 @@ using uapi-sdk-csharp.Client;
 namespace uapi-sdk-csharp.Model
 {
     /// <summary>
-    /// 分钟级降水预报（minutely&#x3D;true 时返回，仅国内城市可用）
+    /// 分钟级降水预报（minutely&#x3D;true 时返回，仅国内城市可用，精确到2分钟）
     /// </summary>
     public partial class GetMiscWeather200ResponseMinutelyPrecip : IValidatableObject
     {
@@ -35,7 +35,7 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         /// <param name="summary">降水描述</param>
         /// <param name="updateTime">更新时间</param>
-        /// <param name="data">每5分钟一个数据点，共24个</param>
+        /// <param name="data">精确到2分钟的数据点</param>
         [JsonConstructor]
         public GetMiscWeather200ResponseMinutelyPrecip(Option<string?> summary = default, Option<string?> updateTime = default, Option<List<GetMiscWeather200ResponseMinutelyPrecipDataInner>?> data = default)
         {
@@ -85,9 +85,9 @@ namespace uapi-sdk-csharp.Model
         public Option<List<GetMiscWeather200ResponseMinutelyPrecipDataInner>?> DataOption { get; private set; }
 
         /// <summary>
-        /// 每5分钟一个数据点，共24个
+        /// 精确到2分钟的数据点
         /// </summary>
-        /// <value>每5分钟一个数据点，共24个</value>
+        /// <value>精确到2分钟的数据点</value>
         [JsonPropertyName("data")]
         public List<GetMiscWeather200ResponseMinutelyPrecipDataInner>? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
 

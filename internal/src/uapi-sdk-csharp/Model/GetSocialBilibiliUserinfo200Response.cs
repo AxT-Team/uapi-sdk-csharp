@@ -33,60 +33,221 @@ namespace uapi-sdk-csharp.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSocialBilibiliUserinfo200Response" /> class.
         /// </summary>
-        /// <param name="code">code</param>
-        /// <param name="data">data</param>
-        /// <param name="message">message</param>
+        /// <param name="mid">mid</param>
+        /// <param name="name">name</param>
+        /// <param name="sex">sex</param>
+        /// <param name="face">face</param>
+        /// <param name="sign">sign</param>
+        /// <param name="level">level</param>
+        /// <param name="birthday">birthday</param>
+        /// <param name="vipType">vipType</param>
+        /// <param name="vipStatus">vipStatus</param>
+        /// <param name="following">following</param>
+        /// <param name="follower">follower</param>
+        /// <param name="archiveCount">archiveCount</param>
+        /// <param name="articleCount">articleCount</param>
         [JsonConstructor]
-        public GetSocialBilibiliUserinfo200Response(Option<int?> code = default, Option<GetSocialBilibiliUserinfo200ResponseData?> data = default, Option<string?> message = default)
+        public GetSocialBilibiliUserinfo200Response(Option<int?> mid = default, Option<string?> name = default, Option<string?> sex = default, Option<string?> face = default, Option<string?> sign = default, Option<int?> level = default, Option<string?> birthday = default, Option<int?> vipType = default, Option<int?> vipStatus = default, Option<int?> following = default, Option<int?> follower = default, Option<int?> archiveCount = default, Option<int?> articleCount = default)
         {
-            CodeOption = code;
-            DataOption = data;
-            MessageOption = message;
+            MidOption = mid;
+            NameOption = name;
+            SexOption = sex;
+            FaceOption = face;
+            SignOption = sign;
+            LevelOption = level;
+            BirthdayOption = birthday;
+            VipTypeOption = vipType;
+            VipStatusOption = vipStatus;
+            FollowingOption = following;
+            FollowerOption = follower;
+            ArchiveCountOption = archiveCount;
+            ArticleCountOption = articleCount;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Code
+        /// Used to track the state of Mid
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<int?> CodeOption { get; private set; }
+        public Option<int?> MidOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Code
+        /// Gets or Sets Mid
         /// </summary>
-        /* <example>0</example> */
-        [JsonPropertyName("code")]
-        public int? Code { get { return this.CodeOption; } set { this.CodeOption = new(value); } }
+        /* <example>483307278</example> */
+        [JsonPropertyName("mid")]
+        public int? Mid { get { return this.MidOption; } set { this.MidOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of Data
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<GetSocialBilibiliUserinfo200ResponseData?> DataOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Data
-        /// </summary>
-        [JsonPropertyName("data")]
-        public GetSocialBilibiliUserinfo200ResponseData? Data { get { return this.DataOption; } set { this.DataOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Message
+        /// Used to track the state of Name
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> MessageOption { get; private set; }
+        public Option<string?> NameOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Message
+        /// Gets or Sets Name
         /// </summary>
-        /* <example>0</example> */
-        [JsonPropertyName("message")]
-        public string? Message { get { return this.MessageOption; } set { this.MessageOption = new(value); } }
+        /* <example>bishi</example> */
+        [JsonPropertyName("name")]
+        public string? Name { get { return this.NameOption; } set { this.NameOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Sex
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> SexOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Sex
+        /// </summary>
+        /* <example>保密</example> */
+        [JsonPropertyName("sex")]
+        public string? Sex { get { return this.SexOption; } set { this.SexOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Face
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> FaceOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Face
+        /// </summary>
+        /* <example>http://i0.hdslb.com/bfs/face/....jpg</example> */
+        [JsonPropertyName("face")]
+        public string? Face { get { return this.FaceOption; } set { this.FaceOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Sign
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> SignOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Sign
+        /// </summary>
+        /* <example>嗶哩嗶哩 - ( ゜- ゜)つロ 乾杯~</example> */
+        [JsonPropertyName("sign")]
+        public string? Sign { get { return this.SignOption; } set { this.SignOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Level
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> LevelOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Level
+        /// </summary>
+        /* <example>6</example> */
+        [JsonPropertyName("level")]
+        public int? Level { get { return this.LevelOption; } set { this.LevelOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Birthday
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> BirthdayOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Birthday
+        /// </summary>
+        /* <example>10-24</example> */
+        [JsonPropertyName("birthday")]
+        public string? Birthday { get { return this.BirthdayOption; } set { this.BirthdayOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of VipType
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> VipTypeOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets VipType
+        /// </summary>
+        /* <example>2</example> */
+        [JsonPropertyName("vip_type")]
+        public int? VipType { get { return this.VipTypeOption; } set { this.VipTypeOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of VipStatus
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> VipStatusOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets VipStatus
+        /// </summary>
+        /* <example>1</example> */
+        [JsonPropertyName("vip_status")]
+        public int? VipStatus { get { return this.VipStatusOption; } set { this.VipStatusOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Following
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> FollowingOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Following
+        /// </summary>
+        /* <example>148</example> */
+        [JsonPropertyName("following")]
+        public int? Following { get { return this.FollowingOption; } set { this.FollowingOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of Follower
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> FollowerOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Follower
+        /// </summary>
+        /* <example>123456</example> */
+        [JsonPropertyName("follower")]
+        public int? Follower { get { return this.FollowerOption; } set { this.FollowerOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of ArchiveCount
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> ArchiveCountOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets ArchiveCount
+        /// </summary>
+        /* <example>321</example> */
+        [JsonPropertyName("archive_count")]
+        public int? ArchiveCount { get { return this.ArchiveCountOption; } set { this.ArchiveCountOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of ArticleCount
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> ArticleCountOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets ArticleCount
+        /// </summary>
+        /* <example>12</example> */
+        [JsonPropertyName("article_count")]
+        public int? ArticleCount { get { return this.ArticleCountOption; } set { this.ArticleCountOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -96,9 +257,19 @@ namespace uapi-sdk-csharp.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class GetSocialBilibiliUserinfo200Response {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("  Mid: ").Append(Mid).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Sex: ").Append(Sex).Append("\n");
+            sb.Append("  Face: ").Append(Face).Append("\n");
+            sb.Append("  Sign: ").Append(Sign).Append("\n");
+            sb.Append("  Level: ").Append(Level).Append("\n");
+            sb.Append("  Birthday: ").Append(Birthday).Append("\n");
+            sb.Append("  VipType: ").Append(VipType).Append("\n");
+            sb.Append("  VipStatus: ").Append(VipStatus).Append("\n");
+            sb.Append("  Following: ").Append(Following).Append("\n");
+            sb.Append("  Follower: ").Append(Follower).Append("\n");
+            sb.Append("  ArchiveCount: ").Append(ArchiveCount).Append("\n");
+            sb.Append("  ArticleCount: ").Append(ArticleCount).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -136,9 +307,19 @@ namespace uapi-sdk-csharp.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<int?> code = default;
-            Option<GetSocialBilibiliUserinfo200ResponseData?> data = default;
-            Option<string?> message = default;
+            Option<int?> mid = default;
+            Option<string?> name = default;
+            Option<string?> sex = default;
+            Option<string?> face = default;
+            Option<string?> sign = default;
+            Option<int?> level = default;
+            Option<string?> birthday = default;
+            Option<int?> vipType = default;
+            Option<int?> vipStatus = default;
+            Option<int?> following = default;
+            Option<int?> follower = default;
+            Option<int?> archiveCount = default;
+            Option<int?> articleCount = default;
 
             while (utf8JsonReader.Read())
             {
@@ -155,14 +336,44 @@ namespace uapi-sdk-csharp.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "code":
-                            code = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                        case "mid":
+                            mid = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
-                        case "data":
-                            data = new Option<GetSocialBilibiliUserinfo200ResponseData?>(JsonSerializer.Deserialize<GetSocialBilibiliUserinfo200ResponseData>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "name":
+                            name = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "message":
-                            message = new Option<string?>(utf8JsonReader.GetString()!);
+                        case "sex":
+                            sex = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "face":
+                            face = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "sign":
+                            sign = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "level":
+                            level = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "birthday":
+                            birthday = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "vip_type":
+                            vipType = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "vip_status":
+                            vipStatus = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "following":
+                            following = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "follower":
+                            follower = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "archive_count":
+                            archiveCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "article_count":
+                            articleCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         default:
                             break;
@@ -170,16 +381,46 @@ namespace uapi-sdk-csharp.Model
                 }
             }
 
-            if (code.IsSet && code.Value == null)
-                throw new ArgumentNullException(nameof(code), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+            if (mid.IsSet && mid.Value == null)
+                throw new ArgumentNullException(nameof(mid), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
 
-            if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+            if (name.IsSet && name.Value == null)
+                throw new ArgumentNullException(nameof(name), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
 
-            if (message.IsSet && message.Value == null)
-                throw new ArgumentNullException(nameof(message), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+            if (sex.IsSet && sex.Value == null)
+                throw new ArgumentNullException(nameof(sex), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
 
-            return new GetSocialBilibiliUserinfo200Response(code, data, message);
+            if (face.IsSet && face.Value == null)
+                throw new ArgumentNullException(nameof(face), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (sign.IsSet && sign.Value == null)
+                throw new ArgumentNullException(nameof(sign), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (level.IsSet && level.Value == null)
+                throw new ArgumentNullException(nameof(level), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (birthday.IsSet && birthday.Value == null)
+                throw new ArgumentNullException(nameof(birthday), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (vipType.IsSet && vipType.Value == null)
+                throw new ArgumentNullException(nameof(vipType), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (vipStatus.IsSet && vipStatus.Value == null)
+                throw new ArgumentNullException(nameof(vipStatus), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (following.IsSet && following.Value == null)
+                throw new ArgumentNullException(nameof(following), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (follower.IsSet && follower.Value == null)
+                throw new ArgumentNullException(nameof(follower), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (archiveCount.IsSet && archiveCount.Value == null)
+                throw new ArgumentNullException(nameof(archiveCount), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            if (articleCount.IsSet && articleCount.Value == null)
+                throw new ArgumentNullException(nameof(articleCount), "Property is not nullable for class GetSocialBilibiliUserinfo200Response.");
+
+            return new GetSocialBilibiliUserinfo200Response(mid, name, sex, face, sign, level, birthday, vipType, vipStatus, following, follower, archiveCount, articleCount);
         }
 
         /// <summary>
@@ -206,22 +447,59 @@ namespace uapi-sdk-csharp.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, GetSocialBilibiliUserinfo200Response getSocialBilibiliUserinfo200Response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (getSocialBilibiliUserinfo200Response.DataOption.IsSet && getSocialBilibiliUserinfo200Response.Data == null)
-                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Data), "Property is required for class GetSocialBilibiliUserinfo200Response.");
+            if (getSocialBilibiliUserinfo200Response.NameOption.IsSet && getSocialBilibiliUserinfo200Response.Name == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Name), "Property is required for class GetSocialBilibiliUserinfo200Response.");
 
-            if (getSocialBilibiliUserinfo200Response.MessageOption.IsSet && getSocialBilibiliUserinfo200Response.Message == null)
-                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Message), "Property is required for class GetSocialBilibiliUserinfo200Response.");
+            if (getSocialBilibiliUserinfo200Response.SexOption.IsSet && getSocialBilibiliUserinfo200Response.Sex == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Sex), "Property is required for class GetSocialBilibiliUserinfo200Response.");
 
-            if (getSocialBilibiliUserinfo200Response.CodeOption.IsSet)
-                writer.WriteNumber("code", getSocialBilibiliUserinfo200Response.CodeOption.Value!.Value);
+            if (getSocialBilibiliUserinfo200Response.FaceOption.IsSet && getSocialBilibiliUserinfo200Response.Face == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Face), "Property is required for class GetSocialBilibiliUserinfo200Response.");
 
-            if (getSocialBilibiliUserinfo200Response.DataOption.IsSet)
-            {
-                writer.WritePropertyName("data");
-                JsonSerializer.Serialize(writer, getSocialBilibiliUserinfo200Response.Data, jsonSerializerOptions);
-            }
-            if (getSocialBilibiliUserinfo200Response.MessageOption.IsSet)
-                writer.WriteString("message", getSocialBilibiliUserinfo200Response.Message);
+            if (getSocialBilibiliUserinfo200Response.SignOption.IsSet && getSocialBilibiliUserinfo200Response.Sign == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Sign), "Property is required for class GetSocialBilibiliUserinfo200Response.");
+
+            if (getSocialBilibiliUserinfo200Response.BirthdayOption.IsSet && getSocialBilibiliUserinfo200Response.Birthday == null)
+                throw new ArgumentNullException(nameof(getSocialBilibiliUserinfo200Response.Birthday), "Property is required for class GetSocialBilibiliUserinfo200Response.");
+
+            if (getSocialBilibiliUserinfo200Response.MidOption.IsSet)
+                writer.WriteNumber("mid", getSocialBilibiliUserinfo200Response.MidOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.NameOption.IsSet)
+                writer.WriteString("name", getSocialBilibiliUserinfo200Response.Name);
+
+            if (getSocialBilibiliUserinfo200Response.SexOption.IsSet)
+                writer.WriteString("sex", getSocialBilibiliUserinfo200Response.Sex);
+
+            if (getSocialBilibiliUserinfo200Response.FaceOption.IsSet)
+                writer.WriteString("face", getSocialBilibiliUserinfo200Response.Face);
+
+            if (getSocialBilibiliUserinfo200Response.SignOption.IsSet)
+                writer.WriteString("sign", getSocialBilibiliUserinfo200Response.Sign);
+
+            if (getSocialBilibiliUserinfo200Response.LevelOption.IsSet)
+                writer.WriteNumber("level", getSocialBilibiliUserinfo200Response.LevelOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.BirthdayOption.IsSet)
+                writer.WriteString("birthday", getSocialBilibiliUserinfo200Response.Birthday);
+
+            if (getSocialBilibiliUserinfo200Response.VipTypeOption.IsSet)
+                writer.WriteNumber("vip_type", getSocialBilibiliUserinfo200Response.VipTypeOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.VipStatusOption.IsSet)
+                writer.WriteNumber("vip_status", getSocialBilibiliUserinfo200Response.VipStatusOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.FollowingOption.IsSet)
+                writer.WriteNumber("following", getSocialBilibiliUserinfo200Response.FollowingOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.FollowerOption.IsSet)
+                writer.WriteNumber("follower", getSocialBilibiliUserinfo200Response.FollowerOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.ArchiveCountOption.IsSet)
+                writer.WriteNumber("archive_count", getSocialBilibiliUserinfo200Response.ArchiveCountOption.Value!.Value);
+
+            if (getSocialBilibiliUserinfo200Response.ArticleCountOption.IsSet)
+                writer.WriteNumber("article_count", getSocialBilibiliUserinfo200Response.ArticleCountOption.Value!.Value);
         }
     }
 }

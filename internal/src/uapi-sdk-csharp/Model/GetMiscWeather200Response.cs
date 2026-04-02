@@ -35,8 +35,10 @@ namespace uapi-sdk-csharp.Model
         /// </summary>
         /// <param name="province">省份</param>
         /// <param name="city">城市名</param>
+        /// <param name="district">区县或更细一级的行政区名称。自动按 IP 定位时更常见。</param>
         /// <param name="adcode">行政区划代码（部分数据源可能为空）</param>
         /// <param name="weather">天气状况描述。默认返回中文，传 &#x60;lang&#x3D;en&#x60; 时返回英文。非固定枚举。</param>
+        /// <param name="weatherIcon">天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。</param>
         /// <param name="temperature">当前温度 °C</param>
         /// <param name="windDirection">风向</param>
         /// <param name="windPower">风力等级</param>
@@ -60,12 +62,14 @@ namespace uapi-sdk-csharp.Model
         /// <param name="minutelyPrecip">minutelyPrecip</param>
         /// <param name="lifeIndices">lifeIndices</param>
         [JsonConstructor]
-        public GetMiscWeather200Response(Option<string?> province = default, Option<string?> city = default, Option<string?> adcode = default, Option<string?> weather = default, Option<decimal?> temperature = default, Option<string?> windDirection = default, Option<string?> windPower = default, Option<decimal?> humidity = default, Option<string?> reportTime = default, Option<decimal?> feelsLike = default, Option<decimal?> visibility = default, Option<decimal?> pressure = default, Option<decimal?> uv = default, Option<decimal?> precipitation = default, Option<decimal?> cloud = default, Option<decimal?> aqi = default, Option<decimal?> aqiLevel = default, Option<string?> aqiCategory = default, Option<string?> aqiPrimary = default, Option<GetMiscWeather200ResponseAirPollutants?> airPollutants = default, Option<decimal?> tempMax = default, Option<decimal?> tempMin = default, Option<List<GetMiscWeather200ResponseForecastInner>?> forecast = default, Option<List<GetMiscWeather200ResponseHourlyForecastInner>?> hourlyForecast = default, Option<GetMiscWeather200ResponseMinutelyPrecip?> minutelyPrecip = default, Option<GetMiscWeather200ResponseLifeIndices?> lifeIndices = default)
+        public GetMiscWeather200Response(Option<string?> province = default, Option<string?> city = default, Option<string?> district = default, Option<string?> adcode = default, Option<string?> weather = default, Option<WeatherIconEnum?> weatherIcon = default, Option<decimal?> temperature = default, Option<string?> windDirection = default, Option<string?> windPower = default, Option<decimal?> humidity = default, Option<string?> reportTime = default, Option<decimal?> feelsLike = default, Option<decimal?> visibility = default, Option<decimal?> pressure = default, Option<decimal?> uv = default, Option<decimal?> precipitation = default, Option<decimal?> cloud = default, Option<decimal?> aqi = default, Option<decimal?> aqiLevel = default, Option<string?> aqiCategory = default, Option<string?> aqiPrimary = default, Option<GetMiscWeather200ResponseAirPollutants?> airPollutants = default, Option<decimal?> tempMax = default, Option<decimal?> tempMin = default, Option<List<GetMiscWeather200ResponseForecastInner>?> forecast = default, Option<List<GetMiscWeather200ResponseHourlyForecastInner>?> hourlyForecast = default, Option<GetMiscWeather200ResponseMinutelyPrecip?> minutelyPrecip = default, Option<GetMiscWeather200ResponseLifeIndices?> lifeIndices = default)
         {
             ProvinceOption = province;
             CityOption = city;
+            DistrictOption = district;
             AdcodeOption = adcode;
             WeatherOption = weather;
+            WeatherIconOption = weatherIcon;
             TemperatureOption = temperature;
             WindDirectionOption = windDirection;
             WindPowerOption = windPower;
@@ -92,6 +96,6262 @@ namespace uapi-sdk-csharp.Model
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// 天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。
+        /// </summary>
+        /// <value>天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。</value>
+        public enum WeatherIconEnum
+        {
+            /// <summary>
+            /// Enum _100 for value: 100
+            /// </summary>
+            _100 = 1,
+
+            /// <summary>
+            /// Enum _101 for value: 101
+            /// </summary>
+            _101 = 2,
+
+            /// <summary>
+            /// Enum _102 for value: 102
+            /// </summary>
+            _102 = 3,
+
+            /// <summary>
+            /// Enum _103 for value: 103
+            /// </summary>
+            _103 = 4,
+
+            /// <summary>
+            /// Enum _104 for value: 104
+            /// </summary>
+            _104 = 5,
+
+            /// <summary>
+            /// Enum _150 for value: 150
+            /// </summary>
+            _150 = 6,
+
+            /// <summary>
+            /// Enum _151 for value: 151
+            /// </summary>
+            _151 = 7,
+
+            /// <summary>
+            /// Enum _152 for value: 152
+            /// </summary>
+            _152 = 8,
+
+            /// <summary>
+            /// Enum _153 for value: 153
+            /// </summary>
+            _153 = 9,
+
+            /// <summary>
+            /// Enum _300 for value: 300
+            /// </summary>
+            _300 = 10,
+
+            /// <summary>
+            /// Enum _301 for value: 301
+            /// </summary>
+            _301 = 11,
+
+            /// <summary>
+            /// Enum _302 for value: 302
+            /// </summary>
+            _302 = 12,
+
+            /// <summary>
+            /// Enum _303 for value: 303
+            /// </summary>
+            _303 = 13,
+
+            /// <summary>
+            /// Enum _304 for value: 304
+            /// </summary>
+            _304 = 14,
+
+            /// <summary>
+            /// Enum _305 for value: 305
+            /// </summary>
+            _305 = 15,
+
+            /// <summary>
+            /// Enum _306 for value: 306
+            /// </summary>
+            _306 = 16,
+
+            /// <summary>
+            /// Enum _307 for value: 307
+            /// </summary>
+            _307 = 17,
+
+            /// <summary>
+            /// Enum _308 for value: 308
+            /// </summary>
+            _308 = 18,
+
+            /// <summary>
+            /// Enum _309 for value: 309
+            /// </summary>
+            _309 = 19,
+
+            /// <summary>
+            /// Enum _310 for value: 310
+            /// </summary>
+            _310 = 20,
+
+            /// <summary>
+            /// Enum _311 for value: 311
+            /// </summary>
+            _311 = 21,
+
+            /// <summary>
+            /// Enum _312 for value: 312
+            /// </summary>
+            _312 = 22,
+
+            /// <summary>
+            /// Enum _313 for value: 313
+            /// </summary>
+            _313 = 23,
+
+            /// <summary>
+            /// Enum _314 for value: 314
+            /// </summary>
+            _314 = 24,
+
+            /// <summary>
+            /// Enum _315 for value: 315
+            /// </summary>
+            _315 = 25,
+
+            /// <summary>
+            /// Enum _316 for value: 316
+            /// </summary>
+            _316 = 26,
+
+            /// <summary>
+            /// Enum _317 for value: 317
+            /// </summary>
+            _317 = 27,
+
+            /// <summary>
+            /// Enum _318 for value: 318
+            /// </summary>
+            _318 = 28,
+
+            /// <summary>
+            /// Enum _350 for value: 350
+            /// </summary>
+            _350 = 29,
+
+            /// <summary>
+            /// Enum _351 for value: 351
+            /// </summary>
+            _351 = 30,
+
+            /// <summary>
+            /// Enum _399 for value: 399
+            /// </summary>
+            _399 = 31,
+
+            /// <summary>
+            /// Enum _400 for value: 400
+            /// </summary>
+            _400 = 32,
+
+            /// <summary>
+            /// Enum _401 for value: 401
+            /// </summary>
+            _401 = 33,
+
+            /// <summary>
+            /// Enum _402 for value: 402
+            /// </summary>
+            _402 = 34,
+
+            /// <summary>
+            /// Enum _403 for value: 403
+            /// </summary>
+            _403 = 35,
+
+            /// <summary>
+            /// Enum _404 for value: 404
+            /// </summary>
+            _404 = 36,
+
+            /// <summary>
+            /// Enum _405 for value: 405
+            /// </summary>
+            _405 = 37,
+
+            /// <summary>
+            /// Enum _406 for value: 406
+            /// </summary>
+            _406 = 38,
+
+            /// <summary>
+            /// Enum _407 for value: 407
+            /// </summary>
+            _407 = 39,
+
+            /// <summary>
+            /// Enum _408 for value: 408
+            /// </summary>
+            _408 = 40,
+
+            /// <summary>
+            /// Enum _409 for value: 409
+            /// </summary>
+            _409 = 41,
+
+            /// <summary>
+            /// Enum _410 for value: 410
+            /// </summary>
+            _410 = 42,
+
+            /// <summary>
+            /// Enum _456 for value: 456
+            /// </summary>
+            _456 = 43,
+
+            /// <summary>
+            /// Enum _457 for value: 457
+            /// </summary>
+            _457 = 44,
+
+            /// <summary>
+            /// Enum _499 for value: 499
+            /// </summary>
+            _499 = 45,
+
+            /// <summary>
+            /// Enum _500 for value: 500
+            /// </summary>
+            _500 = 46,
+
+            /// <summary>
+            /// Enum _501 for value: 501
+            /// </summary>
+            _501 = 47,
+
+            /// <summary>
+            /// Enum _502 for value: 502
+            /// </summary>
+            _502 = 48,
+
+            /// <summary>
+            /// Enum _503 for value: 503
+            /// </summary>
+            _503 = 49,
+
+            /// <summary>
+            /// Enum _504 for value: 504
+            /// </summary>
+            _504 = 50,
+
+            /// <summary>
+            /// Enum _507 for value: 507
+            /// </summary>
+            _507 = 51,
+
+            /// <summary>
+            /// Enum _508 for value: 508
+            /// </summary>
+            _508 = 52,
+
+            /// <summary>
+            /// Enum _509 for value: 509
+            /// </summary>
+            _509 = 53,
+
+            /// <summary>
+            /// Enum _510 for value: 510
+            /// </summary>
+            _510 = 54,
+
+            /// <summary>
+            /// Enum _511 for value: 511
+            /// </summary>
+            _511 = 55,
+
+            /// <summary>
+            /// Enum _512 for value: 512
+            /// </summary>
+            _512 = 56,
+
+            /// <summary>
+            /// Enum _513 for value: 513
+            /// </summary>
+            _513 = 57,
+
+            /// <summary>
+            /// Enum _514 for value: 514
+            /// </summary>
+            _514 = 58,
+
+            /// <summary>
+            /// Enum _515 for value: 515
+            /// </summary>
+            _515 = 59,
+
+            /// <summary>
+            /// Enum _800 for value: 800
+            /// </summary>
+            _800 = 60,
+
+            /// <summary>
+            /// Enum _801 for value: 801
+            /// </summary>
+            _801 = 61,
+
+            /// <summary>
+            /// Enum _802 for value: 802
+            /// </summary>
+            _802 = 62,
+
+            /// <summary>
+            /// Enum _803 for value: 803
+            /// </summary>
+            _803 = 63,
+
+            /// <summary>
+            /// Enum _804 for value: 804
+            /// </summary>
+            _804 = 64,
+
+            /// <summary>
+            /// Enum _805 for value: 805
+            /// </summary>
+            _805 = 65,
+
+            /// <summary>
+            /// Enum _806 for value: 806
+            /// </summary>
+            _806 = 66,
+
+            /// <summary>
+            /// Enum _807 for value: 807
+            /// </summary>
+            _807 = 67,
+
+            /// <summary>
+            /// Enum _900 for value: 900
+            /// </summary>
+            _900 = 68,
+
+            /// <summary>
+            /// Enum _901 for value: 901
+            /// </summary>
+            _901 = 69,
+
+            /// <summary>
+            /// Enum _999 for value: 999
+            /// </summary>
+            _999 = 70,
+
+            /// <summary>
+            /// Enum _1001 for value: 1001
+            /// </summary>
+            _1001 = 71,
+
+            /// <summary>
+            /// Enum _1002 for value: 1002
+            /// </summary>
+            _1002 = 72,
+
+            /// <summary>
+            /// Enum _1003 for value: 1003
+            /// </summary>
+            _1003 = 73,
+
+            /// <summary>
+            /// Enum _1004 for value: 1004
+            /// </summary>
+            _1004 = 74,
+
+            /// <summary>
+            /// Enum _1005 for value: 1005
+            /// </summary>
+            _1005 = 75,
+
+            /// <summary>
+            /// Enum _1006 for value: 1006
+            /// </summary>
+            _1006 = 76,
+
+            /// <summary>
+            /// Enum _1007 for value: 1007
+            /// </summary>
+            _1007 = 77,
+
+            /// <summary>
+            /// Enum _1008 for value: 1008
+            /// </summary>
+            _1008 = 78,
+
+            /// <summary>
+            /// Enum _1009 for value: 1009
+            /// </summary>
+            _1009 = 79,
+
+            /// <summary>
+            /// Enum _1010 for value: 1010
+            /// </summary>
+            _1010 = 80,
+
+            /// <summary>
+            /// Enum _1011 for value: 1011
+            /// </summary>
+            _1011 = 81,
+
+            /// <summary>
+            /// Enum _1012 for value: 1012
+            /// </summary>
+            _1012 = 82,
+
+            /// <summary>
+            /// Enum _1013 for value: 1013
+            /// </summary>
+            _1013 = 83,
+
+            /// <summary>
+            /// Enum _1014 for value: 1014
+            /// </summary>
+            _1014 = 84,
+
+            /// <summary>
+            /// Enum _1015 for value: 1015
+            /// </summary>
+            _1015 = 85,
+
+            /// <summary>
+            /// Enum _1016 for value: 1016
+            /// </summary>
+            _1016 = 86,
+
+            /// <summary>
+            /// Enum _1017 for value: 1017
+            /// </summary>
+            _1017 = 87,
+
+            /// <summary>
+            /// Enum _1018 for value: 1018
+            /// </summary>
+            _1018 = 88,
+
+            /// <summary>
+            /// Enum _1019 for value: 1019
+            /// </summary>
+            _1019 = 89,
+
+            /// <summary>
+            /// Enum _1020 for value: 1020
+            /// </summary>
+            _1020 = 90,
+
+            /// <summary>
+            /// Enum _1021 for value: 1021
+            /// </summary>
+            _1021 = 91,
+
+            /// <summary>
+            /// Enum _1022 for value: 1022
+            /// </summary>
+            _1022 = 92,
+
+            /// <summary>
+            /// Enum _1023 for value: 1023
+            /// </summary>
+            _1023 = 93,
+
+            /// <summary>
+            /// Enum _1024 for value: 1024
+            /// </summary>
+            _1024 = 94,
+
+            /// <summary>
+            /// Enum _1025 for value: 1025
+            /// </summary>
+            _1025 = 95,
+
+            /// <summary>
+            /// Enum _1026 for value: 1026
+            /// </summary>
+            _1026 = 96,
+
+            /// <summary>
+            /// Enum _1027 for value: 1027
+            /// </summary>
+            _1027 = 97,
+
+            /// <summary>
+            /// Enum _1028 for value: 1028
+            /// </summary>
+            _1028 = 98,
+
+            /// <summary>
+            /// Enum _1029 for value: 1029
+            /// </summary>
+            _1029 = 99,
+
+            /// <summary>
+            /// Enum _1030 for value: 1030
+            /// </summary>
+            _1030 = 100,
+
+            /// <summary>
+            /// Enum _1031 for value: 1031
+            /// </summary>
+            _1031 = 101,
+
+            /// <summary>
+            /// Enum _1032 for value: 1032
+            /// </summary>
+            _1032 = 102,
+
+            /// <summary>
+            /// Enum _1033 for value: 1033
+            /// </summary>
+            _1033 = 103,
+
+            /// <summary>
+            /// Enum _1034 for value: 1034
+            /// </summary>
+            _1034 = 104,
+
+            /// <summary>
+            /// Enum _1035 for value: 1035
+            /// </summary>
+            _1035 = 105,
+
+            /// <summary>
+            /// Enum _1036 for value: 1036
+            /// </summary>
+            _1036 = 106,
+
+            /// <summary>
+            /// Enum _1037 for value: 1037
+            /// </summary>
+            _1037 = 107,
+
+            /// <summary>
+            /// Enum _1038 for value: 1038
+            /// </summary>
+            _1038 = 108,
+
+            /// <summary>
+            /// Enum _1039 for value: 1039
+            /// </summary>
+            _1039 = 109,
+
+            /// <summary>
+            /// Enum _1040 for value: 1040
+            /// </summary>
+            _1040 = 110,
+
+            /// <summary>
+            /// Enum _1041 for value: 1041
+            /// </summary>
+            _1041 = 111,
+
+            /// <summary>
+            /// Enum _1042 for value: 1042
+            /// </summary>
+            _1042 = 112,
+
+            /// <summary>
+            /// Enum _1043 for value: 1043
+            /// </summary>
+            _1043 = 113,
+
+            /// <summary>
+            /// Enum _1044 for value: 1044
+            /// </summary>
+            _1044 = 114,
+
+            /// <summary>
+            /// Enum _1045 for value: 1045
+            /// </summary>
+            _1045 = 115,
+
+            /// <summary>
+            /// Enum _1046 for value: 1046
+            /// </summary>
+            _1046 = 116,
+
+            /// <summary>
+            /// Enum _1047 for value: 1047
+            /// </summary>
+            _1047 = 117,
+
+            /// <summary>
+            /// Enum _1048 for value: 1048
+            /// </summary>
+            _1048 = 118,
+
+            /// <summary>
+            /// Enum _1049 for value: 1049
+            /// </summary>
+            _1049 = 119,
+
+            /// <summary>
+            /// Enum _1050 for value: 1050
+            /// </summary>
+            _1050 = 120,
+
+            /// <summary>
+            /// Enum _1051 for value: 1051
+            /// </summary>
+            _1051 = 121,
+
+            /// <summary>
+            /// Enum _1052 for value: 1052
+            /// </summary>
+            _1052 = 122,
+
+            /// <summary>
+            /// Enum _1053 for value: 1053
+            /// </summary>
+            _1053 = 123,
+
+            /// <summary>
+            /// Enum _1054 for value: 1054
+            /// </summary>
+            _1054 = 124,
+
+            /// <summary>
+            /// Enum _1055 for value: 1055
+            /// </summary>
+            _1055 = 125,
+
+            /// <summary>
+            /// Enum _1056 for value: 1056
+            /// </summary>
+            _1056 = 126,
+
+            /// <summary>
+            /// Enum _1057 for value: 1057
+            /// </summary>
+            _1057 = 127,
+
+            /// <summary>
+            /// Enum _1058 for value: 1058
+            /// </summary>
+            _1058 = 128,
+
+            /// <summary>
+            /// Enum _1059 for value: 1059
+            /// </summary>
+            _1059 = 129,
+
+            /// <summary>
+            /// Enum _1060 for value: 1060
+            /// </summary>
+            _1060 = 130,
+
+            /// <summary>
+            /// Enum _1061 for value: 1061
+            /// </summary>
+            _1061 = 131,
+
+            /// <summary>
+            /// Enum _1062 for value: 1062
+            /// </summary>
+            _1062 = 132,
+
+            /// <summary>
+            /// Enum _1063 for value: 1063
+            /// </summary>
+            _1063 = 133,
+
+            /// <summary>
+            /// Enum _1064 for value: 1064
+            /// </summary>
+            _1064 = 134,
+
+            /// <summary>
+            /// Enum _1065 for value: 1065
+            /// </summary>
+            _1065 = 135,
+
+            /// <summary>
+            /// Enum _1066 for value: 1066
+            /// </summary>
+            _1066 = 136,
+
+            /// <summary>
+            /// Enum _1067 for value: 1067
+            /// </summary>
+            _1067 = 137,
+
+            /// <summary>
+            /// Enum _1068 for value: 1068
+            /// </summary>
+            _1068 = 138,
+
+            /// <summary>
+            /// Enum _1069 for value: 1069
+            /// </summary>
+            _1069 = 139,
+
+            /// <summary>
+            /// Enum _1071 for value: 1071
+            /// </summary>
+            _1071 = 140,
+
+            /// <summary>
+            /// Enum _1072 for value: 1072
+            /// </summary>
+            _1072 = 141,
+
+            /// <summary>
+            /// Enum _1073 for value: 1073
+            /// </summary>
+            _1073 = 142,
+
+            /// <summary>
+            /// Enum _1074 for value: 1074
+            /// </summary>
+            _1074 = 143,
+
+            /// <summary>
+            /// Enum _1075 for value: 1075
+            /// </summary>
+            _1075 = 144,
+
+            /// <summary>
+            /// Enum _1076 for value: 1076
+            /// </summary>
+            _1076 = 145,
+
+            /// <summary>
+            /// Enum _1077 for value: 1077
+            /// </summary>
+            _1077 = 146,
+
+            /// <summary>
+            /// Enum _1078 for value: 1078
+            /// </summary>
+            _1078 = 147,
+
+            /// <summary>
+            /// Enum _1079 for value: 1079
+            /// </summary>
+            _1079 = 148,
+
+            /// <summary>
+            /// Enum _1080 for value: 1080
+            /// </summary>
+            _1080 = 149,
+
+            /// <summary>
+            /// Enum _1081 for value: 1081
+            /// </summary>
+            _1081 = 150,
+
+            /// <summary>
+            /// Enum _1082 for value: 1082
+            /// </summary>
+            _1082 = 151,
+
+            /// <summary>
+            /// Enum _1084 for value: 1084
+            /// </summary>
+            _1084 = 152,
+
+            /// <summary>
+            /// Enum _1085 for value: 1085
+            /// </summary>
+            _1085 = 153,
+
+            /// <summary>
+            /// Enum _1086 for value: 1086
+            /// </summary>
+            _1086 = 154,
+
+            /// <summary>
+            /// Enum _1087 for value: 1087
+            /// </summary>
+            _1087 = 155,
+
+            /// <summary>
+            /// Enum _1088 for value: 1088
+            /// </summary>
+            _1088 = 156,
+
+            /// <summary>
+            /// Enum _1089 for value: 1089
+            /// </summary>
+            _1089 = 157,
+
+            /// <summary>
+            /// Enum _1201 for value: 1201
+            /// </summary>
+            _1201 = 158,
+
+            /// <summary>
+            /// Enum _1202 for value: 1202
+            /// </summary>
+            _1202 = 159,
+
+            /// <summary>
+            /// Enum _1203 for value: 1203
+            /// </summary>
+            _1203 = 160,
+
+            /// <summary>
+            /// Enum _1204 for value: 1204
+            /// </summary>
+            _1204 = 161,
+
+            /// <summary>
+            /// Enum _1205 for value: 1205
+            /// </summary>
+            _1205 = 162,
+
+            /// <summary>
+            /// Enum _1206 for value: 1206
+            /// </summary>
+            _1206 = 163,
+
+            /// <summary>
+            /// Enum _1207 for value: 1207
+            /// </summary>
+            _1207 = 164,
+
+            /// <summary>
+            /// Enum _1208 for value: 1208
+            /// </summary>
+            _1208 = 165,
+
+            /// <summary>
+            /// Enum _1209 for value: 1209
+            /// </summary>
+            _1209 = 166,
+
+            /// <summary>
+            /// Enum _1210 for value: 1210
+            /// </summary>
+            _1210 = 167,
+
+            /// <summary>
+            /// Enum _1211 for value: 1211
+            /// </summary>
+            _1211 = 168,
+
+            /// <summary>
+            /// Enum _1212 for value: 1212
+            /// </summary>
+            _1212 = 169,
+
+            /// <summary>
+            /// Enum _1213 for value: 1213
+            /// </summary>
+            _1213 = 170,
+
+            /// <summary>
+            /// Enum _1214 for value: 1214
+            /// </summary>
+            _1214 = 171,
+
+            /// <summary>
+            /// Enum _1215 for value: 1215
+            /// </summary>
+            _1215 = 172,
+
+            /// <summary>
+            /// Enum _1216 for value: 1216
+            /// </summary>
+            _1216 = 173,
+
+            /// <summary>
+            /// Enum _1217 for value: 1217
+            /// </summary>
+            _1217 = 174,
+
+            /// <summary>
+            /// Enum _1218 for value: 1218
+            /// </summary>
+            _1218 = 175,
+
+            /// <summary>
+            /// Enum _1219 for value: 1219
+            /// </summary>
+            _1219 = 176,
+
+            /// <summary>
+            /// Enum _1221 for value: 1221
+            /// </summary>
+            _1221 = 177,
+
+            /// <summary>
+            /// Enum _1241 for value: 1241
+            /// </summary>
+            _1241 = 178,
+
+            /// <summary>
+            /// Enum _1242 for value: 1242
+            /// </summary>
+            _1242 = 179,
+
+            /// <summary>
+            /// Enum _1243 for value: 1243
+            /// </summary>
+            _1243 = 180,
+
+            /// <summary>
+            /// Enum _1244 for value: 1244
+            /// </summary>
+            _1244 = 181,
+
+            /// <summary>
+            /// Enum _1245 for value: 1245
+            /// </summary>
+            _1245 = 182,
+
+            /// <summary>
+            /// Enum _1246 for value: 1246
+            /// </summary>
+            _1246 = 183,
+
+            /// <summary>
+            /// Enum _1247 for value: 1247
+            /// </summary>
+            _1247 = 184,
+
+            /// <summary>
+            /// Enum _1248 for value: 1248
+            /// </summary>
+            _1248 = 185,
+
+            /// <summary>
+            /// Enum _1249 for value: 1249
+            /// </summary>
+            _1249 = 186,
+
+            /// <summary>
+            /// Enum _1250 for value: 1250
+            /// </summary>
+            _1250 = 187,
+
+            /// <summary>
+            /// Enum _1251 for value: 1251
+            /// </summary>
+            _1251 = 188,
+
+            /// <summary>
+            /// Enum _1271 for value: 1271
+            /// </summary>
+            _1271 = 189,
+
+            /// <summary>
+            /// Enum _1272 for value: 1272
+            /// </summary>
+            _1272 = 190,
+
+            /// <summary>
+            /// Enum _1273 for value: 1273
+            /// </summary>
+            _1273 = 191,
+
+            /// <summary>
+            /// Enum _1274 for value: 1274
+            /// </summary>
+            _1274 = 192,
+
+            /// <summary>
+            /// Enum _1601 for value: 1601
+            /// </summary>
+            _1601 = 193,
+
+            /// <summary>
+            /// Enum _1602 for value: 1602
+            /// </summary>
+            _1602 = 194,
+
+            /// <summary>
+            /// Enum _1603 for value: 1603
+            /// </summary>
+            _1603 = 195,
+
+            /// <summary>
+            /// Enum _1604 for value: 1604
+            /// </summary>
+            _1604 = 196,
+
+            /// <summary>
+            /// Enum _1605 for value: 1605
+            /// </summary>
+            _1605 = 197,
+
+            /// <summary>
+            /// Enum _1606 for value: 1606
+            /// </summary>
+            _1606 = 198,
+
+            /// <summary>
+            /// Enum _1607 for value: 1607
+            /// </summary>
+            _1607 = 199,
+
+            /// <summary>
+            /// Enum _1608 for value: 1608
+            /// </summary>
+            _1608 = 200,
+
+            /// <summary>
+            /// Enum _1609 for value: 1609
+            /// </summary>
+            _1609 = 201,
+
+            /// <summary>
+            /// Enum _1610 for value: 1610
+            /// </summary>
+            _1610 = 202,
+
+            /// <summary>
+            /// Enum _1701 for value: 1701
+            /// </summary>
+            _1701 = 203,
+
+            /// <summary>
+            /// Enum _1702 for value: 1702
+            /// </summary>
+            _1702 = 204,
+
+            /// <summary>
+            /// Enum _1703 for value: 1703
+            /// </summary>
+            _1703 = 205,
+
+            /// <summary>
+            /// Enum _1704 for value: 1704
+            /// </summary>
+            _1704 = 206,
+
+            /// <summary>
+            /// Enum _1705 for value: 1705
+            /// </summary>
+            _1705 = 207,
+
+            /// <summary>
+            /// Enum _1706 for value: 1706
+            /// </summary>
+            _1706 = 208,
+
+            /// <summary>
+            /// Enum _1707 for value: 1707
+            /// </summary>
+            _1707 = 209,
+
+            /// <summary>
+            /// Enum _1708 for value: 1708
+            /// </summary>
+            _1708 = 210,
+
+            /// <summary>
+            /// Enum _1709 for value: 1709
+            /// </summary>
+            _1709 = 211,
+
+            /// <summary>
+            /// Enum _1710 for value: 1710
+            /// </summary>
+            _1710 = 212,
+
+            /// <summary>
+            /// Enum _1801 for value: 1801
+            /// </summary>
+            _1801 = 213,
+
+            /// <summary>
+            /// Enum _1802 for value: 1802
+            /// </summary>
+            _1802 = 214,
+
+            /// <summary>
+            /// Enum _1803 for value: 1803
+            /// </summary>
+            _1803 = 215,
+
+            /// <summary>
+            /// Enum _1804 for value: 1804
+            /// </summary>
+            _1804 = 216,
+
+            /// <summary>
+            /// Enum _1805 for value: 1805
+            /// </summary>
+            _1805 = 217,
+
+            /// <summary>
+            /// Enum _2001 for value: 2001
+            /// </summary>
+            _2001 = 218,
+
+            /// <summary>
+            /// Enum _2002 for value: 2002
+            /// </summary>
+            _2002 = 219,
+
+            /// <summary>
+            /// Enum _2003 for value: 2003
+            /// </summary>
+            _2003 = 220,
+
+            /// <summary>
+            /// Enum _2004 for value: 2004
+            /// </summary>
+            _2004 = 221,
+
+            /// <summary>
+            /// Enum _2005 for value: 2005
+            /// </summary>
+            _2005 = 222,
+
+            /// <summary>
+            /// Enum _2006 for value: 2006
+            /// </summary>
+            _2006 = 223,
+
+            /// <summary>
+            /// Enum _2007 for value: 2007
+            /// </summary>
+            _2007 = 224,
+
+            /// <summary>
+            /// Enum _2029 for value: 2029
+            /// </summary>
+            _2029 = 225,
+
+            /// <summary>
+            /// Enum _2030 for value: 2030
+            /// </summary>
+            _2030 = 226,
+
+            /// <summary>
+            /// Enum _2031 for value: 2031
+            /// </summary>
+            _2031 = 227,
+
+            /// <summary>
+            /// Enum _2032 for value: 2032
+            /// </summary>
+            _2032 = 228,
+
+            /// <summary>
+            /// Enum _2033 for value: 2033
+            /// </summary>
+            _2033 = 229,
+
+            /// <summary>
+            /// Enum _2050 for value: 2050
+            /// </summary>
+            _2050 = 230,
+
+            /// <summary>
+            /// Enum _2051 for value: 2051
+            /// </summary>
+            _2051 = 231,
+
+            /// <summary>
+            /// Enum _2052 for value: 2052
+            /// </summary>
+            _2052 = 232,
+
+            /// <summary>
+            /// Enum _2053 for value: 2053
+            /// </summary>
+            _2053 = 233,
+
+            /// <summary>
+            /// Enum _2054 for value: 2054
+            /// </summary>
+            _2054 = 234,
+
+            /// <summary>
+            /// Enum _2070 for value: 2070
+            /// </summary>
+            _2070 = 235,
+
+            /// <summary>
+            /// Enum _2071 for value: 2071
+            /// </summary>
+            _2071 = 236,
+
+            /// <summary>
+            /// Enum _2072 for value: 2072
+            /// </summary>
+            _2072 = 237,
+
+            /// <summary>
+            /// Enum _2073 for value: 2073
+            /// </summary>
+            _2073 = 238,
+
+            /// <summary>
+            /// Enum _2074 for value: 2074
+            /// </summary>
+            _2074 = 239,
+
+            /// <summary>
+            /// Enum _2075 for value: 2075
+            /// </summary>
+            _2075 = 240,
+
+            /// <summary>
+            /// Enum _2076 for value: 2076
+            /// </summary>
+            _2076 = 241,
+
+            /// <summary>
+            /// Enum _2077 for value: 2077
+            /// </summary>
+            _2077 = 242,
+
+            /// <summary>
+            /// Enum _2078 for value: 2078
+            /// </summary>
+            _2078 = 243,
+
+            /// <summary>
+            /// Enum _2079 for value: 2079
+            /// </summary>
+            _2079 = 244,
+
+            /// <summary>
+            /// Enum _2080 for value: 2080
+            /// </summary>
+            _2080 = 245,
+
+            /// <summary>
+            /// Enum _2081 for value: 2081
+            /// </summary>
+            _2081 = 246,
+
+            /// <summary>
+            /// Enum _2082 for value: 2082
+            /// </summary>
+            _2082 = 247,
+
+            /// <summary>
+            /// Enum _2083 for value: 2083
+            /// </summary>
+            _2083 = 248,
+
+            /// <summary>
+            /// Enum _2084 for value: 2084
+            /// </summary>
+            _2084 = 249,
+
+            /// <summary>
+            /// Enum _2085 for value: 2085
+            /// </summary>
+            _2085 = 250,
+
+            /// <summary>
+            /// Enum _2100 for value: 2100
+            /// </summary>
+            _2100 = 251,
+
+            /// <summary>
+            /// Enum _2101 for value: 2101
+            /// </summary>
+            _2101 = 252,
+
+            /// <summary>
+            /// Enum _2102 for value: 2102
+            /// </summary>
+            _2102 = 253,
+
+            /// <summary>
+            /// Enum _2103 for value: 2103
+            /// </summary>
+            _2103 = 254,
+
+            /// <summary>
+            /// Enum _2104 for value: 2104
+            /// </summary>
+            _2104 = 255,
+
+            /// <summary>
+            /// Enum _2105 for value: 2105
+            /// </summary>
+            _2105 = 256,
+
+            /// <summary>
+            /// Enum _2106 for value: 2106
+            /// </summary>
+            _2106 = 257,
+
+            /// <summary>
+            /// Enum _2107 for value: 2107
+            /// </summary>
+            _2107 = 258,
+
+            /// <summary>
+            /// Enum _2108 for value: 2108
+            /// </summary>
+            _2108 = 259,
+
+            /// <summary>
+            /// Enum _2109 for value: 2109
+            /// </summary>
+            _2109 = 260,
+
+            /// <summary>
+            /// Enum _2111 for value: 2111
+            /// </summary>
+            _2111 = 261,
+
+            /// <summary>
+            /// Enum _2120 for value: 2120
+            /// </summary>
+            _2120 = 262,
+
+            /// <summary>
+            /// Enum _2121 for value: 2121
+            /// </summary>
+            _2121 = 263,
+
+            /// <summary>
+            /// Enum _2122 for value: 2122
+            /// </summary>
+            _2122 = 264,
+
+            /// <summary>
+            /// Enum _2123 for value: 2123
+            /// </summary>
+            _2123 = 265,
+
+            /// <summary>
+            /// Enum _2124 for value: 2124
+            /// </summary>
+            _2124 = 266,
+
+            /// <summary>
+            /// Enum _2125 for value: 2125
+            /// </summary>
+            _2125 = 267,
+
+            /// <summary>
+            /// Enum _2126 for value: 2126
+            /// </summary>
+            _2126 = 268,
+
+            /// <summary>
+            /// Enum _2127 for value: 2127
+            /// </summary>
+            _2127 = 269,
+
+            /// <summary>
+            /// Enum _2128 for value: 2128
+            /// </summary>
+            _2128 = 270,
+
+            /// <summary>
+            /// Enum _2129 for value: 2129
+            /// </summary>
+            _2129 = 271,
+
+            /// <summary>
+            /// Enum _2130 for value: 2130
+            /// </summary>
+            _2130 = 272,
+
+            /// <summary>
+            /// Enum _2131 for value: 2131
+            /// </summary>
+            _2131 = 273,
+
+            /// <summary>
+            /// Enum _2132 for value: 2132
+            /// </summary>
+            _2132 = 274,
+
+            /// <summary>
+            /// Enum _2133 for value: 2133
+            /// </summary>
+            _2133 = 275,
+
+            /// <summary>
+            /// Enum _2134 for value: 2134
+            /// </summary>
+            _2134 = 276,
+
+            /// <summary>
+            /// Enum _2135 for value: 2135
+            /// </summary>
+            _2135 = 277,
+
+            /// <summary>
+            /// Enum _2150 for value: 2150
+            /// </summary>
+            _2150 = 278,
+
+            /// <summary>
+            /// Enum _2151 for value: 2151
+            /// </summary>
+            _2151 = 279,
+
+            /// <summary>
+            /// Enum _2152 for value: 2152
+            /// </summary>
+            _2152 = 280,
+
+            /// <summary>
+            /// Enum _2153 for value: 2153
+            /// </summary>
+            _2153 = 281,
+
+            /// <summary>
+            /// Enum _2154 for value: 2154
+            /// </summary>
+            _2154 = 282,
+
+            /// <summary>
+            /// Enum _2155 for value: 2155
+            /// </summary>
+            _2155 = 283,
+
+            /// <summary>
+            /// Enum _2156 for value: 2156
+            /// </summary>
+            _2156 = 284,
+
+            /// <summary>
+            /// Enum _2157 for value: 2157
+            /// </summary>
+            _2157 = 285,
+
+            /// <summary>
+            /// Enum _2158 for value: 2158
+            /// </summary>
+            _2158 = 286,
+
+            /// <summary>
+            /// Enum _2159 for value: 2159
+            /// </summary>
+            _2159 = 287,
+
+            /// <summary>
+            /// Enum _2160 for value: 2160
+            /// </summary>
+            _2160 = 288,
+
+            /// <summary>
+            /// Enum _2161 for value: 2161
+            /// </summary>
+            _2161 = 289,
+
+            /// <summary>
+            /// Enum _2162 for value: 2162
+            /// </summary>
+            _2162 = 290,
+
+            /// <summary>
+            /// Enum _2163 for value: 2163
+            /// </summary>
+            _2163 = 291,
+
+            /// <summary>
+            /// Enum _2164 for value: 2164
+            /// </summary>
+            _2164 = 292,
+
+            /// <summary>
+            /// Enum _2165 for value: 2165
+            /// </summary>
+            _2165 = 293,
+
+            /// <summary>
+            /// Enum _2166 for value: 2166
+            /// </summary>
+            _2166 = 294,
+
+            /// <summary>
+            /// Enum _2167 for value: 2167
+            /// </summary>
+            _2167 = 295,
+
+            /// <summary>
+            /// Enum _2190 for value: 2190
+            /// </summary>
+            _2190 = 296,
+
+            /// <summary>
+            /// Enum _2191 for value: 2191
+            /// </summary>
+            _2191 = 297,
+
+            /// <summary>
+            /// Enum _2192 for value: 2192
+            /// </summary>
+            _2192 = 298,
+
+            /// <summary>
+            /// Enum _2193 for value: 2193
+            /// </summary>
+            _2193 = 299,
+
+            /// <summary>
+            /// Enum _2200 for value: 2200
+            /// </summary>
+            _2200 = 300,
+
+            /// <summary>
+            /// Enum _2201 for value: 2201
+            /// </summary>
+            _2201 = 301,
+
+            /// <summary>
+            /// Enum _2202 for value: 2202
+            /// </summary>
+            _2202 = 302,
+
+            /// <summary>
+            /// Enum _2203 for value: 2203
+            /// </summary>
+            _2203 = 303,
+
+            /// <summary>
+            /// Enum _2204 for value: 2204
+            /// </summary>
+            _2204 = 304,
+
+            /// <summary>
+            /// Enum _2205 for value: 2205
+            /// </summary>
+            _2205 = 305,
+
+            /// <summary>
+            /// Enum _2207 for value: 2207
+            /// </summary>
+            _2207 = 306,
+
+            /// <summary>
+            /// Enum _2208 for value: 2208
+            /// </summary>
+            _2208 = 307,
+
+            /// <summary>
+            /// Enum _2209 for value: 2209
+            /// </summary>
+            _2209 = 308,
+
+            /// <summary>
+            /// Enum _2210 for value: 2210
+            /// </summary>
+            _2210 = 309,
+
+            /// <summary>
+            /// Enum _2211 for value: 2211
+            /// </summary>
+            _2211 = 310,
+
+            /// <summary>
+            /// Enum _2212 for value: 2212
+            /// </summary>
+            _2212 = 311,
+
+            /// <summary>
+            /// Enum _2213 for value: 2213
+            /// </summary>
+            _2213 = 312,
+
+            /// <summary>
+            /// Enum _2214 for value: 2214
+            /// </summary>
+            _2214 = 313,
+
+            /// <summary>
+            /// Enum _2215 for value: 2215
+            /// </summary>
+            _2215 = 314,
+
+            /// <summary>
+            /// Enum _2216 for value: 2216
+            /// </summary>
+            _2216 = 315,
+
+            /// <summary>
+            /// Enum _2217 for value: 2217
+            /// </summary>
+            _2217 = 316,
+
+            /// <summary>
+            /// Enum _2218 for value: 2218
+            /// </summary>
+            _2218 = 317,
+
+            /// <summary>
+            /// Enum _2300 for value: 2300
+            /// </summary>
+            _2300 = 318,
+
+            /// <summary>
+            /// Enum _2301 for value: 2301
+            /// </summary>
+            _2301 = 319,
+
+            /// <summary>
+            /// Enum _2302 for value: 2302
+            /// </summary>
+            _2302 = 320,
+
+            /// <summary>
+            /// Enum _2303 for value: 2303
+            /// </summary>
+            _2303 = 321,
+
+            /// <summary>
+            /// Enum _2304 for value: 2304
+            /// </summary>
+            _2304 = 322,
+
+            /// <summary>
+            /// Enum _2305 for value: 2305
+            /// </summary>
+            _2305 = 323,
+
+            /// <summary>
+            /// Enum _2306 for value: 2306
+            /// </summary>
+            _2306 = 324,
+
+            /// <summary>
+            /// Enum _2307 for value: 2307
+            /// </summary>
+            _2307 = 325,
+
+            /// <summary>
+            /// Enum _2308 for value: 2308
+            /// </summary>
+            _2308 = 326,
+
+            /// <summary>
+            /// Enum _2309 for value: 2309
+            /// </summary>
+            _2309 = 327,
+
+            /// <summary>
+            /// Enum _2311 for value: 2311
+            /// </summary>
+            _2311 = 328,
+
+            /// <summary>
+            /// Enum _2312 for value: 2312
+            /// </summary>
+            _2312 = 329,
+
+            /// <summary>
+            /// Enum _2313 for value: 2313
+            /// </summary>
+            _2313 = 330,
+
+            /// <summary>
+            /// Enum _2314 for value: 2314
+            /// </summary>
+            _2314 = 331,
+
+            /// <summary>
+            /// Enum _2315 for value: 2315
+            /// </summary>
+            _2315 = 332,
+
+            /// <summary>
+            /// Enum _2316 for value: 2316
+            /// </summary>
+            _2316 = 333,
+
+            /// <summary>
+            /// Enum _2317 for value: 2317
+            /// </summary>
+            _2317 = 334,
+
+            /// <summary>
+            /// Enum _2318 for value: 2318
+            /// </summary>
+            _2318 = 335,
+
+            /// <summary>
+            /// Enum _2319 for value: 2319
+            /// </summary>
+            _2319 = 336,
+
+            /// <summary>
+            /// Enum _2320 for value: 2320
+            /// </summary>
+            _2320 = 337,
+
+            /// <summary>
+            /// Enum _2321 for value: 2321
+            /// </summary>
+            _2321 = 338,
+
+            /// <summary>
+            /// Enum _2322 for value: 2322
+            /// </summary>
+            _2322 = 339,
+
+            /// <summary>
+            /// Enum _2323 for value: 2323
+            /// </summary>
+            _2323 = 340,
+
+            /// <summary>
+            /// Enum _2324 for value: 2324
+            /// </summary>
+            _2324 = 341,
+
+            /// <summary>
+            /// Enum _2325 for value: 2325
+            /// </summary>
+            _2325 = 342,
+
+            /// <summary>
+            /// Enum _2326 for value: 2326
+            /// </summary>
+            _2326 = 343,
+
+            /// <summary>
+            /// Enum _2327 for value: 2327
+            /// </summary>
+            _2327 = 344,
+
+            /// <summary>
+            /// Enum _2328 for value: 2328
+            /// </summary>
+            _2328 = 345,
+
+            /// <summary>
+            /// Enum _2330 for value: 2330
+            /// </summary>
+            _2330 = 346,
+
+            /// <summary>
+            /// Enum _2331 for value: 2331
+            /// </summary>
+            _2331 = 347,
+
+            /// <summary>
+            /// Enum _2332 for value: 2332
+            /// </summary>
+            _2332 = 348,
+
+            /// <summary>
+            /// Enum _2333 for value: 2333
+            /// </summary>
+            _2333 = 349,
+
+            /// <summary>
+            /// Enum _2341 for value: 2341
+            /// </summary>
+            _2341 = 350,
+
+            /// <summary>
+            /// Enum _2343 for value: 2343
+            /// </summary>
+            _2343 = 351,
+
+            /// <summary>
+            /// Enum _2345 for value: 2345
+            /// </summary>
+            _2345 = 352,
+
+            /// <summary>
+            /// Enum _2346 for value: 2346
+            /// </summary>
+            _2346 = 353,
+
+            /// <summary>
+            /// Enum _2348 for value: 2348
+            /// </summary>
+            _2348 = 354,
+
+            /// <summary>
+            /// Enum _2349 for value: 2349
+            /// </summary>
+            _2349 = 355,
+
+            /// <summary>
+            /// Enum _2350 for value: 2350
+            /// </summary>
+            _2350 = 356,
+
+            /// <summary>
+            /// Enum _2351 for value: 2351
+            /// </summary>
+            _2351 = 357,
+
+            /// <summary>
+            /// Enum _2352 for value: 2352
+            /// </summary>
+            _2352 = 358,
+
+            /// <summary>
+            /// Enum _2353 for value: 2353
+            /// </summary>
+            _2353 = 359,
+
+            /// <summary>
+            /// Enum _2354 for value: 2354
+            /// </summary>
+            _2354 = 360,
+
+            /// <summary>
+            /// Enum _2355 for value: 2355
+            /// </summary>
+            _2355 = 361,
+
+            /// <summary>
+            /// Enum _2356 for value: 2356
+            /// </summary>
+            _2356 = 362,
+
+            /// <summary>
+            /// Enum _2357 for value: 2357
+            /// </summary>
+            _2357 = 363,
+
+            /// <summary>
+            /// Enum _2358 for value: 2358
+            /// </summary>
+            _2358 = 364,
+
+            /// <summary>
+            /// Enum _2359 for value: 2359
+            /// </summary>
+            _2359 = 365,
+
+            /// <summary>
+            /// Enum _2360 for value: 2360
+            /// </summary>
+            _2360 = 366,
+
+            /// <summary>
+            /// Enum _2361 for value: 2361
+            /// </summary>
+            _2361 = 367,
+
+            /// <summary>
+            /// Enum _2362 for value: 2362
+            /// </summary>
+            _2362 = 368,
+
+            /// <summary>
+            /// Enum _2363 for value: 2363
+            /// </summary>
+            _2363 = 369,
+
+            /// <summary>
+            /// Enum _2364 for value: 2364
+            /// </summary>
+            _2364 = 370,
+
+            /// <summary>
+            /// Enum _2365 for value: 2365
+            /// </summary>
+            _2365 = 371,
+
+            /// <summary>
+            /// Enum _2366 for value: 2366
+            /// </summary>
+            _2366 = 372,
+
+            /// <summary>
+            /// Enum _2367 for value: 2367
+            /// </summary>
+            _2367 = 373,
+
+            /// <summary>
+            /// Enum _2368 for value: 2368
+            /// </summary>
+            _2368 = 374,
+
+            /// <summary>
+            /// Enum _2369 for value: 2369
+            /// </summary>
+            _2369 = 375,
+
+            /// <summary>
+            /// Enum _2370 for value: 2370
+            /// </summary>
+            _2370 = 376,
+
+            /// <summary>
+            /// Enum _2371 for value: 2371
+            /// </summary>
+            _2371 = 377,
+
+            /// <summary>
+            /// Enum _2372 for value: 2372
+            /// </summary>
+            _2372 = 378,
+
+            /// <summary>
+            /// Enum _2373 for value: 2373
+            /// </summary>
+            _2373 = 379,
+
+            /// <summary>
+            /// Enum _2374 for value: 2374
+            /// </summary>
+            _2374 = 380,
+
+            /// <summary>
+            /// Enum _2375 for value: 2375
+            /// </summary>
+            _2375 = 381,
+
+            /// <summary>
+            /// Enum _2376 for value: 2376
+            /// </summary>
+            _2376 = 382,
+
+            /// <summary>
+            /// Enum _2377 for value: 2377
+            /// </summary>
+            _2377 = 383,
+
+            /// <summary>
+            /// Enum _2378 for value: 2378
+            /// </summary>
+            _2378 = 384,
+
+            /// <summary>
+            /// Enum _2379 for value: 2379
+            /// </summary>
+            _2379 = 385,
+
+            /// <summary>
+            /// Enum _2380 for value: 2380
+            /// </summary>
+            _2380 = 386,
+
+            /// <summary>
+            /// Enum _2381 for value: 2381
+            /// </summary>
+            _2381 = 387,
+
+            /// <summary>
+            /// Enum _2382 for value: 2382
+            /// </summary>
+            _2382 = 388,
+
+            /// <summary>
+            /// Enum _2383 for value: 2383
+            /// </summary>
+            _2383 = 389,
+
+            /// <summary>
+            /// Enum _2384 for value: 2384
+            /// </summary>
+            _2384 = 390,
+
+            /// <summary>
+            /// Enum _2385 for value: 2385
+            /// </summary>
+            _2385 = 391,
+
+            /// <summary>
+            /// Enum _2386 for value: 2386
+            /// </summary>
+            _2386 = 392,
+
+            /// <summary>
+            /// Enum _2387 for value: 2387
+            /// </summary>
+            _2387 = 393,
+
+            /// <summary>
+            /// Enum _2388 for value: 2388
+            /// </summary>
+            _2388 = 394,
+
+            /// <summary>
+            /// Enum _2389 for value: 2389
+            /// </summary>
+            _2389 = 395,
+
+            /// <summary>
+            /// Enum _2390 for value: 2390
+            /// </summary>
+            _2390 = 396,
+
+            /// <summary>
+            /// Enum _2391 for value: 2391
+            /// </summary>
+            _2391 = 397,
+
+            /// <summary>
+            /// Enum _2392 for value: 2392
+            /// </summary>
+            _2392 = 398,
+
+            /// <summary>
+            /// Enum _2393 for value: 2393
+            /// </summary>
+            _2393 = 399,
+
+            /// <summary>
+            /// Enum _2394 for value: 2394
+            /// </summary>
+            _2394 = 400,
+
+            /// <summary>
+            /// Enum _2395 for value: 2395
+            /// </summary>
+            _2395 = 401,
+
+            /// <summary>
+            /// Enum _2396 for value: 2396
+            /// </summary>
+            _2396 = 402,
+
+            /// <summary>
+            /// Enum _2397 for value: 2397
+            /// </summary>
+            _2397 = 403,
+
+            /// <summary>
+            /// Enum _2398 for value: 2398
+            /// </summary>
+            _2398 = 404,
+
+            /// <summary>
+            /// Enum _2399 for value: 2399
+            /// </summary>
+            _2399 = 405,
+
+            /// <summary>
+            /// Enum _2400 for value: 2400
+            /// </summary>
+            _2400 = 406,
+
+            /// <summary>
+            /// Enum _2409 for value: 2409
+            /// </summary>
+            _2409 = 407,
+
+            /// <summary>
+            /// Enum _2411 for value: 2411
+            /// </summary>
+            _2411 = 408,
+
+            /// <summary>
+            /// Enum _2412 for value: 2412
+            /// </summary>
+            _2412 = 409,
+
+            /// <summary>
+            /// Enum _2413 for value: 2413
+            /// </summary>
+            _2413 = 410,
+
+            /// <summary>
+            /// Enum _2414 for value: 2414
+            /// </summary>
+            _2414 = 411,
+
+            /// <summary>
+            /// Enum _2415 for value: 2415
+            /// </summary>
+            _2415 = 412,
+
+            /// <summary>
+            /// Enum _2416 for value: 2416
+            /// </summary>
+            _2416 = 413,
+
+            /// <summary>
+            /// Enum _2417 for value: 2417
+            /// </summary>
+            _2417 = 414,
+
+            /// <summary>
+            /// Enum _2418 for value: 2418
+            /// </summary>
+            _2418 = 415,
+
+            /// <summary>
+            /// Enum _2419 for value: 2419
+            /// </summary>
+            _2419 = 416,
+
+            /// <summary>
+            /// Enum _2420 for value: 2420
+            /// </summary>
+            _2420 = 417,
+
+            /// <summary>
+            /// Enum _2421 for value: 2421
+            /// </summary>
+            _2421 = 418,
+
+            /// <summary>
+            /// Enum _2422 for value: 2422
+            /// </summary>
+            _2422 = 419,
+
+            /// <summary>
+            /// Enum _2423 for value: 2423
+            /// </summary>
+            _2423 = 420,
+
+            /// <summary>
+            /// Enum _2424 for value: 2424
+            /// </summary>
+            _2424 = 421,
+
+            /// <summary>
+            /// Enum _2425 for value: 2425
+            /// </summary>
+            _2425 = 422,
+
+            /// <summary>
+            /// Enum _2426 for value: 2426
+            /// </summary>
+            _2426 = 423,
+
+            /// <summary>
+            /// Enum _2501 for value: 2501
+            /// </summary>
+            _2501 = 424,
+
+            /// <summary>
+            /// Enum _2502 for value: 2502
+            /// </summary>
+            _2502 = 425,
+
+            /// <summary>
+            /// Enum _2521 for value: 2521
+            /// </summary>
+            _2521 = 426,
+
+            /// <summary>
+            /// Enum _2522 for value: 2522
+            /// </summary>
+            _2522 = 427,
+
+            /// <summary>
+            /// Enum _2523 for value: 2523
+            /// </summary>
+            _2523 = 428,
+
+            /// <summary>
+            /// Enum _2524 for value: 2524
+            /// </summary>
+            _2524 = 429,
+
+            /// <summary>
+            /// Enum _2525 for value: 2525
+            /// </summary>
+            _2525 = 430,
+
+            /// <summary>
+            /// Enum _2526 for value: 2526
+            /// </summary>
+            _2526 = 431,
+
+            /// <summary>
+            /// Enum _2527 for value: 2527
+            /// </summary>
+            _2527 = 432,
+
+            /// <summary>
+            /// Enum _2528 for value: 2528
+            /// </summary>
+            _2528 = 433,
+
+            /// <summary>
+            /// Enum _2529 for value: 2529
+            /// </summary>
+            _2529 = 434,
+
+            /// <summary>
+            /// Enum _2530 for value: 2530
+            /// </summary>
+            _2530 = 435,
+
+            /// <summary>
+            /// Enum _2531 for value: 2531
+            /// </summary>
+            _2531 = 436,
+
+            /// <summary>
+            /// Enum _2532 for value: 2532
+            /// </summary>
+            _2532 = 437,
+
+            /// <summary>
+            /// Enum _2550 for value: 2550
+            /// </summary>
+            _2550 = 438,
+
+            /// <summary>
+            /// Enum _2551 for value: 2551
+            /// </summary>
+            _2551 = 439,
+
+            /// <summary>
+            /// Enum _2552 for value: 2552
+            /// </summary>
+            _2552 = 440,
+
+            /// <summary>
+            /// Enum _2553 for value: 2553
+            /// </summary>
+            _2553 = 441,
+
+            /// <summary>
+            /// Enum _2554 for value: 2554
+            /// </summary>
+            _2554 = 442,
+
+            /// <summary>
+            /// Enum _9999 for value: 9999
+            /// </summary>
+            _9999 = 443
+        }
+
+        /// <summary>
+        /// Returns a <see cref="WeatherIconEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static WeatherIconEnum WeatherIconEnumFromString(string value)
+        {
+            if (value.Equals("100"))
+                return WeatherIconEnum._100;
+
+            if (value.Equals("101"))
+                return WeatherIconEnum._101;
+
+            if (value.Equals("102"))
+                return WeatherIconEnum._102;
+
+            if (value.Equals("103"))
+                return WeatherIconEnum._103;
+
+            if (value.Equals("104"))
+                return WeatherIconEnum._104;
+
+            if (value.Equals("150"))
+                return WeatherIconEnum._150;
+
+            if (value.Equals("151"))
+                return WeatherIconEnum._151;
+
+            if (value.Equals("152"))
+                return WeatherIconEnum._152;
+
+            if (value.Equals("153"))
+                return WeatherIconEnum._153;
+
+            if (value.Equals("300"))
+                return WeatherIconEnum._300;
+
+            if (value.Equals("301"))
+                return WeatherIconEnum._301;
+
+            if (value.Equals("302"))
+                return WeatherIconEnum._302;
+
+            if (value.Equals("303"))
+                return WeatherIconEnum._303;
+
+            if (value.Equals("304"))
+                return WeatherIconEnum._304;
+
+            if (value.Equals("305"))
+                return WeatherIconEnum._305;
+
+            if (value.Equals("306"))
+                return WeatherIconEnum._306;
+
+            if (value.Equals("307"))
+                return WeatherIconEnum._307;
+
+            if (value.Equals("308"))
+                return WeatherIconEnum._308;
+
+            if (value.Equals("309"))
+                return WeatherIconEnum._309;
+
+            if (value.Equals("310"))
+                return WeatherIconEnum._310;
+
+            if (value.Equals("311"))
+                return WeatherIconEnum._311;
+
+            if (value.Equals("312"))
+                return WeatherIconEnum._312;
+
+            if (value.Equals("313"))
+                return WeatherIconEnum._313;
+
+            if (value.Equals("314"))
+                return WeatherIconEnum._314;
+
+            if (value.Equals("315"))
+                return WeatherIconEnum._315;
+
+            if (value.Equals("316"))
+                return WeatherIconEnum._316;
+
+            if (value.Equals("317"))
+                return WeatherIconEnum._317;
+
+            if (value.Equals("318"))
+                return WeatherIconEnum._318;
+
+            if (value.Equals("350"))
+                return WeatherIconEnum._350;
+
+            if (value.Equals("351"))
+                return WeatherIconEnum._351;
+
+            if (value.Equals("399"))
+                return WeatherIconEnum._399;
+
+            if (value.Equals("400"))
+                return WeatherIconEnum._400;
+
+            if (value.Equals("401"))
+                return WeatherIconEnum._401;
+
+            if (value.Equals("402"))
+                return WeatherIconEnum._402;
+
+            if (value.Equals("403"))
+                return WeatherIconEnum._403;
+
+            if (value.Equals("404"))
+                return WeatherIconEnum._404;
+
+            if (value.Equals("405"))
+                return WeatherIconEnum._405;
+
+            if (value.Equals("406"))
+                return WeatherIconEnum._406;
+
+            if (value.Equals("407"))
+                return WeatherIconEnum._407;
+
+            if (value.Equals("408"))
+                return WeatherIconEnum._408;
+
+            if (value.Equals("409"))
+                return WeatherIconEnum._409;
+
+            if (value.Equals("410"))
+                return WeatherIconEnum._410;
+
+            if (value.Equals("456"))
+                return WeatherIconEnum._456;
+
+            if (value.Equals("457"))
+                return WeatherIconEnum._457;
+
+            if (value.Equals("499"))
+                return WeatherIconEnum._499;
+
+            if (value.Equals("500"))
+                return WeatherIconEnum._500;
+
+            if (value.Equals("501"))
+                return WeatherIconEnum._501;
+
+            if (value.Equals("502"))
+                return WeatherIconEnum._502;
+
+            if (value.Equals("503"))
+                return WeatherIconEnum._503;
+
+            if (value.Equals("504"))
+                return WeatherIconEnum._504;
+
+            if (value.Equals("507"))
+                return WeatherIconEnum._507;
+
+            if (value.Equals("508"))
+                return WeatherIconEnum._508;
+
+            if (value.Equals("509"))
+                return WeatherIconEnum._509;
+
+            if (value.Equals("510"))
+                return WeatherIconEnum._510;
+
+            if (value.Equals("511"))
+                return WeatherIconEnum._511;
+
+            if (value.Equals("512"))
+                return WeatherIconEnum._512;
+
+            if (value.Equals("513"))
+                return WeatherIconEnum._513;
+
+            if (value.Equals("514"))
+                return WeatherIconEnum._514;
+
+            if (value.Equals("515"))
+                return WeatherIconEnum._515;
+
+            if (value.Equals("800"))
+                return WeatherIconEnum._800;
+
+            if (value.Equals("801"))
+                return WeatherIconEnum._801;
+
+            if (value.Equals("802"))
+                return WeatherIconEnum._802;
+
+            if (value.Equals("803"))
+                return WeatherIconEnum._803;
+
+            if (value.Equals("804"))
+                return WeatherIconEnum._804;
+
+            if (value.Equals("805"))
+                return WeatherIconEnum._805;
+
+            if (value.Equals("806"))
+                return WeatherIconEnum._806;
+
+            if (value.Equals("807"))
+                return WeatherIconEnum._807;
+
+            if (value.Equals("900"))
+                return WeatherIconEnum._900;
+
+            if (value.Equals("901"))
+                return WeatherIconEnum._901;
+
+            if (value.Equals("999"))
+                return WeatherIconEnum._999;
+
+            if (value.Equals("1001"))
+                return WeatherIconEnum._1001;
+
+            if (value.Equals("1002"))
+                return WeatherIconEnum._1002;
+
+            if (value.Equals("1003"))
+                return WeatherIconEnum._1003;
+
+            if (value.Equals("1004"))
+                return WeatherIconEnum._1004;
+
+            if (value.Equals("1005"))
+                return WeatherIconEnum._1005;
+
+            if (value.Equals("1006"))
+                return WeatherIconEnum._1006;
+
+            if (value.Equals("1007"))
+                return WeatherIconEnum._1007;
+
+            if (value.Equals("1008"))
+                return WeatherIconEnum._1008;
+
+            if (value.Equals("1009"))
+                return WeatherIconEnum._1009;
+
+            if (value.Equals("1010"))
+                return WeatherIconEnum._1010;
+
+            if (value.Equals("1011"))
+                return WeatherIconEnum._1011;
+
+            if (value.Equals("1012"))
+                return WeatherIconEnum._1012;
+
+            if (value.Equals("1013"))
+                return WeatherIconEnum._1013;
+
+            if (value.Equals("1014"))
+                return WeatherIconEnum._1014;
+
+            if (value.Equals("1015"))
+                return WeatherIconEnum._1015;
+
+            if (value.Equals("1016"))
+                return WeatherIconEnum._1016;
+
+            if (value.Equals("1017"))
+                return WeatherIconEnum._1017;
+
+            if (value.Equals("1018"))
+                return WeatherIconEnum._1018;
+
+            if (value.Equals("1019"))
+                return WeatherIconEnum._1019;
+
+            if (value.Equals("1020"))
+                return WeatherIconEnum._1020;
+
+            if (value.Equals("1021"))
+                return WeatherIconEnum._1021;
+
+            if (value.Equals("1022"))
+                return WeatherIconEnum._1022;
+
+            if (value.Equals("1023"))
+                return WeatherIconEnum._1023;
+
+            if (value.Equals("1024"))
+                return WeatherIconEnum._1024;
+
+            if (value.Equals("1025"))
+                return WeatherIconEnum._1025;
+
+            if (value.Equals("1026"))
+                return WeatherIconEnum._1026;
+
+            if (value.Equals("1027"))
+                return WeatherIconEnum._1027;
+
+            if (value.Equals("1028"))
+                return WeatherIconEnum._1028;
+
+            if (value.Equals("1029"))
+                return WeatherIconEnum._1029;
+
+            if (value.Equals("1030"))
+                return WeatherIconEnum._1030;
+
+            if (value.Equals("1031"))
+                return WeatherIconEnum._1031;
+
+            if (value.Equals("1032"))
+                return WeatherIconEnum._1032;
+
+            if (value.Equals("1033"))
+                return WeatherIconEnum._1033;
+
+            if (value.Equals("1034"))
+                return WeatherIconEnum._1034;
+
+            if (value.Equals("1035"))
+                return WeatherIconEnum._1035;
+
+            if (value.Equals("1036"))
+                return WeatherIconEnum._1036;
+
+            if (value.Equals("1037"))
+                return WeatherIconEnum._1037;
+
+            if (value.Equals("1038"))
+                return WeatherIconEnum._1038;
+
+            if (value.Equals("1039"))
+                return WeatherIconEnum._1039;
+
+            if (value.Equals("1040"))
+                return WeatherIconEnum._1040;
+
+            if (value.Equals("1041"))
+                return WeatherIconEnum._1041;
+
+            if (value.Equals("1042"))
+                return WeatherIconEnum._1042;
+
+            if (value.Equals("1043"))
+                return WeatherIconEnum._1043;
+
+            if (value.Equals("1044"))
+                return WeatherIconEnum._1044;
+
+            if (value.Equals("1045"))
+                return WeatherIconEnum._1045;
+
+            if (value.Equals("1046"))
+                return WeatherIconEnum._1046;
+
+            if (value.Equals("1047"))
+                return WeatherIconEnum._1047;
+
+            if (value.Equals("1048"))
+                return WeatherIconEnum._1048;
+
+            if (value.Equals("1049"))
+                return WeatherIconEnum._1049;
+
+            if (value.Equals("1050"))
+                return WeatherIconEnum._1050;
+
+            if (value.Equals("1051"))
+                return WeatherIconEnum._1051;
+
+            if (value.Equals("1052"))
+                return WeatherIconEnum._1052;
+
+            if (value.Equals("1053"))
+                return WeatherIconEnum._1053;
+
+            if (value.Equals("1054"))
+                return WeatherIconEnum._1054;
+
+            if (value.Equals("1055"))
+                return WeatherIconEnum._1055;
+
+            if (value.Equals("1056"))
+                return WeatherIconEnum._1056;
+
+            if (value.Equals("1057"))
+                return WeatherIconEnum._1057;
+
+            if (value.Equals("1058"))
+                return WeatherIconEnum._1058;
+
+            if (value.Equals("1059"))
+                return WeatherIconEnum._1059;
+
+            if (value.Equals("1060"))
+                return WeatherIconEnum._1060;
+
+            if (value.Equals("1061"))
+                return WeatherIconEnum._1061;
+
+            if (value.Equals("1062"))
+                return WeatherIconEnum._1062;
+
+            if (value.Equals("1063"))
+                return WeatherIconEnum._1063;
+
+            if (value.Equals("1064"))
+                return WeatherIconEnum._1064;
+
+            if (value.Equals("1065"))
+                return WeatherIconEnum._1065;
+
+            if (value.Equals("1066"))
+                return WeatherIconEnum._1066;
+
+            if (value.Equals("1067"))
+                return WeatherIconEnum._1067;
+
+            if (value.Equals("1068"))
+                return WeatherIconEnum._1068;
+
+            if (value.Equals("1069"))
+                return WeatherIconEnum._1069;
+
+            if (value.Equals("1071"))
+                return WeatherIconEnum._1071;
+
+            if (value.Equals("1072"))
+                return WeatherIconEnum._1072;
+
+            if (value.Equals("1073"))
+                return WeatherIconEnum._1073;
+
+            if (value.Equals("1074"))
+                return WeatherIconEnum._1074;
+
+            if (value.Equals("1075"))
+                return WeatherIconEnum._1075;
+
+            if (value.Equals("1076"))
+                return WeatherIconEnum._1076;
+
+            if (value.Equals("1077"))
+                return WeatherIconEnum._1077;
+
+            if (value.Equals("1078"))
+                return WeatherIconEnum._1078;
+
+            if (value.Equals("1079"))
+                return WeatherIconEnum._1079;
+
+            if (value.Equals("1080"))
+                return WeatherIconEnum._1080;
+
+            if (value.Equals("1081"))
+                return WeatherIconEnum._1081;
+
+            if (value.Equals("1082"))
+                return WeatherIconEnum._1082;
+
+            if (value.Equals("1084"))
+                return WeatherIconEnum._1084;
+
+            if (value.Equals("1085"))
+                return WeatherIconEnum._1085;
+
+            if (value.Equals("1086"))
+                return WeatherIconEnum._1086;
+
+            if (value.Equals("1087"))
+                return WeatherIconEnum._1087;
+
+            if (value.Equals("1088"))
+                return WeatherIconEnum._1088;
+
+            if (value.Equals("1089"))
+                return WeatherIconEnum._1089;
+
+            if (value.Equals("1201"))
+                return WeatherIconEnum._1201;
+
+            if (value.Equals("1202"))
+                return WeatherIconEnum._1202;
+
+            if (value.Equals("1203"))
+                return WeatherIconEnum._1203;
+
+            if (value.Equals("1204"))
+                return WeatherIconEnum._1204;
+
+            if (value.Equals("1205"))
+                return WeatherIconEnum._1205;
+
+            if (value.Equals("1206"))
+                return WeatherIconEnum._1206;
+
+            if (value.Equals("1207"))
+                return WeatherIconEnum._1207;
+
+            if (value.Equals("1208"))
+                return WeatherIconEnum._1208;
+
+            if (value.Equals("1209"))
+                return WeatherIconEnum._1209;
+
+            if (value.Equals("1210"))
+                return WeatherIconEnum._1210;
+
+            if (value.Equals("1211"))
+                return WeatherIconEnum._1211;
+
+            if (value.Equals("1212"))
+                return WeatherIconEnum._1212;
+
+            if (value.Equals("1213"))
+                return WeatherIconEnum._1213;
+
+            if (value.Equals("1214"))
+                return WeatherIconEnum._1214;
+
+            if (value.Equals("1215"))
+                return WeatherIconEnum._1215;
+
+            if (value.Equals("1216"))
+                return WeatherIconEnum._1216;
+
+            if (value.Equals("1217"))
+                return WeatherIconEnum._1217;
+
+            if (value.Equals("1218"))
+                return WeatherIconEnum._1218;
+
+            if (value.Equals("1219"))
+                return WeatherIconEnum._1219;
+
+            if (value.Equals("1221"))
+                return WeatherIconEnum._1221;
+
+            if (value.Equals("1241"))
+                return WeatherIconEnum._1241;
+
+            if (value.Equals("1242"))
+                return WeatherIconEnum._1242;
+
+            if (value.Equals("1243"))
+                return WeatherIconEnum._1243;
+
+            if (value.Equals("1244"))
+                return WeatherIconEnum._1244;
+
+            if (value.Equals("1245"))
+                return WeatherIconEnum._1245;
+
+            if (value.Equals("1246"))
+                return WeatherIconEnum._1246;
+
+            if (value.Equals("1247"))
+                return WeatherIconEnum._1247;
+
+            if (value.Equals("1248"))
+                return WeatherIconEnum._1248;
+
+            if (value.Equals("1249"))
+                return WeatherIconEnum._1249;
+
+            if (value.Equals("1250"))
+                return WeatherIconEnum._1250;
+
+            if (value.Equals("1251"))
+                return WeatherIconEnum._1251;
+
+            if (value.Equals("1271"))
+                return WeatherIconEnum._1271;
+
+            if (value.Equals("1272"))
+                return WeatherIconEnum._1272;
+
+            if (value.Equals("1273"))
+                return WeatherIconEnum._1273;
+
+            if (value.Equals("1274"))
+                return WeatherIconEnum._1274;
+
+            if (value.Equals("1601"))
+                return WeatherIconEnum._1601;
+
+            if (value.Equals("1602"))
+                return WeatherIconEnum._1602;
+
+            if (value.Equals("1603"))
+                return WeatherIconEnum._1603;
+
+            if (value.Equals("1604"))
+                return WeatherIconEnum._1604;
+
+            if (value.Equals("1605"))
+                return WeatherIconEnum._1605;
+
+            if (value.Equals("1606"))
+                return WeatherIconEnum._1606;
+
+            if (value.Equals("1607"))
+                return WeatherIconEnum._1607;
+
+            if (value.Equals("1608"))
+                return WeatherIconEnum._1608;
+
+            if (value.Equals("1609"))
+                return WeatherIconEnum._1609;
+
+            if (value.Equals("1610"))
+                return WeatherIconEnum._1610;
+
+            if (value.Equals("1701"))
+                return WeatherIconEnum._1701;
+
+            if (value.Equals("1702"))
+                return WeatherIconEnum._1702;
+
+            if (value.Equals("1703"))
+                return WeatherIconEnum._1703;
+
+            if (value.Equals("1704"))
+                return WeatherIconEnum._1704;
+
+            if (value.Equals("1705"))
+                return WeatherIconEnum._1705;
+
+            if (value.Equals("1706"))
+                return WeatherIconEnum._1706;
+
+            if (value.Equals("1707"))
+                return WeatherIconEnum._1707;
+
+            if (value.Equals("1708"))
+                return WeatherIconEnum._1708;
+
+            if (value.Equals("1709"))
+                return WeatherIconEnum._1709;
+
+            if (value.Equals("1710"))
+                return WeatherIconEnum._1710;
+
+            if (value.Equals("1801"))
+                return WeatherIconEnum._1801;
+
+            if (value.Equals("1802"))
+                return WeatherIconEnum._1802;
+
+            if (value.Equals("1803"))
+                return WeatherIconEnum._1803;
+
+            if (value.Equals("1804"))
+                return WeatherIconEnum._1804;
+
+            if (value.Equals("1805"))
+                return WeatherIconEnum._1805;
+
+            if (value.Equals("2001"))
+                return WeatherIconEnum._2001;
+
+            if (value.Equals("2002"))
+                return WeatherIconEnum._2002;
+
+            if (value.Equals("2003"))
+                return WeatherIconEnum._2003;
+
+            if (value.Equals("2004"))
+                return WeatherIconEnum._2004;
+
+            if (value.Equals("2005"))
+                return WeatherIconEnum._2005;
+
+            if (value.Equals("2006"))
+                return WeatherIconEnum._2006;
+
+            if (value.Equals("2007"))
+                return WeatherIconEnum._2007;
+
+            if (value.Equals("2029"))
+                return WeatherIconEnum._2029;
+
+            if (value.Equals("2030"))
+                return WeatherIconEnum._2030;
+
+            if (value.Equals("2031"))
+                return WeatherIconEnum._2031;
+
+            if (value.Equals("2032"))
+                return WeatherIconEnum._2032;
+
+            if (value.Equals("2033"))
+                return WeatherIconEnum._2033;
+
+            if (value.Equals("2050"))
+                return WeatherIconEnum._2050;
+
+            if (value.Equals("2051"))
+                return WeatherIconEnum._2051;
+
+            if (value.Equals("2052"))
+                return WeatherIconEnum._2052;
+
+            if (value.Equals("2053"))
+                return WeatherIconEnum._2053;
+
+            if (value.Equals("2054"))
+                return WeatherIconEnum._2054;
+
+            if (value.Equals("2070"))
+                return WeatherIconEnum._2070;
+
+            if (value.Equals("2071"))
+                return WeatherIconEnum._2071;
+
+            if (value.Equals("2072"))
+                return WeatherIconEnum._2072;
+
+            if (value.Equals("2073"))
+                return WeatherIconEnum._2073;
+
+            if (value.Equals("2074"))
+                return WeatherIconEnum._2074;
+
+            if (value.Equals("2075"))
+                return WeatherIconEnum._2075;
+
+            if (value.Equals("2076"))
+                return WeatherIconEnum._2076;
+
+            if (value.Equals("2077"))
+                return WeatherIconEnum._2077;
+
+            if (value.Equals("2078"))
+                return WeatherIconEnum._2078;
+
+            if (value.Equals("2079"))
+                return WeatherIconEnum._2079;
+
+            if (value.Equals("2080"))
+                return WeatherIconEnum._2080;
+
+            if (value.Equals("2081"))
+                return WeatherIconEnum._2081;
+
+            if (value.Equals("2082"))
+                return WeatherIconEnum._2082;
+
+            if (value.Equals("2083"))
+                return WeatherIconEnum._2083;
+
+            if (value.Equals("2084"))
+                return WeatherIconEnum._2084;
+
+            if (value.Equals("2085"))
+                return WeatherIconEnum._2085;
+
+            if (value.Equals("2100"))
+                return WeatherIconEnum._2100;
+
+            if (value.Equals("2101"))
+                return WeatherIconEnum._2101;
+
+            if (value.Equals("2102"))
+                return WeatherIconEnum._2102;
+
+            if (value.Equals("2103"))
+                return WeatherIconEnum._2103;
+
+            if (value.Equals("2104"))
+                return WeatherIconEnum._2104;
+
+            if (value.Equals("2105"))
+                return WeatherIconEnum._2105;
+
+            if (value.Equals("2106"))
+                return WeatherIconEnum._2106;
+
+            if (value.Equals("2107"))
+                return WeatherIconEnum._2107;
+
+            if (value.Equals("2108"))
+                return WeatherIconEnum._2108;
+
+            if (value.Equals("2109"))
+                return WeatherIconEnum._2109;
+
+            if (value.Equals("2111"))
+                return WeatherIconEnum._2111;
+
+            if (value.Equals("2120"))
+                return WeatherIconEnum._2120;
+
+            if (value.Equals("2121"))
+                return WeatherIconEnum._2121;
+
+            if (value.Equals("2122"))
+                return WeatherIconEnum._2122;
+
+            if (value.Equals("2123"))
+                return WeatherIconEnum._2123;
+
+            if (value.Equals("2124"))
+                return WeatherIconEnum._2124;
+
+            if (value.Equals("2125"))
+                return WeatherIconEnum._2125;
+
+            if (value.Equals("2126"))
+                return WeatherIconEnum._2126;
+
+            if (value.Equals("2127"))
+                return WeatherIconEnum._2127;
+
+            if (value.Equals("2128"))
+                return WeatherIconEnum._2128;
+
+            if (value.Equals("2129"))
+                return WeatherIconEnum._2129;
+
+            if (value.Equals("2130"))
+                return WeatherIconEnum._2130;
+
+            if (value.Equals("2131"))
+                return WeatherIconEnum._2131;
+
+            if (value.Equals("2132"))
+                return WeatherIconEnum._2132;
+
+            if (value.Equals("2133"))
+                return WeatherIconEnum._2133;
+
+            if (value.Equals("2134"))
+                return WeatherIconEnum._2134;
+
+            if (value.Equals("2135"))
+                return WeatherIconEnum._2135;
+
+            if (value.Equals("2150"))
+                return WeatherIconEnum._2150;
+
+            if (value.Equals("2151"))
+                return WeatherIconEnum._2151;
+
+            if (value.Equals("2152"))
+                return WeatherIconEnum._2152;
+
+            if (value.Equals("2153"))
+                return WeatherIconEnum._2153;
+
+            if (value.Equals("2154"))
+                return WeatherIconEnum._2154;
+
+            if (value.Equals("2155"))
+                return WeatherIconEnum._2155;
+
+            if (value.Equals("2156"))
+                return WeatherIconEnum._2156;
+
+            if (value.Equals("2157"))
+                return WeatherIconEnum._2157;
+
+            if (value.Equals("2158"))
+                return WeatherIconEnum._2158;
+
+            if (value.Equals("2159"))
+                return WeatherIconEnum._2159;
+
+            if (value.Equals("2160"))
+                return WeatherIconEnum._2160;
+
+            if (value.Equals("2161"))
+                return WeatherIconEnum._2161;
+
+            if (value.Equals("2162"))
+                return WeatherIconEnum._2162;
+
+            if (value.Equals("2163"))
+                return WeatherIconEnum._2163;
+
+            if (value.Equals("2164"))
+                return WeatherIconEnum._2164;
+
+            if (value.Equals("2165"))
+                return WeatherIconEnum._2165;
+
+            if (value.Equals("2166"))
+                return WeatherIconEnum._2166;
+
+            if (value.Equals("2167"))
+                return WeatherIconEnum._2167;
+
+            if (value.Equals("2190"))
+                return WeatherIconEnum._2190;
+
+            if (value.Equals("2191"))
+                return WeatherIconEnum._2191;
+
+            if (value.Equals("2192"))
+                return WeatherIconEnum._2192;
+
+            if (value.Equals("2193"))
+                return WeatherIconEnum._2193;
+
+            if (value.Equals("2200"))
+                return WeatherIconEnum._2200;
+
+            if (value.Equals("2201"))
+                return WeatherIconEnum._2201;
+
+            if (value.Equals("2202"))
+                return WeatherIconEnum._2202;
+
+            if (value.Equals("2203"))
+                return WeatherIconEnum._2203;
+
+            if (value.Equals("2204"))
+                return WeatherIconEnum._2204;
+
+            if (value.Equals("2205"))
+                return WeatherIconEnum._2205;
+
+            if (value.Equals("2207"))
+                return WeatherIconEnum._2207;
+
+            if (value.Equals("2208"))
+                return WeatherIconEnum._2208;
+
+            if (value.Equals("2209"))
+                return WeatherIconEnum._2209;
+
+            if (value.Equals("2210"))
+                return WeatherIconEnum._2210;
+
+            if (value.Equals("2211"))
+                return WeatherIconEnum._2211;
+
+            if (value.Equals("2212"))
+                return WeatherIconEnum._2212;
+
+            if (value.Equals("2213"))
+                return WeatherIconEnum._2213;
+
+            if (value.Equals("2214"))
+                return WeatherIconEnum._2214;
+
+            if (value.Equals("2215"))
+                return WeatherIconEnum._2215;
+
+            if (value.Equals("2216"))
+                return WeatherIconEnum._2216;
+
+            if (value.Equals("2217"))
+                return WeatherIconEnum._2217;
+
+            if (value.Equals("2218"))
+                return WeatherIconEnum._2218;
+
+            if (value.Equals("2300"))
+                return WeatherIconEnum._2300;
+
+            if (value.Equals("2301"))
+                return WeatherIconEnum._2301;
+
+            if (value.Equals("2302"))
+                return WeatherIconEnum._2302;
+
+            if (value.Equals("2303"))
+                return WeatherIconEnum._2303;
+
+            if (value.Equals("2304"))
+                return WeatherIconEnum._2304;
+
+            if (value.Equals("2305"))
+                return WeatherIconEnum._2305;
+
+            if (value.Equals("2306"))
+                return WeatherIconEnum._2306;
+
+            if (value.Equals("2307"))
+                return WeatherIconEnum._2307;
+
+            if (value.Equals("2308"))
+                return WeatherIconEnum._2308;
+
+            if (value.Equals("2309"))
+                return WeatherIconEnum._2309;
+
+            if (value.Equals("2311"))
+                return WeatherIconEnum._2311;
+
+            if (value.Equals("2312"))
+                return WeatherIconEnum._2312;
+
+            if (value.Equals("2313"))
+                return WeatherIconEnum._2313;
+
+            if (value.Equals("2314"))
+                return WeatherIconEnum._2314;
+
+            if (value.Equals("2315"))
+                return WeatherIconEnum._2315;
+
+            if (value.Equals("2316"))
+                return WeatherIconEnum._2316;
+
+            if (value.Equals("2317"))
+                return WeatherIconEnum._2317;
+
+            if (value.Equals("2318"))
+                return WeatherIconEnum._2318;
+
+            if (value.Equals("2319"))
+                return WeatherIconEnum._2319;
+
+            if (value.Equals("2320"))
+                return WeatherIconEnum._2320;
+
+            if (value.Equals("2321"))
+                return WeatherIconEnum._2321;
+
+            if (value.Equals("2322"))
+                return WeatherIconEnum._2322;
+
+            if (value.Equals("2323"))
+                return WeatherIconEnum._2323;
+
+            if (value.Equals("2324"))
+                return WeatherIconEnum._2324;
+
+            if (value.Equals("2325"))
+                return WeatherIconEnum._2325;
+
+            if (value.Equals("2326"))
+                return WeatherIconEnum._2326;
+
+            if (value.Equals("2327"))
+                return WeatherIconEnum._2327;
+
+            if (value.Equals("2328"))
+                return WeatherIconEnum._2328;
+
+            if (value.Equals("2330"))
+                return WeatherIconEnum._2330;
+
+            if (value.Equals("2331"))
+                return WeatherIconEnum._2331;
+
+            if (value.Equals("2332"))
+                return WeatherIconEnum._2332;
+
+            if (value.Equals("2333"))
+                return WeatherIconEnum._2333;
+
+            if (value.Equals("2341"))
+                return WeatherIconEnum._2341;
+
+            if (value.Equals("2343"))
+                return WeatherIconEnum._2343;
+
+            if (value.Equals("2345"))
+                return WeatherIconEnum._2345;
+
+            if (value.Equals("2346"))
+                return WeatherIconEnum._2346;
+
+            if (value.Equals("2348"))
+                return WeatherIconEnum._2348;
+
+            if (value.Equals("2349"))
+                return WeatherIconEnum._2349;
+
+            if (value.Equals("2350"))
+                return WeatherIconEnum._2350;
+
+            if (value.Equals("2351"))
+                return WeatherIconEnum._2351;
+
+            if (value.Equals("2352"))
+                return WeatherIconEnum._2352;
+
+            if (value.Equals("2353"))
+                return WeatherIconEnum._2353;
+
+            if (value.Equals("2354"))
+                return WeatherIconEnum._2354;
+
+            if (value.Equals("2355"))
+                return WeatherIconEnum._2355;
+
+            if (value.Equals("2356"))
+                return WeatherIconEnum._2356;
+
+            if (value.Equals("2357"))
+                return WeatherIconEnum._2357;
+
+            if (value.Equals("2358"))
+                return WeatherIconEnum._2358;
+
+            if (value.Equals("2359"))
+                return WeatherIconEnum._2359;
+
+            if (value.Equals("2360"))
+                return WeatherIconEnum._2360;
+
+            if (value.Equals("2361"))
+                return WeatherIconEnum._2361;
+
+            if (value.Equals("2362"))
+                return WeatherIconEnum._2362;
+
+            if (value.Equals("2363"))
+                return WeatherIconEnum._2363;
+
+            if (value.Equals("2364"))
+                return WeatherIconEnum._2364;
+
+            if (value.Equals("2365"))
+                return WeatherIconEnum._2365;
+
+            if (value.Equals("2366"))
+                return WeatherIconEnum._2366;
+
+            if (value.Equals("2367"))
+                return WeatherIconEnum._2367;
+
+            if (value.Equals("2368"))
+                return WeatherIconEnum._2368;
+
+            if (value.Equals("2369"))
+                return WeatherIconEnum._2369;
+
+            if (value.Equals("2370"))
+                return WeatherIconEnum._2370;
+
+            if (value.Equals("2371"))
+                return WeatherIconEnum._2371;
+
+            if (value.Equals("2372"))
+                return WeatherIconEnum._2372;
+
+            if (value.Equals("2373"))
+                return WeatherIconEnum._2373;
+
+            if (value.Equals("2374"))
+                return WeatherIconEnum._2374;
+
+            if (value.Equals("2375"))
+                return WeatherIconEnum._2375;
+
+            if (value.Equals("2376"))
+                return WeatherIconEnum._2376;
+
+            if (value.Equals("2377"))
+                return WeatherIconEnum._2377;
+
+            if (value.Equals("2378"))
+                return WeatherIconEnum._2378;
+
+            if (value.Equals("2379"))
+                return WeatherIconEnum._2379;
+
+            if (value.Equals("2380"))
+                return WeatherIconEnum._2380;
+
+            if (value.Equals("2381"))
+                return WeatherIconEnum._2381;
+
+            if (value.Equals("2382"))
+                return WeatherIconEnum._2382;
+
+            if (value.Equals("2383"))
+                return WeatherIconEnum._2383;
+
+            if (value.Equals("2384"))
+                return WeatherIconEnum._2384;
+
+            if (value.Equals("2385"))
+                return WeatherIconEnum._2385;
+
+            if (value.Equals("2386"))
+                return WeatherIconEnum._2386;
+
+            if (value.Equals("2387"))
+                return WeatherIconEnum._2387;
+
+            if (value.Equals("2388"))
+                return WeatherIconEnum._2388;
+
+            if (value.Equals("2389"))
+                return WeatherIconEnum._2389;
+
+            if (value.Equals("2390"))
+                return WeatherIconEnum._2390;
+
+            if (value.Equals("2391"))
+                return WeatherIconEnum._2391;
+
+            if (value.Equals("2392"))
+                return WeatherIconEnum._2392;
+
+            if (value.Equals("2393"))
+                return WeatherIconEnum._2393;
+
+            if (value.Equals("2394"))
+                return WeatherIconEnum._2394;
+
+            if (value.Equals("2395"))
+                return WeatherIconEnum._2395;
+
+            if (value.Equals("2396"))
+                return WeatherIconEnum._2396;
+
+            if (value.Equals("2397"))
+                return WeatherIconEnum._2397;
+
+            if (value.Equals("2398"))
+                return WeatherIconEnum._2398;
+
+            if (value.Equals("2399"))
+                return WeatherIconEnum._2399;
+
+            if (value.Equals("2400"))
+                return WeatherIconEnum._2400;
+
+            if (value.Equals("2409"))
+                return WeatherIconEnum._2409;
+
+            if (value.Equals("2411"))
+                return WeatherIconEnum._2411;
+
+            if (value.Equals("2412"))
+                return WeatherIconEnum._2412;
+
+            if (value.Equals("2413"))
+                return WeatherIconEnum._2413;
+
+            if (value.Equals("2414"))
+                return WeatherIconEnum._2414;
+
+            if (value.Equals("2415"))
+                return WeatherIconEnum._2415;
+
+            if (value.Equals("2416"))
+                return WeatherIconEnum._2416;
+
+            if (value.Equals("2417"))
+                return WeatherIconEnum._2417;
+
+            if (value.Equals("2418"))
+                return WeatherIconEnum._2418;
+
+            if (value.Equals("2419"))
+                return WeatherIconEnum._2419;
+
+            if (value.Equals("2420"))
+                return WeatherIconEnum._2420;
+
+            if (value.Equals("2421"))
+                return WeatherIconEnum._2421;
+
+            if (value.Equals("2422"))
+                return WeatherIconEnum._2422;
+
+            if (value.Equals("2423"))
+                return WeatherIconEnum._2423;
+
+            if (value.Equals("2424"))
+                return WeatherIconEnum._2424;
+
+            if (value.Equals("2425"))
+                return WeatherIconEnum._2425;
+
+            if (value.Equals("2426"))
+                return WeatherIconEnum._2426;
+
+            if (value.Equals("2501"))
+                return WeatherIconEnum._2501;
+
+            if (value.Equals("2502"))
+                return WeatherIconEnum._2502;
+
+            if (value.Equals("2521"))
+                return WeatherIconEnum._2521;
+
+            if (value.Equals("2522"))
+                return WeatherIconEnum._2522;
+
+            if (value.Equals("2523"))
+                return WeatherIconEnum._2523;
+
+            if (value.Equals("2524"))
+                return WeatherIconEnum._2524;
+
+            if (value.Equals("2525"))
+                return WeatherIconEnum._2525;
+
+            if (value.Equals("2526"))
+                return WeatherIconEnum._2526;
+
+            if (value.Equals("2527"))
+                return WeatherIconEnum._2527;
+
+            if (value.Equals("2528"))
+                return WeatherIconEnum._2528;
+
+            if (value.Equals("2529"))
+                return WeatherIconEnum._2529;
+
+            if (value.Equals("2530"))
+                return WeatherIconEnum._2530;
+
+            if (value.Equals("2531"))
+                return WeatherIconEnum._2531;
+
+            if (value.Equals("2532"))
+                return WeatherIconEnum._2532;
+
+            if (value.Equals("2550"))
+                return WeatherIconEnum._2550;
+
+            if (value.Equals("2551"))
+                return WeatherIconEnum._2551;
+
+            if (value.Equals("2552"))
+                return WeatherIconEnum._2552;
+
+            if (value.Equals("2553"))
+                return WeatherIconEnum._2553;
+
+            if (value.Equals("2554"))
+                return WeatherIconEnum._2554;
+
+            if (value.Equals("9999"))
+                return WeatherIconEnum._9999;
+
+            throw new NotImplementedException($"Could not convert value to type WeatherIconEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="WeatherIconEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static WeatherIconEnum? WeatherIconEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("100"))
+                return WeatherIconEnum._100;
+
+            if (value.Equals("101"))
+                return WeatherIconEnum._101;
+
+            if (value.Equals("102"))
+                return WeatherIconEnum._102;
+
+            if (value.Equals("103"))
+                return WeatherIconEnum._103;
+
+            if (value.Equals("104"))
+                return WeatherIconEnum._104;
+
+            if (value.Equals("150"))
+                return WeatherIconEnum._150;
+
+            if (value.Equals("151"))
+                return WeatherIconEnum._151;
+
+            if (value.Equals("152"))
+                return WeatherIconEnum._152;
+
+            if (value.Equals("153"))
+                return WeatherIconEnum._153;
+
+            if (value.Equals("300"))
+                return WeatherIconEnum._300;
+
+            if (value.Equals("301"))
+                return WeatherIconEnum._301;
+
+            if (value.Equals("302"))
+                return WeatherIconEnum._302;
+
+            if (value.Equals("303"))
+                return WeatherIconEnum._303;
+
+            if (value.Equals("304"))
+                return WeatherIconEnum._304;
+
+            if (value.Equals("305"))
+                return WeatherIconEnum._305;
+
+            if (value.Equals("306"))
+                return WeatherIconEnum._306;
+
+            if (value.Equals("307"))
+                return WeatherIconEnum._307;
+
+            if (value.Equals("308"))
+                return WeatherIconEnum._308;
+
+            if (value.Equals("309"))
+                return WeatherIconEnum._309;
+
+            if (value.Equals("310"))
+                return WeatherIconEnum._310;
+
+            if (value.Equals("311"))
+                return WeatherIconEnum._311;
+
+            if (value.Equals("312"))
+                return WeatherIconEnum._312;
+
+            if (value.Equals("313"))
+                return WeatherIconEnum._313;
+
+            if (value.Equals("314"))
+                return WeatherIconEnum._314;
+
+            if (value.Equals("315"))
+                return WeatherIconEnum._315;
+
+            if (value.Equals("316"))
+                return WeatherIconEnum._316;
+
+            if (value.Equals("317"))
+                return WeatherIconEnum._317;
+
+            if (value.Equals("318"))
+                return WeatherIconEnum._318;
+
+            if (value.Equals("350"))
+                return WeatherIconEnum._350;
+
+            if (value.Equals("351"))
+                return WeatherIconEnum._351;
+
+            if (value.Equals("399"))
+                return WeatherIconEnum._399;
+
+            if (value.Equals("400"))
+                return WeatherIconEnum._400;
+
+            if (value.Equals("401"))
+                return WeatherIconEnum._401;
+
+            if (value.Equals("402"))
+                return WeatherIconEnum._402;
+
+            if (value.Equals("403"))
+                return WeatherIconEnum._403;
+
+            if (value.Equals("404"))
+                return WeatherIconEnum._404;
+
+            if (value.Equals("405"))
+                return WeatherIconEnum._405;
+
+            if (value.Equals("406"))
+                return WeatherIconEnum._406;
+
+            if (value.Equals("407"))
+                return WeatherIconEnum._407;
+
+            if (value.Equals("408"))
+                return WeatherIconEnum._408;
+
+            if (value.Equals("409"))
+                return WeatherIconEnum._409;
+
+            if (value.Equals("410"))
+                return WeatherIconEnum._410;
+
+            if (value.Equals("456"))
+                return WeatherIconEnum._456;
+
+            if (value.Equals("457"))
+                return WeatherIconEnum._457;
+
+            if (value.Equals("499"))
+                return WeatherIconEnum._499;
+
+            if (value.Equals("500"))
+                return WeatherIconEnum._500;
+
+            if (value.Equals("501"))
+                return WeatherIconEnum._501;
+
+            if (value.Equals("502"))
+                return WeatherIconEnum._502;
+
+            if (value.Equals("503"))
+                return WeatherIconEnum._503;
+
+            if (value.Equals("504"))
+                return WeatherIconEnum._504;
+
+            if (value.Equals("507"))
+                return WeatherIconEnum._507;
+
+            if (value.Equals("508"))
+                return WeatherIconEnum._508;
+
+            if (value.Equals("509"))
+                return WeatherIconEnum._509;
+
+            if (value.Equals("510"))
+                return WeatherIconEnum._510;
+
+            if (value.Equals("511"))
+                return WeatherIconEnum._511;
+
+            if (value.Equals("512"))
+                return WeatherIconEnum._512;
+
+            if (value.Equals("513"))
+                return WeatherIconEnum._513;
+
+            if (value.Equals("514"))
+                return WeatherIconEnum._514;
+
+            if (value.Equals("515"))
+                return WeatherIconEnum._515;
+
+            if (value.Equals("800"))
+                return WeatherIconEnum._800;
+
+            if (value.Equals("801"))
+                return WeatherIconEnum._801;
+
+            if (value.Equals("802"))
+                return WeatherIconEnum._802;
+
+            if (value.Equals("803"))
+                return WeatherIconEnum._803;
+
+            if (value.Equals("804"))
+                return WeatherIconEnum._804;
+
+            if (value.Equals("805"))
+                return WeatherIconEnum._805;
+
+            if (value.Equals("806"))
+                return WeatherIconEnum._806;
+
+            if (value.Equals("807"))
+                return WeatherIconEnum._807;
+
+            if (value.Equals("900"))
+                return WeatherIconEnum._900;
+
+            if (value.Equals("901"))
+                return WeatherIconEnum._901;
+
+            if (value.Equals("999"))
+                return WeatherIconEnum._999;
+
+            if (value.Equals("1001"))
+                return WeatherIconEnum._1001;
+
+            if (value.Equals("1002"))
+                return WeatherIconEnum._1002;
+
+            if (value.Equals("1003"))
+                return WeatherIconEnum._1003;
+
+            if (value.Equals("1004"))
+                return WeatherIconEnum._1004;
+
+            if (value.Equals("1005"))
+                return WeatherIconEnum._1005;
+
+            if (value.Equals("1006"))
+                return WeatherIconEnum._1006;
+
+            if (value.Equals("1007"))
+                return WeatherIconEnum._1007;
+
+            if (value.Equals("1008"))
+                return WeatherIconEnum._1008;
+
+            if (value.Equals("1009"))
+                return WeatherIconEnum._1009;
+
+            if (value.Equals("1010"))
+                return WeatherIconEnum._1010;
+
+            if (value.Equals("1011"))
+                return WeatherIconEnum._1011;
+
+            if (value.Equals("1012"))
+                return WeatherIconEnum._1012;
+
+            if (value.Equals("1013"))
+                return WeatherIconEnum._1013;
+
+            if (value.Equals("1014"))
+                return WeatherIconEnum._1014;
+
+            if (value.Equals("1015"))
+                return WeatherIconEnum._1015;
+
+            if (value.Equals("1016"))
+                return WeatherIconEnum._1016;
+
+            if (value.Equals("1017"))
+                return WeatherIconEnum._1017;
+
+            if (value.Equals("1018"))
+                return WeatherIconEnum._1018;
+
+            if (value.Equals("1019"))
+                return WeatherIconEnum._1019;
+
+            if (value.Equals("1020"))
+                return WeatherIconEnum._1020;
+
+            if (value.Equals("1021"))
+                return WeatherIconEnum._1021;
+
+            if (value.Equals("1022"))
+                return WeatherIconEnum._1022;
+
+            if (value.Equals("1023"))
+                return WeatherIconEnum._1023;
+
+            if (value.Equals("1024"))
+                return WeatherIconEnum._1024;
+
+            if (value.Equals("1025"))
+                return WeatherIconEnum._1025;
+
+            if (value.Equals("1026"))
+                return WeatherIconEnum._1026;
+
+            if (value.Equals("1027"))
+                return WeatherIconEnum._1027;
+
+            if (value.Equals("1028"))
+                return WeatherIconEnum._1028;
+
+            if (value.Equals("1029"))
+                return WeatherIconEnum._1029;
+
+            if (value.Equals("1030"))
+                return WeatherIconEnum._1030;
+
+            if (value.Equals("1031"))
+                return WeatherIconEnum._1031;
+
+            if (value.Equals("1032"))
+                return WeatherIconEnum._1032;
+
+            if (value.Equals("1033"))
+                return WeatherIconEnum._1033;
+
+            if (value.Equals("1034"))
+                return WeatherIconEnum._1034;
+
+            if (value.Equals("1035"))
+                return WeatherIconEnum._1035;
+
+            if (value.Equals("1036"))
+                return WeatherIconEnum._1036;
+
+            if (value.Equals("1037"))
+                return WeatherIconEnum._1037;
+
+            if (value.Equals("1038"))
+                return WeatherIconEnum._1038;
+
+            if (value.Equals("1039"))
+                return WeatherIconEnum._1039;
+
+            if (value.Equals("1040"))
+                return WeatherIconEnum._1040;
+
+            if (value.Equals("1041"))
+                return WeatherIconEnum._1041;
+
+            if (value.Equals("1042"))
+                return WeatherIconEnum._1042;
+
+            if (value.Equals("1043"))
+                return WeatherIconEnum._1043;
+
+            if (value.Equals("1044"))
+                return WeatherIconEnum._1044;
+
+            if (value.Equals("1045"))
+                return WeatherIconEnum._1045;
+
+            if (value.Equals("1046"))
+                return WeatherIconEnum._1046;
+
+            if (value.Equals("1047"))
+                return WeatherIconEnum._1047;
+
+            if (value.Equals("1048"))
+                return WeatherIconEnum._1048;
+
+            if (value.Equals("1049"))
+                return WeatherIconEnum._1049;
+
+            if (value.Equals("1050"))
+                return WeatherIconEnum._1050;
+
+            if (value.Equals("1051"))
+                return WeatherIconEnum._1051;
+
+            if (value.Equals("1052"))
+                return WeatherIconEnum._1052;
+
+            if (value.Equals("1053"))
+                return WeatherIconEnum._1053;
+
+            if (value.Equals("1054"))
+                return WeatherIconEnum._1054;
+
+            if (value.Equals("1055"))
+                return WeatherIconEnum._1055;
+
+            if (value.Equals("1056"))
+                return WeatherIconEnum._1056;
+
+            if (value.Equals("1057"))
+                return WeatherIconEnum._1057;
+
+            if (value.Equals("1058"))
+                return WeatherIconEnum._1058;
+
+            if (value.Equals("1059"))
+                return WeatherIconEnum._1059;
+
+            if (value.Equals("1060"))
+                return WeatherIconEnum._1060;
+
+            if (value.Equals("1061"))
+                return WeatherIconEnum._1061;
+
+            if (value.Equals("1062"))
+                return WeatherIconEnum._1062;
+
+            if (value.Equals("1063"))
+                return WeatherIconEnum._1063;
+
+            if (value.Equals("1064"))
+                return WeatherIconEnum._1064;
+
+            if (value.Equals("1065"))
+                return WeatherIconEnum._1065;
+
+            if (value.Equals("1066"))
+                return WeatherIconEnum._1066;
+
+            if (value.Equals("1067"))
+                return WeatherIconEnum._1067;
+
+            if (value.Equals("1068"))
+                return WeatherIconEnum._1068;
+
+            if (value.Equals("1069"))
+                return WeatherIconEnum._1069;
+
+            if (value.Equals("1071"))
+                return WeatherIconEnum._1071;
+
+            if (value.Equals("1072"))
+                return WeatherIconEnum._1072;
+
+            if (value.Equals("1073"))
+                return WeatherIconEnum._1073;
+
+            if (value.Equals("1074"))
+                return WeatherIconEnum._1074;
+
+            if (value.Equals("1075"))
+                return WeatherIconEnum._1075;
+
+            if (value.Equals("1076"))
+                return WeatherIconEnum._1076;
+
+            if (value.Equals("1077"))
+                return WeatherIconEnum._1077;
+
+            if (value.Equals("1078"))
+                return WeatherIconEnum._1078;
+
+            if (value.Equals("1079"))
+                return WeatherIconEnum._1079;
+
+            if (value.Equals("1080"))
+                return WeatherIconEnum._1080;
+
+            if (value.Equals("1081"))
+                return WeatherIconEnum._1081;
+
+            if (value.Equals("1082"))
+                return WeatherIconEnum._1082;
+
+            if (value.Equals("1084"))
+                return WeatherIconEnum._1084;
+
+            if (value.Equals("1085"))
+                return WeatherIconEnum._1085;
+
+            if (value.Equals("1086"))
+                return WeatherIconEnum._1086;
+
+            if (value.Equals("1087"))
+                return WeatherIconEnum._1087;
+
+            if (value.Equals("1088"))
+                return WeatherIconEnum._1088;
+
+            if (value.Equals("1089"))
+                return WeatherIconEnum._1089;
+
+            if (value.Equals("1201"))
+                return WeatherIconEnum._1201;
+
+            if (value.Equals("1202"))
+                return WeatherIconEnum._1202;
+
+            if (value.Equals("1203"))
+                return WeatherIconEnum._1203;
+
+            if (value.Equals("1204"))
+                return WeatherIconEnum._1204;
+
+            if (value.Equals("1205"))
+                return WeatherIconEnum._1205;
+
+            if (value.Equals("1206"))
+                return WeatherIconEnum._1206;
+
+            if (value.Equals("1207"))
+                return WeatherIconEnum._1207;
+
+            if (value.Equals("1208"))
+                return WeatherIconEnum._1208;
+
+            if (value.Equals("1209"))
+                return WeatherIconEnum._1209;
+
+            if (value.Equals("1210"))
+                return WeatherIconEnum._1210;
+
+            if (value.Equals("1211"))
+                return WeatherIconEnum._1211;
+
+            if (value.Equals("1212"))
+                return WeatherIconEnum._1212;
+
+            if (value.Equals("1213"))
+                return WeatherIconEnum._1213;
+
+            if (value.Equals("1214"))
+                return WeatherIconEnum._1214;
+
+            if (value.Equals("1215"))
+                return WeatherIconEnum._1215;
+
+            if (value.Equals("1216"))
+                return WeatherIconEnum._1216;
+
+            if (value.Equals("1217"))
+                return WeatherIconEnum._1217;
+
+            if (value.Equals("1218"))
+                return WeatherIconEnum._1218;
+
+            if (value.Equals("1219"))
+                return WeatherIconEnum._1219;
+
+            if (value.Equals("1221"))
+                return WeatherIconEnum._1221;
+
+            if (value.Equals("1241"))
+                return WeatherIconEnum._1241;
+
+            if (value.Equals("1242"))
+                return WeatherIconEnum._1242;
+
+            if (value.Equals("1243"))
+                return WeatherIconEnum._1243;
+
+            if (value.Equals("1244"))
+                return WeatherIconEnum._1244;
+
+            if (value.Equals("1245"))
+                return WeatherIconEnum._1245;
+
+            if (value.Equals("1246"))
+                return WeatherIconEnum._1246;
+
+            if (value.Equals("1247"))
+                return WeatherIconEnum._1247;
+
+            if (value.Equals("1248"))
+                return WeatherIconEnum._1248;
+
+            if (value.Equals("1249"))
+                return WeatherIconEnum._1249;
+
+            if (value.Equals("1250"))
+                return WeatherIconEnum._1250;
+
+            if (value.Equals("1251"))
+                return WeatherIconEnum._1251;
+
+            if (value.Equals("1271"))
+                return WeatherIconEnum._1271;
+
+            if (value.Equals("1272"))
+                return WeatherIconEnum._1272;
+
+            if (value.Equals("1273"))
+                return WeatherIconEnum._1273;
+
+            if (value.Equals("1274"))
+                return WeatherIconEnum._1274;
+
+            if (value.Equals("1601"))
+                return WeatherIconEnum._1601;
+
+            if (value.Equals("1602"))
+                return WeatherIconEnum._1602;
+
+            if (value.Equals("1603"))
+                return WeatherIconEnum._1603;
+
+            if (value.Equals("1604"))
+                return WeatherIconEnum._1604;
+
+            if (value.Equals("1605"))
+                return WeatherIconEnum._1605;
+
+            if (value.Equals("1606"))
+                return WeatherIconEnum._1606;
+
+            if (value.Equals("1607"))
+                return WeatherIconEnum._1607;
+
+            if (value.Equals("1608"))
+                return WeatherIconEnum._1608;
+
+            if (value.Equals("1609"))
+                return WeatherIconEnum._1609;
+
+            if (value.Equals("1610"))
+                return WeatherIconEnum._1610;
+
+            if (value.Equals("1701"))
+                return WeatherIconEnum._1701;
+
+            if (value.Equals("1702"))
+                return WeatherIconEnum._1702;
+
+            if (value.Equals("1703"))
+                return WeatherIconEnum._1703;
+
+            if (value.Equals("1704"))
+                return WeatherIconEnum._1704;
+
+            if (value.Equals("1705"))
+                return WeatherIconEnum._1705;
+
+            if (value.Equals("1706"))
+                return WeatherIconEnum._1706;
+
+            if (value.Equals("1707"))
+                return WeatherIconEnum._1707;
+
+            if (value.Equals("1708"))
+                return WeatherIconEnum._1708;
+
+            if (value.Equals("1709"))
+                return WeatherIconEnum._1709;
+
+            if (value.Equals("1710"))
+                return WeatherIconEnum._1710;
+
+            if (value.Equals("1801"))
+                return WeatherIconEnum._1801;
+
+            if (value.Equals("1802"))
+                return WeatherIconEnum._1802;
+
+            if (value.Equals("1803"))
+                return WeatherIconEnum._1803;
+
+            if (value.Equals("1804"))
+                return WeatherIconEnum._1804;
+
+            if (value.Equals("1805"))
+                return WeatherIconEnum._1805;
+
+            if (value.Equals("2001"))
+                return WeatherIconEnum._2001;
+
+            if (value.Equals("2002"))
+                return WeatherIconEnum._2002;
+
+            if (value.Equals("2003"))
+                return WeatherIconEnum._2003;
+
+            if (value.Equals("2004"))
+                return WeatherIconEnum._2004;
+
+            if (value.Equals("2005"))
+                return WeatherIconEnum._2005;
+
+            if (value.Equals("2006"))
+                return WeatherIconEnum._2006;
+
+            if (value.Equals("2007"))
+                return WeatherIconEnum._2007;
+
+            if (value.Equals("2029"))
+                return WeatherIconEnum._2029;
+
+            if (value.Equals("2030"))
+                return WeatherIconEnum._2030;
+
+            if (value.Equals("2031"))
+                return WeatherIconEnum._2031;
+
+            if (value.Equals("2032"))
+                return WeatherIconEnum._2032;
+
+            if (value.Equals("2033"))
+                return WeatherIconEnum._2033;
+
+            if (value.Equals("2050"))
+                return WeatherIconEnum._2050;
+
+            if (value.Equals("2051"))
+                return WeatherIconEnum._2051;
+
+            if (value.Equals("2052"))
+                return WeatherIconEnum._2052;
+
+            if (value.Equals("2053"))
+                return WeatherIconEnum._2053;
+
+            if (value.Equals("2054"))
+                return WeatherIconEnum._2054;
+
+            if (value.Equals("2070"))
+                return WeatherIconEnum._2070;
+
+            if (value.Equals("2071"))
+                return WeatherIconEnum._2071;
+
+            if (value.Equals("2072"))
+                return WeatherIconEnum._2072;
+
+            if (value.Equals("2073"))
+                return WeatherIconEnum._2073;
+
+            if (value.Equals("2074"))
+                return WeatherIconEnum._2074;
+
+            if (value.Equals("2075"))
+                return WeatherIconEnum._2075;
+
+            if (value.Equals("2076"))
+                return WeatherIconEnum._2076;
+
+            if (value.Equals("2077"))
+                return WeatherIconEnum._2077;
+
+            if (value.Equals("2078"))
+                return WeatherIconEnum._2078;
+
+            if (value.Equals("2079"))
+                return WeatherIconEnum._2079;
+
+            if (value.Equals("2080"))
+                return WeatherIconEnum._2080;
+
+            if (value.Equals("2081"))
+                return WeatherIconEnum._2081;
+
+            if (value.Equals("2082"))
+                return WeatherIconEnum._2082;
+
+            if (value.Equals("2083"))
+                return WeatherIconEnum._2083;
+
+            if (value.Equals("2084"))
+                return WeatherIconEnum._2084;
+
+            if (value.Equals("2085"))
+                return WeatherIconEnum._2085;
+
+            if (value.Equals("2100"))
+                return WeatherIconEnum._2100;
+
+            if (value.Equals("2101"))
+                return WeatherIconEnum._2101;
+
+            if (value.Equals("2102"))
+                return WeatherIconEnum._2102;
+
+            if (value.Equals("2103"))
+                return WeatherIconEnum._2103;
+
+            if (value.Equals("2104"))
+                return WeatherIconEnum._2104;
+
+            if (value.Equals("2105"))
+                return WeatherIconEnum._2105;
+
+            if (value.Equals("2106"))
+                return WeatherIconEnum._2106;
+
+            if (value.Equals("2107"))
+                return WeatherIconEnum._2107;
+
+            if (value.Equals("2108"))
+                return WeatherIconEnum._2108;
+
+            if (value.Equals("2109"))
+                return WeatherIconEnum._2109;
+
+            if (value.Equals("2111"))
+                return WeatherIconEnum._2111;
+
+            if (value.Equals("2120"))
+                return WeatherIconEnum._2120;
+
+            if (value.Equals("2121"))
+                return WeatherIconEnum._2121;
+
+            if (value.Equals("2122"))
+                return WeatherIconEnum._2122;
+
+            if (value.Equals("2123"))
+                return WeatherIconEnum._2123;
+
+            if (value.Equals("2124"))
+                return WeatherIconEnum._2124;
+
+            if (value.Equals("2125"))
+                return WeatherIconEnum._2125;
+
+            if (value.Equals("2126"))
+                return WeatherIconEnum._2126;
+
+            if (value.Equals("2127"))
+                return WeatherIconEnum._2127;
+
+            if (value.Equals("2128"))
+                return WeatherIconEnum._2128;
+
+            if (value.Equals("2129"))
+                return WeatherIconEnum._2129;
+
+            if (value.Equals("2130"))
+                return WeatherIconEnum._2130;
+
+            if (value.Equals("2131"))
+                return WeatherIconEnum._2131;
+
+            if (value.Equals("2132"))
+                return WeatherIconEnum._2132;
+
+            if (value.Equals("2133"))
+                return WeatherIconEnum._2133;
+
+            if (value.Equals("2134"))
+                return WeatherIconEnum._2134;
+
+            if (value.Equals("2135"))
+                return WeatherIconEnum._2135;
+
+            if (value.Equals("2150"))
+                return WeatherIconEnum._2150;
+
+            if (value.Equals("2151"))
+                return WeatherIconEnum._2151;
+
+            if (value.Equals("2152"))
+                return WeatherIconEnum._2152;
+
+            if (value.Equals("2153"))
+                return WeatherIconEnum._2153;
+
+            if (value.Equals("2154"))
+                return WeatherIconEnum._2154;
+
+            if (value.Equals("2155"))
+                return WeatherIconEnum._2155;
+
+            if (value.Equals("2156"))
+                return WeatherIconEnum._2156;
+
+            if (value.Equals("2157"))
+                return WeatherIconEnum._2157;
+
+            if (value.Equals("2158"))
+                return WeatherIconEnum._2158;
+
+            if (value.Equals("2159"))
+                return WeatherIconEnum._2159;
+
+            if (value.Equals("2160"))
+                return WeatherIconEnum._2160;
+
+            if (value.Equals("2161"))
+                return WeatherIconEnum._2161;
+
+            if (value.Equals("2162"))
+                return WeatherIconEnum._2162;
+
+            if (value.Equals("2163"))
+                return WeatherIconEnum._2163;
+
+            if (value.Equals("2164"))
+                return WeatherIconEnum._2164;
+
+            if (value.Equals("2165"))
+                return WeatherIconEnum._2165;
+
+            if (value.Equals("2166"))
+                return WeatherIconEnum._2166;
+
+            if (value.Equals("2167"))
+                return WeatherIconEnum._2167;
+
+            if (value.Equals("2190"))
+                return WeatherIconEnum._2190;
+
+            if (value.Equals("2191"))
+                return WeatherIconEnum._2191;
+
+            if (value.Equals("2192"))
+                return WeatherIconEnum._2192;
+
+            if (value.Equals("2193"))
+                return WeatherIconEnum._2193;
+
+            if (value.Equals("2200"))
+                return WeatherIconEnum._2200;
+
+            if (value.Equals("2201"))
+                return WeatherIconEnum._2201;
+
+            if (value.Equals("2202"))
+                return WeatherIconEnum._2202;
+
+            if (value.Equals("2203"))
+                return WeatherIconEnum._2203;
+
+            if (value.Equals("2204"))
+                return WeatherIconEnum._2204;
+
+            if (value.Equals("2205"))
+                return WeatherIconEnum._2205;
+
+            if (value.Equals("2207"))
+                return WeatherIconEnum._2207;
+
+            if (value.Equals("2208"))
+                return WeatherIconEnum._2208;
+
+            if (value.Equals("2209"))
+                return WeatherIconEnum._2209;
+
+            if (value.Equals("2210"))
+                return WeatherIconEnum._2210;
+
+            if (value.Equals("2211"))
+                return WeatherIconEnum._2211;
+
+            if (value.Equals("2212"))
+                return WeatherIconEnum._2212;
+
+            if (value.Equals("2213"))
+                return WeatherIconEnum._2213;
+
+            if (value.Equals("2214"))
+                return WeatherIconEnum._2214;
+
+            if (value.Equals("2215"))
+                return WeatherIconEnum._2215;
+
+            if (value.Equals("2216"))
+                return WeatherIconEnum._2216;
+
+            if (value.Equals("2217"))
+                return WeatherIconEnum._2217;
+
+            if (value.Equals("2218"))
+                return WeatherIconEnum._2218;
+
+            if (value.Equals("2300"))
+                return WeatherIconEnum._2300;
+
+            if (value.Equals("2301"))
+                return WeatherIconEnum._2301;
+
+            if (value.Equals("2302"))
+                return WeatherIconEnum._2302;
+
+            if (value.Equals("2303"))
+                return WeatherIconEnum._2303;
+
+            if (value.Equals("2304"))
+                return WeatherIconEnum._2304;
+
+            if (value.Equals("2305"))
+                return WeatherIconEnum._2305;
+
+            if (value.Equals("2306"))
+                return WeatherIconEnum._2306;
+
+            if (value.Equals("2307"))
+                return WeatherIconEnum._2307;
+
+            if (value.Equals("2308"))
+                return WeatherIconEnum._2308;
+
+            if (value.Equals("2309"))
+                return WeatherIconEnum._2309;
+
+            if (value.Equals("2311"))
+                return WeatherIconEnum._2311;
+
+            if (value.Equals("2312"))
+                return WeatherIconEnum._2312;
+
+            if (value.Equals("2313"))
+                return WeatherIconEnum._2313;
+
+            if (value.Equals("2314"))
+                return WeatherIconEnum._2314;
+
+            if (value.Equals("2315"))
+                return WeatherIconEnum._2315;
+
+            if (value.Equals("2316"))
+                return WeatherIconEnum._2316;
+
+            if (value.Equals("2317"))
+                return WeatherIconEnum._2317;
+
+            if (value.Equals("2318"))
+                return WeatherIconEnum._2318;
+
+            if (value.Equals("2319"))
+                return WeatherIconEnum._2319;
+
+            if (value.Equals("2320"))
+                return WeatherIconEnum._2320;
+
+            if (value.Equals("2321"))
+                return WeatherIconEnum._2321;
+
+            if (value.Equals("2322"))
+                return WeatherIconEnum._2322;
+
+            if (value.Equals("2323"))
+                return WeatherIconEnum._2323;
+
+            if (value.Equals("2324"))
+                return WeatherIconEnum._2324;
+
+            if (value.Equals("2325"))
+                return WeatherIconEnum._2325;
+
+            if (value.Equals("2326"))
+                return WeatherIconEnum._2326;
+
+            if (value.Equals("2327"))
+                return WeatherIconEnum._2327;
+
+            if (value.Equals("2328"))
+                return WeatherIconEnum._2328;
+
+            if (value.Equals("2330"))
+                return WeatherIconEnum._2330;
+
+            if (value.Equals("2331"))
+                return WeatherIconEnum._2331;
+
+            if (value.Equals("2332"))
+                return WeatherIconEnum._2332;
+
+            if (value.Equals("2333"))
+                return WeatherIconEnum._2333;
+
+            if (value.Equals("2341"))
+                return WeatherIconEnum._2341;
+
+            if (value.Equals("2343"))
+                return WeatherIconEnum._2343;
+
+            if (value.Equals("2345"))
+                return WeatherIconEnum._2345;
+
+            if (value.Equals("2346"))
+                return WeatherIconEnum._2346;
+
+            if (value.Equals("2348"))
+                return WeatherIconEnum._2348;
+
+            if (value.Equals("2349"))
+                return WeatherIconEnum._2349;
+
+            if (value.Equals("2350"))
+                return WeatherIconEnum._2350;
+
+            if (value.Equals("2351"))
+                return WeatherIconEnum._2351;
+
+            if (value.Equals("2352"))
+                return WeatherIconEnum._2352;
+
+            if (value.Equals("2353"))
+                return WeatherIconEnum._2353;
+
+            if (value.Equals("2354"))
+                return WeatherIconEnum._2354;
+
+            if (value.Equals("2355"))
+                return WeatherIconEnum._2355;
+
+            if (value.Equals("2356"))
+                return WeatherIconEnum._2356;
+
+            if (value.Equals("2357"))
+                return WeatherIconEnum._2357;
+
+            if (value.Equals("2358"))
+                return WeatherIconEnum._2358;
+
+            if (value.Equals("2359"))
+                return WeatherIconEnum._2359;
+
+            if (value.Equals("2360"))
+                return WeatherIconEnum._2360;
+
+            if (value.Equals("2361"))
+                return WeatherIconEnum._2361;
+
+            if (value.Equals("2362"))
+                return WeatherIconEnum._2362;
+
+            if (value.Equals("2363"))
+                return WeatherIconEnum._2363;
+
+            if (value.Equals("2364"))
+                return WeatherIconEnum._2364;
+
+            if (value.Equals("2365"))
+                return WeatherIconEnum._2365;
+
+            if (value.Equals("2366"))
+                return WeatherIconEnum._2366;
+
+            if (value.Equals("2367"))
+                return WeatherIconEnum._2367;
+
+            if (value.Equals("2368"))
+                return WeatherIconEnum._2368;
+
+            if (value.Equals("2369"))
+                return WeatherIconEnum._2369;
+
+            if (value.Equals("2370"))
+                return WeatherIconEnum._2370;
+
+            if (value.Equals("2371"))
+                return WeatherIconEnum._2371;
+
+            if (value.Equals("2372"))
+                return WeatherIconEnum._2372;
+
+            if (value.Equals("2373"))
+                return WeatherIconEnum._2373;
+
+            if (value.Equals("2374"))
+                return WeatherIconEnum._2374;
+
+            if (value.Equals("2375"))
+                return WeatherIconEnum._2375;
+
+            if (value.Equals("2376"))
+                return WeatherIconEnum._2376;
+
+            if (value.Equals("2377"))
+                return WeatherIconEnum._2377;
+
+            if (value.Equals("2378"))
+                return WeatherIconEnum._2378;
+
+            if (value.Equals("2379"))
+                return WeatherIconEnum._2379;
+
+            if (value.Equals("2380"))
+                return WeatherIconEnum._2380;
+
+            if (value.Equals("2381"))
+                return WeatherIconEnum._2381;
+
+            if (value.Equals("2382"))
+                return WeatherIconEnum._2382;
+
+            if (value.Equals("2383"))
+                return WeatherIconEnum._2383;
+
+            if (value.Equals("2384"))
+                return WeatherIconEnum._2384;
+
+            if (value.Equals("2385"))
+                return WeatherIconEnum._2385;
+
+            if (value.Equals("2386"))
+                return WeatherIconEnum._2386;
+
+            if (value.Equals("2387"))
+                return WeatherIconEnum._2387;
+
+            if (value.Equals("2388"))
+                return WeatherIconEnum._2388;
+
+            if (value.Equals("2389"))
+                return WeatherIconEnum._2389;
+
+            if (value.Equals("2390"))
+                return WeatherIconEnum._2390;
+
+            if (value.Equals("2391"))
+                return WeatherIconEnum._2391;
+
+            if (value.Equals("2392"))
+                return WeatherIconEnum._2392;
+
+            if (value.Equals("2393"))
+                return WeatherIconEnum._2393;
+
+            if (value.Equals("2394"))
+                return WeatherIconEnum._2394;
+
+            if (value.Equals("2395"))
+                return WeatherIconEnum._2395;
+
+            if (value.Equals("2396"))
+                return WeatherIconEnum._2396;
+
+            if (value.Equals("2397"))
+                return WeatherIconEnum._2397;
+
+            if (value.Equals("2398"))
+                return WeatherIconEnum._2398;
+
+            if (value.Equals("2399"))
+                return WeatherIconEnum._2399;
+
+            if (value.Equals("2400"))
+                return WeatherIconEnum._2400;
+
+            if (value.Equals("2409"))
+                return WeatherIconEnum._2409;
+
+            if (value.Equals("2411"))
+                return WeatherIconEnum._2411;
+
+            if (value.Equals("2412"))
+                return WeatherIconEnum._2412;
+
+            if (value.Equals("2413"))
+                return WeatherIconEnum._2413;
+
+            if (value.Equals("2414"))
+                return WeatherIconEnum._2414;
+
+            if (value.Equals("2415"))
+                return WeatherIconEnum._2415;
+
+            if (value.Equals("2416"))
+                return WeatherIconEnum._2416;
+
+            if (value.Equals("2417"))
+                return WeatherIconEnum._2417;
+
+            if (value.Equals("2418"))
+                return WeatherIconEnum._2418;
+
+            if (value.Equals("2419"))
+                return WeatherIconEnum._2419;
+
+            if (value.Equals("2420"))
+                return WeatherIconEnum._2420;
+
+            if (value.Equals("2421"))
+                return WeatherIconEnum._2421;
+
+            if (value.Equals("2422"))
+                return WeatherIconEnum._2422;
+
+            if (value.Equals("2423"))
+                return WeatherIconEnum._2423;
+
+            if (value.Equals("2424"))
+                return WeatherIconEnum._2424;
+
+            if (value.Equals("2425"))
+                return WeatherIconEnum._2425;
+
+            if (value.Equals("2426"))
+                return WeatherIconEnum._2426;
+
+            if (value.Equals("2501"))
+                return WeatherIconEnum._2501;
+
+            if (value.Equals("2502"))
+                return WeatherIconEnum._2502;
+
+            if (value.Equals("2521"))
+                return WeatherIconEnum._2521;
+
+            if (value.Equals("2522"))
+                return WeatherIconEnum._2522;
+
+            if (value.Equals("2523"))
+                return WeatherIconEnum._2523;
+
+            if (value.Equals("2524"))
+                return WeatherIconEnum._2524;
+
+            if (value.Equals("2525"))
+                return WeatherIconEnum._2525;
+
+            if (value.Equals("2526"))
+                return WeatherIconEnum._2526;
+
+            if (value.Equals("2527"))
+                return WeatherIconEnum._2527;
+
+            if (value.Equals("2528"))
+                return WeatherIconEnum._2528;
+
+            if (value.Equals("2529"))
+                return WeatherIconEnum._2529;
+
+            if (value.Equals("2530"))
+                return WeatherIconEnum._2530;
+
+            if (value.Equals("2531"))
+                return WeatherIconEnum._2531;
+
+            if (value.Equals("2532"))
+                return WeatherIconEnum._2532;
+
+            if (value.Equals("2550"))
+                return WeatherIconEnum._2550;
+
+            if (value.Equals("2551"))
+                return WeatherIconEnum._2551;
+
+            if (value.Equals("2552"))
+                return WeatherIconEnum._2552;
+
+            if (value.Equals("2553"))
+                return WeatherIconEnum._2553;
+
+            if (value.Equals("2554"))
+                return WeatherIconEnum._2554;
+
+            if (value.Equals("9999"))
+                return WeatherIconEnum._9999;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="WeatherIconEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string WeatherIconEnumToJsonValue(WeatherIconEnum? value)
+        {
+            if (value == WeatherIconEnum._100)
+                return "100";
+
+            if (value == WeatherIconEnum._101)
+                return "101";
+
+            if (value == WeatherIconEnum._102)
+                return "102";
+
+            if (value == WeatherIconEnum._103)
+                return "103";
+
+            if (value == WeatherIconEnum._104)
+                return "104";
+
+            if (value == WeatherIconEnum._150)
+                return "150";
+
+            if (value == WeatherIconEnum._151)
+                return "151";
+
+            if (value == WeatherIconEnum._152)
+                return "152";
+
+            if (value == WeatherIconEnum._153)
+                return "153";
+
+            if (value == WeatherIconEnum._300)
+                return "300";
+
+            if (value == WeatherIconEnum._301)
+                return "301";
+
+            if (value == WeatherIconEnum._302)
+                return "302";
+
+            if (value == WeatherIconEnum._303)
+                return "303";
+
+            if (value == WeatherIconEnum._304)
+                return "304";
+
+            if (value == WeatherIconEnum._305)
+                return "305";
+
+            if (value == WeatherIconEnum._306)
+                return "306";
+
+            if (value == WeatherIconEnum._307)
+                return "307";
+
+            if (value == WeatherIconEnum._308)
+                return "308";
+
+            if (value == WeatherIconEnum._309)
+                return "309";
+
+            if (value == WeatherIconEnum._310)
+                return "310";
+
+            if (value == WeatherIconEnum._311)
+                return "311";
+
+            if (value == WeatherIconEnum._312)
+                return "312";
+
+            if (value == WeatherIconEnum._313)
+                return "313";
+
+            if (value == WeatherIconEnum._314)
+                return "314";
+
+            if (value == WeatherIconEnum._315)
+                return "315";
+
+            if (value == WeatherIconEnum._316)
+                return "316";
+
+            if (value == WeatherIconEnum._317)
+                return "317";
+
+            if (value == WeatherIconEnum._318)
+                return "318";
+
+            if (value == WeatherIconEnum._350)
+                return "350";
+
+            if (value == WeatherIconEnum._351)
+                return "351";
+
+            if (value == WeatherIconEnum._399)
+                return "399";
+
+            if (value == WeatherIconEnum._400)
+                return "400";
+
+            if (value == WeatherIconEnum._401)
+                return "401";
+
+            if (value == WeatherIconEnum._402)
+                return "402";
+
+            if (value == WeatherIconEnum._403)
+                return "403";
+
+            if (value == WeatherIconEnum._404)
+                return "404";
+
+            if (value == WeatherIconEnum._405)
+                return "405";
+
+            if (value == WeatherIconEnum._406)
+                return "406";
+
+            if (value == WeatherIconEnum._407)
+                return "407";
+
+            if (value == WeatherIconEnum._408)
+                return "408";
+
+            if (value == WeatherIconEnum._409)
+                return "409";
+
+            if (value == WeatherIconEnum._410)
+                return "410";
+
+            if (value == WeatherIconEnum._456)
+                return "456";
+
+            if (value == WeatherIconEnum._457)
+                return "457";
+
+            if (value == WeatherIconEnum._499)
+                return "499";
+
+            if (value == WeatherIconEnum._500)
+                return "500";
+
+            if (value == WeatherIconEnum._501)
+                return "501";
+
+            if (value == WeatherIconEnum._502)
+                return "502";
+
+            if (value == WeatherIconEnum._503)
+                return "503";
+
+            if (value == WeatherIconEnum._504)
+                return "504";
+
+            if (value == WeatherIconEnum._507)
+                return "507";
+
+            if (value == WeatherIconEnum._508)
+                return "508";
+
+            if (value == WeatherIconEnum._509)
+                return "509";
+
+            if (value == WeatherIconEnum._510)
+                return "510";
+
+            if (value == WeatherIconEnum._511)
+                return "511";
+
+            if (value == WeatherIconEnum._512)
+                return "512";
+
+            if (value == WeatherIconEnum._513)
+                return "513";
+
+            if (value == WeatherIconEnum._514)
+                return "514";
+
+            if (value == WeatherIconEnum._515)
+                return "515";
+
+            if (value == WeatherIconEnum._800)
+                return "800";
+
+            if (value == WeatherIconEnum._801)
+                return "801";
+
+            if (value == WeatherIconEnum._802)
+                return "802";
+
+            if (value == WeatherIconEnum._803)
+                return "803";
+
+            if (value == WeatherIconEnum._804)
+                return "804";
+
+            if (value == WeatherIconEnum._805)
+                return "805";
+
+            if (value == WeatherIconEnum._806)
+                return "806";
+
+            if (value == WeatherIconEnum._807)
+                return "807";
+
+            if (value == WeatherIconEnum._900)
+                return "900";
+
+            if (value == WeatherIconEnum._901)
+                return "901";
+
+            if (value == WeatherIconEnum._999)
+                return "999";
+
+            if (value == WeatherIconEnum._1001)
+                return "1001";
+
+            if (value == WeatherIconEnum._1002)
+                return "1002";
+
+            if (value == WeatherIconEnum._1003)
+                return "1003";
+
+            if (value == WeatherIconEnum._1004)
+                return "1004";
+
+            if (value == WeatherIconEnum._1005)
+                return "1005";
+
+            if (value == WeatherIconEnum._1006)
+                return "1006";
+
+            if (value == WeatherIconEnum._1007)
+                return "1007";
+
+            if (value == WeatherIconEnum._1008)
+                return "1008";
+
+            if (value == WeatherIconEnum._1009)
+                return "1009";
+
+            if (value == WeatherIconEnum._1010)
+                return "1010";
+
+            if (value == WeatherIconEnum._1011)
+                return "1011";
+
+            if (value == WeatherIconEnum._1012)
+                return "1012";
+
+            if (value == WeatherIconEnum._1013)
+                return "1013";
+
+            if (value == WeatherIconEnum._1014)
+                return "1014";
+
+            if (value == WeatherIconEnum._1015)
+                return "1015";
+
+            if (value == WeatherIconEnum._1016)
+                return "1016";
+
+            if (value == WeatherIconEnum._1017)
+                return "1017";
+
+            if (value == WeatherIconEnum._1018)
+                return "1018";
+
+            if (value == WeatherIconEnum._1019)
+                return "1019";
+
+            if (value == WeatherIconEnum._1020)
+                return "1020";
+
+            if (value == WeatherIconEnum._1021)
+                return "1021";
+
+            if (value == WeatherIconEnum._1022)
+                return "1022";
+
+            if (value == WeatherIconEnum._1023)
+                return "1023";
+
+            if (value == WeatherIconEnum._1024)
+                return "1024";
+
+            if (value == WeatherIconEnum._1025)
+                return "1025";
+
+            if (value == WeatherIconEnum._1026)
+                return "1026";
+
+            if (value == WeatherIconEnum._1027)
+                return "1027";
+
+            if (value == WeatherIconEnum._1028)
+                return "1028";
+
+            if (value == WeatherIconEnum._1029)
+                return "1029";
+
+            if (value == WeatherIconEnum._1030)
+                return "1030";
+
+            if (value == WeatherIconEnum._1031)
+                return "1031";
+
+            if (value == WeatherIconEnum._1032)
+                return "1032";
+
+            if (value == WeatherIconEnum._1033)
+                return "1033";
+
+            if (value == WeatherIconEnum._1034)
+                return "1034";
+
+            if (value == WeatherIconEnum._1035)
+                return "1035";
+
+            if (value == WeatherIconEnum._1036)
+                return "1036";
+
+            if (value == WeatherIconEnum._1037)
+                return "1037";
+
+            if (value == WeatherIconEnum._1038)
+                return "1038";
+
+            if (value == WeatherIconEnum._1039)
+                return "1039";
+
+            if (value == WeatherIconEnum._1040)
+                return "1040";
+
+            if (value == WeatherIconEnum._1041)
+                return "1041";
+
+            if (value == WeatherIconEnum._1042)
+                return "1042";
+
+            if (value == WeatherIconEnum._1043)
+                return "1043";
+
+            if (value == WeatherIconEnum._1044)
+                return "1044";
+
+            if (value == WeatherIconEnum._1045)
+                return "1045";
+
+            if (value == WeatherIconEnum._1046)
+                return "1046";
+
+            if (value == WeatherIconEnum._1047)
+                return "1047";
+
+            if (value == WeatherIconEnum._1048)
+                return "1048";
+
+            if (value == WeatherIconEnum._1049)
+                return "1049";
+
+            if (value == WeatherIconEnum._1050)
+                return "1050";
+
+            if (value == WeatherIconEnum._1051)
+                return "1051";
+
+            if (value == WeatherIconEnum._1052)
+                return "1052";
+
+            if (value == WeatherIconEnum._1053)
+                return "1053";
+
+            if (value == WeatherIconEnum._1054)
+                return "1054";
+
+            if (value == WeatherIconEnum._1055)
+                return "1055";
+
+            if (value == WeatherIconEnum._1056)
+                return "1056";
+
+            if (value == WeatherIconEnum._1057)
+                return "1057";
+
+            if (value == WeatherIconEnum._1058)
+                return "1058";
+
+            if (value == WeatherIconEnum._1059)
+                return "1059";
+
+            if (value == WeatherIconEnum._1060)
+                return "1060";
+
+            if (value == WeatherIconEnum._1061)
+                return "1061";
+
+            if (value == WeatherIconEnum._1062)
+                return "1062";
+
+            if (value == WeatherIconEnum._1063)
+                return "1063";
+
+            if (value == WeatherIconEnum._1064)
+                return "1064";
+
+            if (value == WeatherIconEnum._1065)
+                return "1065";
+
+            if (value == WeatherIconEnum._1066)
+                return "1066";
+
+            if (value == WeatherIconEnum._1067)
+                return "1067";
+
+            if (value == WeatherIconEnum._1068)
+                return "1068";
+
+            if (value == WeatherIconEnum._1069)
+                return "1069";
+
+            if (value == WeatherIconEnum._1071)
+                return "1071";
+
+            if (value == WeatherIconEnum._1072)
+                return "1072";
+
+            if (value == WeatherIconEnum._1073)
+                return "1073";
+
+            if (value == WeatherIconEnum._1074)
+                return "1074";
+
+            if (value == WeatherIconEnum._1075)
+                return "1075";
+
+            if (value == WeatherIconEnum._1076)
+                return "1076";
+
+            if (value == WeatherIconEnum._1077)
+                return "1077";
+
+            if (value == WeatherIconEnum._1078)
+                return "1078";
+
+            if (value == WeatherIconEnum._1079)
+                return "1079";
+
+            if (value == WeatherIconEnum._1080)
+                return "1080";
+
+            if (value == WeatherIconEnum._1081)
+                return "1081";
+
+            if (value == WeatherIconEnum._1082)
+                return "1082";
+
+            if (value == WeatherIconEnum._1084)
+                return "1084";
+
+            if (value == WeatherIconEnum._1085)
+                return "1085";
+
+            if (value == WeatherIconEnum._1086)
+                return "1086";
+
+            if (value == WeatherIconEnum._1087)
+                return "1087";
+
+            if (value == WeatherIconEnum._1088)
+                return "1088";
+
+            if (value == WeatherIconEnum._1089)
+                return "1089";
+
+            if (value == WeatherIconEnum._1201)
+                return "1201";
+
+            if (value == WeatherIconEnum._1202)
+                return "1202";
+
+            if (value == WeatherIconEnum._1203)
+                return "1203";
+
+            if (value == WeatherIconEnum._1204)
+                return "1204";
+
+            if (value == WeatherIconEnum._1205)
+                return "1205";
+
+            if (value == WeatherIconEnum._1206)
+                return "1206";
+
+            if (value == WeatherIconEnum._1207)
+                return "1207";
+
+            if (value == WeatherIconEnum._1208)
+                return "1208";
+
+            if (value == WeatherIconEnum._1209)
+                return "1209";
+
+            if (value == WeatherIconEnum._1210)
+                return "1210";
+
+            if (value == WeatherIconEnum._1211)
+                return "1211";
+
+            if (value == WeatherIconEnum._1212)
+                return "1212";
+
+            if (value == WeatherIconEnum._1213)
+                return "1213";
+
+            if (value == WeatherIconEnum._1214)
+                return "1214";
+
+            if (value == WeatherIconEnum._1215)
+                return "1215";
+
+            if (value == WeatherIconEnum._1216)
+                return "1216";
+
+            if (value == WeatherIconEnum._1217)
+                return "1217";
+
+            if (value == WeatherIconEnum._1218)
+                return "1218";
+
+            if (value == WeatherIconEnum._1219)
+                return "1219";
+
+            if (value == WeatherIconEnum._1221)
+                return "1221";
+
+            if (value == WeatherIconEnum._1241)
+                return "1241";
+
+            if (value == WeatherIconEnum._1242)
+                return "1242";
+
+            if (value == WeatherIconEnum._1243)
+                return "1243";
+
+            if (value == WeatherIconEnum._1244)
+                return "1244";
+
+            if (value == WeatherIconEnum._1245)
+                return "1245";
+
+            if (value == WeatherIconEnum._1246)
+                return "1246";
+
+            if (value == WeatherIconEnum._1247)
+                return "1247";
+
+            if (value == WeatherIconEnum._1248)
+                return "1248";
+
+            if (value == WeatherIconEnum._1249)
+                return "1249";
+
+            if (value == WeatherIconEnum._1250)
+                return "1250";
+
+            if (value == WeatherIconEnum._1251)
+                return "1251";
+
+            if (value == WeatherIconEnum._1271)
+                return "1271";
+
+            if (value == WeatherIconEnum._1272)
+                return "1272";
+
+            if (value == WeatherIconEnum._1273)
+                return "1273";
+
+            if (value == WeatherIconEnum._1274)
+                return "1274";
+
+            if (value == WeatherIconEnum._1601)
+                return "1601";
+
+            if (value == WeatherIconEnum._1602)
+                return "1602";
+
+            if (value == WeatherIconEnum._1603)
+                return "1603";
+
+            if (value == WeatherIconEnum._1604)
+                return "1604";
+
+            if (value == WeatherIconEnum._1605)
+                return "1605";
+
+            if (value == WeatherIconEnum._1606)
+                return "1606";
+
+            if (value == WeatherIconEnum._1607)
+                return "1607";
+
+            if (value == WeatherIconEnum._1608)
+                return "1608";
+
+            if (value == WeatherIconEnum._1609)
+                return "1609";
+
+            if (value == WeatherIconEnum._1610)
+                return "1610";
+
+            if (value == WeatherIconEnum._1701)
+                return "1701";
+
+            if (value == WeatherIconEnum._1702)
+                return "1702";
+
+            if (value == WeatherIconEnum._1703)
+                return "1703";
+
+            if (value == WeatherIconEnum._1704)
+                return "1704";
+
+            if (value == WeatherIconEnum._1705)
+                return "1705";
+
+            if (value == WeatherIconEnum._1706)
+                return "1706";
+
+            if (value == WeatherIconEnum._1707)
+                return "1707";
+
+            if (value == WeatherIconEnum._1708)
+                return "1708";
+
+            if (value == WeatherIconEnum._1709)
+                return "1709";
+
+            if (value == WeatherIconEnum._1710)
+                return "1710";
+
+            if (value == WeatherIconEnum._1801)
+                return "1801";
+
+            if (value == WeatherIconEnum._1802)
+                return "1802";
+
+            if (value == WeatherIconEnum._1803)
+                return "1803";
+
+            if (value == WeatherIconEnum._1804)
+                return "1804";
+
+            if (value == WeatherIconEnum._1805)
+                return "1805";
+
+            if (value == WeatherIconEnum._2001)
+                return "2001";
+
+            if (value == WeatherIconEnum._2002)
+                return "2002";
+
+            if (value == WeatherIconEnum._2003)
+                return "2003";
+
+            if (value == WeatherIconEnum._2004)
+                return "2004";
+
+            if (value == WeatherIconEnum._2005)
+                return "2005";
+
+            if (value == WeatherIconEnum._2006)
+                return "2006";
+
+            if (value == WeatherIconEnum._2007)
+                return "2007";
+
+            if (value == WeatherIconEnum._2029)
+                return "2029";
+
+            if (value == WeatherIconEnum._2030)
+                return "2030";
+
+            if (value == WeatherIconEnum._2031)
+                return "2031";
+
+            if (value == WeatherIconEnum._2032)
+                return "2032";
+
+            if (value == WeatherIconEnum._2033)
+                return "2033";
+
+            if (value == WeatherIconEnum._2050)
+                return "2050";
+
+            if (value == WeatherIconEnum._2051)
+                return "2051";
+
+            if (value == WeatherIconEnum._2052)
+                return "2052";
+
+            if (value == WeatherIconEnum._2053)
+                return "2053";
+
+            if (value == WeatherIconEnum._2054)
+                return "2054";
+
+            if (value == WeatherIconEnum._2070)
+                return "2070";
+
+            if (value == WeatherIconEnum._2071)
+                return "2071";
+
+            if (value == WeatherIconEnum._2072)
+                return "2072";
+
+            if (value == WeatherIconEnum._2073)
+                return "2073";
+
+            if (value == WeatherIconEnum._2074)
+                return "2074";
+
+            if (value == WeatherIconEnum._2075)
+                return "2075";
+
+            if (value == WeatherIconEnum._2076)
+                return "2076";
+
+            if (value == WeatherIconEnum._2077)
+                return "2077";
+
+            if (value == WeatherIconEnum._2078)
+                return "2078";
+
+            if (value == WeatherIconEnum._2079)
+                return "2079";
+
+            if (value == WeatherIconEnum._2080)
+                return "2080";
+
+            if (value == WeatherIconEnum._2081)
+                return "2081";
+
+            if (value == WeatherIconEnum._2082)
+                return "2082";
+
+            if (value == WeatherIconEnum._2083)
+                return "2083";
+
+            if (value == WeatherIconEnum._2084)
+                return "2084";
+
+            if (value == WeatherIconEnum._2085)
+                return "2085";
+
+            if (value == WeatherIconEnum._2100)
+                return "2100";
+
+            if (value == WeatherIconEnum._2101)
+                return "2101";
+
+            if (value == WeatherIconEnum._2102)
+                return "2102";
+
+            if (value == WeatherIconEnum._2103)
+                return "2103";
+
+            if (value == WeatherIconEnum._2104)
+                return "2104";
+
+            if (value == WeatherIconEnum._2105)
+                return "2105";
+
+            if (value == WeatherIconEnum._2106)
+                return "2106";
+
+            if (value == WeatherIconEnum._2107)
+                return "2107";
+
+            if (value == WeatherIconEnum._2108)
+                return "2108";
+
+            if (value == WeatherIconEnum._2109)
+                return "2109";
+
+            if (value == WeatherIconEnum._2111)
+                return "2111";
+
+            if (value == WeatherIconEnum._2120)
+                return "2120";
+
+            if (value == WeatherIconEnum._2121)
+                return "2121";
+
+            if (value == WeatherIconEnum._2122)
+                return "2122";
+
+            if (value == WeatherIconEnum._2123)
+                return "2123";
+
+            if (value == WeatherIconEnum._2124)
+                return "2124";
+
+            if (value == WeatherIconEnum._2125)
+                return "2125";
+
+            if (value == WeatherIconEnum._2126)
+                return "2126";
+
+            if (value == WeatherIconEnum._2127)
+                return "2127";
+
+            if (value == WeatherIconEnum._2128)
+                return "2128";
+
+            if (value == WeatherIconEnum._2129)
+                return "2129";
+
+            if (value == WeatherIconEnum._2130)
+                return "2130";
+
+            if (value == WeatherIconEnum._2131)
+                return "2131";
+
+            if (value == WeatherIconEnum._2132)
+                return "2132";
+
+            if (value == WeatherIconEnum._2133)
+                return "2133";
+
+            if (value == WeatherIconEnum._2134)
+                return "2134";
+
+            if (value == WeatherIconEnum._2135)
+                return "2135";
+
+            if (value == WeatherIconEnum._2150)
+                return "2150";
+
+            if (value == WeatherIconEnum._2151)
+                return "2151";
+
+            if (value == WeatherIconEnum._2152)
+                return "2152";
+
+            if (value == WeatherIconEnum._2153)
+                return "2153";
+
+            if (value == WeatherIconEnum._2154)
+                return "2154";
+
+            if (value == WeatherIconEnum._2155)
+                return "2155";
+
+            if (value == WeatherIconEnum._2156)
+                return "2156";
+
+            if (value == WeatherIconEnum._2157)
+                return "2157";
+
+            if (value == WeatherIconEnum._2158)
+                return "2158";
+
+            if (value == WeatherIconEnum._2159)
+                return "2159";
+
+            if (value == WeatherIconEnum._2160)
+                return "2160";
+
+            if (value == WeatherIconEnum._2161)
+                return "2161";
+
+            if (value == WeatherIconEnum._2162)
+                return "2162";
+
+            if (value == WeatherIconEnum._2163)
+                return "2163";
+
+            if (value == WeatherIconEnum._2164)
+                return "2164";
+
+            if (value == WeatherIconEnum._2165)
+                return "2165";
+
+            if (value == WeatherIconEnum._2166)
+                return "2166";
+
+            if (value == WeatherIconEnum._2167)
+                return "2167";
+
+            if (value == WeatherIconEnum._2190)
+                return "2190";
+
+            if (value == WeatherIconEnum._2191)
+                return "2191";
+
+            if (value == WeatherIconEnum._2192)
+                return "2192";
+
+            if (value == WeatherIconEnum._2193)
+                return "2193";
+
+            if (value == WeatherIconEnum._2200)
+                return "2200";
+
+            if (value == WeatherIconEnum._2201)
+                return "2201";
+
+            if (value == WeatherIconEnum._2202)
+                return "2202";
+
+            if (value == WeatherIconEnum._2203)
+                return "2203";
+
+            if (value == WeatherIconEnum._2204)
+                return "2204";
+
+            if (value == WeatherIconEnum._2205)
+                return "2205";
+
+            if (value == WeatherIconEnum._2207)
+                return "2207";
+
+            if (value == WeatherIconEnum._2208)
+                return "2208";
+
+            if (value == WeatherIconEnum._2209)
+                return "2209";
+
+            if (value == WeatherIconEnum._2210)
+                return "2210";
+
+            if (value == WeatherIconEnum._2211)
+                return "2211";
+
+            if (value == WeatherIconEnum._2212)
+                return "2212";
+
+            if (value == WeatherIconEnum._2213)
+                return "2213";
+
+            if (value == WeatherIconEnum._2214)
+                return "2214";
+
+            if (value == WeatherIconEnum._2215)
+                return "2215";
+
+            if (value == WeatherIconEnum._2216)
+                return "2216";
+
+            if (value == WeatherIconEnum._2217)
+                return "2217";
+
+            if (value == WeatherIconEnum._2218)
+                return "2218";
+
+            if (value == WeatherIconEnum._2300)
+                return "2300";
+
+            if (value == WeatherIconEnum._2301)
+                return "2301";
+
+            if (value == WeatherIconEnum._2302)
+                return "2302";
+
+            if (value == WeatherIconEnum._2303)
+                return "2303";
+
+            if (value == WeatherIconEnum._2304)
+                return "2304";
+
+            if (value == WeatherIconEnum._2305)
+                return "2305";
+
+            if (value == WeatherIconEnum._2306)
+                return "2306";
+
+            if (value == WeatherIconEnum._2307)
+                return "2307";
+
+            if (value == WeatherIconEnum._2308)
+                return "2308";
+
+            if (value == WeatherIconEnum._2309)
+                return "2309";
+
+            if (value == WeatherIconEnum._2311)
+                return "2311";
+
+            if (value == WeatherIconEnum._2312)
+                return "2312";
+
+            if (value == WeatherIconEnum._2313)
+                return "2313";
+
+            if (value == WeatherIconEnum._2314)
+                return "2314";
+
+            if (value == WeatherIconEnum._2315)
+                return "2315";
+
+            if (value == WeatherIconEnum._2316)
+                return "2316";
+
+            if (value == WeatherIconEnum._2317)
+                return "2317";
+
+            if (value == WeatherIconEnum._2318)
+                return "2318";
+
+            if (value == WeatherIconEnum._2319)
+                return "2319";
+
+            if (value == WeatherIconEnum._2320)
+                return "2320";
+
+            if (value == WeatherIconEnum._2321)
+                return "2321";
+
+            if (value == WeatherIconEnum._2322)
+                return "2322";
+
+            if (value == WeatherIconEnum._2323)
+                return "2323";
+
+            if (value == WeatherIconEnum._2324)
+                return "2324";
+
+            if (value == WeatherIconEnum._2325)
+                return "2325";
+
+            if (value == WeatherIconEnum._2326)
+                return "2326";
+
+            if (value == WeatherIconEnum._2327)
+                return "2327";
+
+            if (value == WeatherIconEnum._2328)
+                return "2328";
+
+            if (value == WeatherIconEnum._2330)
+                return "2330";
+
+            if (value == WeatherIconEnum._2331)
+                return "2331";
+
+            if (value == WeatherIconEnum._2332)
+                return "2332";
+
+            if (value == WeatherIconEnum._2333)
+                return "2333";
+
+            if (value == WeatherIconEnum._2341)
+                return "2341";
+
+            if (value == WeatherIconEnum._2343)
+                return "2343";
+
+            if (value == WeatherIconEnum._2345)
+                return "2345";
+
+            if (value == WeatherIconEnum._2346)
+                return "2346";
+
+            if (value == WeatherIconEnum._2348)
+                return "2348";
+
+            if (value == WeatherIconEnum._2349)
+                return "2349";
+
+            if (value == WeatherIconEnum._2350)
+                return "2350";
+
+            if (value == WeatherIconEnum._2351)
+                return "2351";
+
+            if (value == WeatherIconEnum._2352)
+                return "2352";
+
+            if (value == WeatherIconEnum._2353)
+                return "2353";
+
+            if (value == WeatherIconEnum._2354)
+                return "2354";
+
+            if (value == WeatherIconEnum._2355)
+                return "2355";
+
+            if (value == WeatherIconEnum._2356)
+                return "2356";
+
+            if (value == WeatherIconEnum._2357)
+                return "2357";
+
+            if (value == WeatherIconEnum._2358)
+                return "2358";
+
+            if (value == WeatherIconEnum._2359)
+                return "2359";
+
+            if (value == WeatherIconEnum._2360)
+                return "2360";
+
+            if (value == WeatherIconEnum._2361)
+                return "2361";
+
+            if (value == WeatherIconEnum._2362)
+                return "2362";
+
+            if (value == WeatherIconEnum._2363)
+                return "2363";
+
+            if (value == WeatherIconEnum._2364)
+                return "2364";
+
+            if (value == WeatherIconEnum._2365)
+                return "2365";
+
+            if (value == WeatherIconEnum._2366)
+                return "2366";
+
+            if (value == WeatherIconEnum._2367)
+                return "2367";
+
+            if (value == WeatherIconEnum._2368)
+                return "2368";
+
+            if (value == WeatherIconEnum._2369)
+                return "2369";
+
+            if (value == WeatherIconEnum._2370)
+                return "2370";
+
+            if (value == WeatherIconEnum._2371)
+                return "2371";
+
+            if (value == WeatherIconEnum._2372)
+                return "2372";
+
+            if (value == WeatherIconEnum._2373)
+                return "2373";
+
+            if (value == WeatherIconEnum._2374)
+                return "2374";
+
+            if (value == WeatherIconEnum._2375)
+                return "2375";
+
+            if (value == WeatherIconEnum._2376)
+                return "2376";
+
+            if (value == WeatherIconEnum._2377)
+                return "2377";
+
+            if (value == WeatherIconEnum._2378)
+                return "2378";
+
+            if (value == WeatherIconEnum._2379)
+                return "2379";
+
+            if (value == WeatherIconEnum._2380)
+                return "2380";
+
+            if (value == WeatherIconEnum._2381)
+                return "2381";
+
+            if (value == WeatherIconEnum._2382)
+                return "2382";
+
+            if (value == WeatherIconEnum._2383)
+                return "2383";
+
+            if (value == WeatherIconEnum._2384)
+                return "2384";
+
+            if (value == WeatherIconEnum._2385)
+                return "2385";
+
+            if (value == WeatherIconEnum._2386)
+                return "2386";
+
+            if (value == WeatherIconEnum._2387)
+                return "2387";
+
+            if (value == WeatherIconEnum._2388)
+                return "2388";
+
+            if (value == WeatherIconEnum._2389)
+                return "2389";
+
+            if (value == WeatherIconEnum._2390)
+                return "2390";
+
+            if (value == WeatherIconEnum._2391)
+                return "2391";
+
+            if (value == WeatherIconEnum._2392)
+                return "2392";
+
+            if (value == WeatherIconEnum._2393)
+                return "2393";
+
+            if (value == WeatherIconEnum._2394)
+                return "2394";
+
+            if (value == WeatherIconEnum._2395)
+                return "2395";
+
+            if (value == WeatherIconEnum._2396)
+                return "2396";
+
+            if (value == WeatherIconEnum._2397)
+                return "2397";
+
+            if (value == WeatherIconEnum._2398)
+                return "2398";
+
+            if (value == WeatherIconEnum._2399)
+                return "2399";
+
+            if (value == WeatherIconEnum._2400)
+                return "2400";
+
+            if (value == WeatherIconEnum._2409)
+                return "2409";
+
+            if (value == WeatherIconEnum._2411)
+                return "2411";
+
+            if (value == WeatherIconEnum._2412)
+                return "2412";
+
+            if (value == WeatherIconEnum._2413)
+                return "2413";
+
+            if (value == WeatherIconEnum._2414)
+                return "2414";
+
+            if (value == WeatherIconEnum._2415)
+                return "2415";
+
+            if (value == WeatherIconEnum._2416)
+                return "2416";
+
+            if (value == WeatherIconEnum._2417)
+                return "2417";
+
+            if (value == WeatherIconEnum._2418)
+                return "2418";
+
+            if (value == WeatherIconEnum._2419)
+                return "2419";
+
+            if (value == WeatherIconEnum._2420)
+                return "2420";
+
+            if (value == WeatherIconEnum._2421)
+                return "2421";
+
+            if (value == WeatherIconEnum._2422)
+                return "2422";
+
+            if (value == WeatherIconEnum._2423)
+                return "2423";
+
+            if (value == WeatherIconEnum._2424)
+                return "2424";
+
+            if (value == WeatherIconEnum._2425)
+                return "2425";
+
+            if (value == WeatherIconEnum._2426)
+                return "2426";
+
+            if (value == WeatherIconEnum._2501)
+                return "2501";
+
+            if (value == WeatherIconEnum._2502)
+                return "2502";
+
+            if (value == WeatherIconEnum._2521)
+                return "2521";
+
+            if (value == WeatherIconEnum._2522)
+                return "2522";
+
+            if (value == WeatherIconEnum._2523)
+                return "2523";
+
+            if (value == WeatherIconEnum._2524)
+                return "2524";
+
+            if (value == WeatherIconEnum._2525)
+                return "2525";
+
+            if (value == WeatherIconEnum._2526)
+                return "2526";
+
+            if (value == WeatherIconEnum._2527)
+                return "2527";
+
+            if (value == WeatherIconEnum._2528)
+                return "2528";
+
+            if (value == WeatherIconEnum._2529)
+                return "2529";
+
+            if (value == WeatherIconEnum._2530)
+                return "2530";
+
+            if (value == WeatherIconEnum._2531)
+                return "2531";
+
+            if (value == WeatherIconEnum._2532)
+                return "2532";
+
+            if (value == WeatherIconEnum._2550)
+                return "2550";
+
+            if (value == WeatherIconEnum._2551)
+                return "2551";
+
+            if (value == WeatherIconEnum._2552)
+                return "2552";
+
+            if (value == WeatherIconEnum._2553)
+                return "2553";
+
+            if (value == WeatherIconEnum._2554)
+                return "2554";
+
+            if (value == WeatherIconEnum._9999)
+                return "9999";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of WeatherIcon
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<WeatherIconEnum?> WeatherIconOption { get; private set; }
+
+        /// <summary>
+        /// 天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。
+        /// </summary>
+        /// <value>天气图标代码。请从[天气图标代码表](#enum-list)中查看所有可能的值。</value>
+        /* <example>100</example> */
+        [JsonPropertyName("weather_icon")]
+        public WeatherIconEnum? WeatherIcon { get { return this.WeatherIconOption; } set { this.WeatherIconOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Province
@@ -122,6 +6382,21 @@ namespace uapi-sdk-csharp.Model
         /* <example>北京</example> */
         [JsonPropertyName("city")]
         public string? City { get { return this.CityOption; } set { this.CityOption = new(value); } }
+
+        /// <summary>
+        /// Used to track the state of District
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> DistrictOption { get; private set; }
+
+        /// <summary>
+        /// 区县或更细一级的行政区名称。自动按 IP 定位时更常见。
+        /// </summary>
+        /// <value>区县或更细一级的行政区名称。自动按 IP 定位时更常见。</value>
+        /* <example>海淀区</example> */
+        [JsonPropertyName("district")]
+        public string? District { get { return this.DistrictOption; } set { this.DistrictOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Adcode
@@ -484,8 +6759,10 @@ namespace uapi-sdk-csharp.Model
             sb.Append("class GetMiscWeather200Response {\n");
             sb.Append("  Province: ").Append(Province).Append("\n");
             sb.Append("  City: ").Append(City).Append("\n");
+            sb.Append("  District: ").Append(District).Append("\n");
             sb.Append("  Adcode: ").Append(Adcode).Append("\n");
             sb.Append("  Weather: ").Append(Weather).Append("\n");
+            sb.Append("  WeatherIcon: ").Append(WeatherIcon).Append("\n");
             sb.Append("  Temperature: ").Append(Temperature).Append("\n");
             sb.Append("  WindDirection: ").Append(WindDirection).Append("\n");
             sb.Append("  WindPower: ").Append(WindPower).Append("\n");
@@ -547,8 +6824,10 @@ namespace uapi-sdk-csharp.Model
 
             Option<string?> province = default;
             Option<string?> city = default;
+            Option<string?> district = default;
             Option<string?> adcode = default;
             Option<string?> weather = default;
+            Option<GetMiscWeather200Response.WeatherIconEnum?> weatherIcon = default;
             Option<decimal?> temperature = default;
             Option<string?> windDirection = default;
             Option<string?> windPower = default;
@@ -593,11 +6872,19 @@ namespace uapi-sdk-csharp.Model
                         case "city":
                             city = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "district":
+                            district = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "adcode":
                             adcode = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "weather":
                             weather = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "weather_icon":
+                            string? weatherIconRawValue = utf8JsonReader.GetString();
+                            if (weatherIconRawValue != null)
+                                weatherIcon = new Option<GetMiscWeather200Response.WeatherIconEnum?>(GetMiscWeather200Response.WeatherIconEnumFromStringOrDefault(weatherIconRawValue));
                             break;
                         case "temperature":
                             temperature = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
@@ -677,11 +6964,17 @@ namespace uapi-sdk-csharp.Model
             if (city.IsSet && city.Value == null)
                 throw new ArgumentNullException(nameof(city), "Property is not nullable for class GetMiscWeather200Response.");
 
+            if (district.IsSet && district.Value == null)
+                throw new ArgumentNullException(nameof(district), "Property is not nullable for class GetMiscWeather200Response.");
+
             if (adcode.IsSet && adcode.Value == null)
                 throw new ArgumentNullException(nameof(adcode), "Property is not nullable for class GetMiscWeather200Response.");
 
             if (weather.IsSet && weather.Value == null)
                 throw new ArgumentNullException(nameof(weather), "Property is not nullable for class GetMiscWeather200Response.");
+
+            if (weatherIcon.IsSet && weatherIcon.Value == null)
+                throw new ArgumentNullException(nameof(weatherIcon), "Property is not nullable for class GetMiscWeather200Response.");
 
             if (temperature.IsSet && temperature.Value == null)
                 throw new ArgumentNullException(nameof(temperature), "Property is not nullable for class GetMiscWeather200Response.");
@@ -749,7 +7042,7 @@ namespace uapi-sdk-csharp.Model
             if (lifeIndices.IsSet && lifeIndices.Value == null)
                 throw new ArgumentNullException(nameof(lifeIndices), "Property is not nullable for class GetMiscWeather200Response.");
 
-            return new GetMiscWeather200Response(province, city, adcode, weather, temperature, windDirection, windPower, humidity, reportTime, feelsLike, visibility, pressure, uv, precipitation, cloud, aqi, aqiLevel, aqiCategory, aqiPrimary, airPollutants, tempMax, tempMin, forecast, hourlyForecast, minutelyPrecip, lifeIndices);
+            return new GetMiscWeather200Response(province, city, district, adcode, weather, weatherIcon, temperature, windDirection, windPower, humidity, reportTime, feelsLike, visibility, pressure, uv, precipitation, cloud, aqi, aqiLevel, aqiCategory, aqiPrimary, airPollutants, tempMax, tempMin, forecast, hourlyForecast, minutelyPrecip, lifeIndices);
         }
 
         /// <summary>
@@ -781,6 +7074,9 @@ namespace uapi-sdk-csharp.Model
 
             if (getMiscWeather200Response.CityOption.IsSet && getMiscWeather200Response.City == null)
                 throw new ArgumentNullException(nameof(getMiscWeather200Response.City), "Property is required for class GetMiscWeather200Response.");
+
+            if (getMiscWeather200Response.DistrictOption.IsSet && getMiscWeather200Response.District == null)
+                throw new ArgumentNullException(nameof(getMiscWeather200Response.District), "Property is required for class GetMiscWeather200Response.");
 
             if (getMiscWeather200Response.AdcodeOption.IsSet && getMiscWeather200Response.Adcode == null)
                 throw new ArgumentNullException(nameof(getMiscWeather200Response.Adcode), "Property is required for class GetMiscWeather200Response.");
@@ -824,12 +7120,17 @@ namespace uapi-sdk-csharp.Model
             if (getMiscWeather200Response.CityOption.IsSet)
                 writer.WriteString("city", getMiscWeather200Response.City);
 
+            if (getMiscWeather200Response.DistrictOption.IsSet)
+                writer.WriteString("district", getMiscWeather200Response.District);
+
             if (getMiscWeather200Response.AdcodeOption.IsSet)
                 writer.WriteString("adcode", getMiscWeather200Response.Adcode);
 
             if (getMiscWeather200Response.WeatherOption.IsSet)
                 writer.WriteString("weather", getMiscWeather200Response.Weather);
 
+            var weatherIconRawValue = GetMiscWeather200Response.WeatherIconEnumToJsonValue(getMiscWeather200Response.WeatherIconOption.Value!.Value);
+            writer.WriteString("weather_icon", weatherIconRawValue);
             if (getMiscWeather200Response.TemperatureOption.IsSet)
                 writer.WriteNumber("temperature", getMiscWeather200Response.TemperatureOption.Value!.Value);
 

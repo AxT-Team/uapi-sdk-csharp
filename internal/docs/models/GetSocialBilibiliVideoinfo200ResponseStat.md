@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Aid** | **decimal** | AV 号。 | [optional] 
 **View** | **decimal** | 播放数。 | [optional] 
 **Danmaku** | **decimal** | 弹幕数。 | [optional] 
 **Reply** | **decimal** | 评论数。 | [optional] 
@@ -12,6 +13,11 @@ Name | Type | Description | Notes
 **Coin** | **decimal** | 投币数。 | [optional] 
 **Share** | **decimal** | 分享数。 | [optional] 
 **Like** | **decimal** | 获赞数。 | [optional] 
+**NowRank** | **decimal** | 当前全站/分区排名。 | [optional] 
+**HisRank** | **decimal** | 历史排名。 | [optional] 
+**Dislike** | **decimal** | 点踩量（通常为 0）。 | [optional] 
+**Evaluation** | **string** | 评分/评估文案，通常为空。 | [optional] 
+**Vt** | **decimal** | 视频类型相关历史字段。 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
