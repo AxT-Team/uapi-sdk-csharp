@@ -2,7 +2,7 @@
 
 ![Banner](https://raw.githubusercontent.com/AxT-Team/uapi-sdk-csharp/main/banner.png)
 
-[![.NET](https://img.shields.io/badge/.NET-7+-512BD4?style=flat-square&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-8+-512BD4?style=flat-square&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![Docs](https://img.shields.io/badge/Docs-uapis.cn-2EAE5D?style=flat-square)](https://uapis.cn/)
 
 > [!NOTE]
@@ -52,7 +52,7 @@ catch (Exception ex)
 
 针对 401、404、429 等标准 HTTP 响应，SDK 已将其统一映射为具名的异常类型。这些异常均附带 `Code`、`Status`、`Details` 等关键上下文信息，确保你在日志中能第一时间准确、快速地诊断问题。
 
-`Client` 基于 `HttpClient`，构造函数会设置 BaseAddress 并自动追加 `Authorization` 头；如果你想引入代理、超时或重试策略，只需包装一个自定义的 `HttpClient` 传入即可。
+`Client` 基于 `HttpClient`，构造函数会设置 BaseAddress 并自动追加 `Authorization` 头。当前版本还没有开放自定义 `HttpClient` 注入；如果你需要代理、超时或重试策略，建议在项目里再封装一层，或者按需扩展源码。
 
 如果你需要查看字段细节或内部逻辑，仓库中的 `./internal` 目录同步保留了由 `openapi-generator` 生成的完整结构体，随时可供参考。
 
