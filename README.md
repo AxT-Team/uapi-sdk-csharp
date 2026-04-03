@@ -26,13 +26,7 @@ try
 {
     var result = await client.Misc.getMiscHotboardAsync(new Dictionary<string, object?>
         {
-            ["type"] = "weibo",
-            ["time"] = 0,
-            ["keyword"] = "",
-            ["time_start"] = 0,
-            ["time_end"] = 0,
-            ["limit"] = 0,
-            ["sources"] = false
+            ["type"] = "weibo"
         });
     Console.WriteLine($"Response: {result}");
 }
@@ -45,6 +39,8 @@ catch (Exception ex)
     Console.Error.WriteLine($"Transport error: {ex.Message}");
 }
 ```
+
+这个接口默认只要传 `type` 就可以拿当前热榜。`time`、`keyword`、`time_start`、`time_end`、`limit`、`sources` 都是按场景再传的可选参数。
 
 ## 特性
 
