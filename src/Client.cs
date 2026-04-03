@@ -75,9 +75,16 @@ public class Client {
     private readonly HttpClient _http;
     public ResponseMeta? LastResponseMeta { get; private set; }
     public Client(string baseUrl, string? token = null) {
-        var normalized = baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
+        var normalized = NormalizeBaseUrl(baseUrl);
         _http = new HttpClient { BaseAddress = new Uri(normalized) };
         if (!string.IsNullOrEmpty(token)) _http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    }
+    private static string NormalizeBaseUrl(string baseUrl) {
+        var normalized = baseUrl.TrimEnd('/');
+        if (normalized.EndsWith("/api/v1", StringComparison.OrdinalIgnoreCase)) {
+            normalized = normalized[..^"/api/v1".Length];
+        }
+        return normalized.EndsWith("/") ? normalized : normalized + "/";
     }
     private async Task<object?> RequestAsync(string method, string path, Dictionary<string, object?>? query = null, object? body = null) {
         var relative = path.TrimStart('/');

@@ -17,11 +17,33 @@ dotnet add package uapi-sdk-csharp
 ```csharp
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using uapi;
 
-var client = new Client("https://uapis.cn/api/v1");
-var result = await client.Social.getSocialQqUserinfoAsync(new Dictionary<string, object?> { ["qq"] = "10001" });
-Console.WriteLine(result);
+var client = new Client("https://uapis.cn", "YOUR_API_KEY");
+
+try
+{
+    var result = await client.Misc.getMiscHotboardAsync(new Dictionary<string, object?>
+        {
+            ["type"] = "weibo",
+            ["time"] = 0,
+            ["keyword"] = "",
+            ["time_start"] = 0,
+            ["time_end"] = 0,
+            ["limit"] = 0,
+            ["sources"] = false
+        });
+    Console.WriteLine($"Response: {result}");
+}
+catch (UapiError ex)
+{
+    Console.Error.WriteLine($"API call failed: {ex.Message}");
+}
+catch (Exception ex)
+{
+    Console.Error.WriteLine($"Transport error: {ex.Message}");
+}
 ```
 
 ## 特性
@@ -49,7 +71,7 @@ using System;
 using System.Collections.Generic;
 using uapi;
 
-var client = new Client("https://uapis.cn/api/v1");
+var client = new Client("https://uapis.cn", "YOUR_API_KEY");
 
 // 成功路径
 var result = await client.Social.getSocialQqUserinfoAsync(
