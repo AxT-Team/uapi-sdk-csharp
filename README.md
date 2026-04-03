@@ -70,13 +70,19 @@ using uapi;
 var client = new Client("https://uapis.cn", "YOUR_API_KEY");
 
 // 成功路径
-var result = await client.Social.getSocialQqUserinfoAsync(
+await client.Social.getSocialQqUserinfoAsync(
     new Dictionary<string, object?> { ["qq"] = "10001" }
 );
 var meta = client.LastResponseMeta;
 if (meta != null) {
+    Console.WriteLine($"这次请求原价: {meta.CreditsRequested ?? 0} 积分");
+    Console.WriteLine($"这次实际扣费: {meta.CreditsCharged ?? 0} 积分");
+    Console.WriteLine($"特殊计价: {meta.CreditsPricing ?? "原价"}");
     Console.WriteLine($"余额剩余: {meta.BalanceRemainingCents ?? 0} 分");
     Console.WriteLine($"资源包剩余: {meta.QuotaRemainingCredits ?? 0} 积分");
+    Console.WriteLine($"当前有效额度桶: {meta.ActiveQuotaBuckets ?? 0}");
+    Console.WriteLine($"额度用空即停: {meta.StopOnEmpty ?? false}");
+    Console.WriteLine($"Key QPS: {meta.BillingKeyRateRemaining ?? 0} / {meta.BillingKeyRateLimit ?? 0} {meta.BillingKeyRateUnit ?? "req"}");
     Console.WriteLine($"Request ID: {meta.RequestId}");
 }
 
@@ -87,7 +93,9 @@ try {
     );
 } catch (UapiError e) {
     if (e.Meta != null) {
-        Console.WriteLine($"限流，{e.Meta.RetryAfterSeconds ?? 0}s 后重试");
+        Console.WriteLine($"Retry-After 秒数: {e.Meta.RetryAfterSeconds}");
+        Console.WriteLine($"Retry-After 原始值: {e.Meta.RetryAfterRaw ?? "-"}");
+        Console.WriteLine($"访客 QPS: {e.Meta.VisitorRateRemaining ?? 0} / {e.Meta.VisitorRateLimit ?? 0}");
         Console.WriteLine($"Request ID: {e.Meta.RequestId}");
     }
 }
@@ -97,12 +105,18 @@ try {
 
 | 字段 | 说明 |
 |------|------|
+| `CreditsRequested` | 这次请求原本要扣多少积分，也就是请求价 |
+| `CreditsCharged` | 这次请求实际扣了多少积分 |
+| `CreditsPricing` | 特殊计价原因，例如缓存半价 `cache-hit-half-price` |
 | `BalanceRemainingCents` | 账户余额剩余（分） |
 | `QuotaRemainingCredits` | 资源包剩余积分 |
-| `VisitorQuotaRemainingCredits` | 访客配额剩余积分 |
-| `RetryAfterSeconds` | 触发限流后的建议等待时长 |
+| `ActiveQuotaBuckets` | 当前还有多少个有效额度桶参与计费 |
+| `StopOnEmpty` | 额度耗尽后是否直接停止服务 |
+| `RetryAfterSeconds` / `RetryAfterRaw` | 限流后的等待时长；当服务端返回 HTTP 时间字符串时看 `RetryAfterRaw` |
 | `RequestId` | 请求唯一 ID，排障时使用 |
-| `DebitStatus` | 本次计费状态 |
+| `BillingKeyRateLimit` / `BillingKeyRateRemaining` | Billing Key 当前 QPS 规则的上限与剩余 |
+| `BillingIPRateLimit` / `BillingIPRateRemaining` | Billing Key 单 IP 当前 QPS 规则的上限与剩余 |
+| `VisitorRateLimit` / `VisitorRateRemaining` | 访客当前 QPS 规则的上限与剩余 |
 | `RateLimitPolicies` / `RateLimits` | 完整结构化限流策略数据 |
 
 ## 错误模型概览

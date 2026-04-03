@@ -19,6 +19,7 @@ public class RateLimitStateEntry {
 
 public class ResponseMeta {
     public string? RequestId { get; set; }
+    public string? RetryAfterRaw { get; set; }
     public int? RetryAfterSeconds { get; set; }
     public string? DebitStatus { get; set; }
     public long? CreditsRequested { get; set; }
@@ -36,6 +37,21 @@ public class ResponseMeta {
     public long? QuotaRemainingCredits { get; set; }
     public long? VisitorQuotaLimitCredits { get; set; }
     public long? VisitorQuotaRemainingCredits { get; set; }
+    public long? BillingKeyRateLimit { get; set; }
+    public long? BillingKeyRateRemaining { get; set; }
+    public string? BillingKeyRateUnit { get; set; }
+    public int? BillingKeyRateWindowSeconds { get; set; }
+    public int? BillingKeyRateResetAfterSeconds { get; set; }
+    public long? BillingIPRateLimit { get; set; }
+    public long? BillingIPRateRemaining { get; set; }
+    public string? BillingIPRateUnit { get; set; }
+    public int? BillingIPRateWindowSeconds { get; set; }
+    public int? BillingIPRateResetAfterSeconds { get; set; }
+    public long? VisitorRateLimit { get; set; }
+    public long? VisitorRateRemaining { get; set; }
+    public string? VisitorRateUnit { get; set; }
+    public int? VisitorRateWindowSeconds { get; set; }
+    public int? VisitorRateResetAfterSeconds { get; set; }
     public Dictionary<string, string> RawHeaders { get; } = new(StringComparer.OrdinalIgnoreCase);
 }
 
@@ -175,6 +191,7 @@ public class Client {
         }
 
         meta.RequestId = GetHeader(meta.RawHeaders, "X-Request-ID");
+        meta.RetryAfterRaw = GetHeader(meta.RawHeaders, "Retry-After");
         meta.RetryAfterSeconds = ParseInt(GetHeader(meta.RawHeaders, "Retry-After"));
         meta.DebitStatus = GetHeader(meta.RawHeaders, "UAPI-Debit-Status");
         meta.CreditsRequested = ParseLong(GetHeader(meta.RawHeaders, "UAPI-Credits-Requested"));
@@ -208,6 +225,36 @@ public class Client {
         meta.QuotaRemainingCredits = meta.RateLimits.TryGetValue("billing-quota", out var quotaState) ? quotaState.Remaining : null;
         meta.VisitorQuotaLimitCredits = meta.RateLimitPolicies.TryGetValue("visitor-quota", out var visitorQuotaPolicy) ? visitorQuotaPolicy.Quota : null;
         meta.VisitorQuotaRemainingCredits = meta.RateLimits.TryGetValue("visitor-quota", out var visitorQuotaState) ? visitorQuotaState.Remaining : null;
+        if (meta.RateLimitPolicies.TryGetValue("billing-key-rate", out var billingKeyRatePolicy)) {
+            meta.BillingKeyRateLimit = billingKeyRatePolicy.Quota;
+            meta.BillingKeyRateUnit = billingKeyRatePolicy.Unit;
+            meta.BillingKeyRateWindowSeconds = billingKeyRatePolicy.WindowSeconds;
+        }
+        if (meta.RateLimits.TryGetValue("billing-key-rate", out var billingKeyRateState)) {
+            meta.BillingKeyRateRemaining = billingKeyRateState.Remaining;
+            meta.BillingKeyRateUnit ??= billingKeyRateState.Unit;
+            meta.BillingKeyRateResetAfterSeconds = billingKeyRateState.ResetAfterSeconds;
+        }
+        if (meta.RateLimitPolicies.TryGetValue("billing-ip-rate", out var billingIpRatePolicy)) {
+            meta.BillingIPRateLimit = billingIpRatePolicy.Quota;
+            meta.BillingIPRateUnit = billingIpRatePolicy.Unit;
+            meta.BillingIPRateWindowSeconds = billingIpRatePolicy.WindowSeconds;
+        }
+        if (meta.RateLimits.TryGetValue("billing-ip-rate", out var billingIpRateState)) {
+            meta.BillingIPRateRemaining = billingIpRateState.Remaining;
+            meta.BillingIPRateUnit ??= billingIpRateState.Unit;
+            meta.BillingIPRateResetAfterSeconds = billingIpRateState.ResetAfterSeconds;
+        }
+        if (meta.RateLimitPolicies.TryGetValue("visitor-rate", out var visitorRatePolicy)) {
+            meta.VisitorRateLimit = visitorRatePolicy.Quota;
+            meta.VisitorRateUnit = visitorRatePolicy.Unit;
+            meta.VisitorRateWindowSeconds = visitorRatePolicy.WindowSeconds;
+        }
+        if (meta.RateLimits.TryGetValue("visitor-rate", out var visitorRateState)) {
+            meta.VisitorRateRemaining = visitorRateState.Remaining;
+            meta.VisitorRateUnit ??= visitorRateState.Unit;
+            meta.VisitorRateResetAfterSeconds = visitorRateState.ResetAfterSeconds;
+        }
         return meta;
     }
 
