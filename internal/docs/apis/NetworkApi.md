@@ -88,7 +88,7 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | 查询成功！返回该域名的ICP备案详情。 |  -  |
 | **400** | 请求参数无效。请检查 &#x60;domain&#x60; 参数是否提供且格式正确。 |  -  |
-| **404** | 未查询到备案信息。该域名可能没有在工信部备案，或者是我们查询的上游接口暂时没有收录。 |  -  |
+| **404** | 未查询到备案信息。该域名可能没有在工信部备案，或者当前暂无可用结果。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -98,7 +98,7 @@ No authorization required
 
 查询 IP
 
-想知道一个IP地址或域名来自地球的哪个角落？这个接口可以帮你定位它。你可以使用默认数据源，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+想知道一个IP地址或域名来自哪里？这个接口可以帮你定位它。默认返回标准结果；如果传 `source=commercial`，可以返回更完整的位置信息。  ## 功能概述 提供一个公网IPv4、IPv6地址或域名，我们会查询并返回它的地理位置（国家、省份、城市）、经纬度、以及所属的运营商（ISP）和自治系统（ASN）信息。这在网络安全分析、访问来源统计等领域非常有用。  当传 `source=commercial` 时，响应中会补充更完整的市、区、运营商、时区、海拔等信息，响应时间可能会稍长。
 
 
 ### Parameters
@@ -106,7 +106,7 @@ No authorization required
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **ip** | **string** | 你需要查询的公网IP地址或域名（支持IPv4和IPv6）。 |  |
-| **source** | **string** | 查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 | [optional]  |
+| **source** | **string** | 查询结果类型。不传时返回标准结果；如果设置为 &#x60;commercial&#x60;，将返回更完整的地理位置信息，但响应时间可能会稍长。 | [optional]  |
 
 ### Return type
 
@@ -138,14 +138,14 @@ No authorization required
 
 查询我的 IP
 
-想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。你可以使用默认数据源，也可以指定 `source=commercial` 参数来查询更详细的商业级IP归属信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 `/network/ipinfo` 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当使用 `source=commercial` 参数时，接口将调用高性能商业API，提供更精确的市、区、运营商、时区、海拔等信息。请注意，商业查询的响应时间可能会稍长。
+想知道你自己的出口公网IP是多少吗？这个接口就是你的“网络身份证”。默认返回标准结果；如果传 `source=commercial`，可以返回更完整的位置信息。  ## 功能概述 调用此接口，它会返回你（即发起请求的客户端）的公网IP地址，并附带与 `/network/ipinfo` 接口相同的地理位置和网络归属信息。非常适合用于在网页上向用户展示他们自己的IP和地理位置。  当传 `source=commercial` 时，响应中会补充更完整的市、区、运营商、时区、海拔等信息，响应时间可能会稍长。
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **source** | **string** | 查询的数据源。如果留空，将使用默认的数据库。如果设置为 &#x60;commercial&#x60;，将调用商业级API，返回更详细的地理位置信息，但响应时间可能会稍长。 | [optional]  |
+| **source** | **string** | 查询结果类型。不传时返回标准结果；如果设置为 &#x60;commercial&#x60;，将返回更完整的地理位置信息，但响应时间可能会稍长。 | [optional]  |
 
 ### Return type
 
@@ -393,7 +393,7 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | 查询成功！返回该域名在微信中的状态。 |  -  |
 | **400** | 请求参数无效。 |  -  |
-| **502** | 查询上游接口失败。 |  -  |
+| **502** | 暂时无法完成查询，请稍后重试。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

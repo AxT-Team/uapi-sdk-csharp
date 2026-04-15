@@ -447,6 +447,21 @@ public class Client {
             var query = new Dictionary<string, object?>();
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("resolution")) query["resolution"] = args["resolution"];
+            if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
+        public Task<object?> getImageBingDailyHistoryAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/image/bing-daily/history";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("resolution")) query["resolution"] = args["resolution"];
+            if (args != null && args.ContainsKey("page")) query["page"] = args["page"];
+            if (args != null && args.ContainsKey("page_size")) query["page_size"] = args["page_size"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
@@ -494,6 +509,24 @@ public class Client {
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
+        public Task<object?> postImageDecodeAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/image/decode";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("width")) query["width"] = args["width"];
+            if (args != null && args.ContainsKey("height")) query["height"] = args["height"];
+            if (args != null && args.ContainsKey("max_width")) query["max_width"] = args["max_width"];
+            if (args != null && args.ContainsKey("max_height")) query["max_height"] = args["max_height"];
+            if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
+            if (args != null && args.ContainsKey("color_mode")) query["color_mode"] = args["color_mode"];
+            if (args != null && args.ContainsKey("fit")) query["fit"] = args["fit"];
+            if (args != null && args.ContainsKey("background")) query["background"] = args["background"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
         public Task<object?> postImageFrombase64Async(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/frombase64";
             var query = new Dictionary<string, object?>();
@@ -521,6 +554,21 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
+        public Task<object?> postImageOcrAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/image/ocr";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("enable_cls")) body["enable_cls"] = args["enable_cls"];
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("image_base64")) body["image_base64"] = args["image_base64"];
+            if (args != null && args.ContainsKey("image_name")) body["image_name"] = args["image_name"];
+            if (args != null && args.ContainsKey("need_location")) body["need_location"] = args["need_location"];
+            if (args != null && args.ContainsKey("return_markdown")) body["return_markdown"] = args["return_markdown"];
             if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
@@ -596,6 +644,7 @@ public class Client {
             if (args != null && args.ContainsKey("holiday_type")) query["holiday_type"] = args["holiday_type"];
             if (args != null && args.ContainsKey("include_nearby")) query["include_nearby"] = args["include_nearby"];
             if (args != null && args.ContainsKey("nearby_limit")) query["nearby_limit"] = args["nearby_limit"];
+            if (args != null && args.ContainsKey("exclude_past")) query["exclude_past"] = args["exclude_past"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
@@ -610,7 +659,6 @@ public class Client {
             if (args != null && args.ContainsKey("time_start")) query["time_start"] = args["time_start"];
             if (args != null && args.ContainsKey("time_end")) query["time_end"] = args["time_end"];
             if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
-            if (args != null && args.ContainsKey("sources")) query["sources"] = args["sources"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
@@ -681,6 +729,7 @@ public class Client {
             if (args != null && args.ContainsKey("tracking_number")) query["tracking_number"] = args["tracking_number"];
             if (args != null && args.ContainsKey("carrier_code")) query["carrier_code"] = args["carrier_code"];
             if (args != null && args.ContainsKey("phone")) query["phone"] = args["phone"];
+            if (args != null && args.ContainsKey("full")) query["full"] = args["full"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
@@ -885,6 +934,18 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
+        public Task<object?> getGithubUserAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/github/user";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("user")) query["user"] = args["user"];
+            if (args != null && args.ContainsKey("activity")) query["activity"] = args["activity"];
+            if (args != null && args.ContainsKey("activity_scope")) query["activity_scope"] = args["activity_scope"];
+            if (args != null && args.ContainsKey("org")) query["org"] = args["org"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
         public Task<object?> getSocialBilibiliArchivesAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/archives";
             var query = new Dictionary<string, object?>();
@@ -1078,6 +1139,28 @@ public class Client {
             if (args != null && args.ContainsKey("to")) body["to"] = args["to"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
+        public Task<object?> postTextMarkdownToHtmlAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/text/markdown-to-html";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("format")) body["format"] = args["format"];
+            if (args != null && args.ContainsKey("sanitize")) body["sanitize"] = args["sanitize"];
+            if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
+        public Task<object?> postTextMarkdownToPdfAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/text/markdown-to-pdf";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("paper_size")) body["paper_size"] = args["paper_size"];
+            if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
+            if (args != null && args.ContainsKey("theme")) body["theme"] = args["theme"];
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+        }
         public Task<object?> postTextMd5Async(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/md5";
             var query = new Dictionary<string, object?>();
@@ -1240,7 +1323,6 @@ public class Client {
             if (args != null && args.ContainsKey("site")) body["site"] = args["site"];
             if (args != null && args.ContainsKey("sort")) body["sort"] = args["sort"];
             if (args != null && args.ContainsKey("time_range")) body["time_range"] = args["time_range"];
-            if (args != null && args.ContainsKey("timeout_ms")) body["timeout_ms"] = args["timeout_ms"];
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
         }
     }
