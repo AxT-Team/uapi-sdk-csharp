@@ -1,0 +1,12 @@
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.AssemblyInfoInputs.cache
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.AssemblyInfo.cs
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.csproj.CoreCompileInputs.cache
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.sourcelink.json
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\bin\Release\net8.0\uapi-sdk-csharp.deps.json
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\bin\Release\net8.0\uapi-sdk-csharp.dll
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\bin\Release\net8.0\uapi-sdk-csharp.pdb
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.dll
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\refint\uapi-sdk-csharp.dll
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\uapi-sdk-csharp.pdb
+C:\Users\Shuakami_Projects\darf\uapi-sdk\sdks\csharp\obj\Release\net8.0\ref\uapi-sdk-csharp.dll

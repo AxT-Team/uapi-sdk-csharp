@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
 namespace uapi;
@@ -141,7 +142,50 @@ public class Client {
         return next;
     }
 
-    private async Task<object?> RequestAsync(string method, string path, Dictionary<string, object?>? query = null, object? body = null, bool? disableCache = null) {
+    private static string StringifyFormValue(object value) => value switch {
+        bool boolValue => boolValue ? "true" : "false",
+        _ => value.ToString() ?? string.Empty,
+    };
+
+    private static void AddMultipartFile(MultipartFormDataContent content, string name, object value) {
+        switch (value) {
+            case string path:
+                if (!File.Exists(path)) {
+                    throw new FileNotFoundException("File not found", path);
+                }
+                content.Add(new ByteArrayContent(File.ReadAllBytes(path)), name, Path.GetFileName(path));
+                break;
+            case byte[] bytes:
+                content.Add(new ByteArrayContent(bytes), name, "upload.bin");
+                break;
+            case Stream stream:
+                content.Add(new StreamContent(stream), name, "upload.bin");
+                break;
+            case HttpContent httpContent:
+                content.Add(httpContent, name);
+                break;
+            default:
+                throw new ArgumentException($"Unsupported multipart file value for {name}: {value.GetType().FullName}");
+        }
+    }
+
+    private static MultipartFormDataContent BuildMultipartBody(Dictionary<string, object?> body, string[] fileFields) {
+        var content = new MultipartFormDataContent();
+        var fileFieldSet = new HashSet<string>(fileFields, StringComparer.OrdinalIgnoreCase);
+        foreach (var entry in body) {
+            if (entry.Value is null) {
+                continue;
+            }
+            if (fileFieldSet.Contains(entry.Key)) {
+                AddMultipartFile(content, entry.Key, entry.Value);
+                continue;
+            }
+            content.Add(new StringContent(StringifyFormValue(entry.Value), Encoding.UTF8), entry.Key);
+        }
+        return content;
+    }
+
+    private async Task<object?> RequestAsync(string method, string path, Dictionary<string, object?>? query = null, object? body = null, bool? disableCache = null, bool multipart = false, string[]? fileFields = null, string responseKind = "json") {
         query = ApplyCacheControl(method, query, disableCache);
         var relative = path.TrimStart('/');
         var qs = query is null || query.Count == 0
@@ -149,19 +193,26 @@ public class Client {
             : "?" + string.Join("&", query.Select(kv => $"{Uri.EscapeDataString(kv.Key)}={Uri.EscapeDataString(kv.Value?.ToString() ?? "")}"));
         var uri = relative + qs;
         var msg = new HttpRequestMessage(new HttpMethod(method), uri);
-        if (body is not null) msg.Content = JsonContent.Create(body);
+        if (multipart) {
+            msg.Content = BuildMultipartBody(body as Dictionary<string, object?> ?? new Dictionary<string, object?>(), fileFields ?? Array.Empty<string>());
+        } else if (body is not null) {
+            msg.Content = JsonContent.Create(body);
+        }
         var res = await _http.SendAsync(msg);
         LastResponseMeta = ExtractMeta(res);
         if (!res.IsSuccessStatusCode) {
-            var text = await res.Content.ReadAsStringAsync();
+            var errorBytes = await res.Content.ReadAsByteArrayAsync();
+            var text = Encoding.UTF8.GetString(errorBytes);
             var payload = ParseJson(text);
             var code = (ReadString(payload, "code") ?? ReadString(payload, "error") ?? DefaultCode((int)res.StatusCode)).ToUpperInvariant();
             var message = ReadString(payload, "message") ?? (!string.IsNullOrWhiteSpace(text) ? text : res.ReasonPhrase ?? "");
             throw From(code, (int)res.StatusCode, message, PickDetails(payload), payload, LastResponseMeta);
         }
         var ct = res.Content.Headers.ContentType?.MediaType ?? "";
-        if (ct.Contains("json")) return await res.Content.ReadFromJsonAsync<object>();
-        return await res.Content.ReadAsStringAsync();
+        var responseBytes = await res.Content.ReadAsByteArrayAsync();
+        if (ct.Contains("json")) return JsonSerializer.Deserialize<object>(responseBytes);
+        if (responseKind == "arrayBuffer") return responseBytes;
+        return Encoding.UTF8.GetString(responseBytes);
     }
     private static string DefaultCode(int status) => status switch {
         400 => "INVALID_PARAMETER", 401 => "UNAUTHORIZED", 402 => "INSUFFICIENT_CREDITS", 404 => "NOT_FOUND", 429 => "SERVICE_BUSY", 500 => "INTERNAL_SERVER_ERROR", _ => "API_ERROR",
@@ -317,7 +368,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("id")) query["id"] = args["id"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getClipzyRawAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/api/raw/{id}";
@@ -327,7 +379,8 @@ public class Client {
             if (args != null && args.ContainsKey("id") && args["id"] != null) path = path.Replace("{"+ "id" +"}", args["id"]!.ToString());
             if (args != null && args.ContainsKey("key")) query["key"] = args["key"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "text";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postClipzyStoreAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/api/store";
@@ -337,7 +390,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("compressedData")) body["compressedData"] = args["compressedData"];
             if (args != null && args.ContainsKey("ttl")) body["ttl"] = args["ttl"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public ConvertApi Convert => new ConvertApi(this);
@@ -350,7 +404,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("time")) query["time"] = args["time"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postConvertJsonAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/convert/json";
@@ -359,7 +414,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("content")) body["content"] = args["content"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public DailyApi Daily => new DailyApi(this);
@@ -371,7 +427,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public GameApi Game => new GameApi(this);
@@ -383,7 +440,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getGameMinecraftHistoryidAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/game/minecraft/historyid";
@@ -393,7 +451,8 @@ public class Client {
             if (args != null && args.ContainsKey("name")) query["name"] = args["name"];
             if (args != null && args.ContainsKey("uuid")) query["uuid"] = args["uuid"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getGameMinecraftServerstatusAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/game/minecraft/serverstatus";
@@ -402,7 +461,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("server")) query["server"] = args["server"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getGameMinecraftUserinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/game/minecraft/userinfo";
@@ -411,7 +471,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("username")) query["username"] = args["username"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getGameSteamSummaryAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/game/steam/summary";
@@ -423,7 +484,8 @@ public class Client {
             if (args != null && args.ContainsKey("id3")) query["id3"] = args["id3"];
             if (args != null && args.ContainsKey("key")) query["key"] = args["key"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public ImageApi Image => new ImageApi(this);
@@ -440,7 +502,8 @@ public class Client {
             if (args != null && args.ContainsKey("d")) query["d"] = args["d"];
             if (args != null && args.ContainsKey("r")) query["r"] = args["r"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getImageBingDailyAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/bing-daily";
@@ -451,7 +514,8 @@ public class Client {
             if (args != null && args.ContainsKey("resolution")) query["resolution"] = args["resolution"];
             if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = args != null && args.TryGetValue("format", out var formatValue) && string.Equals(formatValue?.ToString(), "json", StringComparison.OrdinalIgnoreCase) ? "json" : "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getImageBingDailyHistoryAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/bing-daily/history";
@@ -463,7 +527,8 @@ public class Client {
             if (args != null && args.ContainsKey("page")) query["page"] = args["page"];
             if (args != null && args.ContainsKey("page_size")) query["page_size"] = args["page_size"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getImageMotouAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/motou";
@@ -473,7 +538,8 @@ public class Client {
             if (args != null && args.ContainsKey("qq")) query["qq"] = args["qq"];
             if (args != null && args.ContainsKey("bg_color")) query["bg_color"] = args["bg_color"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getImageQrcodeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/qrcode";
@@ -487,7 +553,8 @@ public class Client {
             if (args != null && args.ContainsKey("fgcolor")) query["fgcolor"] = args["fgcolor"];
             if (args != null && args.ContainsKey("bgcolor")) query["bgcolor"] = args["bgcolor"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getImageTobase64Async(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/tobase64";
@@ -496,7 +563,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("url")) query["url"] = args["url"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postImageCompressAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/compress";
@@ -507,7 +575,8 @@ public class Client {
             if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
         public Task<object?> postImageDecodeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/decode";
@@ -525,7 +594,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
             if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
         public Task<object?> postImageFrombase64Async(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/frombase64";
@@ -534,7 +604,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("imageData")) body["imageData"] = args["imageData"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postImageMotouAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/motou";
@@ -545,7 +616,8 @@ public class Client {
             if (args != null && args.ContainsKey("bg_color")) body["bg_color"] = args["bg_color"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
             if (args != null && args.ContainsKey("image_url")) body["image_url"] = args["image_url"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
         public Task<object?> postImageNsfwAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/nsfw";
@@ -555,7 +627,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
             if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
         public Task<object?> postImageOcrAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/ocr";
@@ -570,7 +643,8 @@ public class Client {
             if (args != null && args.ContainsKey("need_location")) body["need_location"] = args["need_location"];
             if (args != null && args.ContainsKey("return_markdown")) body["return_markdown"] = args["return_markdown"];
             if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
         public Task<object?> postImageSpeechlessAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/speechless";
@@ -580,7 +654,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("bottom_text")) body["bottom_text"] = args["bottom_text"];
             if (args != null && args.ContainsKey("top_text")) body["top_text"] = args["top_text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postImageSvgAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/image/svg";
@@ -593,7 +668,8 @@ public class Client {
             if (args != null && args.ContainsKey("quality")) query["quality"] = args["quality"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
         }
     }
     public MiscApi Misc => new MiscApi(this);
@@ -607,7 +683,8 @@ public class Client {
             if (args != null && args.ContainsKey("month")) query["month"] = args["month"];
             if (args != null && args.ContainsKey("day")) query["day"] = args["day"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getHistoryProgrammerTodayAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/history/programmer/today";
@@ -615,7 +692,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscDistrictAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/district";
@@ -630,7 +708,8 @@ public class Client {
             if (args != null && args.ContainsKey("country")) query["country"] = args["country"];
             if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscHolidayCalendarAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/holiday-calendar";
@@ -646,7 +725,8 @@ public class Client {
             if (args != null && args.ContainsKey("nearby_limit")) query["nearby_limit"] = args["nearby_limit"];
             if (args != null && args.ContainsKey("exclude_past")) query["exclude_past"] = args["exclude_past"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscHotboardAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/hotboard";
@@ -660,7 +740,8 @@ public class Client {
             if (args != null && args.ContainsKey("time_end")) query["time_end"] = args["time_end"];
             if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscLunartimeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/lunartime";
@@ -670,7 +751,8 @@ public class Client {
             if (args != null && args.ContainsKey("ts")) query["ts"] = args["ts"];
             if (args != null && args.ContainsKey("timezone")) query["timezone"] = args["timezone"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscPhoneinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/phoneinfo";
@@ -679,7 +761,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("phone")) query["phone"] = args["phone"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscRandomnumberAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/randomnumber";
@@ -693,7 +776,8 @@ public class Client {
             if (args != null && args.ContainsKey("allow_decimal")) query["allow_decimal"] = args["allow_decimal"];
             if (args != null && args.ContainsKey("decimal_places")) query["decimal_places"] = args["decimal_places"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscTimestampAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/timestamp";
@@ -702,7 +786,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("ts")) query["ts"] = args["ts"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscTrackingCarriersAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/tracking/carriers";
@@ -710,7 +795,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscTrackingDetectAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/tracking/detect";
@@ -719,7 +805,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("tracking_number")) query["tracking_number"] = args["tracking_number"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscTrackingQueryAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/tracking/query";
@@ -731,7 +818,8 @@ public class Client {
             if (args != null && args.ContainsKey("phone")) query["phone"] = args["phone"];
             if (args != null && args.ContainsKey("full")) query["full"] = args["full"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscWeatherAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/weather";
@@ -747,7 +835,8 @@ public class Client {
             if (args != null && args.ContainsKey("indices")) query["indices"] = args["indices"];
             if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getMiscWorldtimeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/worldtime";
@@ -756,7 +845,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("city")) query["city"] = args["city"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postMiscDateDiffAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/date-diff";
@@ -767,7 +857,8 @@ public class Client {
             if (args != null && args.ContainsKey("end_date")) body["end_date"] = args["end_date"];
             if (args != null && args.ContainsKey("format")) body["format"] = args["format"];
             if (args != null && args.ContainsKey("start_date")) body["start_date"] = args["start_date"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public NetworkApi Network => new NetworkApi(this);
@@ -781,7 +872,8 @@ public class Client {
             if (args != null && args.ContainsKey("domain")) query["domain"] = args["domain"];
             if (args != null && args.ContainsKey("type")) query["type"] = args["type"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkIcpAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/icp";
@@ -790,7 +882,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("domain")) query["domain"] = args["domain"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkIpinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/ipinfo";
@@ -800,7 +893,8 @@ public class Client {
             if (args != null && args.ContainsKey("ip")) query["ip"] = args["ip"];
             if (args != null && args.ContainsKey("source")) query["source"] = args["source"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkMyipAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/myip";
@@ -809,7 +903,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("source")) query["source"] = args["source"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkPingAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/ping";
@@ -818,7 +913,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("host")) query["host"] = args["host"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkPingmyipAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/pingmyip";
@@ -826,7 +922,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkPortscanAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/portscan";
@@ -837,7 +934,8 @@ public class Client {
             if (args != null && args.ContainsKey("port")) query["port"] = args["port"];
             if (args != null && args.ContainsKey("protocol")) query["protocol"] = args["protocol"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkUrlstatusAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/urlstatus";
@@ -846,7 +944,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("url")) query["url"] = args["url"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkWhoisAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/whois";
@@ -856,7 +955,8 @@ public class Client {
             if (args != null && args.ContainsKey("domain")) query["domain"] = args["domain"];
             if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getNetworkWxdomainAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/network/wxdomain";
@@ -865,7 +965,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("domain")) query["domain"] = args["domain"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public PoemApi Poem => new PoemApi(this);
@@ -877,7 +978,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public RandomApi Random => new RandomApi(this);
@@ -890,7 +992,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("question")) query["question"] = args["question"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getRandomImageAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/random/image";
@@ -900,7 +1003,8 @@ public class Client {
             if (args != null && args.ContainsKey("category")) query["category"] = args["category"];
             if (args != null && args.ContainsKey("type")) query["type"] = args["type"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getRandomStringAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/random/string";
@@ -910,7 +1014,8 @@ public class Client {
             if (args != null && args.ContainsKey("length")) query["length"] = args["length"];
             if (args != null && args.ContainsKey("type")) query["type"] = args["type"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postAnswerbookAskAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/answerbook/ask";
@@ -919,7 +1024,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("question")) body["question"] = args["question"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public SocialApi Social => new SocialApi(this);
@@ -932,7 +1038,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("repo")) query["repo"] = args["repo"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getGithubUserAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/github/user";
@@ -944,7 +1051,8 @@ public class Client {
             if (args != null && args.ContainsKey("activity_scope")) query["activity_scope"] = args["activity_scope"];
             if (args != null && args.ContainsKey("org")) query["org"] = args["org"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialBilibiliArchivesAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/archives";
@@ -957,7 +1065,8 @@ public class Client {
             if (args != null && args.ContainsKey("ps")) query["ps"] = args["ps"];
             if (args != null && args.ContainsKey("pn")) query["pn"] = args["pn"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialBilibiliLiveroomAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/liveroom";
@@ -967,7 +1076,8 @@ public class Client {
             if (args != null && args.ContainsKey("mid")) query["mid"] = args["mid"];
             if (args != null && args.ContainsKey("room_id")) query["room_id"] = args["room_id"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialBilibiliRepliesAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/replies";
@@ -979,7 +1089,8 @@ public class Client {
             if (args != null && args.ContainsKey("ps")) query["ps"] = args["ps"];
             if (args != null && args.ContainsKey("pn")) query["pn"] = args["pn"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialBilibiliUserinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/userinfo";
@@ -988,7 +1099,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("uid")) query["uid"] = args["uid"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialBilibiliVideoinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/bilibili/videoinfo";
@@ -998,7 +1110,8 @@ public class Client {
             if (args != null && args.ContainsKey("aid")) query["aid"] = args["aid"];
             if (args != null && args.ContainsKey("bvid")) query["bvid"] = args["bvid"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialQqGroupinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/qq/groupinfo";
@@ -1007,7 +1120,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("group_id")) query["group_id"] = args["group_id"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getSocialQqUserinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/social/qq/userinfo";
@@ -1016,7 +1130,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("qq")) query["qq"] = args["qq"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public StatusApi Status => new StatusApi(this);
@@ -1028,7 +1143,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getStatusUsageAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/status/usage";
@@ -1037,7 +1153,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("path")) query["path"] = args["path"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public TextApi Text => new TextApi(this);
@@ -1050,7 +1167,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("text")) query["text"] = args["text"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextAesDecryptAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/aes/decrypt";
@@ -1061,7 +1179,8 @@ public class Client {
             if (args != null && args.ContainsKey("key")) body["key"] = args["key"];
             if (args != null && args.ContainsKey("nonce")) body["nonce"] = args["nonce"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextAesDecryptAdvancedAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/aes/decrypt-advanced";
@@ -1074,7 +1193,8 @@ public class Client {
             if (args != null && args.ContainsKey("mode")) body["mode"] = args["mode"];
             if (args != null && args.ContainsKey("padding")) body["padding"] = args["padding"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextAesEncryptAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/aes/encrypt";
@@ -1084,7 +1204,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("key")) body["key"] = args["key"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextAesEncryptAdvancedAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/aes/encrypt-advanced";
@@ -1098,7 +1219,8 @@ public class Client {
             if (args != null && args.ContainsKey("output_format")) body["output_format"] = args["output_format"];
             if (args != null && args.ContainsKey("padding")) body["padding"] = args["padding"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextAnalyzeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/analyze";
@@ -1107,7 +1229,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextBase64DecodeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/base64/decode";
@@ -1116,7 +1239,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextBase64EncodeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/base64/encode";
@@ -1125,7 +1249,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextConvertAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/convert";
@@ -1137,7 +1262,8 @@ public class Client {
             if (args != null && args.ContainsKey("options")) body["options"] = args["options"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
             if (args != null && args.ContainsKey("to")) body["to"] = args["to"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextMarkdownToHtmlAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/markdown-to-html";
@@ -1148,7 +1274,8 @@ public class Client {
             if (args != null && args.ContainsKey("format")) body["format"] = args["format"];
             if (args != null && args.ContainsKey("sanitize")) body["sanitize"] = args["sanitize"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextMarkdownToPdfAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/markdown-to-pdf";
@@ -1159,7 +1286,8 @@ public class Client {
             if (args != null && args.ContainsKey("paper_size")) body["paper_size"] = args["paper_size"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
             if (args != null && args.ContainsKey("theme")) body["theme"] = args["theme"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextMd5Async(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/md5";
@@ -1168,7 +1296,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTextMd5VerifyAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/md5/verify";
@@ -1178,7 +1307,8 @@ public class Client {
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("hash")) body["hash"] = args["hash"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public TranslateApi Translate => new TranslateApi(this);
@@ -1190,7 +1320,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postAiTranslateAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/ai/translate";
@@ -1204,7 +1335,8 @@ public class Client {
             if (args != null && args.ContainsKey("source_lang")) body["source_lang"] = args["source_lang"];
             if (args != null && args.ContainsKey("style")) body["style"] = args["style"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTranslateStreamAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/translate/stream";
@@ -1216,7 +1348,8 @@ public class Client {
             if (args != null && args.ContainsKey("query")) body["query"] = args["query"];
             if (args != null && args.ContainsKey("to_lang")) body["to_lang"] = args["to_lang"];
             if (args != null && args.ContainsKey("tone")) body["tone"] = args["tone"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postTranslateTextAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/translate/text";
@@ -1226,7 +1359,8 @@ public class Client {
             if (args != null && args.ContainsKey("to_lang")) query["to_lang"] = args["to_lang"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public WebparseApi Webparse => new WebparseApi(this);
@@ -1239,7 +1373,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("task_id") && args["task_id"] != null) path = path.Replace("{"+ "task_id" +"}", args["task_id"]!.ToString());
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getWebparseExtractimagesAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/webparse/extractimages";
@@ -1248,7 +1383,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("url")) query["url"] = args["url"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> getWebparseMetadataAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/webparse/metadata";
@@ -1257,7 +1393,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("url")) query["url"] = args["url"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postWebTomarkdownAsyncAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/web/tomarkdown/async";
@@ -1266,7 +1403,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("url")) query["url"] = args["url"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public MinGanCiShiBieApi MinGanCiShiBie => new MinGanCiShiBieApi(this);
@@ -1279,7 +1417,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("keyword")) query["keyword"] = args["keyword"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postSensitiveWordAnalyzeAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/sensitive-word/analyze";
@@ -1288,7 +1427,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("keywords")) body["keywords"] = args["keywords"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postSensitiveWordQuickCheckAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/text/profanitycheck";
@@ -1297,7 +1437,8 @@ public class Client {
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             if (args != null && args.ContainsKey("text")) body["text"] = args["text"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
     public ZhiNengSouSuoApi ZhiNengSouSuo => new ZhiNengSouSuoApi(this);
@@ -1309,7 +1450,8 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
-            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
         public Task<object?> postSearchAggregateAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/search/aggregate";
@@ -1323,7 +1465,8 @@ public class Client {
             if (args != null && args.ContainsKey("site")) body["site"] = args["site"];
             if (args != null && args.ContainsKey("sort")) body["sort"] = args["sort"];
             if (args != null && args.ContainsKey("time_range")) body["time_range"] = args["time_range"];
-            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache);
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
     }
 }
