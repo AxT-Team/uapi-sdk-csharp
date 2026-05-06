@@ -5,8 +5,21 @@
     <Nullable>enable</Nullable>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <Version>1.0.5</Version>
+    <PackageId>Uapi.Sdk</PackageId>
+    <Authors>UAPI / AxT-Team</Authors>
+    <Company>UAPI</Company>
+    <Description>Official .NET / C# SDK for UAPI / uapis.cn — typed .NET 8 wrapper around 100+ free public-API endpoints (network, text, image, social, translation, search). Generated from the live OpenAPI 3.1 spec.</Description>
+    <PackageTags>uapi;uapis;sdk;dotnet;public-api;free-api;openapi;rest;client;agent;llm</PackageTags>
+    <PackageProjectUrl>https://uapis.cn/docs/sdk/csharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AxT-Team/uapi-sdk-csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>banner.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/**/*.cs" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="banner.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
