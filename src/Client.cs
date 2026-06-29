@@ -430,6 +430,49 @@ public class Client {
             var responseKind = "arrayBuffer";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
+        public Task<object?> getDailyWordAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/daily/word";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
+            if (args != null && args.ContainsKey("category")) query["category"] = args["category"];
+            if (args != null && args.ContainsKey("count")) query["count"] = args["count"];
+            if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("seed")) query["seed"] = args["seed"];
+            if (args != null && args.ContainsKey("example")) query["example"] = args["example"];
+            if (args != null && args.ContainsKey("phonetic")) query["phonetic"] = args["phonetic"];
+            if (args != null && args.ContainsKey("define")) query["define"] = args["define"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+    }
+    public DictionaryApi Dictionary => new DictionaryApi(this);
+    public class DictionaryApi {
+        private readonly Client _c; public DictionaryApi(Client c) { _c = c; }
+        public Task<object?> getDictionaryAudioAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/dictionary/audio";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("word")) query["word"] = args["word"];
+            if (args != null && args.ContainsKey("accent")) query["accent"] = args["accent"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "arrayBuffer";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+        public Task<object?> getDictionaryLookupAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/dictionary/lookup";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("word")) query["word"] = args["word"];
+            if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
     }
     public GameApi Game => new GameApi(this);
     public class GameApi {
@@ -454,6 +497,20 @@ public class Client {
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
+        public Task<object?> getGameMinecraftModsAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/game/minecraft/mods";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("query")) query["query"] = args["query"];
+            if (args != null && args.ContainsKey("source")) query["source"] = args["source"];
+            if (args != null && args.ContainsKey("type")) query["type"] = args["type"];
+            if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
+            if (args != null && args.ContainsKey("enrich")) query["enrich"] = args["enrich"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
         public Task<object?> getGameMinecraftServerstatusAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/game/minecraft/serverstatus";
             var query = new Dictionary<string, object?>();
@@ -470,6 +527,27 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("username")) query["username"] = args["username"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+        public Task<object?> getGameMinecraftVersionAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/game/minecraft/version";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+        public Task<object?> getGameSteamServersAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/game/steam/servers";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("appid")) query["appid"] = args["appid"];
+            if (args != null && args.ContainsKey("name")) query["name"] = args["name"];
+            if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
@@ -511,6 +589,7 @@ public class Client {
             var body = new Dictionary<string, object?>();
             var disableCache = ReadDisableCache(args);
             if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("random")) query["random"] = args["random"];
             if (args != null && args.ContainsKey("resolution")) query["resolution"] = args["resolution"];
             if (args != null && args.ContainsKey("format")) query["format"] = args["format"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
@@ -754,6 +833,29 @@ public class Client {
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
+        public Task<object?> getMiscMovieBoxOfficeAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/movie-box-office";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+        public Task<object?> getMiscMovieRatingRankAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/movie-rating-rank";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("channel")) query["channel"] = args["channel"];
+            if (args != null && args.ContainsKey("platform")) query["platform"] = args["platform"];
+            if (args != null && args.ContainsKey("limit")) query["limit"] = args["limit"];
+            if (args != null && args.ContainsKey("period")) query["period"] = args["period"];
+            if (args != null && args.ContainsKey("date")) query["date"] = args["date"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
         public Task<object?> getMiscPhoneinfoAsync(Dictionary<string,object?>? args = null) {
             var path = "/api/v1/misc/phoneinfo";
             var query = new Dictionary<string, object?>();
@@ -816,7 +918,6 @@ public class Client {
             if (args != null && args.ContainsKey("tracking_number")) query["tracking_number"] = args["tracking_number"];
             if (args != null && args.ContainsKey("carrier_code")) query["carrier_code"] = args["carrier_code"];
             if (args != null && args.ContainsKey("phone")) query["phone"] = args["phone"];
-            if (args != null && args.ContainsKey("full")) query["full"] = args["full"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
@@ -833,6 +934,21 @@ public class Client {
             if (args != null && args.ContainsKey("hourly")) query["hourly"] = args["hourly"];
             if (args != null && args.ContainsKey("minutely")) query["minutely"] = args["minutely"];
             if (args != null && args.ContainsKey("indices")) query["indices"] = args["indices"];
+            if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+        public Task<object?> getMiscWeatherHistoryAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/misc/weather/history";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("city")) query["city"] = args["city"];
+            if (args != null && args.ContainsKey("adcode")) query["adcode"] = args["adcode"];
+            if (args != null && args.ContainsKey("start_date")) query["start_date"] = args["start_date"];
+            if (args != null && args.ContainsKey("end_date")) query["end_date"] = args["end_date"];
+            if (args != null && args.ContainsKey("days")) query["days"] = args["days"];
             if (args != null && args.ContainsKey("lang")) query["lang"] = args["lang"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             var responseKind = "json";
@@ -981,6 +1097,20 @@ public class Client {
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }
+        public Task<object?> getSayingRandomAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/saying/random";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("mode")) query["mode"] = args["mode"];
+            if (args != null && args.ContainsKey("scene")) query["scene"] = args["scene"];
+            if (args != null && args.ContainsKey("source")) query["source"] = args["source"];
+            if (args != null && args.ContainsKey("category")) query["category"] = args["category"];
+            if (args != null && args.ContainsKey("tag")) query["tag"] = args["tag"];
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            var responseKind = "json";
+            return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
     }
     public RandomApi Random => new RandomApi(this);
     public class RandomApi {
@@ -1050,6 +1180,9 @@ public class Client {
             if (args != null && args.ContainsKey("activity")) query["activity"] = args["activity"];
             if (args != null && args.ContainsKey("activity_scope")) query["activity_scope"] = args["activity_scope"];
             if (args != null && args.ContainsKey("org")) query["org"] = args["org"];
+            if (args != null && args.ContainsKey("pinned")) query["pinned"] = args["pinned"];
+            if (args != null && args.ContainsKey("repos")) query["repos"] = args["repos"];
+            if (args != null && args.ContainsKey("repos_limit")) query["repos_limit"] = args["repos_limit"];
             if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
             var responseKind = "json";
             return _c.RequestAsync("GET", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
@@ -1465,6 +1598,83 @@ public class Client {
             if (args != null && args.ContainsKey("site")) body["site"] = args["site"];
             if (args != null && args.ContainsKey("sort")) body["sort"] = args["sort"];
             if (args != null && args.ContainsKey("time_range")) body["time_range"] = args["time_range"];
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
+        }
+    }
+    public ShuiYinYuAigcBiaoShiApi ShuiYinYuAigcBiaoShi => new ShuiYinYuAigcBiaoShiApi(this);
+    public class ShuiYinYuAigcBiaoShiApi {
+        private readonly Client _c; public ShuiYinYuAigcBiaoShiApi(Client c) { _c = c; }
+        public Task<object?> postWatermarkDecodeAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/watermark/decode";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("ecc")) body["ecc"] = args["ecc"];
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("image_base64")) body["image_base64"] = args["image_base64"];
+            if (args != null && args.ContainsKey("model_type")) body["model_type"] = args["model_type"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
+        }
+        public Task<object?> postWatermarkEmbedAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/watermark/embed";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("ecc")) body["ecc"] = args["ecc"];
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("image_base64")) body["image_base64"] = args["image_base64"];
+            if (args != null && args.ContainsKey("jpeg_quality")) body["jpeg_quality"] = args["jpeg_quality"];
+            if (args != null && args.ContainsKey("model_type")) body["model_type"] = args["model_type"];
+            if (args != null && args.ContainsKey("out_format")) body["out_format"] = args["out_format"];
+            if (args != null && args.ContainsKey("payload")) body["payload"] = args["payload"];
+            if (args != null && args.ContainsKey("strength")) body["strength"] = args["strength"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
+        }
+        public Task<object?> postWatermarkLabelAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/watermark/label";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("content_producer")) body["content_producer"] = args["content_producer"];
+            if (args != null && args.ContainsKey("content_propagator")) body["content_propagator"] = args["content_propagator"];
+            if (args != null && args.ContainsKey("embed_watermark")) body["embed_watermark"] = args["embed_watermark"];
+            if (args != null && args.ContainsKey("explicit_height_ratio")) body["explicit_height_ratio"] = args["explicit_height_ratio"];
+            if (args != null && args.ContainsKey("explicit_label")) body["explicit_label"] = args["explicit_label"];
+            if (args != null && args.ContainsKey("explicit_position")) body["explicit_position"] = args["explicit_position"];
+            if (args != null && args.ContainsKey("explicit_text")) body["explicit_text"] = args["explicit_text"];
+            if (args != null && args.ContainsKey("file")) body["file"] = args["file"];
+            if (args != null && args.ContainsKey("image_base64")) body["image_base64"] = args["image_base64"];
+            if (args != null && args.ContainsKey("jpeg_quality")) body["jpeg_quality"] = args["jpeg_quality"];
+            if (args != null && args.ContainsKey("label")) body["label"] = args["label"];
+            if (args != null && args.ContainsKey("out_format")) body["out_format"] = args["out_format"];
+            if (args != null && args.ContainsKey("produce_id")) body["produce_id"] = args["produce_id"];
+            if (args != null && args.ContainsKey("propagate_id")) body["propagate_id"] = args["propagate_id"];
+            if (args != null && args.ContainsKey("skip_metadata")) body["skip_metadata"] = args["skip_metadata"];
+            if (args != null && args.ContainsKey("url")) body["url"] = args["url"];
+            if (args != null && args.ContainsKey("watermark_payload")) body["watermark_payload"] = args["watermark_payload"];
+            var responseKind = "json";
+            return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, true, new string[] {"file" }, responseKind);
+        }
+        public Task<object?> postWatermarkProducerCodeAsync(Dictionary<string,object?>? args = null) {
+            var path = "/api/v1/watermark/producer-code";
+            var query = new Dictionary<string, object?>();
+            var body = new Dictionary<string, object?>();
+            var disableCache = ReadDisableCache(args);
+            if (args != null && args.ContainsKey("_t")) query["_t"] = args["_t"];
+            if (args != null && args.ContainsKey("binding")) body["binding"] = args["binding"];
+            if (args != null && args.ContainsKey("code")) body["code"] = args["code"];
+            if (args != null && args.ContainsKey("identifier")) body["identifier"] = args["identifier"];
+            if (args != null && args.ContainsKey("model_code")) body["model_code"] = args["model_code"];
+            if (args != null && args.ContainsKey("service_type")) body["service_type"] = args["service_type"];
+            if (args != null && args.ContainsKey("subject_type")) body["subject_type"] = args["subject_type"];
             var responseKind = "json";
             return _c.RequestAsync("POST", path, query.Count > 0 ? query : null, body.Count > 0 ? body : null, disableCache, false, new string[] { }, responseKind);
         }

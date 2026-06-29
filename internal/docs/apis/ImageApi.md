@@ -1,6 +1,6 @@
 # uapi-sdk-csharp.Api.ImageApi
 
-All URIs are relative to *https://uapis.cn/api/v1*
+All URIs are relative to *https://uapis.cn*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
@@ -49,7 +49,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: image/*, application/json
+ - **Accept**: image/png, application/json
 
 
 ### HTTP response details
@@ -63,7 +63,7 @@ No authorization required
 
 <a id="getimagebingdaily"></a>
 # **GetImageBingDaily**
-> System.IO.Stream GetImageBingDaily (string date = null, string resolution = null, string format = null)
+> System.IO.Stream GetImageBingDaily (string date = null, bool random = null, string resolution = null, string format = null)
 
 获取必应每日壁纸
 
@@ -75,6 +75,7 @@ No authorization required
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **date** | **string** | 壁纸日期，格式是 &#x60;YYYY-MM-DD&#x60;。不传时返回当天壁纸。 | [optional]  |
+| **random** | **bool** | 是否每次请求随机返回一张历史壁纸。传 &#x60;true&#x60; 时生效；不能和 &#x60;date&#x60; 同时使用。不传或传 &#x60;false&#x60; 时保持默认当天/指定日期逻辑。 | [optional] [default to false] |
 | **resolution** | **string** | 返回图片的目标分辨率。可以传 &#x60;4k&#x60; 或 &#x60;1080&#x60;，不传时默认是 &#x60;4k&#x60;。 | [optional] [default to 4k] |
 | **format** | **string** | 响应格式。可以传 &#x60;image&#x60;、&#x60;json&#x60; 或 &#x60;redirect&#x60;。不传时默认是 &#x60;image&#x60;。 | [optional] [default to image] |
 
@@ -293,7 +294,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: image/*, application/json
+ - **Accept**: image/png, application/json
 
 
 ### HTTP response details
@@ -396,7 +397,7 @@ No authorization required
 
 <a id="postimagemotou"></a>
 # **PostImageMotou**
-> System.IO.Stream PostImageMotou (string imageUrl = null, System.IO.Stream file = null, string bgColor = null)
+> System.IO.Stream PostImageMotou (string bgColor = null, System.IO.Stream file = null, string imageUrl = null)
 
 生成摸摸头GIF
 
@@ -407,9 +408,9 @@ No authorization required
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **imageUrl** | **string** | 图片的URL地址。如果提供此项，将优先使用该URL的图片。 | [optional]  |
-| **file** | **System.IO.Stream****System.IO.Stream** | 上传的图片文件。支持JPG、PNG、GIF等常见格式。 | [optional]  |
 | **bgColor** | **string** | GIF的背景颜色。可选值为 &#39;white&#39;, &#39;black&#39;, &#39;transparent&#39;。 | [optional]  |
+| **file** | **System.IO.Stream****System.IO.Stream** | 上传的图片文件。支持JPG、PNG、GIF等常见格式。 | [optional]  |
+| **imageUrl** | **string** | 图片的URL地址。如果提供此项，将优先使用该URL的图片。 | [optional]  |
 
 ### Return type
 
@@ -456,7 +457,7 @@ No authorization required
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -476,7 +477,7 @@ No authorization required
 
 <a id="postimageocr"></a>
 # **PostImageOcr**
-> PostImageOcr200Response PostImageOcr (System.IO.Stream file = null, string url = null, string imageBase64 = null, string imageName = null, string needLocation = null, string returnMarkdown = null, string enableCls = null)
+> PostImageOcr200Response PostImageOcr (string enableCls = null, System.IO.Stream file = null, string imageBase64 = null, string imageName = null, string needLocation = null, string returnMarkdown = null, string url = null)
 
 通用 OCR 文字识别
 
@@ -487,13 +488,13 @@ No authorization required
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
+| **enableCls** | **string** | 是否开启额外的文字方向校正。请传 &#x60;true&#x60; 或 &#x60;false&#x60;，不传时默认是 &#x60;false&#x60;。 | [optional] [default to false] |
 | **file** | **System.IO.Stream****System.IO.Stream** | 待识别的图片文件。支持 JPG、JPEG、PNG、BMP、GIF、WebP 等常见格式，最大不超过 10MB。请勿与 url 或 image_base64 同时提交。 | [optional]  |
-| **url** | **string** | 公网可直接访问的图片地址。请勿与 file 或 image_base64 同时提交。 | [optional]  |
 | **imageBase64** | **string** | 图片的 Base64 字符串。可以传完整 Data URI，也可以只传纯 Base64 内容。请勿与 file 或 url 同时提交。 | [optional]  |
 | **imageName** | **string** | 自定义图片文件名。传链接或纯 Base64 时建议一起传，便于保留或推断扩展名。 | [optional]  |
 | **needLocation** | **string** | 是否返回文字坐标信息。请传 &#x60;true&#x60; 或 &#x60;false&#x60;，不传时默认是 &#x60;true&#x60;。 | [optional] [default to true] |
 | **returnMarkdown** | **string** | 是否额外返回整理后的 Markdown 文本。请传 &#x60;true&#x60; 或 &#x60;false&#x60;，不传时默认是 &#x60;false&#x60;。 | [optional] [default to false] |
-| **enableCls** | **string** | 是否开启额外的文字方向校正。请传 &#x60;true&#x60; 或 &#x60;false&#x60;，不传时默认是 &#x60;false&#x60;。 | [optional] [default to false] |
+| **url** | **string** | 公网可直接访问的图片地址。请勿与 file 或 image_base64 同时提交。 | [optional]  |
 
 ### Return type
 
@@ -589,7 +590,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: image/*, application/json
+ - **Accept**: image/png, application/json
 
 
 ### HTTP response details

@@ -1,0 +1,11 @@
+# uapi-sdk-csharp.Model.GetDictionaryLookup200ResponseEntryPhrasesInner
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Meaning** | **string** |  | [optional] 
+**Phrase** | **string** |  | [optional] 
+
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+

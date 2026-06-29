@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Message** | **string** |  | [optional] 
 **Date** | **string** |  | [optional] 
 **Events** | [**List&lt;GetHistoryProgrammer200ResponseEventsInner&gt;**](GetHistoryProgrammer200ResponseEventsInner.md) |  | [optional] 
+**Message** | **string** |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

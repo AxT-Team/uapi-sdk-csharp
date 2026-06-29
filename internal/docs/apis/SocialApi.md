@@ -1,6 +1,6 @@
 # uapi-sdk-csharp.Api.SocialApi
 
-All URIs are relative to *https://uapis.cn/api/v1*
+All URIs are relative to *https://uapis.cn*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
@@ -54,7 +54,7 @@ No authorization required
 
 <a id="getgithubuser"></a>
 # **GetGithubUser**
-> GetGithubUser200Response GetGithubUser (string user, bool activity = null, string activityScope = null, string org = null)
+> GetGithubUser200Response GetGithubUser (string user, bool activity = null, string activityScope = null, string org = null, bool pinned = null, bool repos = null, int reposLimit = null)
 
 查询 GitHub 用户信息
 
@@ -69,6 +69,9 @@ No authorization required
 | **activity** | **bool** | 是否获取最近一年的贡献活动数据（如贡献图、时间线）。传入 true 开启，其他值均视为不开启。 | [optional] [default to false] |
 | **activityScope** | **string** | 活动数据范围。可选 all 或 organization。只有开启 activity 时才有意义。 | [optional] [default to all] |
 | **org** | **string** | 组织登录名。如果传入此参数，会自动视为开启 organization 级别的贡献查询，切勿再同时传 activity_scope&#x3D;all。 | [optional]  |
+| **pinned** | **bool** | 是否附带该用户在 GitHub 主页展示的 pinned 仓库数据。传入 true 开启，其他值均视为不开启。 | [optional] [default to false] |
+| **repos** | **bool** | 是否附带该用户最近活跃的公开仓库列表。传入 true 开启，其他值均视为不开启。 | [optional] [default to false] |
+| **reposLimit** | **int** | 公开仓库列表的返回数量。只有开启 repos 时才有意义；如果单独传入 repos_limit，也会自动视为开启 repos。 | [optional] [default to 6] |
 
 ### Return type
 
@@ -348,7 +351,7 @@ No authorization required
 
 ### Authorization
 
-No authorization required
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 

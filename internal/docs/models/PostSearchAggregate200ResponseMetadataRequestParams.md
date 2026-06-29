@@ -5,11 +5,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Query** | **string** | 实际执行的搜索词 | [optional] 
 **Limit** | **int** | 实际生效的返回条数 | [optional] 
 **Page** | **int** | 实际生效的页码 | [optional] 
-**TimeoutMs** | **int** | 实际生效的超时时间（毫秒） | [optional] 
+**Query** | **string** | 实际执行的搜索词 | [optional] 
 **Sort** | **string** | 实际生效的排序方式 | [optional] 
+**TimeoutMs** | **int** | 实际生效的超时时间（毫秒） | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

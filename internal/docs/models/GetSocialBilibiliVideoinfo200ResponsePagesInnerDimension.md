@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Width** | **decimal** | 宽度。 | [optional] 
 **Height** | **decimal** | 高度。 | [optional] 
 **Rotate** | **decimal** | 旋转角度。 | [optional] 
+**Width** | **decimal** | 宽度。 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

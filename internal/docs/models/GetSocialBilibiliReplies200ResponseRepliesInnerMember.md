@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Uname** | **string** | 用户昵称。 | [optional] 
-**Sex** | **string** | 用户性别。 | [optional] 
 **Avatar** | **string** | 用户头像的URL。 | [optional] 
 **LevelInfo** | [**GetSocialBilibiliReplies200ResponseRepliesInnerMemberLevelInfo**](GetSocialBilibiliReplies200ResponseRepliesInnerMemberLevelInfo.md) |  | [optional] 
+**Sex** | **string** | 用户性别。 | [optional] 
+**Uname** | **string** | 用户昵称。 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

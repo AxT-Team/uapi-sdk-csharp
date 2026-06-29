@@ -1,13 +1,16 @@
 # uapi-sdk-csharp.Api.GameApi
 
-All URIs are relative to *https://uapis.cn/api/v1*
+All URIs are relative to *https://uapis.cn*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**GetGameEpicFree**](GameApi.md#getgameepicfree) | **GET** /game/epic-free | Epic 免费游戏 |
 | [**GetGameMinecraftHistoryid**](GameApi.md#getgameminecrafthistoryid) | **GET** /game/minecraft/historyid | 查询 MC 曾用名 |
+| [**GetGameMinecraftMods**](GameApi.md#getgameminecraftmods) | **GET** /game/minecraft/mods | 搜索 MC Mod/插件 |
 | [**GetGameMinecraftServerstatus**](GameApi.md#getgameminecraftserverstatus) | **GET** /game/minecraft/serverstatus | 查询 MC 服务器 |
 | [**GetGameMinecraftUserinfo**](GameApi.md#getgameminecraftuserinfo) | **GET** /game/minecraft/userinfo | 查询 MC 玩家 |
+| [**GetGameMinecraftVersion**](GameApi.md#getgameminecraftversion) | **GET** /game/minecraft/version | Minecraft 最新版本 |
+| [**GetGameSteamServers**](GameApi.md#getgamesteamservers) | **GET** /game/steam/servers | 查询 Steam 游戏服务器 |
 | [**GetGameSteamSummary**](GameApi.md#getgamesteamsummary) | **GET** /game/steam/summary | 查询 Steam 用户 |
 
 <a id="getgameepicfree"></a>
@@ -80,6 +83,48 @@ No authorization required
 | **400** | 请求失败。请检查你是否提供了 &#x60;name&#x60; 或 &#x60;uuid&#x60; 参数中的至少一个。 |  -  |
 | **404** | 用户未找到。我们根据你提供的 UUID 未能找到对应的 Minecraft 玩家。请确认 UUID 是否正确。 |  -  |
 | **502** | 服务暂时不可用，请稍后重试。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getgameminecraftmods"></a>
+# **GetGameMinecraftMods**
+> GetGameMinecraftMods200Response GetGameMinecraftMods (string query, string source = null, string type = null, int limit = null, bool enrich = null)
+
+搜索 MC Mod/插件
+
+想给你的启动器、服务器面板或资源推荐页加上 Mod/插件搜索？这个接口一次帮你检索 Modrinth 与 SpigotMC 上的资源。  ## 功能概述 传入关键词，即可拿到资源名称、简介、作者、下载量、评分、项目页和下载地址。可以用 `source` 指定只搜某个平台，用 `type` 过滤资源类型，用 `limit` 控制每个平台返回的数量。  ## 使用须知 > [!NOTE] > 默认会补全作者名与下载直链。如果只想要更快的基础搜索结果，设置 `enrich=false` 即可降低延迟。
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **query** | **string** | 搜索关键词，也可使用别名 &#x60;q&#x60;。 |  |
+| **source** | **string** | 搜索来源，默认 all。 | [optional] [default to all] |
+| **type** | **string** | 资源类型过滤，例如 mod 或 plugin。 | [optional]  |
+| **limit** | **int** | 每个来源返回的最大条数，默认 10，最大 50。 | [optional] [default to 10] |
+| **enrich** | **bool** | 是否补全下载直链与作者名，默认 true；传 false 可降低延迟。 | [optional] [default to true] |
+
+### Return type
+
+[**GetGameMinecraftMods200Response**](GetGameMinecraftMods200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 搜索成功，返回聚合后的资源列表。 |  -  |
+| **400** | 缺少 query 参数。 |  -  |
+| **502** | 搜索服务暂时不可用，请稍后重试。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -158,6 +203,80 @@ No authorization required
 | **400** | 请求失败。请检查你是否提供了 &#x60;username&#x60; 参数。 |  -  |
 | **404** | 玩家未找到。根据你提供的用户名，未能找到对应的 Minecraft 玩家。请检查拼写是否正确。 |  -  |
 | **502** | 暂时无法获取相关游戏数据，请稍后重试。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getgameminecraftversion"></a>
+# **GetGameMinecraftVersion**
+> GetGameMinecraftVersion200Response GetGameMinecraftVersion ()
+
+Minecraft 最新版本
+
+需要在启动器、服务器面板或机器人里实时显示 Minecraft 的最新版本？这个接口帮你一键拿到当前的正式版和快照版。  ## 功能概述 无需任何参数，直接返回最新正式版（latest release）、最新快照版（latest snapshot）以及完整的版本列表。适合做版本提示、更新检测或服务端版本看板。  ## 使用须知 > [!NOTE] > 数据会随新版本发布而更新，建议在客户端适当缓存，无需高频轮询。
+
+
+### Parameters
+This endpoint does not need any parameter.
+### Return type
+
+[**GetGameMinecraftVersion200Response**](GetGameMinecraftVersion200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 查询成功，返回当前最新版本信息。 |  -  |
+| **503** | 服务暂时不可用，请稍后重试。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getgamesteamservers"></a>
+# **GetGameSteamServers**
+> GetGameSteamServers200Response GetGameSteamServers (int appid, string name = null, int limit = null)
+
+查询 Steam 游戏服务器
+
+想在自己的面板或社区里展示某款游戏的在线服务器？这个接口支持查询使用 A2S/Steam 服务器列表的多人游戏，例如 SCUM、ARK、Rust、CS2 等。  ## 功能概述 传入游戏的 Steam AppID，即可获取当前在线的服务器列表，包含名称、IP、端口、当前/最大人数、地图等信息。你还可以用 `name` 做服务器名称模糊搜索，用 `limit` 控制返回数量。  ## 常见 AppID - SCUM：`513710` - ARK：`346110` - Rust：`252490` - Counter-Strike 2：`730`  ## 使用须知 > [!NOTE] > 不确定游戏的 AppID？可以在 Steam 商店页地址中找到，或参考上面的常见 AppID 列表。
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **appid** | **int** | Steam 游戏 AppID，必须是正整数。 |  |
+| **name** | **string** | 服务器名称关键词，可选，支持模糊搜索。 | [optional]  |
+| **limit** | **int** | 返回数量上限，默认 20，最大 100。 | [optional] [default to 20] |
+
+### Return type
+
+[**GetGameSteamServers200Response**](GetGameSteamServers200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 查询成功，返回匹配的游戏服务器列表。 |  -  |
+| **400** | 参数错误，例如缺少 appid 或 appid 不是有效正整数。 |  -  |
+| **401** | 服务暂时不可用，请稍后重试。 |  -  |
+| **502** | 服务暂时不可用，请稍后重试。 |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

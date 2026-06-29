@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Text** | **string** | 待转换的文本内容 | 
 **From** | **string** | 源格式类型 | 
+**Text** | **string** | 待转换的文本内容 | 
 **To** | **string** | 目标格式类型 | 
 **Options** | **Dictionary&lt;string, Object&gt;** | 可选参数（预留，当前未使用） | [optional] 
 

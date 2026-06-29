@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Face** | **string** | UP主头像的URL。 | [optional] 
 **Mid** | **decimal** | UP主的UID。 | [optional] 
 **Name** | **string** | UP主昵称。 | [optional] 
-**Face** | **string** | UP主头像的URL。 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

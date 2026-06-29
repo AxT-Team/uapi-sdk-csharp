@@ -1,6 +1,6 @@
 # uapi-sdk-csharp.Api.MiscApi
 
-All URIs are relative to *https://uapis.cn/api/v1*
+All URIs are relative to *https://uapis.cn*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
@@ -10,6 +10,8 @@ All URIs are relative to *https://uapis.cn/api/v1*
 | [**GetMiscHolidayCalendar**](MiscApi.md#getmischolidaycalendar) | **GET** /misc/holiday-calendar | 查询节假日与万年历 |
 | [**GetMiscHotboard**](MiscApi.md#getmischotboard) | **GET** /misc/hotboard | 查询热榜 |
 | [**GetMiscLunartime**](MiscApi.md#getmisclunartime) | **GET** /misc/lunartime | 查询农历时间 |
+| [**GetMiscMovieBoxOffice**](MiscApi.md#getmiscmovieboxoffice) | **GET** /misc/movie-box-office | 查询电影票房 |
+| [**GetMiscMovieRatingRank**](MiscApi.md#getmiscmovieratingrank) | **GET** /misc/movie-rating-rank | 电影收视排行查询 |
 | [**GetMiscPhoneinfo**](MiscApi.md#getmiscphoneinfo) | **GET** /misc/phoneinfo | 查询手机归属地 |
 | [**GetMiscRandomnumber**](MiscApi.md#getmiscrandomnumber) | **GET** /misc/randomnumber | 随机数生成 |
 | [**GetMiscTimestamp**](MiscApi.md#getmisctimestamp) | **GET** /misc/timestamp | 转换时间戳 (旧版，推荐使用/convert/unixtime) |
@@ -17,6 +19,7 @@ All URIs are relative to *https://uapis.cn/api/v1*
 | [**GetMiscTrackingDetect**](MiscApi.md#getmisctrackingdetect) | **GET** /misc/tracking/detect | 识别快递公司 |
 | [**GetMiscTrackingQuery**](MiscApi.md#getmisctrackingquery) | **GET** /misc/tracking/query | 查询快递物流信息 |
 | [**GetMiscWeather**](MiscApi.md#getmiscweather) | **GET** /misc/weather | 查询天气 |
+| [**GetMiscWeatherHistory**](MiscApi.md#getmiscweatherhistory) | **GET** /misc/weather/history | 查询历史天气 |
 | [**GetMiscWorldtime**](MiscApi.md#getmiscworldtime) | **GET** /misc/worldtime | 查询世界时间 |
 | [**PostMiscDateDiff**](MiscApi.md#postmiscdatediff) | **POST** /misc/date-diff | 计算两个日期之间的时间差值 |
 
@@ -185,7 +188,7 @@ No authorization required
 
 查询热榜
 
-想快速跟上网络热点？这个接口让你一网打尽各大主流平台的实时热榜/热搜！  ## 功能概述 你只需要指定一个平台类型，就能获取到该平台当前的热榜数据列表。每个热榜条目都包含标题、热度值和原始链接。非常适合用于制作信息聚合类应用或看板。  ## 三种使用模式  ### 默认模式 只传 `type` 参数，返回该平台当前的实时热榜。  ### 时光机模式 传 `type` + `time` 参数，返回最接近指定时间的热榜快照。如果不可用或无数据，会返回空。  ### 搜索模式 传 `type` + `keyword` + `time_start` + `time_end` 参数，在指定时间范围内搜索包含关键词的热榜条目。可选传 `limit` 限制返回数量。
+想快速跟上网络热点？这个接口让你一网打尽各大主流平台的实时热榜/热搜！  ## 功能概述 你只需要指定一个平台类型，就能获取到该平台当前的热榜数据列表。每个热榜条目都包含标题、热度值和原始链接。非常适合用于制作信息聚合类应用或看板。  ## 三种使用模式  ### 默认模式 只传 `type` 参数，返回该平台当前的实时热榜。  ### 时光机模式 传 `type` + `time` 参数，返回指定时间附近最近可展示的历史热榜快照。  ### 搜索模式 传 `type` + `keyword` + `time_start` + `time_end` 参数，在指定历史时间范围内搜索包含关键词的热榜条目。可选传 `limit` 限制返回数量。
 
 
 ### Parameters
@@ -193,10 +196,10 @@ No authorization required
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **type** | **string** | 你想要查询的热榜平台。请从[支持的平台列表](#enum-list)中选择。 |  |
-| **time** | **long** | 时光机模式：毫秒时间戳，返回最接近该时间的热榜快照。不传则返回当前实时热榜。 | [optional]  |
-| **keyword** | **string** | 搜索模式：搜索关键词，在历史热榜中搜索包含该关键词的条目。需配合 time_start 和 time_end 使用。 | [optional]  |
-| **timeStart** | **long** | 搜索模式必填：搜索起始时间戳（毫秒）。 | [optional]  |
-| **timeEnd** | **long** | 搜索模式必填：搜索结束时间戳（毫秒）。 | [optional]  |
+| **time** | **long** | 时光机模式：毫秒时间戳，返回该时间附近最近可展示的历史热榜快照。不传则返回当前实时热榜。 | [optional]  |
+| **keyword** | **string** | 搜索模式：搜索关键词，在指定历史时间范围内搜索包含该关键词的条目。需配合 time_start 和 time_end 使用。 | [optional]  |
+| **timeStart** | **long** | 搜索模式必填：搜索起始时间戳（毫秒），需位于该平台历史数据覆盖范围内。 | [optional]  |
+| **timeEnd** | **long** | 搜索模式必填：搜索结束时间戳（毫秒），需晚于 time_start 且位于该平台历史数据覆盖范围内。 | [optional]  |
 | **limit** | **int** | 搜索模式下最大返回条数，默认 50，最大 200。 | [optional]  |
 
 ### Return type
@@ -261,6 +264,82 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="getmiscmovieboxoffice"></a>
+# **GetMiscMovieBoxOffice**
+> GetMiscMovieBoxOffice200Response GetMiscMovieBoxOffice ()
+
+查询电影票房
+
+正在做影视类应用，想直观展示今天哪部电影最卖座？大盘总票房突破了多少？这个接口能帮你实时获取院线大盘和影片票房排名。  ## 功能概述 调用此接口，无需任何参数，即可获取当前实时的电影市场大盘数据（包含总票房、总场次、总人次），以及每一部上映影片的具体表现（包括票房明细、排片占比、上座率、场均人次和累计票房等）。
+
+
+### Parameters
+This endpoint does not need any parameter.
+### Return type
+
+[**GetMiscMovieBoxOffice200Response**](GetMiscMovieBoxOffice200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 查询成功！返回实时大盘汇总及影片排行榜列表。 |  -  |
+| **503** | 上游实时票房数据不可用或发生拥堵。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getmiscmovieratingrank"></a>
+# **GetMiscMovieRatingRank**
+> GetMiscMovieRatingRank200Response GetMiscMovieRatingRank (string channel = null, string platform = null, int limit = null, string period = null, string date = null)
+
+电影收视排行查询
+
+想做影视榜单页或选题分析？这个接口提供影视的收视、热度和评分排行，既能查实时榜，也能按日、周、月回看历史快照。  ## 功能概述 用 `channel` 切换全网、卫视、网络平台或院线榜单，用 `period` + `date` 查询历史日榜、周榜和月榜。适合影视资讯页、数据看板、自媒体选题和内容运营分析。
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **channel** | **string** | 渠道：all（全网）、tv（卫视）、web（网络平台）、cinema（院线），默认 all。 | [optional] [default to all] |
+| **platform** | **string** | 按渠道或平台关键字过滤，例如 卫视、爱奇艺。 | [optional]  |
+| **limit** | **int** | 每个渠道仅返回前 N 条。 | [optional]  |
+| **period** | **string** | 排行周期：realtime、day、week、month，默认 realtime。 | [optional] [default to realtime] |
+| **date** | **string** | 历史快照日期，格式 YYYY-MM-DD；用于 day/week/month。 | [optional]  |
+
+### Return type
+
+[**GetMiscMovieRatingRank200Response**](GetMiscMovieRatingRank200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 查询成功，返回影视排行数据。 |  -  |
+| **400** | 参数错误，例如 period 不是 realtime/day/week/month。 |  -  |
+| **404** | 指定日期或周期暂无历史快照数据。 |  -  |
+| **503** | 服务暂时不可用，请稍后重试。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="getmiscphoneinfo"></a>
 # **GetMiscPhoneinfo**
 > GetMiscPhoneinfo200Response GetMiscPhoneinfo (string phone)
@@ -305,7 +384,7 @@ No authorization required
 
 随机数生成
 
-需要一个简单的随机数，还是需要一串不重复的、带小数的随机数？这个接口都能满足你！  ## 功能概述 这是一个强大的随机数生成器。你可以指定生成的范围（最大/最小值）、数量、是否允许重复、以及是否生成小数（并指定小数位数）。  ## 流程图 ```mermaid graph TD     A[开始] - -> B{参数校验};     B - -> |通过| C{是否允许小数?};     C - -> |是| D[生成随机小数];     C - -> |否| E[生成随机整数];     D - -> F{是否允许重复?};     E - -> F;     F - -> |是| G[直接生成指定数量];     F - -> |否| H[生成不重复的数字];     G - -> I[返回结果];     H - -> I;     B - -> |失败| J[返回 400 错误]; ``` ## 使用须知 > [!WARNING] > **不重复生成的逻辑限制** > 当设置 `allow_repeat=false` 时，请确保取值范围 `(max - min + 1)` 大于或等于你请求的数量 `count`。否则，系统将无法生成足够的不重复数字，请求会失败并返回 400 错误。
+需要一个简单的随机数，还是需要一串不重复的、带小数的随机数？这个接口都能满足你！  ## 功能概述 这是一个强大的随机数生成器。你可以指定生成的范围（最大/最小值）、数量、是否允许重复、以及是否生成小数（并指定小数位数）。  ## 使用须知 > [!WARNING] > **不重复生成的逻辑限制** > 当设置 `allow_repeat=false` 时，请确保取值范围 `(max - min + 1)` 大于或等于你请求的数量 `count`。否则，系统将无法生成足够的不重复数字，请求会失败并返回 400 错误。
 
 
 ### Parameters
@@ -449,7 +528,7 @@ No authorization required
 
 <a id="getmisctrackingquery"></a>
 # **GetMiscTrackingQuery**
-> GetMiscTrackingQuery200Response GetMiscTrackingQuery (string trackingNumber, string carrierCode = null, string phone = null, bool full = null)
+> GetMiscTrackingQuery200Response GetMiscTrackingQuery (string trackingNumber, string carrierCode = null, string phone = null)
 
 查询快递物流信息
 
@@ -463,7 +542,6 @@ No authorization required
 | **trackingNumber** | **string** | 快递单号，通常是一串10-20位的数字或字母数字组合。 |  |
 | **carrierCode** | **string** | 快递公司编码（可选）。不填写时系统会自动识别，填写后可加快查询速度。 | [optional]  |
 | **phone** | **string** | 收件人手机尾号，4位数字（可选）。部分快递公司需要验证手机尾号才能查询详细物流信息。 | [optional]  |
-| **full** | **bool** | 使用这个参数可以获得完整的物流信息。但会消耗34积分/一次（不过缓存命中半价）。因为成本实在太贵了，否则非常非常亏说是 | [optional]  |
 
 ### Return type
 
@@ -535,6 +613,50 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="getmiscweatherhistory"></a>
+# **GetMiscWeatherHistory**
+> GetMiscWeatherHistory200Response GetMiscWeatherHistory (string city = null, string adcode = null, string startDate = null, string endDate = null, int days = null, string lang = null)
+
+查询历史天气
+
+想知道某个城市过去一段时间有没有下雨、降雨量是多少？这个接口用于查询过去最多 366 天的城市每日历史天气。  ## 功能概述 支持按 `city`、`adcode` 或客户端 IP 自动定位查询。你可以传 `start_date` + `end_date` 指定日期范围，也可以只传 `days` 回看最近若干天。返回结果重点包含 `rained` 与 `rain`，适合做出行复盘、农业记录、气象看板和数据分析。  ## 使用须知 > [!NOTE] > 定位优先级：`adcode` > `city` > IP 自动定位。同时传 `start_date` 和 `days` 时，以 `start_date` + `end_date` 区间为准。
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **city** | **string** | 城市名称，支持中文或英文；可选，不传 city/adcode 时会尝试 IP 自动定位。 | [optional]  |
+| **adcode** | **string** | 6 位行政区划代码，优先级高于 city。 | [optional]  |
+| **startDate** | **string** | 起始日期，格式 YYYY-MM-DD；与 end_date 搭配使用。 | [optional]  |
+| **endDate** | **string** | 结束日期，格式 YYYY-MM-DD，默认昨天。 | [optional]  |
+| **days** | **int** | 回看天数，1-366，默认 365；仅在未指定 start_date 时生效。 | [optional] [default to 365] |
+| **lang** | **string** | 返回语言：zh（默认）或 en。 | [optional] [default to zh] |
+
+### Return type
+
+[**GetMiscWeatherHistory200Response**](GetMiscWeatherHistory200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 查询成功，返回城市历史每日天气。 |  -  |
+| **400** | 参数错误，例如日期格式不正确或 lang 不是 zh/en。 |  -  |
+| **404** | 未找到城市位置。 |  -  |
+| **502** | 服务暂时不可用，请稍后重试。 |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="getmiscworldtime"></a>
 # **GetMiscWorldtime**
 > GetMiscWorldtime200Response GetMiscWorldtime (string city)
@@ -548,7 +670,7 @@ No authorization required
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **city** | **string** | 你需要查询的城市或地区，请使用标准的 IANA 时区数据库名称，例如 &#39;Shanghai&#39;, &#39;Asia/Tokyo&#39;, &#39;America/New_York&#39;。 |  |
+| **city** | **string** | 你需要查询的城市或地区。请从[支持的时区列表](#enum-list)中选择标准 IANA 时区名称，例如 &#39;Asia/Shanghai&#39;, &#39;Asia/Tokyo&#39;, &#39;America/New_York&#39;。 |  |
 
 ### Return type
 

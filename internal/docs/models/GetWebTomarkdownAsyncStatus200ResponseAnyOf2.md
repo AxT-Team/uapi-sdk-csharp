@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TaskId** | **string** |  | [optional] 
-**Status** | **string** |  | [optional] 
-**Url** | **string** |  | [optional] 
-**Progress** | **int** |  | [optional] 
-**CreatedAt** | **string** |  | [optional] 
-**StartedAt** | **string** |  | [optional] 
 **CompletedAt** | **string** |  | [optional] 
+**CreatedAt** | **string** |  | [optional] 
 **Duration** | **decimal** |  | [optional] 
+**Progress** | **int** |  | [optional] 
 **Result** | [**GetWebTomarkdownAsyncStatus200ResponseAnyOf2Result**](GetWebTomarkdownAsyncStatus200ResponseAnyOf2Result.md) |  | [optional] 
+**StartedAt** | **string** |  | [optional] 
+**Status** | **string** |  | [optional] 
+**TaskId** | **string** |  | [optional] 
+**Url** | **string** |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

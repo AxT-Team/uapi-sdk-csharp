@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TaskId** | **string** |  | [optional] 
-**Status** | **string** |  | [optional] 
-**Url** | **string** |  | [optional] 
-**Progress** | **int** |  | [optional] 
 **CreatedAt** | **string** |  | [optional] 
 **Message** | **string** |  | [optional] 
+**Progress** | **int** |  | [optional] 
+**Status** | **string** |  | [optional] 
+**TaskId** | **string** |  | [optional] 
+**Url** | **string** |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

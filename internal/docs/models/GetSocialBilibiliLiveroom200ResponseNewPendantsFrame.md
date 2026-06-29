@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Desc** | **string** | 头像框描述。 | [optional] 
 **Name** | **string** | 头像框名称。 | [optional] 
 **Value** | **string** | 头像框值。 | [optional] 
-**Desc** | **string** | 头像框描述。 | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
